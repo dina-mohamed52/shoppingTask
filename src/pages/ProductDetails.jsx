@@ -1,14 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useProduct from "../features/productDetails/useProduct";
 
 function ProductDetails() {
     const { id } = useParams();
     const { data: product, isLoading, isError, isFetching } = useProduct(id);
-
-    // If still fetching or loading, display a loading state
+const navigate=useNavigate();
+    
     if (isLoading || isFetching) return <div>Loading...</div>;
 
-    // If there's an error, display the error state
+ 
     if (isError) return <div>Error loading product details</div>;
 
     return (
@@ -48,7 +48,9 @@ function ProductDetails() {
                     <button className="bg-yellow-600 hover:bg-yellow-500 text-white py-2 px-6 rounded-md mt-4">
                         Add to Cart
                     </button>
-                    <button className="bg-transparent text-neutral-700 border border-neutral-700 hover:bg-neutral-600 hover:text-white py-2 px-6 rounded-md mt-4">
+                    <button
+                    onClick={() => navigate('/')}
+                     className="bg-transparent text-neutral-700 border border-neutral-700 hover:bg-neutral-600 hover:text-white py-2 px-6 rounded-md mt-4">
                         back to list
                     </button>
                     </div>
