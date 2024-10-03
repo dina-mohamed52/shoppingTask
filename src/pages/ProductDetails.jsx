@@ -19,12 +19,12 @@ const navigate=useNavigate();
                     <img
                         src={product.image}
                         alt={product.title}
-                        className="w-full object-cover rounded-lg"
+                        className="w-full object-cover rounded-xl"
                     />
                 </div>
 
                 {/* Product Details */}
-                <div className="w-full lg:w-1/2 text-center lg:text-left">
+                <div className="w-full lg:w-1/2 text-center lg:text-left ml-0 lg:ml-16 ">
                     <h1 className="text-2xl lg:text-3xl text-[#262626] font-bold mb-4">{product.title}</h1>
                     <div className="flex justify-center lg:justify-start items-center mb-4">
                         <span className="text-2xl font-bold text-green-600">
@@ -43,14 +43,14 @@ const navigate=useNavigate();
                     </div>
 
                     {/* Add to Cart Button */}
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start items-center mb-4" >
+                    <div className="flex flex-col sm:flex-row gap-9 justify-center lg:justify-start items-center mb-4" >
 
-                    <button className="bg-yellow-600 hover:bg-yellow-500 text-white py-2 px-6 rounded-md mt-4">
+                    <button className="bg-yellow-600 hover:bg-yellow-500 text-white py-2 px-6 capitalize rounded-md mt-4">
                         Add to Cart
                     </button>
                     <button
                     onClick={() => navigate('/')}
-                     className="bg-transparent text-neutral-700 border border-neutral-700 hover:bg-neutral-600 hover:text-white py-2 px-6 rounded-md mt-4">
+                     className="bg-transparent capitalize text-neutral-700 border border-neutral-700 hover:bg-neutral-600 hover:text-white py-2 px-6 rounded-md mt-4">
                         back to list
                     </button>
                     </div>
