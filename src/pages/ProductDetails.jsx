@@ -1,15 +1,35 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useProduct from "../features/productDetails/useProduct";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cart/cartSlice";
+import Swal from "sweetalert2"; 
+import "sweetalert2/dist/sweetalert2.min.css"; 
 
 function ProductDetails() {
     const { id } = useParams();
     const { data: product, isLoading, isError, isFetching } = useProduct(id);
-const navigate=useNavigate();
-    
-    if (isLoading || isFetching) return <div>Loading...</div>;
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
- 
+    if (isLoading || isFetching) return <div>Loading...</div>;
     if (isError) return <div>Error loading product details</div>;
+
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product));
+
+        // Trigger SweetAlert2 Success Notification
+        Swal.fire({
+            title: 'Added to Cart!',
+            text: `${product.title} has been added to your cart.`,
+            icon: 'success',
+            confirmButtonText: 'OK',
+            timer: 1000,
+            timerProgressBar: true,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+        });
+    };
 
     return (
         <div className="max-w-7xl mx-auto py-10 px-4">
@@ -44,15 +64,16 @@ const navigate=useNavigate();
 
                     {/* Add to Cart Button */}
                     <div className="flex flex-col sm:flex-row gap-9 justify-center lg:justify-start items-center mb-4" >
-
-                    <button className="bg-yellow-600 hover:bg-yellow-500 text-white py-2 px-6 capitalize rounded-md mt-4">
-                        Add to Cart
-                    </button>
-                    <button
-                    onClick={() => navigate('/')}
-                     className="bg-transparent capitalize text-neutral-700 border border-neutral-700 hover:bg-neutral-600 hover:text-white py-2 px-6 rounded-md mt-4">
-                        back to list
-                    </button>
+                        <button 
+                            onClick={() => handleAddToCart(product)}
+                            className="bg-yellow-600 hover:bg-yellow-500 text-white py-2 px-6 capitalize rounded-md mt-4">
+                            Add to Cart
+                        </button>
+                        <button
+                            onClick={() => navigate('/')}
+                            className="bg-transparent capitalize text-neutral-700 border border-neutral-700 hover:bg-neutral-600 hover:text-white py-2 px-6 rounded-md mt-4">
+                            Back to list
+                        </button>
                     </div>
                 </div>
             </div>

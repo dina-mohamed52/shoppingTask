@@ -3,8 +3,10 @@ import { Badge } from 'antd';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 
 import { RiShoppingBag3Fill } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
 
 function Header({ cartItemCount }) {
+    const totalItems = useSelector((state) => state.cart.totalItems);
     return (
         <header className="bg-[#525252] shadow-md text-white">
             <div className="container mx-auto flex justify-between items-center p-4">
@@ -17,7 +19,7 @@ function Header({ cartItemCount }) {
                         Products
                     </Link>
                     <Link to="/cart" className="flex items-center hover:text-gray-300 transition duration-200">
-                        <Badge count={cartItemCount} className="  mr-2">
+                        <Badge count={totalItems} className="  mr-2">
                             <ShoppingCartOutlined  className="text-white text-2xl" />
                         </Badge>
                         Cart
