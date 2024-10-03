@@ -3,6 +3,7 @@ import Home from "./pages/Home"
 import { Route, Routes } from "react-router-dom";
 import AppLayOut from "./ui/AppLayOut";
 import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <Route path="/" element={<AppLayOut/>}>
     <Route index element={<Home/>}/>
     <Route path="/product/:id"  element={<ProductDetails/>}/>
+    <Route path="/cart"  element={<Cart/>}/>
     </Route>
    
 </Routes>
