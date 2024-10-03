@@ -15,7 +15,6 @@ function Cart() {
     dispatch(addToCart(item));
   };
 
-  // Calculate total price by iterating over cartItems
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
