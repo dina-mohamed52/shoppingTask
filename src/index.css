@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.ant-badge .ant-badge-count {
+    background-color: #ca8a04 !important;
+}
