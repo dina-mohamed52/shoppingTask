@@ -7,12 +7,13 @@ function Filters({ selectedCategory, setSelectedCategory, sortOrder, setSortOrde
     const sortOptions = ["Default", "Price: Low to High", "Price: High to Low"];
 
     return (
-        <div className="mb-6 flex justify-end items-center gap-6">
-            <div className="flex items-center gap-4">
+        <div className="mb-6 flex sm:flex-row flex-col items-center sm:justify-end justify-center gap-6 ">
+            {/* Category Filter */}
+            <div className="flex flex-col sm:flex-row w-full sm:items-start items-center justify-end gap-4">
                 <label className="text-gray-700 font-normal">Filter by Category</label>
                 <Select
                     value={selectedCategory}
-                    style={{ width: 200 }}
+                    style={{ width: "100%", maxWidth: 200 }}
                     onChange={setSelectedCategory}
                 >
                     {categories.map((category) => (
@@ -22,11 +23,13 @@ function Filters({ selectedCategory, setSelectedCategory, sortOrder, setSortOrde
                     ))}
                 </Select>
             </div>
-            <div className="flex items-center gap-4">
+
+            {/* Sort Filter */}
+            <div className="flex flex-col sm:flex-row w-full items-center  gap-4">
                 <label className="text-gray-700 font-normal">Sort by</label>
                 <Select
                     value={sortOrder}
-                    style={{ width: 200 }}
+                    style={{ width: "100%", maxWidth: 200 }}
                     onChange={setSortOrder}
                 >
                     {sortOptions.map((option) => (
