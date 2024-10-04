@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 import Swal from "sweetalert2"; 
 import "sweetalert2/dist/sweetalert2.min.css"; 
+import LoadingSpinner from "../ui/LoadingSpinner";
 
 function ProductDetails() {
     const { id } = useParams();
@@ -11,7 +12,7 @@ function ProductDetails() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    if (isLoading || isFetching) return <div>Loading...</div>;
+    if (isLoading || isFetching) return <LoadingSpinner/>;
     if (isError) return <div>Error loading product details</div>;
 
     const handleAddToCart = (product) => {
@@ -23,7 +24,7 @@ function ProductDetails() {
             text: `${product.title} has been added to your cart.`,
             icon: 'success',
             confirmButtonText: 'OK',
-            timer: 1000,
+            timer: 2000,
             timerProgressBar: true,
             toast: true,
             position: 'top-end',

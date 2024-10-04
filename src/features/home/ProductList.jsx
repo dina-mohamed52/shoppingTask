@@ -1,49 +1,50 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BiCartAdd } from "react-icons/bi";
 import useProducts from "./useProductList";
 import { Tooltip } from 'react-tooltip'; 
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../cart/cartSlice";
-import { Select } from 'antd';
-
-const { Option } = Select;
-
-const categories = ["All", "electronics", "jewelery", "men's clothing", "women's clothing"];
+import Filters from "./Filters";
+import LoadingSpinner from "../../ui/LoadingSpinner";
 
 function ProductList() {
     const [selectedCategory, setSelectedCategory] = useState("All");
+    const [sortOrder, setSortOrder] = useState("Default");
     const { data: products, isError, isLoading } = useProducts(selectedCategory);
 
-    if (isLoading) return <h1 className="text-center">Loading...</h1>;
-    if (isError) return <h1 className="text-center text-red-500">Error</h1>;
-
     const dispatch = useDispatch();
+
+    // Handle sorting 
+    const sortedProducts = [...(products || [])].sort((a, b) => {
+        if (sortOrder === "Price: Low to High") {
+            return a.price - b.price;
+        } else if (sortOrder === "Price: High to Low") {
+            return b.price - a.price;
+        }
+        return 0; 
+    });
 
     const handleAddToCart = (product) => {
         dispatch(addToCart(product));
     };
 
+    // Loading and error states
+    if (isLoading) return <h1 className="text-center"> <LoadingSpinner/></h1>;
+    if (isError) return <h1 className="text-center text-red-500">Error</h1>;
+
     return (
         <div className="container mx-auto px-6 py-8 bg-white w-[95%] rounded-lg mt-12 mb-4">
-            {/* Category Dropdown */}
-            <div className="mb-6 flex justify-end items-center gap-4 ">
-                <label className="block mb-2 text-gray-700 font-semibold">Filter by Category</label>
-                <Select
-                    defaultValue="All"
-                    style={{ width: 200 }}
-                    onChange={setSelectedCategory}
-                >
-                    {categories.map((category) => (
-                        <Option key={category} value={category}>
-                            {category === "All" ? "All Products" : category.charAt(0).toUpperCase() + category.slice(1)}
-                        </Option>
-                    ))}
-                </Select>
-            </div>
-
+            {/* Category and Sorting Dropdowns */}
+            <Filters
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                sortOrder={sortOrder}
+                setSortOrder={setSortOrder}
+            />
+            {/* Product Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {products && products.map((product) => (
+                {sortedProducts.map((product) => (
                     <div key={product.id} className="bg-white border border-neutral-100 rounded-lg shadow-yellow-100 shadow-md overflow-hidden transition-transform transform hover:scale-105">
                         <Link to={`/product/${product.id}`}>
                             <img src={product.image} alt={product.title} className="w-full mt-4 h-52 object-contain" />
