@@ -19,9 +19,9 @@ function Offers() {
                 boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
                 maxWidth: "600px",
                 margin: "2rem auto",
-                padding: "2rem", // Reduced padding for mobile
+                padding: "2rem", // Responsive padding can be controlled via media queries
                 border: "1px solid #d83f87",
-                height: "auto", // Changed to auto to allow for better content fitting
+                height: "auto", // Allow content to fit
                 textAlign: "center",
             }}
             title={
@@ -35,9 +35,9 @@ function Offers() {
                 <br /> متوفر بمقاسات من حديث الولادة حتى 14 سنة.
             </Text>
 
-            <Row gutter={16} style={{ marginTop: "1rem" }}>
+            <Row gutter={[16, 16]} style={{ marginTop: "1rem" }}>
                 {offerDetails.map((offer, index) => (
-                    <Col xs={24} sm={12} key={index}> {/* Use xs for mobile, sm for tablet */}
+                    <Col xs={24} sm={12} key={index}> {/* Responsive grid */}
                         <Card
                             style={{
                                 textAlign: "center",
@@ -45,6 +45,7 @@ function Offers() {
                                 boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
                                 marginBottom: "1rem",
                                 backgroundColor: "#f8f9fa",
+                                padding: "1rem", // Add padding for the inner cards
                             }}
                         >
                             <Text strong style={{ color: "#d83f87", fontSize: "16px" }}>
