@@ -26,7 +26,7 @@ function Offers() {
             }}
             title={
                 <Title level={3} style={{ color: "#d83f87", marginBottom: "1rem", fontWeight: "bold" }}>
-                    عروض الكولونات الشتوية للأطفال
+                   <span className="sm:text-2xl text-xs font-bold" >عروض الكولونات الشتوية للأطفال</span> 
                 </Title>
             }
         >
