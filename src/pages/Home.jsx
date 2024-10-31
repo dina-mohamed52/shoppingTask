@@ -1,16 +1,20 @@
+import Offers from "../features/home/Offers"
 import ProductList from "../features/home/ProductList"
+import CustomCarousel from "../ui/CustomCarousel"
 import Header from "../ui/Header"
 
 function Home() {
     return (
-        // https://fakestoreapi.com/products
-        // https://fakestoreapi.com/products/categories.
-//         All Products: https://fakestoreapi.com/products
-                // Product by ID: https://fakestoreapi.com/products/{id}
-                // Categories: https://fakestoreapi.com/products/categories
-                // Products by Category: https://fakestoreapi.com/products/category/{category}
+      
                 <>
-    
+      <div className="  container mx-auto px-4 mt-4">
+         
+            <CustomCarousel />
+            <div className="offers" >
+
+            <Offers/> 
+            </div>
+        </div>
         <ProductList/>
                 </>
     )

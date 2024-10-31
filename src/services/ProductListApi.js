@@ -1,9 +1,18 @@
-export const fetchProductList = async (selectedCategory) => {
-    const url = !selectedCategory || selectedCategory === "All"
-        ? 'https://fakestoreapi.com/products'
-        : `https://fakestoreapi.com/products/category/${selectedCategory}`;
-    const res = await fetch(url)
-    const data = await res.json()
-    // console.log('ddddddddddddd',data)
-    return data
-}
+import { supabase } from "../Supabase";
+
+export const fetchProductList = async () => {
+    let { data, error } = await supabase
+  .from('products')
+  .select('*')
+  
+    console.log('Dataaaaaaaaaaaaaaaaaaaaa:', data);
+    console.log('Error:', error);
+  
+    if (error) {
+      console.error('Error fetching products:', error);
+      return [];
+    }
+  
+    return data;
+  };
+  
