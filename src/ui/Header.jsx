@@ -12,7 +12,7 @@ function Header() {
             <div className="container mx-auto flex justify-between items-center p-4">
                 <Link to="/" className="flex items-center">
                     <RiShoppingBag3Fill fill='#fff' size={30} />
-                    <span className="sm:text-3xl text-2xl font-bold ml-2 font-fantasy">BabyStyle</span>
+                    <span className="sm:text-3xl text-xl font-bold ml-2 font-fantasy">BabyStyle</span>
                 </Link>
                 <nav className="space-x-6 flex items-center mr-[2rem]">
                     <Link to="/" className="hover:text-gray-200 transition duration-200">
