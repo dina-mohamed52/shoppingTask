@@ -1,7 +1,3 @@
-import React from "react";
-import { Card, Typography, Row, Col } from "antd";
-
-const { Title, Text } = Typography;
 
 const offerDetails = [
     { quantity: "4 قطع", price: "300 ج" },
@@ -12,59 +8,35 @@ const offerDetails = [
 
 function Offers() {
     return (
-        <Card
-            style={{
-                backgroundColor: "#ffffff",
-                borderRadius: "12px",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-                maxWidth: "600px",
-                margin: "2rem auto",
-                padding: "2rem", // Responsive padding can be controlled via media queries
-                border: "1px solid #d83f87",
-                height: "auto", // Allow content to fit
-                textAlign: "center",
-            }}
-            title={
-                <Title level={3} style={{ color: "#d83f87", marginBottom: "1rem", fontWeight: "bold" }}>
-                   <span className="sm:text-2xl text-xs font-bold" >عروض الكولونات الشتوية للأطفال</span> 
-                </Title>
-            }
-        >
-            <Text style={{ fontSize: "14px", color: "#333", lineHeight: 1.5 }}>
+        <div className="bg-white rounded-lg shadow-lg max-w-3xl mx-auto my-8 p-8 border border-pink-500">
+            <h3 className="text-pink-600 sm:text-3xl text-xl font-bold mb-6 text-center">
+                عروض الكولونات الشتوية للأطفال
+            </h3>
+            <p className="text-gray-600 text-base leading-relaxed mb-8 text-center">
                 بأفضل خامة شتوي وتقفيل لكولونات الأطفال، الخامة 90% قطن تقيل + 10% ليكرا معالج. ضد الحساسية وناعمة على البشرة.
                 <br /> متوفر بمقاسات من حديث الولادة حتى 14 سنة.
-            </Text>
+            </p>
 
-            <Row gutter={[16, 16]} style={{ marginTop: "1rem" }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                 {offerDetails.map((offer, index) => (
-                    <Col xs={24} sm={12} key={index}> {/* Responsive grid */}
-                        <Card
-                            style={{
-                                textAlign: "center",
-                                borderRadius: "8px",
-                                boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
-                                marginBottom: "1rem",
-                                backgroundColor: "#f8f9fa",
-                                padding: "1rem", // Add padding for the inner cards
-                            }}
-                        >
-                            <Text strong style={{ color: "#d83f87", fontSize: "16px" }}>
-                                {offer.quantity}
-                            </Text>
-                            <br />
-                            <Text style={{ color: "#52c41a", fontWeight: "bold", fontSize: "14px" }}>
-                                بسعر {offer.price} ❤🥰
-                            </Text>
-                        </Card>
-                    </Col>
+                    <div
+                        key={index}
+                        className="bg-gray-100 rounded-lg shadow-md p-6 text-center transition-transform transform hover:scale-105 hover:shadow-xl"
+                    >
+                        <strong className="text-pink-600 text-xl">{offer.quantity}</strong>
+                        <br />
+                        <span className="text-green-600 font-bold text-lg">
+                            بسعر {offer.price} ❤🥰
+                        </span>
+                    </div>
                 ))}
-            </Row>
+            </div>
 
-            <Text style={{ fontSize: "14px", color: "#333", lineHeight: 1.5, marginTop: "1rem" }}>
+            <p className="text-gray-600 text-base leading-relaxed mt-6 text-center">
                 متاح تشكيل ألوان وأشكال ومقاسات مختلفة. <br />
                 متاح معاينة قبل الاستلام للتأكيد على الجودة والمقاس ✨
-            </Text>
-        </Card>
+            </p>
+        </div>
     );
 }
 
