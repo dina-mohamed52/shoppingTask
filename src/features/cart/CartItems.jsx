@@ -4,7 +4,7 @@ import { addToCart, removeFromCart } from "./cartSlice";
 function CartItems() {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const dispatch = useDispatch();
-    
+
     const handleRemove = (id) => {
         dispatch(removeFromCart(id));
     };
@@ -27,7 +27,7 @@ function CartItems() {
                         >
                             {/* Image */}
                             <img
-                                src={item.image}
+                                src={item.img}
                                 alt={item.title}
                                 className="w-24 h-24 object-contain mb-4 sm:mb-0"
                             />
@@ -37,7 +37,7 @@ function CartItems() {
                                 <h4 className="text-lg font-semibold text-gray-700">
                                     {item.title}
                                 </h4>
-                                <p className="text-gray-500">Price: ${item.price}</p>
+                                <p className="text-gray-500">Price: EGP {item.price}</p>
                             </div>
                             
                             {/* Quantity and Controls */}

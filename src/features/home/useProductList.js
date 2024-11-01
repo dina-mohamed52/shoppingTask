@@ -1,16 +1,11 @@
-import { useQuery } from "@tanstack/react-query"
-import { fetchProductList } from "../../services/ProductListApi"
+import { useQuery } from "@tanstack/react-query";
+import { fetchProductList } from "../../services/ProductListApi";
 
-const useProducts = (selectedCategory) => {
+const useProducts = () => {
+    return useQuery({
+        queryKey: ['products'],
+        queryFn: fetchProductList
+    });
+};
 
-    return (
-
-        useQuery({
-            queryKey: ['products',selectedCategory],
-            queryFn: ()=>fetchProductList(selectedCategory)
-        })
-    )
-
-}
-
-export default useProducts
+export default useProducts;
