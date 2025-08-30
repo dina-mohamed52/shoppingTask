@@ -36,8 +36,8 @@ function Offers() {
               </span>
             )}
 
-            <span className="text-yellow-300 text-xl font-semibold">{offer.quantity}</span>
-            <span className="text-yellow-400 font-bold text-xl">{offer.price} 💛</span>
+            <span className="text-yellow-300 sm:text-xl text-sm font-semibold">{offer.quantity}</span>
+            <span className="text-yellow-400 font-bold  sm:text-xl text-sm">{offer.price} 💛</span>
           </div>
         ))}
       </div>
