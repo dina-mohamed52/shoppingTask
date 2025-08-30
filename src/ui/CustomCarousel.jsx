@@ -2,7 +2,6 @@ import { Carousel } from "antd";
 
 const images = [
   { src: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756575082/468185339_931536052403792_3120323499499149723_n_zp0ej5.jpg", alt: "Slide 1" },
-//   { src: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756575082/468185339_931536052403792_3120323499499149723_n_zp0ej5.jpg", alt: "Slide 2" },
   { src: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578818/5879927343848475497_f2vrqs.jpg", alt: "Slide 2" },
   { src: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578733/5879927343848475501_heygzw.jpg", alt: "Slide 3" },
   { src: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578733/5879927343848475498_hbb6kj.jpg", alt: "Slide 4" },
@@ -11,18 +10,28 @@ const images = [
 
 const CustomCarousel = () => {
   return (
-    <div className="w-full max-w-[95vw] mx-auto  h-[70vh]">
-      <Carousel autoplay dotPosition="bottom" effect="fade" className="h-full">
+    <div className="w-full max-w-[95vw] mx-auto relative">
+      <Carousel autoplay dotPosition="bottom" effect="fade" className="w-full">
         {images.map((image, index) => (
-          <div key={index} className="flex justify-center items-center sm:h-[500px] h-[394px] rounded-md bg-gray-100">
+          <div key={index} className="flex justify-center items-center">
             <img
               src={image.src}
               alt={image.alt}
-              className="max-h-[35rem] w-full object-contain rounded-xl shadow-lg"
+              className="w-full max-h-[70vh] sm:max-h-[500px] object-cover rounded-xl shadow-lg"
             />
           </div>
         ))}
       </Carousel>
+
+      {/* dots position fix */}
+      <style jsx global>{`
+        .ant-carousel .slick-dots-bottom {
+          bottom: 10px; /* خليها فوق شويه */
+        }
+        .ant-carousel .slick-dots {
+          margin: 0;
+        }
+      `}</style>
     </div>
   );
 };
