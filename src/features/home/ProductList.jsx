@@ -30,7 +30,7 @@ const [selectedProduct,setSelectedProduct] = useState(null);
 
   return (
     <div className="container mx-auto px-6 py-10 w-[95%] mt-12 mb-6">
-      <h1 className="sm:text-3xl text-xl font-bold text-center shadow-md p-4 rounded-full border border-gray-300 text-gray-800 mb-10 tracking-wide">
+      <h1 className="sm:text-3xl text-xl font-bold text-center shadow-md sm:p-4 p-8 rounded-full border border-gray-300 text-gray-800 mb-10 tracking-wide">
         ❄️ مغامرات دافئة تبدأ من هنا!
         <span className="block text-yellow-600 mt-2">
           اكتشفوا أجمل الكولونات الشتوية لأقدام صغيرة مليانة لعب ومرح!
