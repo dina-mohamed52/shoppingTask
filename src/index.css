@@ -1,14 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+
+/* تخصيص لون البادج */
 .ant-badge .ant-badge-count {
-    background-color: #a11598 !important;
+  background-color: #facc15 !important; /* أصفر مودرن */
+  color: #1f2937 !important; /* نص غامق علشان يبقى واضح */
+  font-weight: 600;
 }
 
+/* تخصيص النقط بتاعت الكاروسيل */
+.ant-carousel .slick-dots li button {
+  background-color: #1f2937 !important; /* دارك جراي */
+}
 
-.ant-carousel .slick-dots li button{
-    background-color: rgb(158, 12, 112) !important; /* Changes the dots to black */
+.ant-carousel .slick-dots li.slick-active button {
+  background-color: #facc15 !important; /* أصفر عند الاختيار */
 }
-.offers {
-  padding: 3rem;
-}
+

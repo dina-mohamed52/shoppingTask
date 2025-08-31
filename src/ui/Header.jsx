@@ -5,29 +5,49 @@ import { RiShoppingBag3Fill } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 
 function Header() {
-    const totalItems = useSelector((state) => state.cart.totalItems);
-    
-    return (
-        <header className="bg-gradient-to-r from-purple-600 via-gray-600 to-pink-600 shadow-md text-white">
-            <div className="container mx-auto flex justify-between items-center p-4">
-                <Link to="/" className="flex items-center">
-                    <RiShoppingBag3Fill fill='#fff' size={30} />
-                    <span className="sm:text-3xl text-xl font-bold sm:ml-2  sm:mr-2 mr-6 font-fantasy">BabyStyle</span>
-                </Link>
-                <nav className="space-x-6 flex items-center mr-[2rem]">
-                    <Link to="/" className="hover:text-gray-200 transition duration-200">
-                        Products
-                    </Link>
-                    <Link to="/cart" className="flex items-center hover:text-gray-200 transition duration-200">
-                        <Badge count={totalItems} className="mr-2">
-                            <ShoppingCartOutlined className="text-white text-2xl" />
-                        </Badge>
-                        Cart
-                    </Link>
-                </nav>
-            </div>
-        </header>
-    );
+  const totalItems = useSelector((state) => state.cart.totalItems);
+
+  return (
+    <header className="bg-gray-900 shadow-md sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center p-4">
+        {/* Logo */}
+        <Link to="/" className="flex items-center group">
+          <RiShoppingBag3Fill
+            fill="#FFD43B"
+            size={32}
+            className="transition-transform duration-300 group-hover:scale-110"
+          />
+          <span className="sm:text-2xl text-xl font-bold sm:ml-2 font-fantasy text-white group-hover:text-yellow-400 transition-colors">
+            BabyStyle
+          </span>
+        </Link>
+
+        {/* Navigation */}
+        <nav className="space-x-6 flex items-center mr-[1rem]">
+          <Link
+            to="/"
+            className="text-gray-200 hover:text-yellow-400 transition duration-300"
+          >
+            المنتجات
+          </Link>
+
+          <Link
+            to="/cart"
+            className="flex items-center text-gray-200 hover:text-yellow-400 transition duration-300"
+          >
+            <Badge
+              count={totalItems}
+              className="mr-2"
+              style={{ backgroundColor: '#FFD43B', color: '#000' }}
+            >
+              <ShoppingCartOutlined className="text-2xl text-white" />
+            </Badge>
+            السلة
+          </Link>
+        </nav>
+      </div>
+    </header>
+  );
 }
 
 export default Header;
