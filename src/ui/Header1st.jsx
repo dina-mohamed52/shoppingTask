@@ -1,7 +1,7 @@
 function Header1st() {
   return (
     <div className=" w-full mx-auto text-center text-gray-800 p-10 sm:p-8 rounded-full shadow-lg border border-gray-300">
-      <h1 className="sm:text-4xl text-2xl font-extrabold text-yellow-500 mb-4 tracking-wide">
+      <h1 className="sm:text-4xl text-xl font-extrabold text-yellow-500 mb-4 tracking-wide">
         ❄️ دفء الشتاء للأطفال!
       </h1>
 
