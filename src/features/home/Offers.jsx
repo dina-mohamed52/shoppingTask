@@ -1,51 +1,52 @@
 const offerDetails = [
   { quantity: "4 قطع", price: "300 ج" },
-  { quantity: "6 قطع", price: "420 ج" },
-  { quantity: "8 قطع", price: "540 ج" },
-  { quantity: "دسته 12 قطعة", price: "750 ج" },
+  { quantity: "6 قطع", price: "420 ج", highlight: "الأكثر طلباً", color: "yellow-400" },
+  { quantity: "8 قطع", price: "560 ج" },
+  { quantity: "دسته 12 قطعة", price: "810 ج", highlight: "عرض التوفير", color: "green-100" },
 ];
 
 function Offers() {
   return (
-    <div className="bg-gray-900 rounded-3xl shadow-xl max-w-4xl mx-auto my-12 p-10 border border-yellow-400 relative overflow-hidden">
+    <div className="bg-gray-900 rounded-3xl shadow-2xl max-w-4xl mx-auto my-12 p-8 sm:p-12 border border-yellow-400 relative overflow-hidden">
       {/* خلفية شكلية */}
-      <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 via-transparent to-gray-900/30 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 via-transparent to-gray-900/40 pointer-events-none"></div>
 
-      {/* العنوان */}
-      <h3 className="relative z-10 text-yellow-400 sm:text-4xl text-2xl font-extrabold mb-6 text-center tracking-wide">
-        عروض الكولونات الشتوية للأطفال
-      </h3>
-
-      {/* وصف العرض */}
-      <p className="relative z-10 text-gray-300 text-lg leading-relaxed mb-10 text-center max-w-2xl mx-auto">
-        بأفضل خامة شتوي وتقفيل لكولونات الأطفال، <br />
-        <span className="text-yellow-300 font-medium">
-          الخامة 90% قطن تقيل + 10% ليكرا معالج
-        </span>{" "}
-        ✨ ضد الحساسية وناعمة على البشرة. <br /> متوفر بمقاسات من حديث الولادة حتى 14 سنة.
-      </p>
+      {/* تاج "عروضنا" */}
+      <div className="absolute sm:-top-0  -top-2 sm:-left-1 -left-4 bg-yellow-400
+      
+      text-gray-900 text-3xl sm:text-4xl font-extrabold px-8 py-3 rounded-xl shadow-2xl transform -rotate-12 z-20">
+        عروضنا
+      </div>
 
       {/* الكروت */}
-      <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
         {offerDetails.map((offer, index) => (
           <div
             key={index}
-            className="bg-gray-800 rounded-2xl shadow-md p-8 text-center transition-transform transform hover:scale-105 hover:shadow-2xl border border-yellow-500/40"
+            className={`relative bg-gray-800 rounded-3xl p-6 sm:p-8 flex justify-between items-center transition-transform transform hover:scale-105 hover:shadow-2xl border ${
+              offer.highlight ? "border-yellow-300" : "border-yellow-600/10"
+            }`}
           >
-            <strong className="text-yellow-300 text-2xl block mb-3 font-semibold">
-              {offer.quantity}
-            </strong>
-            <span className="text-yellow-400 font-bold text-xl">
-              بسعر {offer.price} 💛
-            </span>
+            {/* التاج الخاص بالعروض المميزة */}
+            {offer.highlight && (
+              <span
+                className={`absolute -top-4 -right-4 bg-${offer.color} text-gray-900 font-bold px-4 py-1 rounded-full text-sm shadow-lg transform rotate-6`}
+              >
+                {offer.highlight}
+              </span>
+            )}
+
+            <span className="text-yellow-300 text-xl font-semibold">{offer.quantity}</span>
+            <span className="text-yellow-400 font-bold text-xl">{offer.price} 💛</span>
           </div>
         ))}
       </div>
 
       {/* النص الختامي */}
-      <p className="relative z-10 text-gray-400 text-base leading-relaxed mt-8 text-center">
-        متاح تشكيل ألوان وأشكال ومقاسات مختلفة. <br />
-        <span className="text-yellow-300">معاينة قبل الاستلام</span> للتأكيد على الجودة والمقاس ✅
+      <p className="relative z-10 text-gray-300 text-base sm:text-lg leading-relaxed mt-10 text-center">
+        متاح تشكيل ألوان وأشكال ومقاسات مختلفة،{" "}
+        <span className="text-yellow-300 font-semibold px-2"> معاينة قبل الاستلام</span> 
+        للتأكيد على الجودة والمقاس ✅
       </p>
     </div>
   );

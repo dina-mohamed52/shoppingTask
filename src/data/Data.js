@@ -108,7 +108,7 @@ export const Data = [
       },
     ],
     image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578733/5879927343848475498_hbb6kj.jpg",
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578747/5879927343848475499_njzuba.jpg",
   },
   {
     id: 7,
@@ -142,6 +142,6 @@ export const Data = [
       },
     ],
     image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578745/5879927343848475492_t7jagx.jpg",
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578760/5879927343848475491_wwzpcw.jpg",
   },
 ];

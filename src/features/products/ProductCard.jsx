@@ -5,30 +5,30 @@ function ProductCard({ product, onPreview }) {
       <div className="relative group bg-gray-50">
         <img
           src={product.image}
-          alt={product.title}
+          alt={product.name}
           className="w-full h-[19rem] object-cover p-4 transition-transform duration-300 group-hover:scale-105"
         />
 
         {/* تاج (مثلاً New أو Sale) */}
-        {product.tag && (
+        {product.name && (
           <span className="absolute top-3 left-3 bg-yellow-400 text-gray-800 text-xs font-bold px-3 py-1 rounded-full shadow">
-            {product.tag}
+            {product.name}
           </span>
         )}
       </div>
 
       {/* تفاصيل المنتج */}
       <div className="p-4 flex flex-col flex-grow">
-        <h2 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-1">
-          {product.title}
-        </h2>
+        {/* <h2 className="text-lg font-semibold flex  justify-center text-gray-800 mb-2 line-clamp-1">
+          {product.name}
+        </h2> */}
 
       
 
         {/* زر معاينة الصور */}
         <button
           onClick={() => onPreview(product)}
-          className="mt-auto w-full py-2.5 px-4 text-yellow-400 hover:text-gray-800 rounded-xl bg-gray-900  font-semibold shadow-sm hover:bg-yellow-500 transition-all duration-300"
+          className="mt-auto w-full py-2.5 px-4 text-yellow-400 hover:text-gray-800 rounded-xl bg-gray-900  font-semibold shadow-sm hover:bg-yellow-400 transition-all duration-300"
         >
           معاينة الصور
         </button>
