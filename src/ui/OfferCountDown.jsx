@@ -26,9 +26,9 @@ export default function OfferCountdown() {
   const seconds = String(timeLeft % 60).padStart(2, "0");
 
   return (
-    <div className="bg-gray-900 text-yellow-400 rounded-2xl p-4 sm:p-6 shadow-2xl w-full max-w-xl mx-auto text-center space-y-6">
+    <div className="bg-gray-900 text-yellow-400 rounded-2xl p-4 sm:p-6 shadow-2xl w-full max-w-xl mx-auto text-center space-y-4 sm:space-y-6">
       {/* الساعة الرملية */}
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-2 sm:mb-4">
         <Hourglass />
       </div>
 
@@ -54,7 +54,7 @@ export default function OfferCountdown() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="text-sm sm:text-lg text-gray-300"
+        className="text-xs sm:text-sm md:text-base text-gray-300 mt-2"
       >
         👀 <span className="text-yellow-400 font-semibold">{viewers}</span>{" "}
         بيشوفوا العرض دلوقتي
@@ -67,7 +67,7 @@ export default function OfferCountdown() {
 function FlipUnit({ value, label }) {
   return (
     <div className="flex flex-col items-center">
-      <div className="relative w-12 h-16 sm:w-16 sm:h-20 md:w-20 md:h-24 bg-gray-800 border border-yellow-400 rounded-xl shadow-lg overflow-hidden">
+      <div className="relative w-12 h-16 sm:w-16 sm:h-20 md:w-20 md:h-24 bg-gray-800 border border-yellow-400 rounded-xl shadow-lg overflow-hidden cursor-default hover:scale-105 transition-transform duration-300">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={value}
@@ -85,7 +85,7 @@ function FlipUnit({ value, label }) {
           </motion.div>
         </AnimatePresence>
       </div>
-      <span className="text-xs sm:text-sm text-gray-400 mt-2">{label}</span>
+      <span className="text-[10px] sm:text-xs mt-1 sm:mt-2 text-gray-400">{label}</span>
     </div>
   );
 }
@@ -94,7 +94,7 @@ function FlipUnit({ value, label }) {
 function Hourglass() {
   return (
     <motion.div
-      className="w-12 h-12 sm:w-16 sm:h-16 text-yellow-400"
+      className="w-10 h-10 sm:w-14 sm:h-14 text-yellow-400"
       animate={{ rotate: [0, 180, 360] }}
       transition={{ repeat: Infinity, duration: 6, ease: "linear" }}
     >
