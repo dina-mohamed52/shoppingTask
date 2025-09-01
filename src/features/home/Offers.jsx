@@ -1,13 +1,14 @@
 const offerDetails = [
-  { quantity: "4 قطع", price: "300 ج" },
-  { quantity: "6 قطع", price: "420 ج", highlight: "الأكثر طلباً", color: "yellow-400" },
-  { quantity: "8 قطع", price: "560 ج" },
-  { quantity: "دسته 12 قطعة", price: "810 ج", highlight: "عرض التوفير", color: "green-100" },
+  { quantity: "4 قطع", price: 300 ,value : 4 },
+  { quantity: "6 قطع", price: 420, highlight: "الأكثر طلباً", color: "yellow-400",value:6 },
+  { quantity: "8 قطع", price: 560 ,value:8},
+  { quantity: "دسته 12 قطعة", price: 810, highlight: "عرض التوفير", color: "green-100",value:12 },
 ];
 
-function Offers() {
+
+function Offers({setSelectedOffer}) {
   return (
-    <div className="bg-gray-900 rounded-3xl shadow-2xl max-w-4xl mx-auto my-12 p-8 sm:p-12 border border-yellow-400 relative overflow-hidden">
+    <div className="bg-gray-900 rounded-3xl shadow-2xl max-w-4xl mx-auto  my-24 p-8 sm:p-12 border border-yellow-400 relative overflow-hidden">
       {/* خلفية شكلية */}
       <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 via-transparent to-gray-900/40 pointer-events-none"></div>
 
@@ -22,8 +23,9 @@ function Offers() {
       <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
         {offerDetails.map((offer, index) => (
           <div
+          onClick={() => setSelectedOffer(offer)}
             key={index}
-            className={`relative bg-gray-800 rounded-3xl p-6 sm:p-8 flex justify-between items-center transition-transform transform hover:scale-105 hover:shadow-2xl border ${
+            className={`relative cursor-pointer bg-gray-800 rounded-3xl p-6 sm:p-8 flex justify-between items-center transition-transform transform hover:scale-105 hover:shadow-2xl border ${
               offer.highlight ? "border-yellow-300" : "border-yellow-600/10"
             }`}
           >
@@ -42,12 +44,7 @@ function Offers() {
         ))}
       </div>
 
-      {/* النص الختامي */}
-      <p className="relative z-10 text-gray-300 text-base sm:text-lg leading-relaxed mt-10 text-center">
-        متاح تشكيل ألوان وأشكال ومقاسات مختلفة،{" "}
-        <span className="text-yellow-300 font-semibold px-2"> معاينة قبل الاستلام</span> 
-        للتأكيد على الجودة والمقاس ✅
-      </p>
+    
     </div>
   );
 }

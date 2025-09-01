@@ -6,6 +6,8 @@ import AppLayOut from "./ui/AppLayOut";
 import Cart from "./pages/Cart";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import OrderForm from "./ui/Orderform";
+import OrderCollection from "./features/products/OrderCollection";
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,6 +20,8 @@ function App() {
           <Route path="/" element={<AppLayOut />}>
             <Route index element={<Home />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/orderForm" element={<OrderForm/>}/>
+            {/* <Route path="/orderCollection" element={<OrderCollection/>}/> */}
           </Route>
         </Routes>
       </QueryClientProvider>
