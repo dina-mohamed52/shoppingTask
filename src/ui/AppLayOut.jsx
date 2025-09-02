@@ -4,11 +4,11 @@ import Footer from "./Footer"
 
 function AppLayOut() {
     return (
-        <div className="flex flex-col min-h-screen" >
+        <div className="flex flex-col min-h-screen bg-gray-50" >
             <header>
                 <Header cartItemCount={5}/>
             </header>
-            <main className="flex-grow pb-28" >
+            <main className="flex-grow" >
                 <Outlet/>
             </main>
             <Footer/>

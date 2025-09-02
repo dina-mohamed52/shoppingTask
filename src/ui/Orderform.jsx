@@ -1,46 +1,96 @@
 import { useState } from "react";
 
-export default function OrderForm() {
+const EGYPT_GOVS = [
+  "القاهرة",
+  "الجيزة",
+  "الإسكندرية",
+  "الشرقية",
+  "الدقهلية",
+  "البحيرة",
+  "المنيا",
+  "القليوبية",
+  "سوهاج",
+  "الغربية",
+  "أسيوط",
+  "الفيوم",
+  "كفر الشيخ",
+  "قنا",
+  "بني سويف",
+  "أسوان",
+  "دمياط",
+  "الإسماعيلية",
+  "الأقصر",
+  "بورسعيد",
+  "السويس",
+  "مطروح",
+  "شمال سيناء",
+  "جنوب سيناء",
+  "الوادي الجديد",
+  "البحر الأحمر",
+];
+
+export default function OrderForm({ order, selectedOffer,formRef}) {
+  const safeOrder = Array.isArray(order) ? order : [];
   const [form, setForm] = useState({
     name: "",
-    order: "",
     phone: "",
     address: "",
+    governorate: "",
   });
-
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleChange = (e) =>
+  const shipping = 50;
+  const orderTotal = selectedOffer?.price || 0;
+  const total = orderTotal + shipping;
+
+  const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    setErrors((err) => ({ ...err, [e.target.name]: "" }));
+  };
+
+  // ✅ فاليديشن
+  const validate = () => {
+    const newErrors = {};
+    if (!form.name.trim()) newErrors.name = "⚠️ الاسم مطلوب";
+    if (!/^01[0-9]{9}$/.test(form.phone.trim()))
+      newErrors.phone = "⚠️ رقم الموبايل غير صحيح (11 رقم ويبدأ بـ 01)";
+    if (!form.address.trim()) newErrors.address = "⚠️ العنوان مطلوب";
+    if (!form.governorate.trim()) newErrors.governorate = "⚠️ اختر المحافظة";
+    return newErrors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setMessage("");
 
-    if (
-      !form.name.trim() ||
-      !form.order.trim() ||
-      !form.phone.trim() ||
-      !form.address.trim()
-    ) {
-      setMessage("❌ رجاءً عبّي كل الحقول");
-      setLoading(false);
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
+    setLoading(true);
+
+    const orderDetails = safeOrder
+      .filter((item) => item?.name)
+      .map((item) => `${item.name} - ${item.size} - ${item.color}`)
+      .join(" | ");
+
     const payload = {
-      values: [
-        [
-          form.name.trim(),
-          form.order.trim(),
-          form.phone.trim(),
-          form.address.trim(),
-          new Date().toLocaleString(),
-        ],
-      ],
-    };
+  values: [
+    [
+      form.name.trim(),                  // الاسم
+      form.phone.trim(),                 // الرقم
+      form.address.trim(),               // العنوان
+      form.governorate,                  // المحافظة
+      orderDetails,                      // الأوردر
+      `${total} ج`                       // الحساب (الإجمالي الكلي)
+    ],
+  ],
+};
+
 
     try {
       const res = await fetch(
@@ -56,21 +106,11 @@ export default function OrderForm() {
         }
       );
 
-      const text = await res.text();
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch {
-        data = text;
-      }
-
       if (res.ok) {
         setMessage("✅ تم إرسال الطلب بنجاح!");
-        setForm({ name: "", order: "", phone: "", address: "" });
+        setForm({ name: "", phone: "", address: "", governorate: "" });
       } else {
-        const serverMsg =
-          typeof data === "string" ? data : data?.error || JSON.stringify(data);
-        setMessage(`❌ خطأ: ${res.status} — ${serverMsg}`);
+        setMessage("❌ حصل خطأ في الإرسال");
       }
     } catch (err) {
       setMessage("❌ حدث خطأ في الشبكة: " + err.message);
@@ -80,59 +120,121 @@ export default function OrderForm() {
   };
 
   return (
-    <div className="flex justify-center items-center my-12">
+    <div ref={formRef} className="flex justify-center items-center my-12">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md border border-gray-200"
+        className="bg-gray-900 shadow-xl rounded-2xl p-8 w-full max-w-2xl border border-yellow-400 text-yellow-300"
       >
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+        <h2 className="text-2xl font-bold text-center mb-6">
           📝 إرسل طلبك الآن
         </h2>
 
+        {/* تفاصيل الأوردر */}
+        <div className="bg-gray-800 rounded-xl p-4 mb-6">
+          <h3 className="font-semibold mb-3 text-yellow-400">
+            🛒 تفاصيل الأوردر:
+          </h3>
+          {safeOrder.length > 0 ? (
+            <>
+              <ul className="list-disc list-inside space-y-1 text-gray-200">
+                {safeOrder
+                  .filter((o) => o?.name)
+                  .map((item) => (
+                    <li key={item.id}>
+                      {item.name} —  مقاس {item.size} — {item.color}
+                    </li>
+                  ))}
+              </ul>
+              <p className="mt-2 text-sm text-gray-400">
+                📦 عدد القطع: {safeOrder.filter((o) => o?.name).length}
+              </p>
+            </>
+          ) : (
+            <p className="text-gray-400 italic">
+              لا يوجد منتجات في الطلب حالياً
+            </p>
+          )}
+        </div>
+
         <div className="flex flex-col gap-4">
-          <input
-            name="name"
-            placeholder="الاسم"
-            value={form.name}
-            onChange={handleChange}
-            required
-            className="p-3 rounded-xl border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
-          />
-          <input
-            name="order"
-            placeholder="الأوردر"
-            value={form.order}
-            onChange={handleChange}
-            required
-            className="p-3 rounded-xl border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
-          />
-          <input
-            name="phone"
-            placeholder="التليفون"
-            value={form.phone}
-            onChange={handleChange}
-            required
-            className="p-3 rounded-xl border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
-          />
-          <input
-            name="address"
-            placeholder="العنوان"
-            value={form.address}
-            onChange={handleChange}
-            required
-            className="p-3 rounded-xl border border-gray-300 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
-          />
+          <div>
+            <input
+              name="name"
+              placeholder="الاسم"
+              value={form.name}
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
+            />
+            {errors.name && (
+              <p className="text-red-400 text-sm mt-1">{errors.name}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              name="phone"
+              placeholder="التليفون"
+              value={form.phone}
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
+            />
+            {errors.phone && (
+              <p className="text-red-400 text-sm mt-1">{errors.phone}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              name="address"
+              placeholder="العنوان بالتفصيل (اسم الشارع ,رقم العماره, علامه مميزه)"
+              value={form.address}
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
+            />
+            {errors.address && (
+              <p className="text-red-400 text-sm mt-1">{errors.address}</p>
+            )}
+          </div>
+
+          <div>
+            <select
+              name="governorate"
+              value={form.governorate}
+              onChange={handleChange}
+              className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all"
+            >
+              <option value="">اختر المحافظة</option>
+              {EGYPT_GOVS.map((gov) => (
+                <option key={gov} value={gov}>
+                  {gov}
+                </option>
+              ))}
+            </select>
+            {errors.governorate && (
+              <p className="text-red-400 text-sm mt-1">{errors.governorate}</p>
+            )}
+          </div>
+
+          {/* ملخص الطلب */}
+          <div className="bg-gray-800 p-4 rounded-xl font-medium space-y-1">
+            <p>🛍️ سعر المنتجات: {orderTotal} ج</p>
+            <p>🚚 الشحن: {shipping} ج</p>
+            <hr className="border-gray-700" />
+            <p className="text-lg font-bold text-yellow-400">
+              💰 الإجمالي الكلي: {total} ج
+            </p>
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-xl font-semibold shadow-md transition-all duration-300 ${
+            className={`w-full py-3 rounded-xl font-semibold shadow-md transform transition-all duration-300 ${
               loading
-                ? "bg-gray-400 text-white cursor-not-allowed"
-                : "bg-gray-900 text-yellow-400 hover:bg-gray-800"
+                ? "bg-gray-600 text-gray-300 cursor-not-allowed animate-pulse"
+                : "bg-yellow-400 text-gray-900 hover:scale-105 hover:bg-yellow-300 hover:animate-bounce"
             }`}
           >
-            {loading ? "⏳ جاري الإرسال..." : "🚀 إرسال الطلب"}
+            {loading ? "⏳ جاري الإرسال..." : "🚀 تأكيد الطلب الآن"}
           </button>
 
           {message && (
