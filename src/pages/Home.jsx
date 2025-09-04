@@ -18,6 +18,8 @@ function Home() {
       <div className="container mx-auto px-4 mt-4 ">
         <CustomCarousel />
         <div className=" text-yellow-400  p-4 mt-16 ">
+
+           <ProductList />
           <Header1st />
           <Offers setSelectedOffer={setSelectedOffer} />
           {selectedOffer && (
@@ -30,7 +32,7 @@ function Home() {
         </div>
       </div>
       <div>
-        <ProductList />
+       
         <OfferCountdown/>
         <PurchaseNotifications/>
         <div className="p-6">

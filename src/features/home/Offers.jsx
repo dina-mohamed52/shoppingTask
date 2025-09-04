@@ -15,8 +15,8 @@ function Offers({setSelectedOffer}) {
       {/* تاج "عروضنا" */}
       <div className="absolute sm:-top-0  -top-2 sm:-left-1 -left-4 bg-yellow-400
       
-      text-gray-900 text-3xl sm:text-4xl font-extrabold px-8 py-3 rounded-xl shadow-2xl transform -rotate-12 z-20">
-        عروضنا
+      text-gray-900 text-2xl sm:text-3xl font-extrabold px-8 py-3 rounded-xl shadow-2xl transform -rotate-12 z-20">
+        اختر عرضك 😉
       </div>
 
       {/* الكروت */}
