@@ -38,7 +38,7 @@ export default function PurchaseNotifications() {
       });
 
       setTimeout(() => setNotification(null), 4000);
-    }, 90000);
+    }, 12000);
 
     return () => clearInterval(interval);
   }, []);
