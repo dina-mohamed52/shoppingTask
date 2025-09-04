@@ -1,11 +1,9 @@
 import { useState, useMemo } from "react";
 import { Data } from "../../data/Data";
 
-
-function OrderCollection({ selectedOffer, setOrder ,formRef }) {
+function OrderCollection({ selectedOffer, setOrder, formRef }) {
   const count = selectedOffer?.value || 0;
 
- 
   const initialPieces = useMemo(() => {
     return Array.from({ length: count }, (_, i) => ({
       id: i + 1,
@@ -16,6 +14,36 @@ function OrderCollection({ selectedOffer, setOrder ,formRef }) {
   }, [count]);
 
   const [pieces, setPieces] = useState(initialPieces);
+
+  const getAvailableSizes = (productName) => {
+    const product = Data.find((item) => item.name === productName);
+
+    // كل المقاسات
+    const allSizes = [
+      "0-1",
+      "1-2",
+      "2-4",
+      "4-6",
+      "6-8",
+      "8-10",
+      "10-12",
+      "12-14",
+    ];
+
+    if (!product) return allSizes;
+
+    if (product.id === 8) {
+      // يبدأ من 2-4
+      return allSizes.slice(2);
+    }
+
+    if (product.id === 11) {
+      // لحد 10-12
+      return allSizes.slice(0, 7);
+    }
+
+    return allSizes;
+  };
 
   // ✅ لما الـ count يتغير (عرض جديد) نعيد تهيئة القطع
   if (pieces.length !== count) {
@@ -94,9 +122,9 @@ function OrderCollection({ selectedOffer, setOrder ,formRef }) {
                       className="w-full bg-gray-800 mb-2 p-2 rounded-lg border border-gray-300"
                     >
                       <option value="">اختاري المقاس</option>
-                      {Array.from({ length: 15 }, (_, i) => (
-                        <option key={i} value={i}>
-                          مقاس {i}
+                      {getAvailableSizes(piece.name).map((size, i) => (
+                        <option key={i} value={size}>
+                          مقاس {size}
                         </option>
                       ))}
                     </select>
@@ -121,19 +149,18 @@ function OrderCollection({ selectedOffer, setOrder ,formRef }) {
               })}
             </div>
             <div className="flex justify-center items-center">
-
-            <button
-              type="submit"
-              className="w-fit mt-6 py-5 px-10 rounded-2xl font-bold shadow-lg 
+              <button
+                type="submit"
+                className="w-fit mt-6 py-5 px-10 rounded-2xl font-bold shadow-lg 
               bg-gradient-to-r from-yellow-400 via-gray-600 to-gray-800 
               text-yellow-400 tracking-wide
               hover:from-gray-700 hover:to-gray-800 
               hover:scale-105 hover:shadow-yellow-400/30 
               active:scale-95 transition-all duration-300"
               >
-              🚀 تأكيد الطلب
-            </button>
-                </div>
+                🚀 تأكيد الطلب
+              </button>
+            </div>
           </>
         )}
       </form>

@@ -3,8 +3,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Data } from "../data/Data";
 import { AlertCircle } from "lucide-react";
 
-const names = ["تقي", "سارة", "محمود", "ليلى", "يوسف", "مريم", "علي"];
-const cities = ["قنا", "القاهرة", "الجيزة", "الإسكندرية", "المنصورة", "سوهاج"];
+const names = [
+  "تقي", "سارة", "محمود", "ليلى", "يوسف", "مريم", "علي", 
+  "أحمد", "عمر", "ندى", "هاجر", "سلمى", "ملك", "رحمة", 
+  "زين", "آدم", "نور", "جميلة", "إسراء", "أميرة", "خالد", 
+  "إبراهيم", "ياسمين", "فاطمة", "حسن", "عائشة", "كارما"
+];
+
+const cities = [
+  "قنا", "القاهرة", "الجيزة", "الإسكندرية", "المنصورة", "سوهاج", 
+  "أسيوط", "طنطا", "بورسعيد", "الفيوم", "دمياط", "بني سويف", 
+  "الأقصر", "أسوان", "كفر الشيخ", "المحلة", "حلوان", "شبين الكوم", 
+  "مرسى مطروح", "العريش"
+];
+;
 const offers = ["4 قطع", "6 قطع", "8 قطع", "12 قطعة"];
 
 export default function PurchaseNotifications() {
@@ -26,7 +38,7 @@ export default function PurchaseNotifications() {
       });
 
       setTimeout(() => setNotification(null), 4000);
-    }, 6000);
+    }, 9000);
 
     return () => clearInterval(interval);
   }, []);
