@@ -17,7 +17,7 @@ function Home() {
     <>
       <div className="container mx-auto px-4 mt-4 ">
         <CustomCarousel />
-        <div className=" text-yellow-400  p-4 mt-16 ">
+        <div className=" text-yellow-400  p-4   ">
 
            <ProductList />
           <Header1st />
