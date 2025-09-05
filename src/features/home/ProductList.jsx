@@ -21,7 +21,7 @@ function ProductList() {
   };
 
   return (
-    <div className="container mx-auto sm:px-6 px-2 py-10 w-full mt-12 mb-6">
+    <div className="container mx-auto sm:px-6 px-2 py-10  w-full mt-12 mb-6">
   <h1 className="sm:text-3xl text-xl font-bold text-center shadow-md sm:p-4 p-6 rounded-full border border-gray-300 text-gray-800 mb-10 tracking-wide">
     {t("productList.title")}
     <span className="block text-yellow-600 mt-2">
