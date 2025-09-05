@@ -1,6 +1,10 @@
+import { useTranslation } from "react-i18next";
+
 function ProductCard({ product, onPreview }) {
+  const { t } = useTranslation();
+
   return (
-    <div className="bg-white border border-gray-300   rounded-2xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-lg duration-300 flex flex-col">
+    <div className="bg-white border border-gray-300 rounded-2xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-lg duration-300 flex flex-col">
       {/* صورة المنتج */}
       <div className="relative group bg-gray-50">
         <img
@@ -19,18 +23,12 @@ function ProductCard({ product, onPreview }) {
 
       {/* تفاصيل المنتج */}
       <div className="p-4 flex flex-col flex-grow">
-        {/* <h2 className="text-lg font-semibold flex  justify-center text-gray-800 mb-2 line-clamp-1">
-          {product.name}
-        </h2> */}
-
-      
-
         {/* زر معاينة الصور */}
         <button
           onClick={() => onPreview(product)}
-          className="mt-auto w-full py-2.5 px-4 text-yellow-400 hover:text-gray-800 rounded-xl bg-gray-900  font-semibold shadow-sm hover:bg-yellow-400 transition-all duration-300"
+          className="mt-auto w-full py-2.5 px-4 text-yellow-400 hover:text-gray-800 rounded-xl bg-gray-900 font-semibold shadow-sm hover:bg-yellow-400 transition-all duration-300"
         >
-          معاينة الصور
+          {t("productCard.preview")}
         </button>
       </div>
     </div>

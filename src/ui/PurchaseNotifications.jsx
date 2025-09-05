@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Data } from "../data/Data";
 import { AlertCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
+
 
 const names = [
   "تقي", "سارة", "محمود", "ليلى", "يوسف", "مريم", "علي", 
@@ -16,11 +18,13 @@ const cities = [
   "الأقصر", "أسوان", "كفر الشيخ", "المحلة", "حلوان", "شبين الكوم", 
   "مرسى مطروح", "العريش"
 ];
-;
-const offers = ["4 قطع", "6 قطع", "8 قطع", "12 قطعة"];
+
+const offers = ["4", "6", "8", "12"];
 
 export default function PurchaseNotifications() {
   const [notification, setNotification] = useState(null);
+  const { t,i18n } = useTranslation();
+  const lang =i18n.language
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,7 +42,7 @@ export default function PurchaseNotifications() {
       });
 
       setTimeout(() => setNotification(null), 4000);
-    }, 12000);
+    }, 11000);
 
     return () => clearInterval(interval);
   }, []);
@@ -65,15 +69,17 @@ export default function PurchaseNotifications() {
             {/* النصوص */}
             <div className="flex flex-col text-xs sm:text-sm md:text-base text-center sm:text-left">
               <span className="text-gray-200 font-medium">
-                {notification.name} من {notification.city}
+                {t("purchaseNotifications.buyer", {
+                  name: notification.name,
+                  city: notification.city,
+                })}
               </span>
 
-              <span className="text-base text-gray-200 font-bold flex items-center gap-1">
-               
+              <span className={`${lang==="en"? "text-xs":"text-base"} text-gray-200 font-bold flex items-center gap-1`}>
                 <span className="text-yellow-400">
-                  باقة {notification.offer}
+                  {t("purchaseNotifications.offer", { offer: notification.offer })}
                 </span>
-                 طلب الآن{" "}
+                {t("purchaseNotifications.orderedNow")}
                 <AlertCircle className="w-5 h-5 text-yellow-400" />
               </span>
             </div>

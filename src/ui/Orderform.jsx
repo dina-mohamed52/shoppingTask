@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const EGYPT_GOVS = [
   "القاهرة",
@@ -30,6 +31,7 @@ const EGYPT_GOVS = [
 ];
 
 export default function OrderForm({ order, selectedOffer, formRef }) {
+   const { t } = useTranslation();
   const safeOrder = Array.isArray(order) ? order : [];
   const [form, setForm] = useState({
     name: "",
@@ -141,7 +143,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   };
 
   return (
-    <div
+       <div
       ref={formRef}
       className="flex justify-center items-center my-8 px-4 sm:px-0"
     >
@@ -150,13 +152,13 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         className="bg-gray-900 shadow-xl rounded-2xl p-6 sm:p-8 w-full max-w-md sm:max-w-2xl border border-yellow-400 text-yellow-300"
       >
         <h2 className="text-xl sm:text-2xl font-bold text-center mb-6">
-          📝 إرسل طلبك الآن
+          {t("orderForm.title")}
         </h2>
 
         {/* تفاصيل الأوردر */}
         <div className="bg-gray-800 rounded-xl p-4 mb-6">
           <h3 className="font-semibold mb-3 text-yellow-400">
-            🛒 تفاصيل الأوردر:
+            {t("orderForm.orderDetails")}
           </h3>
           {safeOrder.length > 0 ? (
             <>
@@ -165,17 +167,18 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
                   .filter((o) => o?.name)
                   .map((item) => (
                     <li key={item.id}>
-                      {item.name} — مقاس {item.size} — {item.color}
+                      {item.name} — {t("orderForm.size")} {item.size} —{" "}
+                      {item.color}
                     </li>
                   ))}
               </ul>
               <p className="mt-2 text-xs sm:text-sm text-gray-400">
-                📦 عدد القطع: {safeOrder.filter((o) => o?.name).length}
+                {t("orderForm.piecesCount", { count: safeOrder.length })}
               </p>
             </>
           ) : (
             <p className="text-gray-400 italic text-sm sm:text-base">
-              لا يوجد منتجات في الطلب حالياً
+              {t("orderForm.emptyOrder")}
             </p>
           )}
         </div>
@@ -185,14 +188,14 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           <div>
             <input
               name="name"
-              placeholder="الاسم"
+              placeholder={t("orderForm.placeholders.name")}
               value={form.name}
               onChange={handleChange}
               className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all text-sm sm:text-base"
             />
             {errors.name && (
               <p className="text-red-400 text-xs sm:text-sm mt-1">
-                {errors.name}
+                {t("orderForm.errors.name")}
               </p>
             )}
           </div>
@@ -201,14 +204,14 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           <div>
             <input
               name="phone"
-              placeholder="رقم التليفون الأساسي"
+              placeholder={t("orderForm.placeholders.phone")}
               value={form.phone}
               onChange={handleChange}
               className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all text-sm sm:text-base"
             />
             {errors.phone && (
               <p className="text-red-400 text-xs sm:text-sm mt-1">
-                {errors.phone}
+                {t("orderForm.errors.phone")}
               </p>
             )}
           </div>
@@ -217,14 +220,14 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           <div>
             <input
               name="phone2"
-              placeholder="رقم تليفون آخر (اختياري)"
+              placeholder={t("orderForm.placeholders.phone2")}
               value={form.phone2}
               onChange={handleChange}
               className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all text-sm sm:text-base"
             />
             {errors.phone2 && (
               <p className="text-red-400 text-xs sm:text-sm mt-1">
-                {errors.phone2}
+                {t("orderForm.errors.phone2")}
               </p>
             )}
           </div>
@@ -233,14 +236,14 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           <div>
             <input
               name="address"
-              placeholder="العنوان بالتفصيل (اسم الشارع، رقم العمارة، علامة مميزة)"
+              placeholder={t("orderForm.placeholders.address")}
               value={form.address}
               onChange={handleChange}
               className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all text-sm sm:text-base"
             />
             {errors.address && (
               <p className="text-red-400 text-xs sm:text-sm mt-1">
-                {errors.address}
+                {t("orderForm.errors.address")}
               </p>
             )}
           </div>
@@ -253,7 +256,9 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
               onChange={handleChange}
               className="w-full p-3 rounded-xl border border-gray-600 bg-gray-800 text-gray-200 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400 outline-none transition-all text-sm sm:text-base"
             >
-              <option value="">اختر المحافظة</option>
+              <option value="">
+                {t("orderForm.placeholders.governorate")}
+              </option>
               {EGYPT_GOVS.map((gov) => (
                 <option key={gov} value={gov}>
                   {gov}
@@ -262,18 +267,18 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
             </select>
             {errors.governorate && (
               <p className="text-red-400 text-xs sm:text-sm mt-1">
-                {errors.governorate}
+                {t("orderForm.errors.governorate")}
               </p>
             )}
           </div>
 
           {/* ملخص الطلب */}
           <div className="bg-gray-800 p-4 rounded-xl font-medium space-y-1 text-sm sm:text-base">
-            <p>🛍️ سعر المنتجات: {orderTotal} ج</p>
-            <p>🚚 الشحن: {shipping} ج</p>
+            <p>{t("orderForm.summary.products", { price: orderTotal })}</p>
+            <p>{t("orderForm.summary.shipping", { price: shipping })}</p>
             <hr className="border-gray-700" />
             <p className="text-lg font-bold text-yellow-400">
-              💰 الإجمالي الكلي: {total} ج
+              {t("orderForm.summary.total", { price: total })}
             </p>
           </div>
 
@@ -287,7 +292,9 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
                 : "bg-yellow-400 text-gray-900 hover:scale-105 hover:bg-yellow-300 hover:animate-bounce"
             }`}
           >
-            {loading ? "⏳ جاري الإرسال..." : "🚀 تأكيد الطلب الآن"}
+            {loading
+              ? t("orderForm.buttons.loading")
+              : t("orderForm.buttons.submit")}
           </button>
 
           {/* رسالة الحالة */}
@@ -299,7 +306,11 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
                   : "bg-red-100 text-red-600"
               }`}
             >
-              {message}
+              {message.includes("✅")
+                ? t("orderForm.messages.success")
+                : message.includes("❌")
+                ? t("orderForm.messages.error")
+                : message}
             </div>
           )}
         </div>
