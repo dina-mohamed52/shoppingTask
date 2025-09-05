@@ -10,29 +10,30 @@ const images = [
 
 const CustomCarousel = () => {
   return (
-    <div className="w-full max-w-[95vw] mx-auto relative">
-      <Carousel autoplay dotPosition="bottom" effect="fade" className="w-full">
-        {images.map((image, index) => (
-          <div key={index} className="flex justify-center items-center">
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="w-full max-h-[70vh] sm:max-h-[500px] object-cover rounded-xl shadow-lg"
-            />
-          </div>
-        ))}
-      </Carousel>
+    <div className="w-full max-w-[95vw] mx-auto relative mt-16 sm:mt-6">
+  <Carousel autoplay dotPosition="bottom" effect="fade" className="w-full">
+    {images.map((image, index) => (
+      <div key={index} className="flex justify-center items-center">
+        <img
+          src={image.src}
+          alt={image.alt}
+          className="w-full max-h-[70vh] sm:max-h-[500px] object-cover rounded-xl shadow-lg"
+        />
+      </div>
+    ))}
+  </Carousel>
 
-      {/* dots position fix */}
-      <style jsx global>{`
-        .ant-carousel .slick-dots-bottom {
-          bottom: 10px; /* خليها فوق شويه */
-        }
-        .ant-carousel .slick-dots {
-          margin: 0;
-        }
-      `}</style>
-    </div>
+  {/* dots position fix */}
+  <style jsx global>{`
+    .ant-carousel .slick-dots-bottom {
+      bottom: 10px; /* خليها فوق شويه */
+    }
+    .ant-carousel .slick-dots {
+      margin: 0;
+    }
+  `}</style>
+</div>
+
   );
 };
 
