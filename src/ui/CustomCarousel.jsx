@@ -10,7 +10,7 @@ const images = [
 
 const CustomCarousel = () => {
   return (
-    <div className="w-full max-w-[95vw] mx-auto relative mt-16 sm:mt-6">
+    <div className="w-full max-w-[95vw] mx-auto relative mt-24 sm:mt-6">
   <Carousel autoplay dotPosition="bottom" effect="fade" className="w-full">
     {images.map((image, index) => (
       <div key={index} className="flex justify-center items-center">
