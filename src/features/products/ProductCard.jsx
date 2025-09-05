@@ -4,13 +4,13 @@ function ProductCard({ product, onPreview }) {
   const { t } = useTranslation();
 
   return (
-    <div className="bg-white border border-gray-300 rounded-2xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-lg duration-300 flex flex-col">
+    <div className="bg-white border  w-full   border-gray-300 rounded-2xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-lg duration-300 flex flex-col">
       {/* صورة المنتج */}
       <div className="relative group bg-gray-50">
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-[19rem] object-cover p-4 transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-[19rem] object-cover p-1 transition-transform duration-300 group-hover:scale-105"
         />
 
         {/* تاج (مثلاً New أو Sale) */}
