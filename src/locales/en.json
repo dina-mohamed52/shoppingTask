@@ -1,0 +1,197 @@
+{
+    "footer": {
+        "copy": "© 2025 Baby Style. All rights reserved.",
+        "designBy": "Designed & Developed by:",
+        "developerName": "Dina Mohamed"
+    },
+    "offers": {
+        "title": "Choose Your Offer 😉",
+        "q4": "4 pieces",
+        "q6": "6 pieces",
+        "q8": "8 pieces",
+        "q12": "Dozen (12 pieces)",
+        "mostWanted": "Most Wanted",
+        "bestDeal": "Best Deal"
+    },
+    "offer2": {
+        "title": "⏳ Our sweet offer will end in",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "seconds": "Seconds",
+        "viewers": "👀 {{count}} people are viewing this offer now"
+    },
+    "productList": {
+        "title": "❄️ Cozy adventures start here!",
+        "subtitle": "Discover the cutest winter leggings for little feet full of fun and play!",
+        "description": "Vibrant colors ✨, lasting comfort, and quality that keeps them ready for any adventure."
+    },
+    "orderCollection": {
+        "step": "✨ Step 2: Choose your products ({{count}} pieces)",
+        "pieceNumber": "Piece No. {{id}}",
+        "selectProduct": "Select product",
+        "selectSize": "Select size",
+        "selectColor": "Select color",
+        "size": "Size {{size}}",
+        "confirmOrder": "Confirm Order",
+        "alert": "⚠️ You must select product + size + color for all pieces before confirming the order"
+    },
+    "productBenefits": {
+        "heading": "✨😉 Why choose our products?",
+        "feature1": {
+            "title": "Comfortable and practical fabric",
+            "desc": "Made from soft cotton with high quality 👕, perfect for daily movement, studying, and playing."
+        },
+        "feature2": {
+            "title": "Full comfort for kids",
+            "desc": "A design that ensures freedom and fun 😀, without any feeling of tightness or heaviness."
+        },
+        "feature3": {
+            "title": "Preview before receiving",
+            "desc": "Try the product yourself before paying ✨, to make sure of size and quality 100%."
+        },
+        "note": "🎨 Available in a variety of colors and sizes. Try it before receiving to ensure quality and size 💯"
+    },
+    "productCard": {
+        "preview": "Preview Images"
+    },
+    "header": {
+        "title": "❄️ Winter Warmth for Kids!",
+        "desc1": "Discover the most beautiful winter tights made from soft, comfy cotton ✨",
+        "highlight": "Gentle on children's skin",
+        "desc2": "Perfect for all ages, from newborns to 14 years old.",
+        "desc3": "😉 Vibrant colors, lasting comfort, and quality that makes every winter adventure full of joy and warmth."
+    },
+    "orderForm": {
+        "title": "📝 Send Your Order Now",
+        "orderDetails": "🛒 Order Details:",
+        "emptyOrder": "No products in the order yet",
+        "piecesCount": "📦 Number of items: {{count}}",
+        "size": "size",
+        "placeholders": {
+            "name": "Full Name",
+            "phone": "Primary Phone Number",
+            "phone2": "Alternative Phone (optional)",
+            "address": "Full Address (Street, Building, Landmark)",
+            "governorate": "Select Governorate"
+        },
+        "errors": {
+            "name": "⚠️ Name is required",
+            "phone": "⚠️ Invalid phone number (must be 11 digits starting with 01)",
+            "phone2": "⚠️ Invalid secondary phone number",
+            "address": "⚠️ Address is required",
+            "governorate": "⚠️ Please select a governorate"
+        },
+        "summary": {
+            "products": "🛍️ Products Price: {{price}} EGP",
+            "shipping": "🚚 Shipping: {{price}} EGP",
+            "total": "💰 Total: {{price}} EGP"
+        },
+        "buttons": {
+            "submit": "🚀 Confirm Order Now",
+            "loading": "⏳ Sending..."
+        },
+        "messages": {
+            "success": "✅ Order sent successfully!",
+            "error": "❌ An error occurred while sending",
+            "network": "❌ Network error: {{error}}"
+        }
+    },
+    "products": {
+        "1": {
+            "name": "Striped Bunny Tights",
+            "colors": [
+                "White",
+                "Black",
+                "Gray",
+                "Pink"
+            ]
+        },
+        "2": {
+            "name": "Deer Tights",
+            "colors": [
+                "White",
+                "Black",
+                "Gray"
+            ]
+        },
+        "3": {
+            "name": "Teddy Bear Tights",
+            "colors": [
+                "Gray",
+                "White",
+                "Black",
+                "Navy",
+                "Pink"
+            ]
+        },
+        "4": {
+            "name": "Cat Tights",
+            "colors": [
+                "White",
+                "Black",
+                "Gray",
+                "Pink"
+            ]
+        },
+        "5": {
+            "name": "Cat Pattern Tights",
+            "colors": [
+                "Baby Blue",
+                "Pink"
+            ]
+        },
+        "6": {
+            "name": "Plain Tights with Bow",
+            "colors": [
+                "White",
+                "Black",
+                "Gray",
+                "Pink"
+            ]
+        },
+        "7": {
+            "name": "Mickey Tights",
+            "colors": [
+                "Black"
+            ]
+        },
+        "8": {
+            "name": "Plain Tights",
+            "colors": [
+                "White",
+                "Black",
+                "Gray",
+                "Navy",
+                "Beige"
+            ]
+        },
+        "9": {
+            "name": "Autumn Jacquard Tights",
+            "colors": [
+                "White",
+                "Black",
+                "Pink"
+            ]
+        },
+        "10": {
+            "name": "Autumn Bow Tights",
+            "colors": [
+                "White",
+                "Pink"
+            ]
+        },
+        "11": {
+            "name": "Autumn Double Opaque Leggings",
+            "colors": [
+                "White",
+                "Black",
+                "Pink"
+            ]
+        }
+    },
+    "purchaseNotifications": {
+        "buyer": "{{name}} from {{city}}",
+        "offer": "Package of {{offer}} pieces",
+        "orderedNow": "just ordered"
+    }
+}

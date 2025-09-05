@@ -1,7 +1,9 @@
 import { useState, useMemo } from "react";
 import { Data } from "../../data/Data";
+import { useTranslation } from "react-i18next";
 
 function OrderCollection({ selectedOffer, setOrder, formRef }) {
+  const { t } = useTranslation();
   const count = selectedOffer?.value || 0;
 
   const initialPieces = useMemo(() => {
@@ -18,7 +20,6 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
   const getAvailableSizes = (productName) => {
     const product = Data.find((item) => item.name === productName);
 
-    // كل المقاسات
     const allSizes = [
       "0-1",
       "1-2",
@@ -33,19 +34,16 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
     if (!product) return allSizes;
 
     if (product.id === 8) {
-      // يبدأ من 2-4
       return allSizes.slice(2);
     }
 
     if (product.id === 11) {
-      // لحد 10-12
       return allSizes.slice(0, 7);
     }
 
     return allSizes;
   };
 
-  // ✅ لما الـ count يتغير (عرض جديد) نعيد تهيئة القطع
   if (pieces.length !== count) {
     setPieces(initialPieces);
   }
@@ -61,15 +59,13 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // لو أي قطعة ناقصة حاجة
     const invalid = pieces.some((p) => !p.name || !p.size || !p.color);
 
     if (invalid) {
-      alert("⚠️ لازم تختاري المنتج + المقاس + اللون لكل القطع قبل تأكيد الطلب");
+      alert(t("orderCollection.alert"));
       return;
     }
 
-    // ✅ هنا بيعمل Scroll للفورم
     formRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -84,7 +80,7 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
         {pieces.length > 0 && (
           <>
             <h1 className="text-center text-xl font-bold mb-6 text-yellow-400">
-              ✨ الخطوة 2: اختاري منتجاتك ({pieces.length} قطع)
+              {t("orderCollection.step", { count: pieces.length })}
             </h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
@@ -96,7 +92,7 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                     className="bg-gray-800 p-6 rounded-xl border border-gray-300"
                   >
                     <h2 className="font-bold text-center mb-2">
-                      القطعة رقم {piece.id}
+                      {t("orderCollection.pieceNumber", { id: piece.id })}
                     </h2>
 
                     <select
@@ -106,7 +102,7 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                       }
                       className="w-full bg-gray-800 mb-2 p-2 rounded-lg border border-gray-300"
                     >
-                      <option value="">اختاري الكولون</option>
+                      <option value="">{t("orderCollection.selectProduct")}</option>
                       {Data.map((product) => (
                         <option key={product.id} value={product.name}>
                           {product.name}
@@ -121,10 +117,10 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                       }
                       className="w-full bg-gray-800 mb-2 p-2 rounded-lg border border-gray-300"
                     >
-                      <option value="">اختاري المقاس</option>
+                      <option value="">{t("orderCollection.selectSize")}</option>
                       {getAvailableSizes(piece.name).map((size, i) => (
                         <option key={i} value={size}>
-                          مقاس {size}
+                          {t("orderCollection.size", { size })}
                         </option>
                       ))}
                     </select>
@@ -137,7 +133,7 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                       disabled={!piece.name}
                       className="w-full p-2 bg-gray-800 rounded-lg border border-gray-300"
                     >
-                      <option value="">اختاري اللون</option>
+                      <option value="">{t("orderCollection.selectColor")}</option>
                       {colors.map((c, i) => (
                         <option key={i} value={c}>
                           {c}
@@ -158,7 +154,7 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
               hover:scale-105 hover:shadow-yellow-400/30 
               active:scale-95 transition-all duration-300"
               >
-                🚀 تأكيد الطلب
+                🚀 {t("orderCollection.confirmOrder")}
               </button>
             </div>
           </>

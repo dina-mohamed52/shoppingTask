@@ -1,42 +1,34 @@
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import { addToCart } from "../cart/cartSlice";
 import { Data } from "../../data/Data";
 import ProductCard from "../products/ProductCard";
 import { useState } from "react";
 import ProductModal from "../../ui/ProductModal";
+import { useTranslation } from "react-i18next";
 
 function ProductList() {
-//   const dispatch = useDispatch();
-const [open, setOpen] = useState(false);
-const [selectedProduct,setSelectedProduct] = useState(null);
-
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handlePreview = (product) => {
-  // هجمع كل الصور اللي في productColors
-  const allUrls = product.productColors.map((c) => c.img);
+    const allUrls = product.productColors.map((c) => c.img);
 
-  console.log("allUrls", allUrls);
+    setSelectedProduct({
+      ...product,
+      previewImages: allUrls,
+    });
 
-  // هخزن البرودكت + الصور
-  setSelectedProduct({
-    ...product,
-    previewImages: allUrls,
-  });
-
-  setOpen(true);
-};
-
+    setOpen(true);
+  };
 
   return (
     <div className="container mx-auto px-6 py-10 w-[95%] mt-12 mb-6">
       <h1 className="sm:text-3xl text-xl font-bold text-center shadow-md sm:p-4 p-9 rounded-full border border-gray-300 text-gray-800 mb-10 tracking-wide">
-        ❄️ مغامرات دافئة تبدأ من هنا!
+        {t("productList.title")}
         <span className="block text-yellow-600 mt-2">
-          اكتشفوا أجمل الكولونات الشتوية لأقدام صغيرة مليانة لعب ومرح!
+          {t("productList.subtitle")}
         </span>
         <span className="block text-gray-700 text-lg mt-1">
-          ألوان حيوية ✨، راحة تدوم، وجودة تخليهم مستعدين لأي مغامرة.
+          {t("productList.description")}
         </span>
       </h1>
 
@@ -50,17 +42,14 @@ const [selectedProduct,setSelectedProduct] = useState(null);
           />
         ))}
 
-       {selectedProduct && (
-  <ProductModal
-      open={open}
-    OnClose={() => setOpen(false)}
-    product={selectedProduct}
-  />
-)}
-
+        {selectedProduct && (
+          <ProductModal
+            open={open}
+            OnClose={() => setOpen(false)}
+            product={selectedProduct}
+          />
+        )}
       </div>
-
-      {/* </div> */}
     </div>
   );
 }
