@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 
 const offerDetails = (t) => [
-  { quantity: t("offers.q4"), price: 300, value: 4 },
-  { quantity: t("offers.q6"), price: 420, highlight: t("offers.mostWanted"), color: "yellow-400", value: 6 },
-  { quantity: t("offers.q8"), price: 560, value: 8 },
-  { quantity: t("offers.q12"), price: 810, highlight: t("offers.bestDeal"), color: "green-100", value: 12 },
+  { quantity: t("offers.q4"), price: 340, value: 4 },
+  { quantity: t("offers.q6"), price: 480, highlight: t("offers.mostWanted"), color: "yellow-400", value: 6 },
+  { quantity: t("offers.q8"), price: 600, value: 8 },
+  { quantity: t("offers.q12"), price: 840, highlight: t("offers.bestDeal"), color: "green-100", value: 12 },
 ];
 
 function Offers({ setSelectedOffer }) {
