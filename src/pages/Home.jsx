@@ -8,18 +8,31 @@ import OrderCollection from "../features/products/OrderCollection";
 import ProductBenefits from "../features/products/ProductBenifits";
 import OfferCountdown from "../ui/OfferCountDown";
 import PurchaseNotifications from "../ui/PurchaseNotifications";
+import { t } from "i18next";import { useTranslation } from "react-i18next";
 function Home() {
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [order, setOrder] = useState(null);
   const formRef = useRef(null);
-
+ const { t } = useTranslation();
   return (
     <>
       <div className="container mx-auto px-4 mt-4 ">
         <CustomCarousel />
         <div className=" text-yellow-400  p-4   ">
+          <div className="flex items-center gap-3">
+            <span className="bg-yellow-400 text-gray-700 text-xs font-bold px-2 py-1 rounded-full">
+              -42%
+            </span>
 
-           <ProductList />
+            <span className="text-3xl font-extrabold text-gray-900">
+              150 <span className="text-base">ج.م</span>
+              <span className="text-xs text-gray-400 ml-1"> / {t("pricing.perPiece")}</span>
+            </span>
+
+            <span className="text-gray-400 line-through text-lg">250 ج.م</span>
+          </div>
+
+          <ProductList />
           <Header1st />
           <Offers setSelectedOffer={setSelectedOffer} />
           {selectedOffer && (
@@ -32,15 +45,18 @@ function Home() {
         </div>
       </div>
       <div>
-       
-        <OfferCountdown/>
-        <PurchaseNotifications/>
+        <OfferCountdown />
+        <PurchaseNotifications />
         <div className="p-6">
           <ProductBenefits />
         </div>
       </div>
       <div className="bg-gray-900 py-8">
-        <OrderForm order={order} selectedOffer={selectedOffer}   formRef={formRef}  />
+        <OrderForm
+          order={order}
+          selectedOffer={selectedOffer}
+          formRef={formRef}
+        />
       </div>
     </>
   );

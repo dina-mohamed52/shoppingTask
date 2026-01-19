@@ -194,5 +194,8 @@
             "buyer": "{{name}} من {{city}}",
             "offer": "باقة {{offer}} قطع",
             "orderedNow": "طلب الآن"
-        }
+        },
+         "pricing": {
+    "perPiece": "قطعة"
+  }
 }

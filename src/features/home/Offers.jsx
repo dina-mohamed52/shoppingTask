@@ -7,9 +7,8 @@ const offerDetails = (t) => [
   { quantity: t("offers.q12"), price: 840, highlight: t("offers.bestDeal"), color: "green-100", value: 12 },
 ];
 
-function Offers({ setSelectedOffer }) {
+function Offers({setSelectedOffer}) {
   const { t } = useTranslation();
-
   return (
     <div className="bg-gray-900 rounded-3xl shadow-2xl max-w-4xl mx-auto my-24 p-8 sm:p-12 border border-yellow-400 relative overflow-hidden">
       {/* خلفية شكلية */}
@@ -46,6 +45,7 @@ function Offers({ setSelectedOffer }) {
             </span>
           </div>
         ))}
+   
       </div>
     </div>
   );
