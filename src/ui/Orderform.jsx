@@ -44,7 +44,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const shipping = 50;
+  const shipping = 60;
   const orderTotal = selectedOffer?.price || 0;
   const total = orderTotal + shipping;
 
