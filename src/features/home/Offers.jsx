@@ -10,12 +10,12 @@ const offerDetails = (t) => [
 function Offers({setSelectedOffer}) {
   const { t } = useTranslation();
   return (
-    <div className="bg-gray-900 rounded-3xl shadow-2xl max-w-4xl mx-auto my-24 p-8 sm:p-12 border border-yellow-400 relative overflow-hidden">
+    <div id="offersSection"   className="bg-gray-900 rounded-3xl shadow-2xl max-w-4xl mx-auto my-24 p-8 sm:p-12 border border-yellow-400 relative overflow-hidden">
       {/* خلفية شكلية */}
       <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/10 via-transparent to-gray-900/40 pointer-events-none"></div>
 
       {/* تاج "عروضنا" */}
-      <div className="absolute sm:-top-0 -top-2 sm:-left-0 -left-4 bg-yellow-400
+      <div  className="absolute sm:-top-0 -top-2 sm:-left-0 -left-4 bg-yellow-400
         text-gray-900 text-2xl sm:text-3xl font-extrabold px-8 py-3 rounded-xl shadow-2xl transform -rotate-12 z-20">
         {t("offers.title")}
       </div>

@@ -9,6 +9,8 @@ import ProductBenefits from "../features/products/ProductBenifits";
 import OfferCountdown from "../ui/OfferCountDown";
 import PurchaseNotifications from "../ui/PurchaseNotifications";
 import { t } from "i18next";import { useTranslation } from "react-i18next";
+import SizeTable from "./SizeTable";
+import OfferButton from "../features/offer/OfferButton";
 function Home() {
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [order, setOrder] = useState(null);
@@ -31,8 +33,10 @@ function Home() {
 
             <span className="text-gray-400 line-through text-lg">250 ج.م</span>
           </div>
+          <OfferButton/>
 
           <ProductList />
+          <SizeTable/>
           <Header1st />
           <Offers setSelectedOffer={setSelectedOffer} />
           {selectedOffer && (

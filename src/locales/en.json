@@ -196,5 +196,18 @@
     },
      "pricing": {
     "perPiece": "piece"
+  },
+  "sizes": {
+    "0-1": "0-1 yrs",
+    "1-2": "1-2 yrs",
+    "2-4": "2-4 yrs",
+    "4-6": "4-6 yrs",
+    "6-8": "6-8 yrs",
+    "8-10": "8-10 yrs",
+    "10-12": "10-12 yrs",
+    "12-14": "12-14 yrs"
+  },
+  "offerButton": {
+    "text": "Check Offers 😉🔥"
   }
 }

@@ -21,15 +21,16 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
     const product = Data.find((item) => item.name === productName);
 
     const allSizes = [
-      "0-1",
-      "1-2",
-      "2-4",
-      "4-6",
-      "6-8",
-      "8-10",
-      "10-12",
-      "12-14",
-    ];
+    "0-1",
+    "1-2",
+    "2-4",
+    "4-6",
+    "6-8",
+    "8-10",
+    "10-12",
+    "12-14",
+  ];
+
 
     if (!product) return allSizes;
 
@@ -120,7 +121,8 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                       <option value="">{t("orderCollection.selectSize")}</option>
                       {getAvailableSizes(piece.name).map((size, i) => (
                         <option key={i} value={size}>
-                          {t("orderCollection.size", { size })}
+                          {t(`sizes.${size}`)}
+                          {/* {t("orderCollection.size", { size })} */}
                         </option>
                       ))}
                     </select>

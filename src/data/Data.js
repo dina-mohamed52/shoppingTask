@@ -67,7 +67,7 @@ export const Data = [
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578818/5879927343848475497_f2vrqs.jpg" },
       {img:"https://res.cloudinary.com/dxenvgjv5/image/upload/v1768763987/WhatsApp_Image_2026-01-18_at_11.14.25_AM_jyketh.jpg"}
     ],
-    avalibeColors: ["أبيض", "أسود", "رمادي", "روز"],
+    avalibeColors: ["أبيض", "أسود", "رمادي", "روز","بيج"],
     image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578747/5879927343848475499_njzuba.jpg",
   },
   {
