@@ -31,7 +31,7 @@ const EGYPT_GOVS = [
 ];
 
 export default function OrderForm({ order, selectedOffer, formRef }) {
-   const { t } = useTranslation();
+  const { t } = useTranslation();
   const safeOrder = Array.isArray(order) ? order : [];
   const [form, setForm] = useState({
     name: "",
@@ -91,39 +91,32 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         .map((item) => `${item.name} - مقاس (${item.size}) - ${item.color}`)
         .join(" + ");
 
-    const today = new Date().toLocaleDateString("en-GB"); 
+    const today = new Date().toLocaleDateString("en-GB");
 
-
-    const payload = {
-      values: [
-        [
-          today, // 📅 التاريخ
-          form.name.trim(), // الاسم
-          form.phone.trim(), // الرقم الأساسي
-          form.phone2.trim() || "-", // الرقم الثاني (لو فاضي يتحط "-")
-          form.address.trim(), // العنوان
-          form.governorate, // المحافظة
-          orderDetails, // الأوردر
-          `${total} ج`, // الحساب (الإجمالي الكلي)
-        ],
-      ],
-    };
+   const payload = {
+  data: {
+    التاريخ: today,
+    الاسم: form.name.trim(),
+    التليفون: form.phone.trim(),
+    "التليفون 2": form.phone2.trim() || "-",
+    العنوان: form.address.trim(),
+    المحافظة: form.governorate,
+    الاوردر: safeOrder
+      .filter((item) => item?.name)
+      .map((item) => `${item.name} - ${item.size} - ${item.color}`)
+      .join(" | "),
+    المبلغ: `${total} ج`, 
+  },
+};
 
     try {
-      const res = await fetch(
-        "https://api.apico.dev/v1/dY0m5U/1gA3RbeU-npFqOV5CdYPyMcVHDxkLh9QVuGP06KFPu4c/values/orders!A1:append?valueInputOption=USER_ENTERED",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "Bearer 2942fab318c52526c56964fac92eaa33eb47c006176ff1217e052f6a22620954",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
-
+      const res = await fetch("https://sheetdb.io/api/v1/ud7ooi446r6mh", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
       if (res.ok) {
+        console.log("dddddddddddddd", payload);
         setMessage("✅ تم إرسال الطلب بنجاح!");
         setForm({
           name: "",
@@ -134,6 +127,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         });
       } else {
         setMessage("❌ حصل خطأ في الإرسال");
+        // console.log("wwwwwwwwwwwwwwwww",await res.json());
       }
     } catch (err) {
       setMessage("❌ حدث خطأ في الشبكة: " + err.message);
@@ -143,7 +137,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   };
 
   return (
-       <div
+    <div
       ref={formRef}
       className="flex justify-center items-center my-8 px-4 sm:px-0"
     >
@@ -309,8 +303,8 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
               {message.includes("✅")
                 ? t("orderForm.messages.success")
                 : message.includes("❌")
-                ? t("orderForm.messages.error")
-                : message}
+                  ? t("orderForm.messages.error")
+                  : message}
             </div>
           )}
         </div>
