@@ -11,12 +11,23 @@ function OfferButton() {
   };
 
   return (
-    <div className="flex justify-center my-6">
+    <div className="fixed sm:absolute sm:bottom-[20%] bottom-8 sm:right-[20%] right-4 z-50">
       <button
         onClick={handleClick}
-        className="bg-yellow-400 text-gray-900 font-bold text-lg px-6 py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-2xl transition-transform duration-300"
+        className="
+          bg-yellow-400 text-gray-900 
+          rounded-full shadow-lg
+          flex items-center justify-center
+          transition-all duration-300
+          hover:scale-110 hover:shadow-2xl
+          font-semibold
+          w-auto h-auto px-4 py-3 text-sm sm:text-lg
+        "
       >
-        {t("offerButton.text", "اكتشف العروض 😉🔥")}
+        {/* نص كامل على الديسكتوب */}
+        <span className="hidden sm:inline">{t("offerButton.text", "اكتشف عروضنا 😉🔥")}</span>
+        {/* نص مختصر على الموبايل */}
+        <span className="inline sm:hidden">{t("offerButton.mobileText", " اكتشف عروضنا 🔥")}</span>
       </button>
     </div>
   );

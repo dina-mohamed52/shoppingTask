@@ -29,6 +29,13 @@ const EGYPT_GOVS = [
   "الوادي الجديد",
   "البحر الأحمر",
 ];
+const HIGH_SHIPPING_GOVS = [
+  "مطروح",
+  "البحر الأحمر",
+  "الوادي الجديد",
+  "جنوب سيناء",
+  "شمال سيناء",
+];
 
 export default function OrderForm({ order, selectedOffer, formRef }) {
   const { t } = useTranslation();
@@ -44,7 +51,11 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const shipping = 60;
+  const baseShipping = 60;
+
+  const shipping = HIGH_SHIPPING_GOVS.includes(form.governorate)
+    ? baseShipping + 20
+    : baseShipping;
   const orderTotal = selectedOffer?.price || 0;
   const total = orderTotal + shipping;
 
@@ -93,21 +104,21 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
 
     const today = new Date().toLocaleDateString("en-GB");
 
-   const payload = {
+  const payload = {
   data: {
     التاريخ: today,
     الاسم: form.name.trim(),
     التليفون: form.phone.trim(),
     "التليفون 2": form.phone2.trim() || "-",
-    العنوان: form.address.trim(),
-    المحافظة: form.governorate,
+    العنوان: `${form.governorate} - ${form.address.trim()}`,
     الاوردر: safeOrder
       .filter((item) => item?.name)
       .map((item) => `${item.name} - ${item.size} - ${item.color}`)
       .join(" | "),
-    المبلغ: `${total} ج`, 
+    المبلغ: `${total} ج`,
   },
 };
+
 
     try {
       const res = await fetch("https://sheetdb.io/api/v1/ud7ooi446r6mh", {
@@ -115,21 +126,30 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (res.ok) {
-        console.log("dddddddddddddd", payload);
-        setMessage("✅ تم إرسال الطلب بنجاح!");
-        setForm({
-          name: "",
-          phone: "",
-          phone2: "",
-          address: "",
-          governorate: "",
-        });
-      } else {
+     if (res.ok) {
+  if (window.fbq) {
+    window.fbq("track", "Purchase", {
+      value: Number(total),
+      currency: "EGP",
+      content_type: "product",
+    });
+  }
+
+  setMessage("✅ تم إرسال الطلب بنجاح!");
+  setForm({
+    name: "",
+    phone: "",
+    phone2: "",
+    address: "",
+    governorate: "",
+  });
+}
+else {
         setMessage("❌ حصل خطأ في الإرسال");
         // console.log("wwwwwwwwwwwwwwwww",await res.json());
       }
     } catch (err) {
+
       setMessage("❌ حدث خطأ في الشبكة: " + err.message);
     } finally {
       setLoading(false);
