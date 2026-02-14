@@ -80,30 +80,25 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-
+    
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
+  
     setLoading(true);
-
-    // const orderDetails = safeOrder
-    //   .filter((item) => item?.name)
-    //   .map((item) => `${item.name} - مقاس (${item.size}) - ${item.color}`)
-    //   .join(" | ");
-
+  
     const orderDetails =
-      ` عرض ${selectedOffer?.quantity || "-"}` +
+      `عرض ${selectedOffer?.quantity || "-"}` +
       "\n" +
       safeOrder
         .filter((item) => item?.name)
         .map((item) => `${item.name} - مقاس (${item.size}) - ${item.color}`)
         .join(" + ");
-
+  
     const today = new Date().toLocaleDateString("en-GB");
-
+  
     const payload = {
       data: {
         التاريخ: today,
@@ -115,34 +110,42 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           .filter((item) => item?.name)
           .map((item) => `${item.name} - ${item.size} - ${item.color}`)
           .join(" | "),
-        المبلغ: `${total} ج`,
+        المبلغ: total, // رقم صافي بدون أي نص
       },
     };
-
-
+  
     try {
       const res = await fetch("https://sheetdb.io/api/v1/ud7ooi446r6mh", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+  
       if (res.ok) {
-
+  
+        // ✅ Mock Pixel for local testing
+        if (!window.fbq) {
+          window.fbq = function(event, data, options) {
+            console.log("📌 Pixel Mock:", event, data, options);
+          };
+        }
+  
+        console.log("DEBUG Pixel Data:", {
+          value: Number(total),
+          currency: "EGP"
+        });
+  
         if (window.fbq && total > 0) {
           const eventId = "purchase_" + Date.now();
-        
-          // ابعت القيمة كرقم صافي بدون أي نص
           window.fbq("track", "Purchase",
             {
               value: Number(total), // رقم صافي
-              currency: "EGP"       // رمز العملة ISO صحيح
+              currency: "EGP"       // ISO code صحيح
             },
-            {
-              eventID: eventId
-            }
+            { eventID: eventId }
           );
         }
-      
+  
         setMessage("✅ تم إرسال الطلب بنجاح!");
         setForm({
           name: "",
@@ -151,21 +154,19 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           address: "",
           governorate: "",
         });
-        
-        console.log("tessssssssssssssssssssst")
-      }
-      
-      else {
+  
+        console.log("Order submitted successfully ✅");
+      } else {
         setMessage("❌ حصل خطأ في الإرسال");
-        // console.log("wwwwwwwwwwwwwwwww",await res.json());
       }
+  
     } catch (err) {
-
       setMessage("❌ حدث خطأ في الشبكة: " + err.message);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div
