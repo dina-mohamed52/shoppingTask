@@ -129,13 +129,13 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
       if (res.ok) {
 
         if (window.fbq && total > 0) {
-      
           const eventId = "purchase_" + Date.now();
-      
+        
+          // ابعت القيمة كرقم صافي بدون أي نص
           window.fbq("track", "Purchase",
             {
-              value: parseFloat(total),
-              currency: "EGP"
+              value: Number(total), // رقم صافي
+              currency: "EGP"       // رمز العملة ISO صحيح
             },
             {
               eventID: eventId
