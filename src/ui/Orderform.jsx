@@ -57,7 +57,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
     ? baseShipping + 20
     : baseShipping;
   const orderTotal = selectedOffer?.price || 0;
-  const total = orderTotal + shipping;
+  const total = Number(orderTotal) + Number(shipping);
 
   const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -104,20 +104,20 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
 
     const today = new Date().toLocaleDateString("en-GB");
 
-  const payload = {
-  data: {
-    التاريخ: today,
-    الاسم: form.name.trim(),
-    التليفون: form.phone.trim(),
-    "التليفون 2": form.phone2.trim() || "-",
-    العنوان: `${form.governorate} - ${form.address.trim()}`,
-    الاوردر: safeOrder
-      .filter((item) => item?.name)
-      .map((item) => `${item.name} - ${item.size} - ${item.color}`)
-      .join(" | "),
-    المبلغ: `${total} ج`,
-  },
-};
+    const payload = {
+      data: {
+        التاريخ: today,
+        الاسم: form.name.trim(),
+        التليفون: form.phone.trim(),
+        "التليفون 2": form.phone2.trim() || "-",
+        العنوان: `${form.governorate} - ${form.address.trim()}`,
+        الاوردر: safeOrder
+          .filter((item) => item?.name)
+          .map((item) => `${item.name} - ${item.size} - ${item.color}`)
+          .join(" | "),
+        المبلغ: `${total} ج`,
+      },
+    };
 
 
     try {
@@ -126,25 +126,36 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-     if (res.ok) {
-  if (window.fbq) {
-    window.fbq("track", "Purchase", {
-      value: Number(total),
-      currency: "EGP",
-      content_type: "product",
-    });
-  }
+      if (res.ok) {
 
-  setMessage("✅ تم إرسال الطلب بنجاح!");
-  setForm({
-    name: "",
-    phone: "",
-    phone2: "",
-    address: "",
-    governorate: "",
-  });
-}
-else {
+        if (window.fbq && total > 0) {
+      
+          const eventId = "purchase_" + Date.now();
+      
+          window.fbq("track", "Purchase",
+            {
+              value: parseFloat(total),
+              currency: "EGP"
+            },
+            {
+              eventID: eventId
+            }
+          );
+        }
+      
+        setMessage("✅ تم إرسال الطلب بنجاح!");
+        setForm({
+          name: "",
+          phone: "",
+          phone2: "",
+          address: "",
+          governorate: "",
+        });
+        
+        console.log("tessssssssssssssssssssst")
+      }
+      
+      else {
         setMessage("❌ حصل خطأ في الإرسال");
         // console.log("wwwwwwwwwwwwwwwww",await res.json());
       }
@@ -300,11 +311,10 @@ else {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-xl font-semibold shadow-md transform transition-all duration-300 text-sm sm:text-base ${
-              loading
-                ? "bg-gray-600 text-gray-300 cursor-not-allowed animate-pulse"
-                : "bg-yellow-400 text-gray-900 hover:scale-105 hover:bg-yellow-300 hover:animate-bounce"
-            }`}
+            className={`w-full py-3 rounded-xl font-semibold shadow-md transform transition-all duration-300 text-sm sm:text-base ${loading
+              ? "bg-gray-600 text-gray-300 cursor-not-allowed animate-pulse"
+              : "bg-yellow-400 text-gray-900 hover:scale-105 hover:bg-yellow-300 hover:animate-bounce"
+              }`}
           >
             {loading
               ? t("orderForm.buttons.loading")
@@ -314,11 +324,10 @@ else {
           {/* رسالة الحالة */}
           {message && (
             <div
-              className={`p-3 rounded-xl text-center font-medium transition-all text-sm sm:text-base ${
-                message.includes("✅")
-                  ? "bg-green-100 text-green-700"
-                  : "bg-red-100 text-red-600"
-              }`}
+              className={`p-3 rounded-xl text-center font-medium transition-all text-sm sm:text-base ${message.includes("✅")
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-600"
+                }`}
             >
               {message.includes("✅")
                 ? t("orderForm.messages.success")
