@@ -4,8 +4,12 @@
         "designBy": "Website Design & Development by:",
         "developerName": "Dina Mohamed"
     },
+     "sizeTable": {
+    "header": "Illustrative Size Table"
+  },
     "offers": {
         "title": "Choose Your Offer 😉",
+         "q3": "3 Pieces",
         "q4": "4 pieces",
         "q6": "6 pieces",
         "q8": "8 pieces",
@@ -13,6 +17,9 @@
         "mostWanted": "Most Wanted",
         "bestDeal": "Best Deal"
     },
+     "pricing": {
+    "perPiece": "per Piece"
+  },
     "offer2": {
         "title": "⏳ Our sweet offer will end in",
         "hours": "Hours",
@@ -79,7 +86,8 @@
             "phone": "⚠️ Invalid phone number (must be 11 digits starting with 01)",
             "phone2": "⚠️ Invalid secondary phone number",
             "address": "⚠️ Address is required",
-            "governorate": "⚠️ Please select a governorate"
+            "governorate": "⚠️ Please select a governorate",
+             "noOffer": "Please select a suitable offer to complete your order"
         },
         "summary": {
             "products": "🛍️ Products Price: {{price}} EGP",
@@ -194,9 +202,7 @@
         "offer": "Package of {{offer}} pieces",
         "orderedNow": "just ordered"
     },
-     "pricing": {
-    "perPiece": "piece"
-  },
+  
   "sizes": {
     "0-1": "0-1 yrs",
     "1-2": "1-2 yrs",
@@ -209,5 +215,15 @@
   },
   "offerButton": {
     "text": "Check Offers 😉🔥"
+  },
+ "confirmOrder": {
+    "title": "✅ Order Confirmed!",
+    "subtitle": "Your order has been placed successfully",
+    "deliveryTime": "Delivery: 5 working days",
+    "preview": "Preview before accepting",
+    "rejection": "Non-receipt? Only shipping fee applies",
+    "thanks1": "Thank you for choosing us!",
+    "thanks2": "Prepared with care ❤️",
+    "gotIt": "Got it, thanks!"
   }
 }

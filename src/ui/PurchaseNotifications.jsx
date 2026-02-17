@@ -48,7 +48,7 @@ export default function PurchaseNotifications() {
   }, []);
 
   return (
-    <div className="fixed bottom-6 left-1/3 transform -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:ml-8 z-50">
+    <div className="fixed bottom-16 left-[50%] transform -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:ml-8 z-50">
       <AnimatePresence>
         {notification && (
           <motion.div

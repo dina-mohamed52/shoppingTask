@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import ConfirmOrderModal from "./ConfirmOrderModal";
 
 const EGYPT_GOVS = [
   "القاهرة",
@@ -50,6 +51,17 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+ const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleOrderSuccess = () => {
+    setIsModalVisible(true);
+  };
+
+
+
+
+
+
 
   const baseShipping = 60;
 
@@ -80,6 +92,17 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
+
+// ✅ تحقق من وجود عرض مختار وأوردر
+  if (!selectedOffer || !safeOrder.length) {
+    alert(
+      t("orderForm.errors.noOffer", "برجاء اختيار العرض المناسب لك لإتمام الأوردر")
+    );
+    return;
+  }
+
+
+    
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -134,6 +157,8 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
     address: "",
     governorate: "",
   });
+  // فتح المودال لطباعة الاوردر
+  handleOrderSuccess();
 }
  else {
         setMessage("❌ حصل خطأ في الإرسال");
@@ -301,6 +326,8 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
               : t("orderForm.buttons.submit")}
           </button>
 
+
+
           {/* رسالة الحالة */}
           {message && (
             <div
@@ -318,6 +345,10 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           )}
         </div>
       </form>
+      <ConfirmOrderModal
+            visible={isModalVisible}
+            onClose={() => setIsModalVisible(false)}
+          />
     </div>
   );
 }

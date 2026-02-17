@@ -11,7 +11,7 @@ function OfferButton() {
   };
 
   return (
-    <div className="fixed sm:absolute sm:bottom-[20%] bottom-8 sm:right-[20%] right-4 z-50">
+    <div className="fixed sm:absolute sm:bottom-[20%] bottom-4 sm:right-[20%] right-[30%] z-50">
       <button
         onClick={handleClick}
         className="

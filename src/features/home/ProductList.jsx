@@ -3,6 +3,7 @@ import ProductCard from "../products/ProductCard";
 import { useState } from "react";
 import ProductModal from "../../ui/ProductModal";
 import { useTranslation } from "react-i18next";
+import ProductBenefits from "../products/ProductBenifits";
 
 function ProductList() {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ function ProductList() {
       {t("productList.description")}
     </span>
   </h1>
+
 
   {/* شبكة المنتجات */}
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
