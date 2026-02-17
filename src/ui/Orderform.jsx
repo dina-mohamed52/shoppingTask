@@ -125,29 +125,30 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (res.ok) {
-        const purchaseValue = Number(total) || 0;
+     if (res.ok) {
+  const purchaseValue = Number(total) || 0;
 
-        try {
-          if (window.fbq && purchaseValue > 0) {
-            window.fbq("track", "Purchase", {
-              value: purchaseValue,
-              currency: "EGP",
-            });
-          }
-        } catch (e) {
-          console.log("FB Pixel error:", e);
-        }
+  try {
+    if (window.fbq && purchaseValue > 0) {
+      window.fbq("track", "Purchase", {
+        value: purchaseValue,
+        currency: "EGP",
+      });
+    }
+  } catch (e) {
+    console.log("FB Pixel error:", e);
+  }
 
-        setMessage("✅ تم إرسال الطلب بنجاح!");
-        setForm({
-          name: "",
-          phone: "",
-          phone2: "",
-          address: "",
-          governorate: "",
-        });
-      } else {
+  setMessage("✅ تم إرسال الطلب بنجاح!");
+  setForm({
+    name: "",
+    phone: "",
+    phone2: "",
+    address: "",
+    governorate: "",
+  });
+}
+ else {
         setMessage("❌ حصل خطأ في الإرسال");
         // console.log("wwwwwwwwwwwwwwwww",await res.json());
       }
