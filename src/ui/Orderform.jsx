@@ -57,7 +57,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
     ? baseShipping + 20
     : baseShipping;
   const orderTotal = selectedOffer?.price || 0;
-  const total = orderTotal + shipping;
+  const total = Number(orderTotal) + Number(shipping);
 
   const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -80,27 +80,12 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
     setLoading(true);
-
-    // const orderDetails = safeOrder
-    //   .filter((item) => item?.name)
-    //   .map((item) => `${item.name} - مقاس (${item.size}) - ${item.color}`)
-    //   .join(" | ");
-
-    const orderDetails =
-      ` عرض ${selectedOffer?.quantity || "-"}` +
-      "\n" +
-      safeOrder
-        .filter((item) => item?.name)
-        .map((item) => `${item.name} - مقاس (${item.size}) - ${item.color}`)
-        .join(" + ");
 
     const today = new Date().toLocaleDateString("en-GB");
 
@@ -150,14 +135,15 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
 }
  else {
         setMessage("❌ حصل خطأ في الإرسال");
-        // console.log("wwwwwwwwwwwwwwwww",await res.json());
       }
+
     } catch (err) {
       setMessage("❌ حدث خطأ في الشبكة: " + err.message);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div
@@ -303,11 +289,10 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-xl font-semibold shadow-md transform transition-all duration-300 text-sm sm:text-base ${
-              loading
-                ? "bg-gray-600 text-gray-300 cursor-not-allowed animate-pulse"
-                : "bg-yellow-400 text-gray-900 hover:scale-105 hover:bg-yellow-300 hover:animate-bounce"
-            }`}
+            className={`w-full py-3 rounded-xl font-semibold shadow-md transform transition-all duration-300 text-sm sm:text-base ${loading
+              ? "bg-gray-600 text-gray-300 cursor-not-allowed animate-pulse"
+              : "bg-yellow-400 text-gray-900 hover:scale-105 hover:bg-yellow-300 hover:animate-bounce"
+              }`}
           >
             {loading
               ? t("orderForm.buttons.loading")
@@ -317,11 +302,10 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
           {/* رسالة الحالة */}
           {message && (
             <div
-              className={`p-3 rounded-xl text-center font-medium transition-all text-sm sm:text-base ${
-                message.includes("✅")
-                  ? "bg-green-100 text-green-700"
-                  : "bg-red-100 text-red-600"
-              }`}
+              className={`p-3 rounded-xl text-center font-medium transition-all text-sm sm:text-base ${message.includes("✅")
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-600"
+                }`}
             >
               {message.includes("✅")
                 ? t("orderForm.messages.success")
