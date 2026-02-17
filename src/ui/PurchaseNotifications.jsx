@@ -61,6 +61,7 @@ export default function PurchaseNotifications() {
           >
             {/* صورة المنتج */}
             <img
+
               src={notification.product.image}
               alt={notification.product.name}
               className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg border-2 border-yellow-400 shadow-md object-cover"

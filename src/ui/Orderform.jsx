@@ -104,21 +104,20 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
 
     const today = new Date().toLocaleDateString("en-GB");
 
-  const payload = {
-  data: {
-    التاريخ: today,
-    الاسم: form.name.trim(),
-    التليفون: form.phone.trim(),
-    "التليفون 2": form.phone2.trim() || "-",
-    العنوان: `${form.governorate} - ${form.address.trim()}`,
-    الاوردر: safeOrder
-      .filter((item) => item?.name)
-      .map((item) => `${item.name} - ${item.size} - ${item.color}`)
-      .join(" | "),
-    المبلغ: `${total} ج`,
-  },
-};
-
+    const payload = {
+      data: {
+        التاريخ: today,
+        الاسم: form.name.trim(),
+        التليفون: form.phone.trim(),
+        "التليفون 2": form.phone2.trim() || "-",
+        العنوان: `${form.governorate} - ${form.address.trim()}`,
+        الاوردر: safeOrder
+          .filter((item) => item?.name)
+          .map((item) => `${item.name} - ${item.size} - ${item.color}`)
+          .join(" | "),
+        المبلغ: `${total} ج`,
+      },
+    };
 
     try {
       const res = await fetch("https://sheetdb.io/api/v1/ud7ooi446r6mh", {
@@ -126,30 +125,33 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-     if (res.ok) {
-  if (window.fbq) {
-    window.fbq("track", "Purchase", {
-      value: Number(total),
-      currency: "EGP",
-      content_type: "product",
-    });
-  }
+      if (res.ok) {
+        const purchaseValue = Number(total) || 0;
 
-  setMessage("✅ تم إرسال الطلب بنجاح!");
-  setForm({
-    name: "",
-    phone: "",
-    phone2: "",
-    address: "",
-    governorate: "",
-  });
-}
-else {
+        try {
+          if (window.fbq && purchaseValue > 0) {
+            window.fbq("track", "Purchase", {
+              value: purchaseValue,
+              currency: "EGP",
+            });
+          }
+        } catch (e) {
+          console.log("FB Pixel error:", e);
+        }
+
+        setMessage("✅ تم إرسال الطلب بنجاح!");
+        setForm({
+          name: "",
+          phone: "",
+          phone2: "",
+          address: "",
+          governorate: "",
+        });
+      } else {
         setMessage("❌ حصل خطأ في الإرسال");
         // console.log("wwwwwwwwwwwwwwwww",await res.json());
       }
     } catch (err) {
-
       setMessage("❌ حدث خطأ في الشبكة: " + err.message);
     } finally {
       setLoading(false);
