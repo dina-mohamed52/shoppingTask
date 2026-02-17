@@ -111,7 +111,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         body: JSON.stringify(payload),
       });
      if (res.ok) {
-  const purchaseValue = Number(total) || 0;
+  const purchaseValue = parseFloat(total) || 0;
 
   try {
     if (window.fbq && purchaseValue > 0) {
