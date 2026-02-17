@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const offerDetails = (t) => [
   { quantity: t("offers.q3"), price: 270, value: 3 },
@@ -8,8 +9,15 @@ const offerDetails = (t) => [
   { quantity: t("offers.q12"), price: 840, highlight: t("offers.bestDeal"), color: "green-100", value: 12 },
 ].sort((a, b) => a.price - b.price); // ترتيب من الأقل للأعلى
 
-function Offers({ setSelectedOffer }) {
+function Offers({ setSelectedOffer,scrollToOrderCollection  }) {
   const { t } = useTranslation();
+
+    const handleSelect = (offer) => {
+    setSelectedOffer(offer);     // حفظ العرض
+    if (scrollToOrderCollection) {
+      scrollToOrderCollection(); // تسكرول للجزء
+    } // الانتقال لصفحة OrderCollection
+  };
   return (
     <div id="offersSection" className="bg-gray-900 rounded-3xl shadow-2xl max-w-4xl mx-auto my-24 p-8 sm:p-12 border border-yellow-400 relative overflow-hidden">
       {/* خلفية شكلية */}
@@ -25,7 +33,7 @@ function Offers({ setSelectedOffer }) {
       <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
         {offerDetails(t).map((offer, index) => (
           <div
-            onClick={() => setSelectedOffer(offer)}
+             onClick={() => handleSelect(offer)}
             key={index}
             className={`relative cursor-pointer bg-gray-800 rounded-3xl p-6 sm:p-8 flex justify-between items-center transition-transform transform hover:scale-105 hover:shadow-2xl border ${
               offer.highlight ? "border-yellow-300" : "border-yellow-600/10"

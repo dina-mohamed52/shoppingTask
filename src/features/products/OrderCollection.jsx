@@ -76,7 +76,7 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4" id="orderCollection">
       <form onSubmit={handleSubmit}>
         {pieces.length > 0 && (
           <>

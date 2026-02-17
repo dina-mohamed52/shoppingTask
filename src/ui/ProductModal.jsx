@@ -1,15 +1,38 @@
 import { Modal } from "antd";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 function ProductModal({ product, open, OnClose }) {
   const [selectedImage, setSelectedImage] = useState(null);
+  const isFirstMount = useRef(true);
 
-  // كل مرة المنتج يتغير أو المودال يتفتح، خلي الصورة الافتراضية أول صورة
+  // useEffect للصور فقط
   useEffect(() => {
-    if (product && product.previewImages?.length > 0) {
+    if (product?.previewImages?.length > 0) {
       setSelectedImage(product.previewImages[0]);
     }
-  }, [product]);
+  }, [product]); // فقط product هو المطلوب هنا
+
+  // useEffect للـ back button - بدون إضافة OnClose كdependency
+  useEffect(() => {
+    if (!open) return;
+
+    const handleBack = () => {
+      OnClose();
+    };
+
+    window.addEventListener("popstate", handleBack);
+    
+    return () => {
+      window.removeEventListener("popstate", handleBack);
+    };
+  }, [open]); // فقط open، بدون OnClose
+
+  // useEffect منفصل لإضافة history state عند الفتح
+  useEffect(() => {
+    if (open) {
+      window.history.pushState({ modal: true }, "");
+    }
+  }, [open]);
 
   if (!product) return null;
 
@@ -22,7 +45,7 @@ function ProductModal({ product, open, OnClose }) {
       width={900}
     >
       <div className="flex gap-4">
-        {/* الصور الصغيرة (الشمال) */}
+        {/* الصور الصغيرة */}
         <div className="flex flex-col gap-3 overflow-y-auto max-h-[500px] w-24 pr-2">
           {product.previewImages?.map((img, index) => (
             <img
@@ -39,7 +62,7 @@ function ProductModal({ product, open, OnClose }) {
           ))}
         </div>
 
-        {/* الصورة الكبيرة (اليمين) */}
+        {/* الصورة الكبيرة */}
         <div className="flex-1 flex justify-center items-center">
           {selectedImage && (
             <img
