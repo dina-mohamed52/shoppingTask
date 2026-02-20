@@ -90,10 +90,14 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage("");
+  e.preventDefault();
 
-// ✅ تحقق من وجود عرض مختار وأوردر
+  // 🔒 Guard ضد الضغط المتكرر
+  if (loading) return;
+
+  setMessage("");
+
+  // تحقق من وجود عرض مختار وأوردر
   if (!selectedOffer || !safeOrder.length) {
     alert(
       t("orderForm.errors.noOffer", "برجاء اختيار العرض المناسب لك لإتمام الأوردر")
@@ -101,76 +105,76 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
     return;
   }
 
-
-    
-    const newErrors = validate();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    setLoading(true);
-
-    const today = new Date().toLocaleDateString("en-GB");
-
-    const payload = {
-      data: {
-        التاريخ: today,
-        الاسم: form.name.trim(),
-        التليفون: form.phone.trim(),
-        "التليفون 2": form.phone2.trim() || "-",
-        العنوان: `${form.governorate} - ${form.address.trim()}`,
-        الاوردر: safeOrder
-          .filter((item) => item?.name)
-          .map((item) => `${item.name} - ${item.size} - ${item.color}`)
-          .join(" | "),
-        المبلغ: `${total}`,
-      },
-    };
-
-    try {
-      const res = await fetch("https://sheetdb.io/api/v1/ud7ooi446r6mh", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-     if (res.ok) {
-  const purchaseValue = parseFloat(total) || 0;
-  const currency = "EGP";
-
-  try {
-    if (window.fbq && purchaseValue > 0) {
-      window.fbq("track", "Purchase", {
-        value: purchaseValue,
-        currency: currency,
-      });
-      // console.log("FB Pixel event sent successfullyyyyyyyyyyyyyy", purchaseValue,currency);
-    }
-  } catch (e) {
-    console.log("FB Pixel error:", e);
+  const newErrors = validate();
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
   }
 
-  setMessage("✅ تم إرسال الطلب بنجاح!");
-  setForm({
-    name: "",
-    phone: "",
-    phone2: "",
-    address: "",
-    governorate: "",
-  });
-  // فتح المودال لطباعة الاوردر
-  handleOrderSuccess();
-}
- else {
-        setMessage("❌ حصل خطأ في الإرسال");
+  setLoading(true);
+
+  const today = new Date().toLocaleDateString("en-GB");
+
+  const payload = {
+    data: {
+      التاريخ: today,
+      الاسم: form.name.trim(),
+      التليفون: form.phone.trim(),
+      "التليفون 2": form.phone2.trim() || "-",
+      العنوان: `${form.governorate} - ${form.address.trim()}`,
+      الاوردر: safeOrder
+        .filter((item) => item?.name)
+        .map((item) => `${item.name} - ${item.size} - ${item.color}`)
+        .join(" | "),
+      المبلغ: `${total}`,
+    },
+  };
+
+  try {
+    const res = await fetch("https://sheetdb.io/api/v1/ud7ooi446r6mh", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      const purchaseValue = parseFloat(total) || 0;
+      const currency = "EGP";
+
+      // 🆔 إنشاء eventID فريد
+      const eventId = "order_" + Date.now();
+
+      try {
+        if (window.fbq && purchaseValue > 0) {
+          window.fbq("track", "Purchase", {
+            value: purchaseValue,
+            currency: currency,
+            eventID: eventId, // 👈 مهم جدًا
+          });
+        }
+      } catch (e) {
+        console.log("FB Pixel error:", e);
       }
 
-    } catch (err) {
-      setMessage("❌ حدث خطأ في الشبكة: " + err.message);
-    } finally {
-      setLoading(false);
+      setMessage("✅ تم إرسال الطلب بنجاح!");
+      setForm({
+        name: "",
+        phone: "",
+        phone2: "",
+        address: "",
+        governorate: "",
+      });
+
+      handleOrderSuccess();
+    } else {
+      setMessage("❌ حصل خطأ في الإرسال");
     }
-  };
-  
+  } catch (err) {
+    setMessage("❌ حدث خطأ في الشبكة: " + err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div
