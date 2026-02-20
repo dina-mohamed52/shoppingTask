@@ -78,17 +78,33 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
 
   // ✅ فاليديشن
   const validate = () => {
-    const newErrors = {};
-    if (!form.name.trim()) newErrors.name = "⚠️ الاسم مطلوب";
-    if (!/^01[0-9]{9}$/.test(form.phone.trim()))
-      newErrors.phone = "⚠️ رقم الموبايل غير صحيح (11 رقم ويبدأ بـ 01)";
-    if (form.phone2.trim() && !/^01[0-9]{9}$/.test(form.phone2.trim()))
-      newErrors.phone2 = "⚠️ رقم الموبايل الثاني غير صحيح";
-    if (!form.address.trim()) newErrors.address = "⚠️ العنوان مطلوب";
-    if (!form.governorate.trim()) newErrors.governorate = "⚠️ اختر المحافظة";
-    return newErrors;
-  };
+  const newErrors = {};
 
+  const phone1 = form.phone.trim();
+  const phone2 = form.phone2.trim();
+
+  if (!form.name.trim()) 
+    newErrors.name = t("orderForm.errors.name");
+
+  if (!/^01[0-9]{9}$/.test(phone1))
+    newErrors.phone = t("orderForm.errors.phone");
+
+  if (phone2 && !/^01[0-9]{9}$/.test(phone2))
+    newErrors.phone2 = t("orderForm.errors.phone2");
+
+  // ✅ تحقق إن الرقمين مش متطابقين
+  if (phone1 && phone2 && phone1 === phone2) {
+    newErrors.phone2 = t("orderForm.errors.duplicatePhone");
+  }
+
+  if (!form.address.trim()) 
+    newErrors.address = t("orderForm.errors.address");
+
+  if (!form.governorate.trim()) 
+    newErrors.governorate = t("orderForm.errors.governorate");
+
+  return newErrors;
+};
   const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -261,7 +277,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
             />
             {errors.phone2 && (
               <p className="text-red-400 text-xs sm:text-sm mt-1">
-                {t("orderForm.errors.phone2")}
+                  {errors.phone2}
               </p>
             )}
           </div>

@@ -87,7 +87,8 @@
             "phone2": "⚠️ Invalid secondary phone number",
             "address": "⚠️ Address is required",
             "governorate": "⚠️ Please select a governorate",
-             "noOffer": "Please select a suitable offer to complete your order"
+             "noOffer": "Please select a suitable offer to complete your order",
+              "duplicatePhone": "⚠️ Phone numbers cannot be the same. Please enter a different number."
         },
         "summary": {
             "products": "🛍️ Products Price: {{price}} EGP",
