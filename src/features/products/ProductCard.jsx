@@ -7,18 +7,41 @@ function ProductCard({ product, onPreview }) {
   const [isLiked, setIsLiked] = useState(false);
   const lang = i18n.language;
 
-  // دالة لتحويل اسم اللون العربي إلى كود لون
+  // دالة لتحويل اسم اللون العربي إلى كود لون - محدثة
   const getColorCode = (colorName) => {
     const colorMap = {
+      // الألوان الأساسية
       "أبيض": "#FFFFFF",
       "أسود": "#000000",
-      "رمادي": "#808080",
-      "روز": "#FFC0CB",
+      "رمادي": "#9CA3AF",
+      "بيج": "#E8D5B5", // بيج أغمق شوية
+      "لبني": "oklch(70.7% 0.165 254.624)", 
+      "عاجي": "#FFF0DB",
+      
+      // ألوان البينك والوردي
       "بينك": "#FF69B4",
-      "كحلي": "#000030",
-      "بيج": "#F5F5DC",
-      "لبني": "#FDF5E6",
-      default: "#CCCCCC"
+      "وردي": "#FFB6C1",
+      "فوشيا": "#FF00FF",
+      "روز": "#FFC0CB",
+      "موف": "#C8A2C8",
+      "خوخي": "#FFDAB9",
+      "سلمون": "#FA8072",
+      
+      // ألوان أخرى
+      "أحمر": "#FF4444",
+      "أصفر": "#FFD700",
+      "أخضر": "#98D8C8",
+      "نعناعي": "#A7F0D9",
+      "سماوي": "#87CEEB",
+      "كحلي": "#1E2F4F",
+      "نيلي": "#4B6A8B",
+      
+      // ألوان البني
+      "كافيه": "#8B5E3C",
+      "بني": "#8B4513",
+      "بندقي": "#D2B48C",
+      
+      default: "#E5E7EB"
     };
     return colorMap[colorName] || colorMap.default;
   };
@@ -55,7 +78,7 @@ function ProductCard({ product, onPreview }) {
           className="w-full h-[20rem] object-contain transition-transform duration-700 group-hover:scale-110"
         />
 
-        {/* Badge (Tag) - Updated to Pink Theme */}
+        {/* Badge (Tag) */}
         {badge && (
           <div className="absolute top-3 left-3 z-10">
             <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full blur-md opacity-50 animate-pulse"></div>
@@ -66,7 +89,7 @@ function ProductCard({ product, onPreview }) {
           </div>
         )}
 
-        {/* Quick Action Buttons - Appear on Hover */}
+        {/* Quick Action Buttons */}
         <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-5 group-hover:translate-x-0">
           {/* Favorite Button */}
           <button
@@ -104,17 +127,9 @@ function ProductCard({ product, onPreview }) {
           <h3 className="font-bold text-gray-800 text-lg line-clamp-1 flex-1">
             {product.name}
           </h3>
-          
-          {/* Price Tag */}
-          {/* <div className="flex items-center gap-1 bg-pink-50 px-2 py-1 rounded-full">
-            <span className="text-pink-600 font-bold text-sm">
-              {product.price || "150"}
-            </span>
-            <span className="text-gray-500 text-xs">ج.م</span>
-          </div> */}
         </div>
 
-        {/* Available Colors - من ملف الداتا */}
+        {/* Available Colors */}
         {product.avalibeColors && product.avalibeColors.length > 0 && (
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2">
@@ -122,21 +137,26 @@ function ProductCard({ product, onPreview }) {
               <span className="text-xs text-pink-500">{product.avalibeColors.length} لون</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
-              {product.avalibeColors.map((color, idx) => (
-                <div
-                  key={idx}
-                  className="group/color relative"
-                >
+              {product.avalibeColors.map((color, idx) => {
+                // الحصول على كود اللون
+                const colorCode = getColorCode(color);
+                
+                return (
                   <div
-                    className="w-6 h-6 rounded-full border-2 border-white shadow-md cursor-pointer transition-transform duration-300 hover:scale-110 hover:shadow-pink-500/50"
-                    style={{ backgroundColor: getColorCode(color) }}
-                  ></div>
-                  {/* Tooltip for color name */}
-                  <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-pink-300 text-[10px] px-2 py-0.5 rounded opacity-0 group-hover/color:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20">
-                    {color}
-                  </span>
-                </div>
-              ))}
+                    key={idx}
+                    className="group/color relative"
+                  >
+                    <div
+                      className="w-6 h-6 rounded-full border-2 border-white shadow-md cursor-pointer transition-transform duration-300 hover:scale-110 hover:shadow-pink-500/50"
+                      style={{ backgroundColor: colorCode }}
+                    ></div>
+                    {/* Tooltip for color name */}
+                    <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover/color:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20">
+                      {color}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

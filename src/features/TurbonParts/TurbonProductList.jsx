@@ -13,6 +13,44 @@ function TurbonProductList() {
   // فلترة المنتجات لعرض التربونات فقط (id 9 و 10)
   const turbonProducts = Data.filter(product => product.id === 9 || product.id === 10);
 
+  // دالة تحويل اسم اللون إلى كود لون - محدثة بناءً على الألوان الفعلية
+  const getColorCode = (colorName) => {
+    const colorMap = {
+      // الألوان الأساسية
+      "أبيض": "#FFFFFF",
+      "أسود": "#000000",
+      "رمادي": "#9CA3AF",
+      "بيج": "#F5E6D3",
+      "لبني": "#4B6A7B",
+      "عاجي": "#FFF8E7",
+      
+      // ألوان البينك والوردي
+      "بينك": "#FF69B4",
+      "وردي": "#FFB6C1",
+      "فوشيا": "#FF00FF",
+      "روز": "#FFC0CB",
+      "موف": "#C8A2C8",
+      "خوخي": "#FFDAB9",
+      
+      // ألوان أخرى
+      "أحمر": "#FF4444",
+      "أصفر": "#FFD700",
+      "أخضر": "#98D8C8",
+      "نعناعي": "#A7F0D9",
+      "سماوي": "#87CEEB",
+      "كحلي": "#1E2F4F",
+      "نيلي": "#4B6A8B",
+      
+      // ألوان البني
+      "كافيه": "#8B5E3C",
+      "بني": "#8B4513",
+      "بندقي": "#D2B48C",
+      
+      default: "#E5E7EB" // رمادي فاتح للافتراضي
+    };
+    return colorMap[colorName] || colorMap.default;
+  };
+
   const handlePreview = (product) => {
     const allUrls = product.productColors.map((c) => c.img);
 
@@ -112,13 +150,22 @@ function TurbonProductList() {
               </h4>
             </div>
             <div className="flex flex-wrap gap-3">
-              {["أبيض", "أوف وايت", "أسود", "أحمر", "بينك", "كافيه"].map((color, idx) => (
+              {[
+                { name: "أبيض", code: "#FFFFFF" },
+                { name: "أسود", code: "#000000" },
+                { name: "بينك", code: "#FF69B4" },
+                { name: "موف", code: "#C8A2C8" },
+                { name: "كافيه", code: "#8B5E3C" },
+                { name: "بيج", code: "#F5E6D3" },
+                { name: "أحمر", code: "#FF4444" },
+                { name: "لبني", code: "oklch(70.7% 0.165 254.624)" }
+              ].map((color, idx) => (
                 <div key={idx} className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full border border-pink-200">
                   <div 
                     className="w-4 h-4 rounded-full border border-white shadow-sm"
-                    style={{ backgroundColor: getColorCode(color) }}
+                    style={{ backgroundColor: color.code }}
                   ></div>
-                  <span className="text-sm text-gray-700">{color}</span>
+                  <span className="text-sm text-gray-700">{color.name}</span>
                 </div>
               ))}
             </div>
@@ -135,19 +182,30 @@ function TurbonProductList() {
               </h4>
             </div>
             <div className="flex flex-wrap gap-3">
-              {["أبيض", "أوف وايت", "أصفر", "بيج", "بينك", "موف"].map((color, idx) => (
+              {[
+                { name: "أبيض", code: "#FFFFFF" },
+                { name: "أصفر", code: "#FFD700" },
+                { name: "بينك", code: "#FF69B4" },
+                { name: "موف", code: "#C8A2C8" },
+                { name: "روز", code: "#FFC0CB" },
+                { name: "بيج", code: "#F5E6D3" },
+                { name: "لبني", code: "oklch(70.7% 0.165 254.624)" },
+                { name: "أوف وايت", code: "#F8F8FF" }
+              ].map((color, idx) => (
                 <div key={idx} className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full border border-pink-200">
                   <div 
                     className="w-4 h-4 rounded-full border border-white shadow-sm"
-                    style={{ backgroundColor: getColorCode(color) }}
+                    style={{ backgroundColor: color.code }}
                   ></div>
-                  <span className="text-sm text-gray-700">{color}</span>
+                  <span className="text-sm text-gray-700">{color.name}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
+
+     
 
       {/* Product Modal */}
       {selectedProduct && (
@@ -174,26 +232,5 @@ function TurbonProductList() {
     </div>
   );
 }
-
-// Helper function for color codes
-const getColorCode = (colorName) => {
-  const colorMap = {
-    "أبيض": "#FFFFFF",
-    "أوف وايت": "#FDF5E6",
-    "أسود": "#000000",
-    "رمادي": "#808080",
-    "روز": "#FFC0CB",
-    "بينك": "#FF69B4",
-    "كحلي": "#000080",
-    "بيج": "#F5F5DC",
-    "لبني": "#FDF5E6",
-    "أحمر": "#FF0000",
-    "كافيه": "#6F4E37",
-    "أصفر": "#FFFF00",
-    "موف": "#E0B0FF",
-    default: "#CCCCCC"
-  };
-  return colorMap[colorName] || colorMap.default;
-};
 
 export default TurbonProductList;

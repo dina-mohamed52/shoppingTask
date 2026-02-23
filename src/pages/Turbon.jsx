@@ -10,6 +10,7 @@ import { Sparkles, Ribbon, Flower2, ArrowDown } from "lucide-react";
 import OfferCountDown from "../ui/OfferCountDown";
 import ProductBenifits from "../features/products/ProductBenifits";
 import TurbonOfferBtn from "../features/TurbonParts/TurbonOfferBtn";
+import PurchaseNotifications from "../ui/PurchaseNotifications";
 
 function Turbon() {
   const { t } = useTranslation();
@@ -76,7 +77,7 @@ function Turbon() {
           </motion.div>
         </motion.div>
       </section>
-
+ <PurchaseNotifications />
       {/* Header Section بعد الكاروسيل */}
       <section className="relative py-12 text-center overflow-hidden">
         {/* Decorative Background */}
