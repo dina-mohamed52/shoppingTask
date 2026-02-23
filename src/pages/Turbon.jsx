@@ -42,50 +42,41 @@ function Turbon() {
     <div className="min-h-screen bg-gradient-to-b from-white via-pink-50/30 to-white">
       
       {/* Carousel Section - First Thing */}
-      <section className="relative pt-4">
-        {/* خلفية زخرفية متحركة خفيفة */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
-        </div>
+     {/* Carousel Section - First Thing */}
+<section className="relative w-full">
+  {/* Carousel Container بدون أي حدود أو خلفيات */}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+    className="relative w-full"
+  >
+    {/* Brand Badge فوق الكاروسيل - يمكنك إبقاؤه أو إزالته حسب رغبتك */}
+    <div className="flex justify-center mb-4 px-4">
+      <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-2 rounded-full shadow-lg border border-pink-200">
+        <Sparkles className="w-4 h-4 text-pink-500" />
+        <span className="text-sm font-semibold text-gray-700">
+          {t("turbonPage.brand", "BabyStyle Turbans")}
+        </span>
+        <Sparkles className="w-4 h-4 text-pink-500" />
+      </div>
+    </div>
+    
+    {/* Carousel - بدون حدود أو ظلال */}
+    <div className="relative w-full">
+      <TurbonCarousal />
+    </div>
 
-        {/* Carousel Container مع تحسينات بصرية */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative max-w-7xl mx-auto px-4"
-        >
-          {/* Brand Badge فوق الكاروسيل */}
-          <div className="flex justify-center mb-4">
-            <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-2 rounded-full shadow-lg border border-pink-200">
-              <Sparkles className="w-4 h-4 text-pink-500" />
-              <span className="text-sm font-semibold text-gray-700">
-                {t("turbonPage.brand", "BabyStyle Turbans")}
-              </span>
-              <Sparkles className="w-4 h-4 text-pink-500" />
-            </div>
-          </div>
-
-          {/* Glow Effect حول الكاروسيل */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-pink-200 via-pink-300 to-pink-200 rounded-3xl blur-2xl opacity-30"></div>
-          
-          {/* Carousel */}
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-pink-200/50">
-            <TurbonCarousal />
-          </div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="flex justify-center mt-8"
-          >
-            <ArrowDown className="w-6 h-6 text-pink-400" />
-          </motion.div>
-        </motion.div>
-      </section>
-
+    {/* Scroll Indicator */}
+    <motion.div
+      animate={{ y: [0, 10, 0] }}
+      transition={{ repeat: Infinity, duration: 2 }}
+      className="flex justify-center mt-8"
+    >
+      <ArrowDown className="w-6 h-6 text-pink-400" />
+    </motion.div>
+  </motion.div>
+</section>
       {/* Header Section بعد الكاروسيل */}
       <section className="relative py-12 text-center overflow-hidden">
         {/* Decorative Background */}
