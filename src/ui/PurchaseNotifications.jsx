@@ -69,7 +69,7 @@ const turbonOffers = [
     originalPrice: "225",
     savings: "15",
     pieces: "3",
-    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756575082/468185339_931536052403792_3120323499499149723_n_zp0ej5.jpg"
+    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_1_jgzfpu.jpg"
   },
   {
     name: "عرض 5 تربونات",
@@ -78,7 +78,7 @@ const turbonOffers = [
     originalPrice: "350",
     savings: "40",
     pieces: "5",
-    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578818/5879927343848475497_f2vrqs.jpg"
+    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_2_gw3for.jpg"
   },
   {
     name: "عرض 6 تربونات",
@@ -87,7 +87,7 @@ const turbonOffers = [
     originalPrice: "420",
     savings: "60",
     pieces: "6",
-    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784154/WhatsApp_Image_2026-02-22_at_3.25.31_AM_cynsay.jpg"
+    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771844899/WhatsApp_Image_2026-02-23_at_3.06.01_AM_xvgu2h.jpg"
   }
 ];
 
