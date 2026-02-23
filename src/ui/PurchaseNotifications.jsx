@@ -66,8 +66,8 @@ const turbonOffers = [
     name: "عرض 3 تربونات",
     nameEn: "3 Turbans Offer",
     price: "210",
-    originalPrice: "225",
-    savings: "15",
+    originalPrice: "270",
+    savings: "60",
     pieces: "3",
     image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_1_jgzfpu.jpg"
   },
@@ -75,8 +75,8 @@ const turbonOffers = [
     name: "عرض 5 تربونات",
     nameEn: "5 Turbans Offer",
     price: "310",
-    originalPrice: "350",
-    savings: "40",
+    originalPrice: "450",
+    savings: "140",
     pieces: "5",
     image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_2_gw3for.jpg"
   },
@@ -84,8 +84,8 @@ const turbonOffers = [
     name: "عرض 6 تربونات",
     nameEn: "6 Turbans Offer",
     price: "360",
-    originalPrice: "420",
-    savings: "60",
+    originalPrice: "540",
+    savings: "180",
     pieces: "6",
     image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771844899/WhatsApp_Image_2026-02-23_at_3.06.01_AM_xvgu2h.jpg"
   }
