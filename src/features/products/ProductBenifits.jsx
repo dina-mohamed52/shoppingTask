@@ -67,7 +67,7 @@ export default function ProductBenefits() {
           {/* Title with Glow - أغمق */}
           <div className="relative inline-block">
             <div className="absolute inset-0 bg-gradient-to-r from-pink-700 to-pink-800 rounded-full blur-2xl opacity-20"></div>
-            <h2 className="relative text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-gray-600 px-8 py-4">
+            <h2 className="relative text-2xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-gray-600 px-8 py-4">
               {t("productBenefits.heading")}
             </h2>
           </div>
