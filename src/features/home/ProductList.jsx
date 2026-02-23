@@ -10,8 +10,8 @@ function ProductList() {
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // فلترة المنتجات لعرض الكولونات فقط (ids من 1 إلى 8)
-  const colonProducts = Data.filter(product => product.id >= 1 && product.id <= 8);
+  // فلترة المنتجات لعرض الكولونات فقط (أي منتج يحتوي على كلمة "كولون" في الاسم)
+  const colonProducts = Data.filter(product => product.name.includes("كولون"));
 
   const handlePreview = (product) => {
     const allUrls = product.productColors.map((c) => c.img);

@@ -7,6 +7,11 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
   const { t } = useTranslation();
   const count = selectedOffer?.value || 0;
 
+  // إنشاء مصفوفة منفصلة للكولونات فقط
+  const colonProducts = useMemo(() => {
+    return Data.filter(product => product.name.includes("كولون"));
+  }, []);
+
   const initialPieces = useMemo(() => {
     return Array.from({ length: count }, (_, i) => ({
       id: i + 1,
@@ -315,12 +320,12 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                       </h2>
 
                       <div className="space-y-4">
-                        {/* Product Dropdown */}
+                        {/* Product Dropdown - الآن يستخدم colonProducts بدلاً من Data */}
                         <CustomDropdown
                           id={piece.id}
                           field="name"
                           value={piece.name}
-                          options={Data}
+                          options={colonProducts}  // تم التغيير هنا
                           placeholder={t("orderCollection.selectProduct")}
                           icon={ShoppingBag}
                           getOptionLabel={(product) => product.name}

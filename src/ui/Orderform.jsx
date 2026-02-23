@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  User, Phone, MapPin, Building, Package, 
+  User, Phone, Package, 
   Truck, CreditCard, AlertCircle, CheckCircle,
   MapPinned, Home, Smartphone 
 } from "lucide-react";
@@ -35,7 +35,6 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [focusedField, setFocusedField] = useState(null);
 
   const handleOrderSuccess = () => {
     setIsModalVisible(true);
@@ -49,8 +48,11 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
   const total = Number(orderTotal) + Number(shipping);
 
   const handleChange = (e) => {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-    setErrors((err) => ({ ...err, [e.target.name]: "" }));
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   const validate = () => {
@@ -149,82 +151,16 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
     }
   };
 
-  // Field Component with Icon
-  const FormField = ({ 
-    name, 
-    type = "text", 
-    placeholder, 
-    icon: Icon, 
-    value, 
-    error,
-    isSelect = false,
-    children 
-  }) => {
-    const isFocused = focusedField === name;
-    const hasError = !!error;
-    const hasValue = !!value;
-
-    return (
-      <div className="relative group">
-        {/* Field Container */}
-        <div className={`
-          relative flex items-center bg-gray-800/50 rounded-xl border-2 transition-all duration-300
-          ${isFocused ? "border-pink-500 shadow-lg shadow-pink-500/20" : 
-            hasError ? "border-red-500/50" : 
-            hasValue ? "border-pink-500/50" : "border-gray-700"}
-          ${isSelect ? "cursor-pointer" : ""}
-        `}>
-          {/* Icon */}
-          <div className={`
-            absolute right-3 transition-all duration-300
-            ${isFocused ? "text-pink-400" : hasValue ? "text-pink-400" : "text-gray-500"}
-          `}>
-            <Icon className="w-5 h-5" />
-          </div>
-
-          {/* Input/Select */}
-          {isSelect ? (
-            <select
-              name={name}
-              value={value}
-              onChange={handleChange}
-              onFocus={() => setFocusedField(name)}
-              onBlur={() => setFocusedField(null)}
-              className="w-full bg-transparent pr-12 pl-4 py-3.5 text-gray-200 rounded-xl outline-none appearance-none cursor-pointer text-sm sm:text-base"
-            >
-              <option value="" className="bg-gray-800">{placeholder}</option>
-              {children}
-            </select>
-          ) : (
-            <input
-              type={type}
-              name={name}
-              placeholder={placeholder}
-              value={value}
-              onChange={handleChange}
-              onFocus={() => setFocusedField(name)}
-              onBlur={() => setFocusedField(null)}
-              className="w-full bg-transparent pr-12 pl-4 py-3.5 text-gray-200 rounded-xl outline-none placeholder-gray-500 text-sm sm:text-base"
-            />
-          )}
-        </div>
-
-        {/* Error Message */}
-        <AnimatePresence>
-          {error && (
-            <motion.p
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-red-400 text-xs sm:text-sm mt-1 mr-2 flex items-center gap-1"
-            >
-              <AlertCircle className="w-3 h-3" />
-              {error}
-            </motion.p>
-          )}
-        </AnimatePresence>
-      </div>
-    );
+  // دالة مساعدة لإرجاع كلاس الحقل بناءً على حالة الخطأ
+  const getFieldClass = (fieldName) => {
+    const baseClass = "w-full bg-gray-800/50 border-2 rounded-xl py-3.5 px-4 text-gray-200 outline-none transition-all duration-300 placeholder-gray-500";
+    if (errors[fieldName]) {
+      return `${baseClass} border-red-500/50 focus:border-red-500 pr-12`;
+    }
+    if (form[fieldName]) {
+      return `${baseClass} border-pink-500/50 focus:border-pink-500 pr-12`;
+    }
+    return `${baseClass} border-gray-700 focus:border-pink-500 pr-12`;
   };
 
   return (
@@ -323,56 +259,142 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
             )}
           </motion.div>
 
-          {/* Form Fields */}
+          {/* Form Fields - الحقول العادية */}
           <div className="space-y-4">
-            <FormField
-              name="name"
-              placeholder={t("orderForm.placeholders.name")}
-              icon={User}
-              value={form.name}
-              error={errors.name}
-            />
+            {/* حقل الاسم */}
+            <div className="relative">
+              <User className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+              <input
+                type="text"
+                name="name"
+                placeholder={t("orderForm.placeholders.name")}
+                value={form.name}
+                onChange={handleChange}
+                className={getFieldClass("name")}
+              />
+              <AnimatePresence>
+                {errors.name && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-red-400 text-xs sm:text-sm mt-1 mr-2 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.name}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
 
-            <FormField
-              name="phone"
-              type="tel"
-              placeholder={t("orderForm.placeholders.phone")}
-              icon={Smartphone}
-              value={form.phone}
-              error={errors.phone}
-            />
+            {/* حقل الهاتف الأول */}
+            <div className="relative">
+              <Smartphone className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+              <input
+                type="tel"
+                name="phone"
+                placeholder={t("orderForm.placeholders.phone")}
+                value={form.phone}
+                onChange={handleChange}
+                className={getFieldClass("phone")}
+              />
+              <AnimatePresence>
+                {errors.phone && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-red-400 text-xs sm:text-sm mt-1 mr-2 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.phone}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
 
-            <FormField
-              name="phone2"
-              type="tel"
-              placeholder={t("orderForm.placeholders.phone2")}
-              icon={Phone}
-              value={form.phone2}
-              error={errors.phone2}
-            />
+            {/* حقل الهاتف الثاني */}
+            <div className="relative">
+              <Phone className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+              <input
+                type="tel"
+                name="phone2"
+                placeholder={t("orderForm.placeholders.phone2")}
+                value={form.phone2}
+                onChange={handleChange}
+                className={getFieldClass("phone2")}
+              />
+              <AnimatePresence>
+                {errors.phone2 && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-red-400 text-xs sm:text-sm mt-1 mr-2 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.phone2}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
 
-            <FormField
-              name="address"
-              placeholder={t("orderForm.placeholders.address")}
-              icon={Home}
-              value={form.address}
-              error={errors.address}
-            />
+            {/* حقل العنوان */}
+            <div className="relative">
+              <Home className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+              <input
+                type="text"
+                name="address"
+                placeholder={t("orderForm.placeholders.address")}
+                value={form.address}
+                onChange={handleChange}
+                className={getFieldClass("address")}
+              />
+              <AnimatePresence>
+                {errors.address && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-red-400 text-xs sm:text-sm mt-1 mr-2 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.address}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
 
-            <FormField
-              name="governorate"
-              placeholder={t("orderForm.placeholders.governorate")}
-              icon={MapPinned}
-              value={form.governorate}
-              error={errors.governorate}
-              isSelect={true}
-            >
-              {EGYPT_GOVS.map((gov) => (
-                <option key={gov} value={gov} className="bg-gray-800 text-gray-200">
-                  {gov}
-                </option>
-              ))}
-            </FormField>
+            {/* حقل المحافظة - select */}
+            <div className="relative">
+              <MapPinned className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+              <select
+                name="governorate"
+                value={form.governorate}
+                onChange={handleChange}
+                className={`${getFieldClass("governorate")} appearance-none cursor-pointer`}
+              >
+                <option value="" className="bg-gray-800">{t("orderForm.placeholders.governorate")}</option>
+                {EGYPT_GOVS.map((gov) => (
+                  <option key={gov} value={gov} className="bg-gray-800 text-gray-200">
+                    {gov}
+                  </option>
+                ))}
+              </select>
+              <AnimatePresence>
+                {errors.governorate && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-red-400 text-xs sm:text-sm mt-1 mr-2 flex items-center gap-1"
+                  >
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.governorate}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           {/* Order Summary */}
