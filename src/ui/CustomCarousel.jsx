@@ -94,7 +94,7 @@ const CustomCarousel = () => {
                   </div>
                 </div>
                 
-                {/* Slide Indicator - Minimal */}
+                {/* Slide Indicator - Only this one (top) */}
                 <div className="absolute top-6 right-6 bg-black/50 px-4 py-2 rounded-full z-20">
                   <span className="text-white text-sm font-medium flex items-center gap-2">
                     <span>{index + 1}</span>
@@ -107,20 +107,7 @@ const CustomCarousel = () => {
           ))}
         </Carousel>
 
-        {/* Progress Bar - Minimal */}
-        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 w-48 sm:w-64 h-1 bg-white/30 rounded-full overflow-hidden z-20">
-          <div 
-            className="h-full bg-white rounded-full transition-all duration-500"
-            style={{ width: `${((currentSlide + 1) / images.length) * 100}%` }}
-          />
-        </div>
-
-        {/* Slide Counter - Minimal */}
-        <div className="absolute bottom-20 left-6 bg-black/50 px-3 py-1.5 rounded-full z-20">
-          <span className="text-xs text-white/80 font-medium">
-            {String(currentSlide + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
-          </span>
-        </div>
+        {/* Progress Bar - Removed completely */}
       </div>
 
       {/* Custom Styles for Ant Design Carousel */}
