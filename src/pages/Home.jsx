@@ -51,7 +51,7 @@ function Home() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full blur-md opacity-50 animate-pulse"></div>
               <span className="relative bg-gradient-to-r from-pink-500 to-pink-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg shadow-pink-500/30 flex items-center gap-1">
-                -42%
+                -56%
               </span>
             </div>
 
@@ -60,7 +60,7 @@ function Home() {
               {/* Current Price */}
               <div className="flex items-baseline gap-1">
                 <span className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-700 to-pink-600">
-                  150
+                  110
                 </span>
                 <span className="text-lg font-semibold text-gray-700">ج.م</span>
                 <span className="text-sm text-gray-500 mr-1"> / {t("pricing.perPiece")}</span>
