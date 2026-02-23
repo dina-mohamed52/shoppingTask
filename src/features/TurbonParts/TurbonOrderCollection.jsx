@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { 
   ShoppingBag, 
   CheckCircle, 
-  Package, 
   Palette, 
   Ruler, 
   ChevronDown, 
@@ -12,7 +11,8 @@ import {
   Ribbon,
   Flower2,
   Sparkles,
-  Heart
+  Heart,
+  X
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -28,7 +28,6 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
       id: i + 1,
       name: "",
       color: "",
-      // size is removed since it's one size
     }));
   }, [count]);
 
@@ -38,7 +37,6 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
   const [activeTab, setActiveTab] = useState("all");
 
   useEffect(() => {
-    // تحديث حالة القطع المكتملة - بدون size
     const completed = {};
     pieces.forEach(piece => {
       completed[piece.id] = !!(piece.name && piece.color);
@@ -62,7 +60,6 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // بدون size
     const invalid = pieces.some((p) => !p.name || !p.color);
 
     if (invalid) {
@@ -78,7 +75,6 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
     return product ? product.avalibeColors : [];
   };
 
-  // دالة لتحويل اسم اللون العربي إلى كود لون
   const getColorCode = (colorName) => {
     const colorMap = {
       "أبيض": "#FFFFFF",
@@ -99,13 +95,11 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
     return colorMap[colorName] || colorMap.default;
   };
 
-  // حساب نسبة الإكتمال - بدون size
   const completionPercentage = useMemo(() => {
     const completed = Object.values(completedPieces).filter(Boolean).length;
     return (completed / pieces.length) * 100;
   }, [completedPieces, pieces.length]);
 
-  // فلترة المنتجات حسب التبويب المختار
   const filteredProducts = activeTab === "all" 
     ? turbonProducts 
     : turbonProducts.filter(p => p.id === (activeTab === "bow" ? 9 : 10));
@@ -175,20 +169,22 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
         <AnimatePresence>
           {isOpen && (
             <>
+              {/* Backdrop للديسكتوب */}
               <motion.div 
-                className="fixed inset-0 z-40"
+                className="fixed inset-0 z-40 hidden md:block"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setOpenDropdown({ type: null, id: null })}
               />
               
+              {/* Dropdown للديسكتوب */}
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="absolute z-50 w-full mt-2 bg-white border border-pink-200 rounded-xl shadow-2xl overflow-hidden"
+                className="absolute z-50 w-full mt-2 bg-white border border-pink-200 rounded-xl shadow-2xl overflow-hidden hidden md:block"
               >
                 <div className="max-h-60 overflow-y-auto custom-scrollbar">
                   {options.length > 0 ? (
@@ -236,6 +232,95 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
                   )}
                 </div>
               </motion.div>
+
+              {/* Bottom Sheet للموبايل */}
+              <motion.div 
+                className="fixed inset-0 bg-black/50 z-50 md:hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setOpenDropdown({ type: null, id: null })}
+              />
+              
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-3xl shadow-2xl max-h-[80vh] flex flex-col md:hidden"
+              >
+                {/* Header */}
+                <div className="sticky top-0 bg-white border-b border-pink-100 rounded-t-3xl p-4 flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-gray-800">
+                    {field === 'name' ? 'اختر الموديل' : 'اختر اللون'}
+                  </h3>
+                  <button
+                    onClick={() => setOpenDropdown({ type: null, id: null })}
+                    className="p-2 hover:bg-pink-50 rounded-full transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-500" />
+                  </button>
+                </div>
+
+                {/* Options List */}
+                <div className="overflow-y-auto flex-1 p-4" style={{ maxHeight: "60vh" }}>
+                  <div className="space-y-2">
+                    {options.length > 0 ? (
+                      options.map((option, index) => {
+                        const optionValue = getOptionValue(option);
+                        const isSelected = optionValue === value;
+                        
+                        return (
+                          <motion.button
+                            key={index}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05 }}
+                            type="button"
+                            onClick={() => handleSelect(optionValue)}
+                            className={`w-full flex items-center gap-3 p-4 rounded-xl transition-all duration-300 ${
+                              isSelected 
+                                ? "bg-gradient-to-r from-pink-50 to-pink-100 border-2 border-pink-500" 
+                                : "hover:bg-pink-50 border-2 border-transparent"
+                            }`}
+                          >
+                            {field === 'color' && (
+                              <div 
+                                className="w-8 h-8 rounded-full border-2 border-white shadow-md"
+                                style={{ backgroundColor: getColorCode(option) }}
+                              />
+                            )}
+                            
+                            {renderOption ? renderOption(option) : (
+                              <span className={`flex-1 text-right text-base ${isSelected ? "text-pink-600 font-bold" : "text-gray-700"}`}>
+                                {getOptionLabel(option)}
+                              </span>
+                            )}
+                            
+                            {isSelected && (
+                              <CheckCircle className="w-5 h-5 text-pink-500" />
+                            )}
+                          </motion.button>
+                        );
+                      })
+                    ) : (
+                      <div className="px-4 py-8 text-center text-gray-500">
+                        {t("orderCollection.noOptions", "لا توجد خيارات متاحة")}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Close Button */}
+                <div className="sticky bottom-0 bg-white border-t border-pink-100 p-4">
+                  <button
+                    onClick={() => setOpenDropdown({ type: null, id: null })}
+                    className="w-full bg-pink-50 text-pink-600 py-3 rounded-xl font-medium hover:bg-pink-100 transition-colors"
+                  >
+                    إغلاق
+                  </button>
+                </div>
+              </motion.div>
             </>
           )}
         </AnimatePresence>
@@ -276,7 +361,7 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
                   </div>
                 </motion.div>
 
-                {/* Progress Bar - بدون size */}
+                {/* Progress Bar */}
                 <div className="max-w-2xl mx-auto">
                   <div className="flex justify-between text-sm text-gray-600 mb-2">
                     <span>{t("orderCollection.completed", "القطع المكتملة")}</span>
@@ -301,6 +386,7 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
               {/* Tabs for Product Filtering */}
               <div className="flex justify-center gap-4 mb-8">
                 <button
+                  type="button"
                   onClick={() => setActiveTab("all")}
                   className={`px-6 py-2 rounded-full transition-all duration-300 ${
                     activeTab === "all"
@@ -311,6 +397,7 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
                   {t("turbonOrder.all", "الكل")}
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActiveTab("bow")}
                   className={`px-6 py-2 rounded-full transition-all duration-300 flex items-center gap-2 ${
                     activeTab === "bow"
@@ -322,6 +409,7 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
                   {t("turbonOrder.bow", "فيونكه")}
                 </button>
                 <button
+                  type="button"
                   onClick={() => setActiveTab("flower")}
                   className={`px-6 py-2 rounded-full transition-all duration-300 flex items-center gap-2 ${
                     activeTab === "flower"
@@ -338,7 +426,7 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-2">
                 {pieces.map((piece, index) => {
                   const colors = getAvailableColors(piece.name);
-                  const isCompleted = piece.name && piece.color; // بدون size
+                  const isCompleted = piece.name && piece.color;
                   
                   return (
                     <motion.div
@@ -417,8 +505,6 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
                             getOptionValue={(product) => product.name}
                           />
 
-                          {/* Size Dropdown - Removed since it's one size */}
-
                           {/* Color Dropdown */}
                           <CustomDropdown
                             id={piece.id}
@@ -468,7 +554,7 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
                         <div className="mt-3 text-center">
                           <span className="inline-flex items-center gap-1 bg-pink-50 px-3 py-1 rounded-full text-xs text-pink-600">
                             <Ruler className="w-3 h-3" />
-                           (one size) مقاس واحد 
+                            مقاس واحد (one size)
                           </span>
                         </div>
                       </div>

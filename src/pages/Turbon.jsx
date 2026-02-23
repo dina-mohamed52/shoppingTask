@@ -42,41 +42,41 @@ function Turbon() {
     <div className="min-h-screen bg-gradient-to-b from-white via-pink-50/30 to-white">
       
       {/* Carousel Section - First Thing */}
-     {/* Carousel Section - First Thing */}
-<section className="relative w-full">
-  {/* Carousel Container بدون أي حدود أو خلفيات */}
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.8 }}
-    className="relative w-full"
-  >
-    {/* Brand Badge فوق الكاروسيل - يمكنك إبقاؤه أو إزالته حسب رغبتك */}
-    <div className="flex justify-center mb-4 px-4">
-      <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-2 rounded-full shadow-lg border border-pink-200">
-        <Sparkles className="w-4 h-4 text-pink-500" />
-        <span className="text-sm font-semibold text-gray-700">
-          {t("turbonPage.brand", "BabyStyle Turbans")}
-        </span>
-        <Sparkles className="w-4 h-4 text-pink-500" />
-      </div>
-    </div>
-    
-    {/* Carousel - بدون حدود أو ظلال */}
-    <div className="relative w-full">
-      <TurbonCarousal />
-    </div>
+      <section className="relative w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative w-full"
+        >
+          {/* Brand Badge فوق الكاروسيل */}
+          <div className="flex justify-center mb-4 px-4">
+            <div className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm px-6 py-2 rounded-full shadow-lg border border-pink-200">
+              <Sparkles className="w-4 h-4 text-pink-500" />
+              <span className="text-sm font-semibold text-gray-700">
+                {t("turbonPage.brand", "BabyStyle Turbans")}
+              </span>
+              <Sparkles className="w-4 h-4 text-pink-500" />
+            </div>
+          </div>
+          
+          {/* Carousel */}
+          <div className="relative w-full">
+            <TurbonCarousal />
+          </div>
+          <TurbonProductList />
 
-    {/* Scroll Indicator */}
-    <motion.div
-      animate={{ y: [0, 10, 0] }}
-      transition={{ repeat: Infinity, duration: 2 }}
-      className="flex justify-center mt-8"
-    >
-      <ArrowDown className="w-6 h-6 text-pink-400" />
-    </motion.div>
-  </motion.div>
-</section>
+          {/* Scroll Indicator */}
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="flex justify-center mt-8"
+          >
+            <ArrowDown className="w-6 h-6 text-pink-400" />
+          </motion.div>
+        </motion.div>
+      </section>
+
       {/* Header Section بعد الكاروسيل */}
       <section className="relative py-12 text-center overflow-hidden">
         {/* Decorative Background */}
@@ -107,8 +107,10 @@ function Turbon() {
           </div>
         </motion.div>
       </section>
-<TurbonOfferBtn/>
-      {/* Offers Section with Glass Effect */}
+
+      <TurbonOfferBtn/>
+
+      {/* Offers Section */}
       <section className="relative mt-8">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-50/50 to-transparent"></div>
         
@@ -125,7 +127,7 @@ function Turbon() {
         </motion.div>
       </section>
 
-      {/* Order Collection Section with Entrance Animation */}
+      {/* Order Collection Section */}
       {selectedOffer && (
         <motion.section
           initial={{ opacity: 0, y: 50 }}
@@ -151,27 +153,25 @@ function Turbon() {
         </motion.section>
       )}
 
-      {/* Product List Section - Hidden when offer selected */}
-      {!selectedOffer && (
-        <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative mt-16"
-        >
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-700">
-              {t("turbonPage.products", "تشكيلتنا")}
-            </h2>
-          </div>
-          <TurbonProductList />
-        </motion.section>
-      )}
+      {/* Product List Section - تظهر دائماً (تم إزالة الشرط) */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="relative mt-16"
+      >
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-700">
+            {t("turbonPage.products", "تشكيلتنا")}
+          </h2>
+        </div>
+      </motion.section>
 
       <OfferCountDown />
-<ProductBenifits />
-      {/* Order Form Section - Shows when order is complete */}
+      <ProductBenifits />
+
+      {/* Order Form Section */}
       {order && order.length > 0 && (
         <motion.section
           initial={{ opacity: 0, y: 50 }}

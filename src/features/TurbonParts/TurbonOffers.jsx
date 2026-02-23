@@ -100,7 +100,7 @@ function TurbonOffers({ setSelectedOffer, scrollToOrderCollection }) {
           {/* Main Title */}
           <h2 className="text-4xl md:text-5xl font-black mb-6">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-600 via-pink-500 to-gray-700">
-              {t("turbonOffers.heading", "اشترِ بالجملة ووفّر أكثر")}
+              {t("turbonOffers.heading", "اختر عروضنا ووفّر أكثر")}
             </span>
           </h2>
 
