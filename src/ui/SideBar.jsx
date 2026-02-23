@@ -33,13 +33,13 @@ function SideBar() {
       gradient: "from-pink-400 via-pink-500 to-pink-600",
       special: true,
     },
-    // {
-    //   to: "/offers",
-    //   icon: <Sparkles size={20} />,
-    //   label: { ar: "عروض الكلونات", en: " colons Offers" },
-    //   gradient: "from-pink-300 to-pink-500",
-    //   onClick: handleScrollToOffers,
-    // },
+    {
+      to: "/SummerColon",
+      icon: <Sparkles size={20} />,
+      label: { ar: "كولونات  صيفي", en: " summer colons" },
+      gradient: "from-pink-300 to-pink-500",
+      onClick: handleScrollToOffers,
+    },
   ];
 
   return (

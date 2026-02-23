@@ -10,6 +10,7 @@ import OrderForm from "./ui/Orderform";
 
 import Offers from "./features/home/Offers";
 import Turbon from "./pages/Turbon";
+import SummerColon from "./pages/SummerColon";
 
 function App() {
   const queryClient = new QueryClient();
@@ -25,6 +26,8 @@ function App() {
             <Route path="/orderForm" element={<OrderForm />} />
             <Route path="/Turbon" element={<Turbon />} />
             <Route path="/Offers" element={<Offers />} />
+            <Route path="/SummerColon" element={<SummerColon />} />
+
 
             {/* <Route path="/orderCollection" element={<OrderCollection/>}/> */}
           </Route>
