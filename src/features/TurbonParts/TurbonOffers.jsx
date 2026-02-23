@@ -25,8 +25,8 @@ function TurbonOffers({ setSelectedOffer, scrollToOrderCollection }) {
       badge: t("turbonOffers.popular", "الأكثر طلباً"),
       badgeColor: "from-pink-500 to-pink-600",
       icon: <Ribbon className="w-5 h-5" />,
-      savings: 15,
-      originalPrice: 225
+      savings: 60,
+      originalPrice: 270
     },
     { 
       quantity: 5, 
@@ -35,8 +35,8 @@ function TurbonOffers({ setSelectedOffer, scrollToOrderCollection }) {
       badge: t("turbonOffers.bestValue", "أفضل قيمة"),
       badgeColor: "from-pink-600 to-rose-600",
       icon: <Crown className="w-5 h-5" />,
-      savings: 40,
-      originalPrice: 350
+      savings: 140,
+      originalPrice: 450
     },
     { 
       quantity: 6, 
@@ -45,8 +45,8 @@ function TurbonOffers({ setSelectedOffer, scrollToOrderCollection }) {
       badge: t("turbonOffers.bestDeal", "أفضل عرض"),
       badgeColor: "from-pink-700 to-pink-800",
       icon: <Star className="w-5 h-5" />,
-      savings: 60,
-      originalPrice: 420
+      savings: 180,
+      originalPrice: 540
     },
   ].sort((a, b) => a.price - b.price);
 
