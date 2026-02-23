@@ -126,4 +126,33 @@ export const Data = [
   //   avalibeColors: ["أبيض", "أسود", "بينك"],
   //   image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756993485/5895652765307357192_wrampt.jpg",
   // },
+
+// التربونات الجديدة
+  {
+    id: 9,
+    name: "تربون فيونكه",
+    productColors: [
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784215/WhatsApp_Image_2026-02-21_at_10.28.05_AM_3_epttvz.jpg" },
+ { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784119/WhatsApp_Image_2026-02-21_at_10.28.06_AM_1_rnv8kp.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.05_AM_1_evw3eg.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784125/WhatsApp_Image_2026-02-21_at_10.28.05_AM_2_mdqyi4.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784119/WhatsApp_Image_2026-02-21_at_10.28.06_AM_1_rnv8kp.jpg" },
+    ],
+    avalibeColors: ["أبيض", "أوف وايت", "أسود", "أحمر", "بينك", "كافيه"],
+    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784215/WhatsApp_Image_2026-02-21_at_10.28.05_AM_3_epttvz.jpg",
+  },
+  {
+    id: 10,
+    name: "تربون ورده",
+    productColors: [
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784154/WhatsApp_Image_2026-02-21_at_10.28.04_AM_qpwxo0.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_2_gw3for.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_1_jgzfpu.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784144/WhatsApp_Image_2026-02-21_at_10.28.05_AM_cuebet.jpg" },
+      // { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784119/WhatsApp_Image_2026-02-21_at_10.28.06_AM_1_rnv8kp.jpg" },
+    ],
+    avalibeColors: ["أبيض", "أوف وايت", "أصفر", "بيج", "بينك", "موف"],
+    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784154/WhatsApp_Image_2026-02-21_at_10.28.04_AM_qpwxo0.jpg",
+  },
+
 ];

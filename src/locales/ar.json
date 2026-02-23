@@ -217,7 +217,8 @@
     "purchaseNotifications": {
             "buyer": "{{name}} من {{city}}",
             "offer": "باقة {{offer}} قطع",
-            "orderedNow": "طلب الآن"
+            "orderedNow": "طلب الآن",
+            "newPurchase":"شراء جديد"
         },
         
    "confirmOrder": {
@@ -232,8 +233,51 @@
     "thanks2": "سيتم تحضير طلبك بعناية ❤️",
     "gotIt": "حسناً، شكراً!"
   },
+
+
   "common": {
     "min": "دقيقة"
+  },
+   "reviews": {
+    "title": "آراء عملائنا",
+    "review": "تقييم",
+    "customerSatisfaction": "رضا العملاء"
+  },
+  "TorderCollection": {
+      "selectProduct":"اختاري التربون"
+  },
+ "turbonOfferBtn": {
+    "mobileText": "عروض التربونات",
+    "text": "🎀 عروض التربونات 🎀"
+  },
+  
+  
+  
+  
+  
+  
+  
+  "carousel": {
+    "slide1": {
+      "title": "تصميم أنيق",
+      "subtitle": "عصري وراقي"
+    },
+    "slide2": {
+      "title": "جمال خالد",
+      "subtitle": "تشكيلة الابيض والرمادي"
+    },
+    "slide3": {
+      "title": "أسلوب راقٍ",
+      "subtitle": "حياة عصرية"
+    },
+    "slide4": {
+      "title": "لمسات عصرية",
+      "subtitle": "تفاصيل وردية مميزة"
+    },
+    "slide5": {
+      "title": "إعادة تعريف الفخامة",
+      "subtitle": "أناقة باللون الابيض"
+    }
   }
 
    

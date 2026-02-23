@@ -8,7 +8,7 @@ function AppLayOut() {
             <header>
                 <Header cartItemCount={5}/>
             </header>
-            <main className="flex-grow" >
+            <main className="flex-grow pt-20" >
                 <Outlet/>
             </main>
             <Footer/>

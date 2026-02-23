@@ -201,7 +201,8 @@
     "purchaseNotifications": {
         "buyer": "{{name}} from {{city}}",
         "offer": "Package of {{offer}} pieces",
-        "orderedNow": "just ordered"
+        "orderedNow": "just ordered",
+        "newPurchase": "New purchase"
     },
   
   "sizes": {
@@ -226,5 +227,52 @@
     "thanks1": "Thank you for choosing us!",
     "thanks2": "Prepared with care ❤️",
     "gotIt": "Got it, thanks!"
+  },
+   "reviews": {
+    "title": "Our Customers' Reviews",
+    "review": "Review",
+    "customerSatisfaction": "Customer Satisfaction"
+  },
+ "TorderCollection": {
+      "selectProduct":"Select Turbon"
+  },
+  "turbonOfferBtn": {
+    "mobileText": "Turban Offers",
+    "text": "🎀 Turban Offers 🎀"
+  },
+
+
+
+
+
+
+
+
+
+
+
+  "carousel": {
+    "slide1": {
+      "title": "Elegant Design",
+      "subtitle": "Modern & Chic"
+    },
+    "slide2": {
+      "title": "Timeless Beauty",
+      "subtitle": "white & Gray Collection"
+    },
+    "slide3": {
+      "title": "Sophisticated Style",
+      "subtitle": "Modern Living"
+    },
+    "slide4": {
+      "title": "Contemporary Vibes",
+      "subtitle": "Pink Accents"
+    },
+    "slide5": {
+      "title": "Luxury Redefined",
+      "subtitle": "white Elegance"
+    }
   }
+  
+  
 }
