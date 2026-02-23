@@ -154,11 +154,11 @@ function TurbonProductList() {
                 { name: "أبيض", code: "#FFFFFF" },
                 { name: "أسود", code: "#000000" },
                 { name: "بينك", code: "#FF69B4" },
-                { name: "موف", code: "#C8A2C8" },
+              { name: "أوف وايت", code: "#FAF9F6" },
                 { name: "كافيه", code: "#8B5E3C" },
-                { name: "بيج", code: "#F5E6D3" },
+                // { name: "بيج", code: "#F5E6D3" },
                 { name: "أحمر", code: "#FF4444" },
-                { name: "لبني", code: "oklch(70.7% 0.165 254.624)" }
+                // { name: "لبني", code: "oklch(70.7% 0.165 254.624)" }
               ].map((color, idx) => (
                 <div key={idx} className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full border border-pink-200">
                   <div 
@@ -187,9 +187,9 @@ function TurbonProductList() {
                 { name: "أصفر", code: "#FFD700" },
                 { name: "بينك", code: "#FF69B4" },
                 { name: "موف", code: "#C8A2C8" },
-                { name: "روز", code: "#FFC0CB" },
+                // { name: "روز", code: "#FFC0CB" },
                 { name: "بيج", code: "#F5E6D3" },
-                { name: "لبني", code: "oklch(70.7% 0.165 254.624)" },
+                // { name: "لبني", code: "oklch(70.7% 0.165 254.624)" },
                 { name: "أوف وايت", code: "#F8F8FF" }
               ].map((color, idx) => (
                 <div key={idx} className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full border border-pink-200">
