@@ -1,21 +1,22 @@
 import T from "../assets/7.png";
 import { useTranslation } from "react-i18next";
-import { Ruler, Sparkles } from "lucide-react";
+import { Ruler, Sparkles, HelpCircle, ArrowRightCircle } from "lucide-react";
 import { useState } from "react";
 
 function SizeTable({ alt = "جدول المقاسات", className = "w-full max-w-md mx-auto" }) {
   const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
+  const [showTip, setShowTip] = useState(false);
 
   // بيانات جدول المقاسات للعرض بشكل نصي (اختياري)
   const sizeData = [
-    { size: "1-0", age: "من حديث الولاده لحد 8 شهور" },
-    { size: "2-1", age: "من 9 شهور لحد سنتين " },
-    { size: "4-2", age: "من سنتين ل4 سنين" },
-    { size: "6-4", age: "من 4 ل6 سنين" },
-    { size: "8-6", age: "من 6 ل8 سنين" },
-    { size: "10-8", age: "من 8 ل10 سنين" },
-    { size: "12-10", age: "من 10 ل12 سنه" },
+    { size: "1-0", age: "من حديث الولاده لحد 6 شهور" },
+    { size: "2-1", age: "من 9 شهور لحد سنه ونص " },
+    { size: "4-2", age: "من سنه ونص ل 3 سنين" },
+    { size: "6-4", age: "من 3 ل5 سنين" },
+    { size: "8-6", age: "من 5 ل7 سنين" },
+    { size: "10-8", age: "من 7 ل9 سنين" },
+    { size: "12-10", age: "من 9 ل11 سنه" },
     { size: "14-12", age: "من 12 ل14 سنه" },
   ];
 
@@ -56,31 +57,10 @@ function SizeTable({ alt = "جدول المقاسات", className = "w-full max-
             </div>
           </div>
 
-          {/* Image Container */}
-          <div className="relative max-w-2xl mx-auto">
-            {/* Pink Glow Behind Image */}
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-2xl blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
-            
-            {/* Image Frame */}
-            <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 p-2 rounded-2xl shadow-2xl border border-pink-500/20">
-              {/* Image with Zoom Effect */}
-              <img
-                src={T}
-                alt={alt}
-                className={`${className} rounded-xl shadow-lg object-contain transform transition-all duration-700 ${
-                  isHovered ? "scale-105" : "scale-100"
-                }`}
-              />
-              
-              {/* Corner Decorations */}
-              <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-pink-400 rounded-tl-xl"></div>
-              <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-pink-400 rounded-tr-xl"></div>
-              <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-pink-400 rounded-bl-xl"></div>
-              <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-pink-400 rounded-br-xl"></div>
-            </div>
-          </div>
+          {/* Image Container - Commented out as in original */}
+          {/* <div className="relative max-w-2xl mx-auto">...</div> */}
 
-          {/* Size Chart Text Version (Optional - Can be hidden on mobile) */}
+          {/* Size Chart Text Version */}
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
             {sizeData.map((item, index) => (
               <div 
@@ -97,13 +77,84 @@ function SizeTable({ alt = "جدول المقاسات", className = "w-full max-
             ))}
           </div>
 
-          {/* Footer Note */}
+          {/* Footer Note - Original */}
           <div className="mt-6 text-center">
             <p className="text-gray-400 text-sm flex items-center justify-center gap-2">
               <span className="w-1 h-1 bg-pink-400 rounded-full"></span>
               {t("sizeTable.note", "اختر المقاس المناسب لطفلك")}
               <span className="w-1 h-1 bg-pink-400 rounded-full"></span>
             </p>
+          </div>
+
+          {/* New Stylish Tip Tab */}
+          <div className="mt-8 relative">
+            {/* Toggle Button */}
+            <button
+              onClick={() => setShowTip(!showTip)}
+              className="w-full group/tip relative overflow-hidden rounded-2xl bg-gradient-to-r from-pink-600/20 to-pink-500/10 p-4 border border-pink-500/30 hover:border-pink-400 transition-all duration-300"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 opacity-0 group-hover/tip:opacity-10 transition-opacity duration-300"></div>
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <HelpCircle className="w-6 h-6 text-pink-400" />
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-pink-400 rounded-full animate-ping"></span>
+                  </div>
+                  <span className="text-gray-300 font-medium">
+                    {showTip ? "اخفاء النصيحة" : "محتار بين مقاسين؟"}
+                  </span>
+                </div>
+                <div className={`transform transition-transform duration-300 ${showTip ? 'rotate-180' : ''}`}>
+                  <ArrowRightCircle className="w-5 h-5 text-pink-400" />
+                </div>
+              </div>
+            </button>
+
+            {/* Tip Content with Animation */}
+            <div 
+              className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                showTip ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+              }`}
+            >
+              <div className="relative p-6 rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-pink-500/20">
+                {/* Decorative Elements */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-pink-500/10 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-0 left-0 w-20 h-20 bg-pink-500/10 rounded-full blur-2xl"></div>
+                
+                {/* Tip Content */}
+                <div className="relative text-right">
+                  <h3 className="text-lg font-bold text-pink-400 mb-3 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5" />
+                    نصيحة مهمة
+                    <Sparkles className="w-5 h-5" />
+                  </h3>
+                  
+                  <p className="text-gray-300 leading-relaxed">
+                    إذا كان طفلك بين مقاسين، ننصحك باختيار المقاس الأكبر. 
+                   . هذا يضمن راحة طفلك ويتيح له مساحة للنمو، 
+                  </p>
+                  
+                  <div className="mt-4 flex items-center justify-center gap-4">
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-gray-400">مقاس أصغر</span>
+                      <span className="text-red-400">✕</span>
+                    </div>
+                    <div className="w-12 h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-green-400">✓</span>
+                      <span className="text-gray-200 font-medium">المقاس الأكبر</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 p-3 bg-pink-500/10 rounded-xl border border-pink-500/20">
+                    <p className="text-pink-300 text-sm flex items-start gap-2">
+                      <span className="text-pink-400 text-lg">💡</span>
+                      <span>المقاس الأكبر يوفر راحة أكثر ومدة استخدام أطول لطفلك</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
