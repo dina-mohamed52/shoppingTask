@@ -67,16 +67,27 @@ function Offers({ setSelectedOffer, scrollToOrderCollection }) {
       </div>
 
       {/* Title Badge - "عروضنا" */}
-      <div className="relative mb-12 flex justify-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full blur-xl opacity-30"></div>
-        <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 px-8 py-4 rounded-full border border-pink-500/30 shadow-2xl flex items-center gap-3">
-          <Sparkles className="w-6 h-6 text-pink-400 animate-spin-slow" />
-          <h2 className="text-2xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-white">
-            {t("offers.title")}
-          </h2>
-          <Sparkles className="w-6 h-6 text-pink-400 animate-spin-slow" style={{ animationDelay: "0.5s" }} />
-        </div>
-      </div>
+     <div className="relative mb-12 flex justify-center px-4 sm:px-0">
+  <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full blur-xl opacity-30"></div>
+  <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 px-4 sm:px-8 py-4 rounded-full border border-pink-500/30 shadow-2xl flex items-center gap-2 sm:gap-3 max-w-full">
+    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400 animate-spin-slow flex-shrink-0" />
+    <h2 className="text-xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-white whitespace-nowrap overflow-x-auto scrollbar-hide text-center">
+      {t("offers.title")}
+    </h2>
+    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400 animate-spin-slow flex-shrink-0" style={{ animationDelay: "0.5s" }} />
+  </div>
+</div>
+
+{/* أضف هذا الـ style لإخفاء شريط التمرير */}
+<style jsx>{`
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+`}</style>
 
       {/* Offers Grid */}
       <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">

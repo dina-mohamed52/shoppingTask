@@ -106,12 +106,12 @@ function ProductCard({ product, onPreview }) {
           </h3>
           
           {/* Price Tag */}
-          <div className="flex items-center gap-1 bg-pink-50 px-2 py-1 rounded-full">
+          {/* <div className="flex items-center gap-1 bg-pink-50 px-2 py-1 rounded-full">
             <span className="text-pink-600 font-bold text-sm">
               {product.price || "150"}
             </span>
             <span className="text-gray-500 text-xs">ج.م</span>
-          </div>
+          </div> */}
         </div>
 
         {/* Available Colors - من ملف الداتا */}
