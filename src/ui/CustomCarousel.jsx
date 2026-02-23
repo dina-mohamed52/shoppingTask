@@ -84,7 +84,7 @@ const CustomCarousel = () => {
                 />
                 
                 {/* Gradient Overlay - Pink & Gray */}
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-pink-500/30 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-pink-500/20 to-transparent"></div>
                 
                 {/* Animated Text Overlay */}
                 <div className="absolute inset-0 flex flex-col items-center justify-end pb-20 sm:pb-32 z-20">
