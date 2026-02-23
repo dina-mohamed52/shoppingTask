@@ -55,13 +55,13 @@ export const Data = [
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578733/5879927343848475502_acxioj.jpg" },
     ],
     avalibeColors: ["لبني", "روز"],
-    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578733/5879927343848475501_heygzw.jpg",
+    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784154/WhatsApp_Image_2026-02-22_at_3.25.31_AM_cynsay.jpg",
   },
   {
     id: 6,
     name: "كولون ساده بفيونكه",
     productColors: [
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578733/5879927343848475498_hbb6kj.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771847667/WhatsApp_Image_2026-02-23_at_3.51.36_AM_e1pkvx.jpg" },
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578735/5879927343848475500_dirovl.jpg" },
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578747/5879927343848475499_njzuba.jpg" },
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578818/5879927343848475497_f2vrqs.jpg" },
