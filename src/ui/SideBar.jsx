@@ -23,7 +23,7 @@ function SideBar() {
     {
       to: "/",
       icon: <Home size={20} />,
-      label: { ar: "كولونات رسومات", en: "Home" },
+      label: { ar: "كولونات رسومات شتوي", en: "Home" },
       gradient: "from-pink-400 to-pink-500",
     },
     {
