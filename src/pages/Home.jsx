@@ -70,7 +70,7 @@ function Home() {
               <div className="flex items-center gap-2">
                 <span className="text-gray-400 line-through text-xl">250 ج.م</span>
                 <span className="bg-pink-100 text-pink-600 text-xs font-semibold px-2 py-1 rounded-full">
-                  وفر 100 ج.م
+                  وفر 140 ج.م
                 </span>
               </div>
             </div>

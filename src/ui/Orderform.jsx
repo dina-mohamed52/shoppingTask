@@ -1,24 +1,55 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  User, Phone, Package, 
-  Truck, CreditCard, AlertCircle, CheckCircle,
-  MapPinned, Home, Smartphone 
+import {
+  User,
+  Phone,
+  Package,
+  Truck,
+  CreditCard,
+  AlertCircle,
+  CheckCircle,
+  MapPinned,
+  Home,
+  Smartphone,
 } from "lucide-react";
 import ConfirmOrderModal from "./ConfirmOrderModal";
 
 const EGYPT_GOVS = [
-  "القاهرة", "الجيزة", "الإسكندرية", "الشرقية", "الدقهلية",
-  "البحيرة", "المنيا", "القليوبية", "سوهاج", "الغربية",
-  "أسيوط", "الفيوم", "كفر الشيخ", "قنا", "بني سويف",
-  "أسوان", "دمياط", "الإسماعيلية", "الأقصر", "بورسعيد",
-  "السويس", "مطروح", "شمال سيناء", "جنوب سيناء",
-  "الوادي الجديد", "البحر الأحمر",
+  "القاهرة",
+  "الجيزة",
+  "الإسكندرية",
+  "الشرقية",
+  "الدقهلية",
+  "البحيرة",
+  "المنيا",
+  "القليوبية",
+  "سوهاج",
+  "الغربية",
+  "أسيوط",
+  "الفيوم",
+  "كفر الشيخ",
+  "قنا",
+  "بني سويف",
+  "أسوان",
+  "دمياط",
+  "الإسماعيلية",
+  "الأقصر",
+  "بورسعيد",
+  "السويس",
+  "مطروح",
+  "شمال سيناء",
+  "جنوب سيناء",
+  "الوادي الجديد",
+  "البحر الأحمر",
 ];
 
 const HIGH_SHIPPING_GOVS = [
-  "مطروح", "البحر الأحمر", "الوادي الجديد", "جنوب سيناء", "شمال سيناء",
+  "مطروح",
+  "البحر الأحمر",
+  "الوادي الجديد",
+  "جنوب سيناء",
+  "شمال سيناء",
 ];
 
 export default function OrderForm({ order, selectedOffer, formRef }) {
@@ -49,9 +80,9 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -61,13 +92,16 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
     const phone2 = form.phone2.trim();
 
     if (!form.name.trim()) newErrors.name = t("orderForm.errors.name");
-    if (!/^01[0-9]{9}$/.test(phone1)) newErrors.phone = t("orderForm.errors.phone");
-    if (phone2 && !/^01[0-9]{9}$/.test(phone2)) newErrors.phone2 = t("orderForm.errors.phone2");
+    if (!/^01[0-9]{9}$/.test(phone1))
+      newErrors.phone = t("orderForm.errors.phone");
+    if (phone2 && !/^01[0-9]{9}$/.test(phone2))
+      newErrors.phone2 = t("orderForm.errors.phone2");
     if (phone1 && phone2 && phone1 === phone2) {
       newErrors.phone2 = t("orderForm.errors.duplicatePhone");
     }
     if (!form.address.trim()) newErrors.address = t("orderForm.errors.address");
-    if (!form.governorate.trim()) newErrors.governorate = t("orderForm.errors.governorate");
+    if (!form.governorate.trim())
+      newErrors.governorate = t("orderForm.errors.governorate");
 
     return newErrors;
   };
@@ -115,17 +149,30 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
       });
 
       if (res.ok) {
-        const purchaseValue = parseFloat(total) || 0;
+        const purchaseValue = Number(total) || 0;
+        // const purchaseValue = parseFloat(total) || 0;
         const currency = "EGP";
         const eventId = "order_" + Date.now();
 
         try {
+          // if (window.fbq && purchaseValue > 0) {
+          //   window.fbq("track", "Purchase", {
+          //     value: purchaseValue,
+          //     currency: currency,
+          //     eventID: eventId,
+          //   });
           if (window.fbq && purchaseValue > 0) {
             window.fbq("track", "Purchase", {
               value: purchaseValue,
-              currency: currency,
+              currency: "EGP",
               eventID: eventId,
+              contents: safeOrder.map((item, index) => ({
+                id: item.name || `product_${index}`,
+                quantity: 1,
+              })),
+              content_type: "product",
             });
+            // }
           }
         } catch (e) {
           console.log("FB Pixel error:", e);
@@ -145,7 +192,9 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         setMessage("❌ " + t("orderForm.messages.error"));
       }
     } catch (err) {
-      setMessage("❌ " + t("orderForm.messages.network", { error: err.message }));
+      setMessage(
+        "❌ " + t("orderForm.messages.network", { error: err.message }),
+      );
     } finally {
       setLoading(false);
     }
@@ -153,7 +202,8 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
 
   // دالة مساعدة لإرجاع كلاس الحقل بناءً على حالة الخطأ
   const getFieldClass = (fieldName) => {
-    const baseClass = "w-full bg-gray-800/50 border-2 rounded-xl py-3.5 px-4 text-gray-200 outline-none transition-all duration-300 placeholder-gray-500";
+    const baseClass =
+      "w-full bg-gray-800/50 border-2 rounded-xl py-3.5 px-4 text-gray-200 outline-none transition-all duration-300 placeholder-gray-500";
     if (errors[fieldName]) {
       return `${baseClass} border-red-500/50 focus:border-red-500 pr-12`;
     }
@@ -242,7 +292,9 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
                         <span className="text-pink-400 text-xs">
                           {t("orderForm.size")} {item.size}
                         </span>
-                        <span className="text-gray-400 text-xs">{item.color}</span>
+                        <span className="text-gray-400 text-xs">
+                          {item.color}
+                        </span>
                       </motion.li>
                     ))}
                 </ul>
@@ -374,9 +426,15 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
                 onChange={handleChange}
                 className={`${getFieldClass("governorate")} appearance-none cursor-pointer`}
               >
-                <option value="" className="bg-gray-800">{t("orderForm.placeholders.governorate")}</option>
+                <option value="" className="bg-gray-800">
+                  {t("orderForm.placeholders.governorate")}
+                </option>
                 {EGYPT_GOVS.map((gov) => (
-                  <option key={gov} value={gov} className="bg-gray-800 text-gray-200">
+                  <option
+                    key={gov}
+                    value={gov}
+                    className="bg-gray-800 text-gray-200"
+                  >
                     {gov}
                   </option>
                 ))}
@@ -410,7 +468,9 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
                   <Package className="w-4 h-4 text-pink-400" />
                   {t("orderForm.summary.products", { price: orderTotal })}
                 </span>
-                <span className="text-gray-200 font-medium">{orderTotal} ج.م</span>
+                <span className="text-gray-200 font-medium">
+                  {orderTotal} ج.م
+                </span>
               </div>
 
               <div className="flex justify-between items-center">
@@ -418,7 +478,9 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
                   <Truck className="w-4 h-4 text-pink-400" />
                   {t("orderForm.summary.shipping", { price: shipping })}
                 </span>
-                <span className="text-gray-200 font-medium">{shipping} ج.م</span>
+                <span className="text-gray-200 font-medium">
+                  {shipping} ج.م
+                </span>
               </div>
 
               {HIGH_SHIPPING_GOVS.includes(form.governorate) && (
@@ -461,14 +523,17 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
               <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-pink-600 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
 
               {/* Button */}
-              <div className={`
+              <div
+                className={`
                 relative flex items-center justify-center gap-2 w-full py-4 rounded-xl font-semibold
                 transition-all duration-300 transform
-                ${loading
-                  ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-gray-900 to-gray-800 text-white border border-pink-500/30 hover:scale-105 active:scale-95"
+                ${
+                  loading
+                    ? "bg-gray-700 text-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-gray-900 to-gray-800 text-white border border-pink-500/30 hover:scale-105 active:scale-95"
                 }
-              `}>
+              `}
+              >
                 {loading ? (
                   <>
                     <div className="w-5 h-5 border-2 border-pink-400 border-t-transparent rounded-full animate-spin"></div>
