@@ -135,7 +135,12 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         العنوان: `${form.governorate} - ${form.address.trim()}`,
         الاوردر: safeOrder
           .filter((item) => item?.name)
-          .map((item) => `${item.name} - ${item.size} - ${item.color}`)
+          // .map((item) => `${item.name} - ${item.size} - ${item.color}`)
+          .map((item) =>
+            item.size
+              ? `${item.name} - ${item.size} - ${item.color}`
+              : `${item.name} - ${item.color}`,
+          )
           .join(" | "),
         المبلغ: `${total}`,
       },
