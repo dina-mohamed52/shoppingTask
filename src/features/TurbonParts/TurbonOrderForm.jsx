@@ -13,7 +13,7 @@ import {
   Home,
   Smartphone,
 } from "lucide-react";
-import ConfirmOrderModal from "./ConfirmOrderModal";
+import ConfirmOrderModal from "../../ui/ConfirmOrderModal";
 
 const EGYPT_GOVS = [
   "القاهرة",
@@ -52,7 +52,7 @@ const HIGH_SHIPPING_GOVS = [
   "شمال سيناء",
 ];
 
-export default function OrderForm({ order, selectedOffer, formRef }) {
+export default function TurbonOrderForm({ order, selectedOffer, formRef }) {
   const { t } = useTranslation();
   const safeOrder = Array.isArray(order) ? order : [];
   const [form, setForm] = useState({
@@ -135,8 +135,8 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         العنوان: `${form.governorate} - ${form.address.trim()}`,
         الاوردر: safeOrder
           .filter((item) => item?.name)
-          .map((item) => `${item.name} - ${item.size} - ${item.color}`)
-          
+          //   .map((item) => `${item.name} - ${item.color}`)
+          .map((item) => [item.name, item.color].filter(Boolean).join(" - "))
           .join(" | "),
         المبلغ: `${total}`,
       },

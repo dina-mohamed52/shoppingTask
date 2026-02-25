@@ -11,6 +11,7 @@ import OfferCountDown from "../ui/OfferCountDown";
 import ProductBenifits from "../features/products/ProductBenifits";
 import TurbonOfferBtn from "../features/TurbonParts/TurbonOfferBtn";
 import PurchaseNotifications from "../ui/PurchaseNotifications";
+import TurbonOrderForm from "../features/TurbonParts/TurbonOrderForm";
 
 function Turbon() {
   const { t } = useTranslation();
@@ -180,10 +181,16 @@ function Turbon() {
           transition={{ duration: 0.6 }}
           className="bg-gradient-to-b from-gray-50 to-pink-50/30 py-16 mt-8"
         >
-          <OrderForm 
+          {/* <OrderForm 
             order={order} 
             selectedOffer={selectedOffer} 
             formRef={formRef} 
+          /> */}
+          <TurbonOrderForm
+           order={order} 
+            selectedOffer={selectedOffer} 
+            formRef={formRef} 
+          
           />
         </motion.section>
       )}
