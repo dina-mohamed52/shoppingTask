@@ -128,8 +128,8 @@ export default function PurchaseNotifications() {
         });
       }
 
-      setTimeout(() => setNotification(null), 7000);
-    }, 20000);
+      setTimeout(() => setNotification(null), 5000);
+    }, 40000);
 
     return () => clearInterval(interval);
   }, []);
