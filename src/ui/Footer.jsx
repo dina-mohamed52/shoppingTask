@@ -7,7 +7,8 @@ export default function Footer() {
   const isRTL = i18n.language === "ar";
 
   return (
-    <footer className="relative bg-gradient-to-b from-gray-900 to-gray-950 text-gray-300 py-8 overflow-hidden">
+    <footer className="relative z-[50] bg-gradient-to-b from-gray-900 to-gray-950 text-gray-300
+     py-8 overflow-hidden">
       {/* Simple Decorative Element */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-32 h-32 bg-pink-500 rounded-full filter blur-3xl"></div>

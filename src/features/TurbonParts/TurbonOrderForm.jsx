@@ -217,7 +217,7 @@ export default function TurbonOrderForm({ order, selectedOffer, formRef }) {
   return (
     <div
       ref={formRef}
-      className="flex justify-center items-center my-8 px-4 sm:px-0"
+      className="flex justify-center items-center  my-8 px-4 sm:px-0"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -231,7 +231,7 @@ export default function TurbonOrderForm({ order, selectedOffer, formRef }) {
         {/* Main Form */}
         <form
           onSubmit={handleSubmit}
-          className="relative bg-gradient-to-br from-gray-900 to-gray-950 shadow-2xl rounded-2xl p-6 sm:p-8 border border-pink-500/30 overflow-hidden"
+          className="relative z-[50] bg-gradient-to-br from-gray-900 to-gray-950 shadow-2xl rounded-2xl p-6 sm:p-8 border border-pink-500/30 overflow-hidden"
         >
           {/* Decorative Elements */}
           <div className="absolute inset-0 opacity-10">

@@ -47,7 +47,7 @@ function SideBar() {
       {/* Hamburger Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed top-2 z-[70] bg-gray-800/90 backdrop-blur-sm p-3 rounded-xl border
+        className={`fixed top-2 z-[100] bg-gray-800/90 backdrop-blur-sm p-3 rounded-xl border
            border-pink-500/50 text-pink-400 hover:bg-gradient-to-r hover:from-pink-500
             hover:to-pink-600 hover:text-white transition-all duration-300 shadow-lg shadow-pink-500/20
              hover:shadow-pink-500/40 ${

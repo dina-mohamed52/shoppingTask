@@ -12,7 +12,7 @@ function OfferButton() {
   };
 
   return (
-    <div className="fixed sm:absolute sm:bottom-[-10%] bottom-4 sm:right-[30%] right-[25%] z-[100]">
+    <div className="fixed sm:absolute sm:bottom-[-10%] bottom-4 sm:right-[30%] right-[25%] z-[40]">
       {/* Button Container with Gradient Border */}
       <div className="relative group">
         {/* Glow Effect */}
