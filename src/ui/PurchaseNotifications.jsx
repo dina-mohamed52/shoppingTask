@@ -101,8 +101,8 @@ export default function PurchaseNotifications() {
       const randomName = names[Math.floor(Math.random() * names.length)];
       const randomCity = cities[Math.floor(Math.random() * cities.length)];
       
-      // 40% فرصة لظهور عرض تربونات (لجعلها مميزة)
-      const showTurbonOffer = Math.random() < 0.4;
+      // 30% فرصة لظهور عرض تربونات (لجعلها مميزة)
+      const showTurbonOffer = Math.random() < 0.3;
       
       if (showTurbonOffer) {
         // عرض تربونات مميز
@@ -128,8 +128,8 @@ export default function PurchaseNotifications() {
         });
       }
 
-      setTimeout(() => setNotification(null), 5000);
-    }, 10000);
+      setTimeout(() => setNotification(null), 7000);
+    }, 20000);
 
     return () => clearInterval(interval);
   }, []);
