@@ -75,7 +75,7 @@ function ProductCard({ product, onPreview }) {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-[20rem] object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-[20rem] object-auto transition-transform duration-700 group-hover:scale-110"
         />
 
         {/* Badge (Tag) */}

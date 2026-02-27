@@ -138,24 +138,24 @@ export default function PurchaseNotifications() {
   const isTurbonOffer = notification?.type === 'turbon';
 
   return (
-    <div className="fixed bottom-24 left-[50%] transform -translate-x-1/2 sm:left-auto sm:right-8 sm:translate-x-0 z-[80]">
+    <div className="fixed bottom-20 left-0 right-0 sm:left-auto sm:right-8 sm:bottom-24 z-[80] flex justify-center sm:block px-3 sm:px-0">
       <AnimatePresence>
         {notification && (
           <motion.div
             key={notification.id}
-            initial={{ opacity: 0, x: lang === "ar" ? 50 : -50, y: 20 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            exit={{ opacity: 0, x: lang === "ar" ? 50 : -50, y: 20 }}
-            transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
-            className="relative group"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.4, type: "spring", stiffness: 200 }}
+            className="relative group w-full max-w-[320px] sm:max-w-sm mx-auto"
           >
             {/* Glow Effect - مختلف للتربونات */}
-            <div className={`absolute -inset-1 bg-gradient-to-r rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300 ${
+            <div className={`absolute -inset-1 bg-gradient-to-r rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300 ${
               isTurbonOffer ? 'from-purple-500 to-pink-600' : 'from-pink-500 to-pink-600'
             }`}></div>
 
             {/* Main Notification Card - تصميم مميز للتربونات */}
-            <div className={`relative flex items-start gap-2 bg-gradient-to-br px-4 py-3 rounded-2xl shadow-2xl border overflow-hidden w-80 sm:w-96 ${
+            <div className={`relative flex items-start gap-2.5 bg-gradient-to-br px-3 py-2.5 sm:px-4 sm:py-3 rounded-2xl shadow-2xl border overflow-hidden ${
               isTurbonOffer 
                 ? 'from-purple-900 to-gray-950 border-purple-500/30' 
                 : 'from-gray-900 to-gray-950 border-pink-500/30'
@@ -163,60 +163,61 @@ export default function PurchaseNotifications() {
               
               {/* شعار خاص للتربونات - مع z-index عالي */}
               {isTurbonOffer && (
-                <div className="absolute top-0 right-0 bg-gradient-to-l from-purple-500 to-pink-500 px-3 py-1 rounded-bl-lg rounded-tr-lg z-30">
-                  <span className="text-white text-xs font-bold flex items-center gap-1">
-                    <Crown className="w-3 h-3" />
-                    عرض تربونات
+                <div className="absolute top-0 right-0 bg-gradient-to-l from-purple-500 to-pink-500 px-2.5 py-0.5 rounded-bl-lg rounded-tr-lg z-30">
+                  <span className="text-white text-[10px] sm:text-xs font-bold flex items-center gap-1">
+                    <Crown className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                    <span className="hidden xs:inline">عرض تربونات</span>
+                    <span className="xs:hidden">تربونات</span>
                   </span>
                 </div>
               )}
 
               {/* Decorative Elements */}
               <div className="absolute inset-0 opacity-10">
-                <div className={`absolute -top-10 -right-10 w-20 h-20 rounded-full filter blur-2xl ${
+                <div className={`absolute -top-10 -right-10 w-16 h-16 sm:w-20 sm:h-20 rounded-full filter blur-2xl ${
                   isTurbonOffer ? 'bg-purple-500' : 'bg-pink-500'
                 }`}></div>
-                <div className="absolute -bottom-10 -left-10 w-20 h-20 bg-gray-500 rounded-full filter blur-2xl"></div>
+                <div className="absolute -bottom-10 -left-10 w-16 h-16 sm:w-20 sm:h-20 bg-gray-500 rounded-full filter blur-2xl"></div>
               </div>
 
               {/* Product Image Container - مع margin-top للتربونات */}
-              <div className={`relative ${isTurbonOffer ? 'mt-6' : ''}`}>
+              <div className={`relative flex-shrink-0 ${isTurbonOffer ? 'mt-5 sm:mt-6' : ''}`}>
                 <div className={`absolute inset-0 bg-gradient-to-r rounded-lg blur-md opacity-50 animate-pulse ${
                   isTurbonOffer ? 'from-purple-500 to-pink-500' : 'from-pink-500 to-pink-600'
                 }`}></div>
                 <img
                   src={isTurbonOffer ? notification.offer.image : notification.product.image}
                   alt={isTurbonOffer ? notification.offer.name : notification.product.name}
-                  className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-lg border-2 shadow-lg object-cover transform transition-transform duration-300 group-hover:scale-110 ${
+                  className={`relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-lg border-2 shadow-lg object-cover transform transition-transform duration-300 group-hover:scale-110 ${
                     isTurbonOffer ? 'border-purple-400' : 'border-pink-400'
                   }`}
                 />
                 {/* Live Badge */}
                 <div className="absolute -top-1 -right-1">
-                  <span className="relative flex h-2.5 w-2.5">
+                  <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-pink-500"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-pink-500"></span>
                   </span>
                 </div>
               </div>
 
               {/* Content - مع margin-top للتربونات */}
-              <div className={`relative flex-1 ${isTurbonOffer ? 'mt-6' : ''}`}>
+              <div className={`relative flex-1 min-w-0 ${isTurbonOffer ? 'mt-5 sm:mt-6' : ''}`}>
                 {/* Header with Icon */}
-                <div className="flex items-center gap-1 mb-1">
-                  <ShoppingBag className={`w-3.5 h-3.5 ${
+                <div className="flex items-center gap-1 mb-0.5">
+                  <ShoppingBag className={`w-3 h-3 sm:w-3.5 sm:h-3.5 flex-shrink-0 ${
                     isTurbonOffer ? 'text-purple-400' : 'text-pink-400'
                   }`} />
-                  <span className="text-xs text-gray-400">
+                  <span className="text-[10px] sm:text-xs text-gray-400 truncate">
                     {isTurbonOffer 
-                      ? "✨ عرض خاص على التربونات" 
+                      ? "✨ عرض خاص" 
                       : t("purchaseNotifications.newPurchase")}
                   </span>
                 </div>
 
                 {/* Buyer Info */}
-                <div className="flex flex-col gap-1">
-                  <span className="text-gray-200 font-medium text-sm">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-gray-200 font-medium text-[11px] sm:text-sm truncate">
                     {t("purchaseNotifications.buyer", {
                       name: notification.name,
                       city: notification.city,
@@ -224,59 +225,59 @@ export default function PurchaseNotifications() {
                   </span>
 
                   {/* City with Icon */}
-                  <div className="flex items-center gap-1 text-xs text-gray-400">
-                    <MapPin className={`w-3 h-3 ${
+                  <div className="flex items-center gap-1 text-[10px] sm:text-xs text-gray-400">
+                    <MapPin className={`w-2.5 h-2.5 sm:w-3 sm:h-3 flex-shrink-0 ${
                       isTurbonOffer ? 'text-purple-400' : 'text-pink-400'
                     }`} />
-                    <span>{notification.city}</span>
+                    <span className="truncate">{notification.city}</span>
                   </div>
 
                   {/* Product/Offer Details */}
                   {isTurbonOffer ? (
                     // عرض تفاصيل التربونات بشكل مميز
                     <div className="mt-1 space-y-1">
-                      <span className="text-sm font-bold text-purple-300">
+                      <span className="text-[11px] sm:text-sm font-bold text-purple-300 block truncate">
                         {lang === "ar" ? notification.offer.name : notification.offer.nameEn}
                       </span>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs line-through text-gray-500">
+                      <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                        <span className="text-[9px] sm:text-xs line-through text-gray-500">
                           {notification.offer.originalPrice} ج.م
                         </span>
-                        <span className="text-base font-bold text-purple-400">
+                        <span className="text-xs sm:text-sm font-bold text-purple-400">
                           {notification.offer.price} ج.م
                         </span>
-                        <span className="text-xs bg-purple-500/30 text-purple-300 px-2 py-0.5 rounded-full">
+                        <span className="text-[8px] sm:text-xs bg-purple-500/30 text-purple-300 px-1.5 sm:px-2 py-0.5 rounded-full whitespace-nowrap">
                           وفر {notification.offer.savings} ج.م
                         </span>
                       </div>
-                      <span className="text-xs text-gray-400 block">
-                        {notification.offer.pieces} تربونات • {Math.round(notification.offer.price / notification.offer.pieces)} ج.م / للقطعة
+                      <span className="text-[8px] sm:text-xs text-gray-400 block truncate">
+                        {notification.offer.pieces} تربونات • {Math.round(notification.offer.price / notification.offer.pieces)} ج.م / قطعة
                       </span>
                     </div>
                   ) : (
                     // منتج عادي
                     <>
-                      <span className="text-xs text-gray-300 line-clamp-1">
+                      <span className="text-[10px] sm:text-xs text-gray-300 line-clamp-1">
                         {lang === "ar"
                           ? notification.product.name
                           : notification.product.nameEn}
                       </span>
                       {/* Offer and Order Time */}
-                      <div className="flex items-center justify-between mt-1">
-                        <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full ${
+                      <div className="flex items-center justify-between mt-0.5">
+                        <div className={`flex items-center gap-1 px-1.5 sm:px-2 py-0.5 rounded-full ${
                           isTurbonOffer ? 'bg-purple-500/20' : 'bg-pink-500/20'
                         }`}>
-                          <span className={`text-xs font-bold ${
+                          <span className={`text-[9px] sm:text-xs font-bold whitespace-nowrap ${
                             isTurbonOffer ? 'text-purple-300' : 'text-pink-300'
                           }`}>
                             {t("purchaseNotifications.offer", {
                               offer: notification.offer,
                             })}
                           </span>
-                          <span className="text-gray-400 text-xs">•</span>
-                          <span className="text-gray-400 text-xs flex items-center gap-1">
-                            <Clock className="w-2.5 h-2.5" />
-                            {t("purchaseNotifications.now", "الآن")}
+                          <span className="text-gray-400 text-[8px] sm:text-xs">•</span>
+                          <span className="text-gray-400 text-[8px] sm:text-xs flex items-center gap-0.5 whitespace-nowrap">
+                            <Clock className="w-2 h-2 sm:w-2.5 sm:h-2.5" />
+                            الآن
                           </span>
                         </div>
                       </div>
@@ -285,7 +286,7 @@ export default function PurchaseNotifications() {
 
                   {/* WhatsApp Icon - موجود في الحالتين */}
                   <div className="absolute bottom-0 right-0">
-                    <FaWhatsapp className={`w-3.5 h-3.5 ${
+                    <FaWhatsapp className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${
                       isTurbonOffer ? 'text-purple-400/60' : 'text-pink-400/60'
                     }`} />
                   </div>
