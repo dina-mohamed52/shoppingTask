@@ -62,6 +62,7 @@ const HIGH_SHIPPING_GOVS = [
   "شمال سيناء",
 ];
 
+
 export default function OrderForm({ order, selectedOffer, formRef }) {
   const { t } = useTranslation();
   const safeOrder = Array.isArray(order) ? order : [];
@@ -145,8 +146,13 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         العنوان: `${form.governorate} - ${form.address.trim()}`,
         الاوردر: safeOrder
           .filter((item) => item?.name)
-          .map((item) => `${item.name} - ${item.size} - ${item.color}`)
-          
+          .map((item) => {
+            const name = item.name?.trim() || "";
+            const size = item.size?.trim() || "";
+            const color = item.color?.trim() || "";
+
+            return `${name} - ${size} - ${color}`;
+          })
           .join(" | "),
         المبلغ: `${total}`,
       },
@@ -236,8 +242,10 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
         className="relative w-full max-w-2xl"
       >
         {/* Glow Effect */}
-        <div className="absolute 
-        -inset-1 bg-gradient-to-r from-pink-500 to-pink-600 rounded-3xl blur-xl opacity-20"></div>
+        <div
+          className="absolute 
+        -inset-1 bg-gradient-to-r from-pink-500 to-pink-600 rounded-3xl blur-xl opacity-20"
+        ></div>
 
         {/* Main Form */}
         <form
