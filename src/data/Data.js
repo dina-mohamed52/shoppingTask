@@ -64,7 +64,7 @@ export const Data = [
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771847667/WhatsApp_Image_2026-02-23_at_3.51.36_AM_e1pkvx.jpg" },
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578735/5879927343848475500_dirovl.jpg" },
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578747/5879927343848475499_njzuba.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/ls""sss""سv1756578818/5879927343848475497_f2vrqs.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1756578818/5879927343848475497_f2vrqs.jpg" },
       {img:"https://res.cloudinary.com/dxenvgjv5/image/upload/v1768763987/WhatsApp_Image_2026-01-18_at_11.14.25_AM_jyketh.jpg"}
     ],
     avalibeColors: [ "أسود","ابيض", "رمادي", "روز","بيج"],
