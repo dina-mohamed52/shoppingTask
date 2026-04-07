@@ -9,7 +9,8 @@ import {
   ArrowRightIcon,
   SparklesIcon,
   ChevronLeftIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
@@ -18,11 +19,23 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   const [rotation, setRotation] = useState(0);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
   const [selectedColor, setSelectedColor] = useState({});
+  const [mobileView, setMobileView] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [timeLeft, setTimeLeft] = useState({
     hours: 23,
     minutes: 59,
     seconds: 59
   });
+
+  // Check mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setMobileView(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Countdown timer
   useEffect(() => {
@@ -37,21 +50,21 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
         }
         return prev;
       });
-    }, 2000);
+    }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Auto rotation
+  // Auto rotation - disabled on mobile
   useEffect(() => {
     let interval;
-    if (isAutoRotating) {
+    if (isAutoRotating && !mobileView && trendingProducts.length > 0) {
       interval = setInterval(() => {
-        setRotation(prev => prev + 72); // 360/5 = 72 degrees per step
+        setRotation(prev => prev + 72);
         setActiveIndex(prev => (prev + 1) % trendingProducts.length);
       }, 3000);
     }
     return () => clearInterval(interval);
-  }, [isAutoRotating]);
+  }, [isAutoRotating, mobileView]);
 
   // Transform HalfColoneData
   const trendingProducts = HalfColoneData?.map(product => ({
@@ -88,6 +101,17 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   };
 
   const getCardStyle = (index) => {
+    if (mobileView) {
+      return {
+        transform: `translateX(0px) translateZ(0px) scale(1)`,
+        opacity: activeIndex === index ? 1 : 0,
+        zIndex: activeIndex === index ? 10 : 0,
+        transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+        position: activeIndex === index ? 'relative' : 'absolute',
+        display: activeIndex === index ? 'block' : 'none'
+      };
+    }
+    
     const angle = (index * angleStep - rotation) * (Math.PI / 180);
     const radius = 280;
     const x = Math.sin(angle) * radius;
@@ -107,19 +131,19 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   const activeProduct = trendingProducts[activeIndex];
 
   return (
-    <div className="relative py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden min-h-screen">
+    <div className="relative py-8 md:py-12 px-3 md:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden min-h-screen">
       {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
         </div>
-        {[...Array(20)].map((_, i) => (
+        {!mobileView && [...Array(20)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 0.1, scale: 1 }}
             transition={{ delay: i * 0.1, duration: 0.5 }}
-            className="absolute text-pink-400"
+            className="absolute text-pink-400 hidden md:block"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
@@ -133,119 +157,141 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
 
       <div className="relative max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-6 md:mb-12">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full text-white text-sm font-medium mb-4 shadow-lg">
-              <FireIcon className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full text-white text-xs md:text-sm font-medium mb-3 md:mb-4 shadow-lg">
+              <FireIcon className="w-3 h-3 md:w-4 md:h-4" />
               <span>🔥 الأكثر طلباً اليوم</span>
             </div>
             
-            <h2 className="text-3xl md:text-5xl font-bold mb-3">
+            <h2 className="text-2xl md:text-5xl font-bold mb-2 md:mb-3">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400">
-               حصرياً كولكشين صيف 2026
+                {mobileView ? "كولكشين صيف 2026" : "حصرياً كولكشين صيف 2026"}
               </span>
             </h2>
             
-            <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
-              جولة على أحدث تشكيلات الصيف - هاف كولون وبندانات عصرية
+            <p className="text-gray-400 max-w-2xl mx-auto text-xs md:text-base px-4">
+              {mobileView ? "هاف كولون وبندانات صيفية عصرية" : "جولة على أحدث تشكيلات الصيف - هاف كولون وبندانات عصرية"}
             </p>
           </motion.div>
 
-          {/* Countdown Timer */}
+          {/* Countdown Timer - Simplified on Mobile */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="mt-6 inline-flex items-center gap-3 md:gap-4 bg-white/10 backdrop-blur-sm rounded-2xl px-4 md:px-6 py-2 md:py-3 shadow-lg border border-pink-500/30"
+            className="mt-4 md:mt-6 inline-flex items-center gap-2 md:gap-4 bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl px-3 md:px-6 py-1.5 md:py-3 shadow-lg border border-pink-500/30"
           >
             <div className="flex items-center gap-1 md:gap-2">
-              <ClockIcon className="w-4 h-4 md:w-5 md:h-5 text-pink-400" />
-              <span className="text-xs md:text-sm text-white font-medium">ينتهي العرض خلال:</span>
+              <ClockIcon className="w-3 h-3 md:w-5 md:h-5 text-pink-400" />
+              <span className="text-[10px] md:text-sm text-white font-medium">ينتهي خلال:</span>
             </div>
-            <div className="flex gap-2 md:gap-3">
+            <div className="flex gap-1 md:gap-3">
               {[
-                { value: timeLeft.hours, label: "ساعات" },
-                { value: timeLeft.minutes, label: "دقائق" },
-                { value: timeLeft.seconds, label: "ثواني" }
+                { value: timeLeft.hours, label: "س" },
+                { value: timeLeft.minutes, label: "د" },
+                { value: timeLeft.seconds, label: "ث" }
               ].map((item, idx) => (
                 <div key={idx} className="text-center">
-                  <div className="bg-gradient-to-br from-pink-600 to-pink-700 text-white rounded-lg px-2 md:px-3 py-1 min-w-[40px] md:min-w-[50px]">
-                    <span className="text-base md:text-xl font-bold">{String(item.value).padStart(2, '0')}</span>
+                  <div className="bg-gradient-to-br from-pink-600 to-pink-700 text-white rounded-lg px-1.5 md:px-3 py-0.5 md:py-1 min-w-[30px] md:min-w-[50px]">
+                    <span className="text-sm md:text-xl font-bold">{String(item.value).padStart(2, '0')}</span>
                   </div>
-                  <span className="text-[10px] md:text-xs text-gray-400">{item.label}</span>
+                  <span className="text-[8px] md:text-xs text-gray-400">{item.label}</span>
                 </div>
               ))}
             </div>
           </motion.div>
         </div>
 
-        {/* 3D Carousel */}
-        <div className="relative h-[500px] md:h-[600px] perspective-1000">
-          {/* Navigation Buttons */}
-          <button
-            onClick={handlePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
-          >
-            <ChevronLeftIcon className="w-6 h-6 text-white" />
-          </button>
-          
-          <button
-            onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
-          >
-            <ChevronRightIcon className="w-6 h-6 text-white" />
-          </button>
+        {/* 3D Carousel - Mobile Optimized */}
+        <div className="relative h-[450px] md:h-[600px] perspective-1000">
+          {/* Navigation Buttons - Only on Desktop */}
+          {!mobileView && (
+            <>
+              <button
+                onClick={handlePrev}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
+              >
+                <ChevronLeftIcon className="w-6 h-6 text-white" />
+              </button>
+              
+              <button
+                onClick={handleNext}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-sm rounded-full p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
+              >
+                <ChevronRightIcon className="w-6 h-6 text-white" />
+              </button>
+            </>
+          )}
+
+          {/* Mobile Swipe Indicators */}
+          {mobileView && (
+            <div className="absolute top-1/2 -translate-y-1/2 left-2 right-2 z-20 flex justify-between pointer-events-none">
+              <div className="bg-white/10 backdrop-blur-sm rounded-full p-2 pointer-events-auto cursor-pointer" onClick={handlePrev}>
+                <ChevronLeftIcon className="w-5 h-5 text-white" />
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-full p-2 pointer-events-auto cursor-pointer" onClick={handleNext}>
+                <ChevronRightIcon className="w-5 h-5 text-white" />
+              </div>
+            </div>
+          )}
 
           {/* 3D Container */}
-          <div className="absolute inset-0 flex items-center justify-center preserve-3d">
+          <div className={`absolute inset-0 flex items-center justify-center ${!mobileView ? 'preserve-3d' : ''}`}>
             {trendingProducts.map((product, index) => (
               <motion.div
                 key={product.id}
                 style={getCardStyle(index)}
-                className="absolute w-[280px] md:w-[320px] cursor-pointer"
-                whileHover={{ scale: 1.05 }}
+                className={`${mobileView ? 'w-full max-w-[320px] mx-auto px-4' : 'absolute w-[280px] md:w-[320px]'} cursor-pointer`}
+                whileHover={!mobileView ? { scale: 1.05 } : {}}
                 transition={{ duration: 0.3 }}
-                onClick={() => setActiveIndex(index)}
+                onClick={() => {
+                  if (mobileView) {
+                    setSelectedProduct(product);
+                  } else {
+                    setActiveIndex(index);
+                  }
+                }}
               >
                 <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-pink-500/30 backdrop-blur-sm">
                   {/* Product Image */}
-                  <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
+                  <div className="relative h-56 md:h-72 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-contain p-4"
+                      className="w-full h-full object-contain p-3 md:p-4"
                     />
                     
                     {/* Discount Badge */}
-                    <div className="absolute top-3 right-3 z-10 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold shadow-lg">
+                    <div className="absolute top-2 right-2 md:top-3 md:right-3 z-10 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-xs md:text-sm font-bold shadow-lg">
                       -{product.discount}%
                     </div>
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-4">
-                    <h3 className="font-bold text-white text-base md:text-lg mb-1 line-clamp-2">
+                  <div className="p-3 md:p-4">
+                    <h3 className="font-bold text-white text-sm md:text-lg mb-1 line-clamp-2">
                       {product.name}
                     </h3>
                     
-                    <p className="text-xs text-pink-400 font-semibold mb-2">{product.brand}</p>
+                    <p className="text-[10px] md:text-xs text-pink-400 font-semibold mb-2">{product.brand}</p>
 
                     {/* Colors */}
                     {product.colors && product.colors.length > 0 && (
-                      <div className="mb-3">
+                      <div className="mb-2 md:mb-3">
                         <div className="flex gap-1 flex-wrap">
-                          {product.colors.slice(0, 4).map((color, idx) => (
+                          {product.colors.slice(0, mobileView ? 3 : 4).map((color, idx) => (
                             <button
                               key={idx}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedColor({ ...selectedColor, [product.id]: color });
                               }}
-                              className={`w-5 h-5 rounded-full border-2 transition-all ${
+                              className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-2 transition-all ${
                                 selectedColor[product.id] === color 
                                   ? 'border-pink-500 scale-110' 
                                   : 'border-gray-600'
@@ -263,26 +309,29 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
                               }}
                             />
                           ))}
+                          {product.colors.length > 3 && mobileView && (
+                            <span className="text-[10px] text-gray-400">+{product.colors.length - 3}</span>
+                          )}
                         </div>
                       </div>
                     )}
 
                     {/* Rating */}
-                    <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-3">
                       <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
-                          <StarSolidIcon key={i} className={`w-3.5 h-3.5 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-600'}`} />
+                          <StarSolidIcon key={i} className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-600'}`} />
                         ))}
                       </div>
-                      <span className="text-xs text-gray-400">({product.reviews})</span>
+                      <span className="text-[10px] md:text-xs text-gray-400">({product.reviews})</span>
                     </div>
 
                     {/* Price */}
-                    <div className="flex items-baseline gap-2 mb-3">
-                      <span className="text-lg md:text-xl font-bold text-white">
+                    <div className="flex items-baseline gap-1 md:gap-2 mb-2 md:mb-3">
+                      <span className="text-base md:text-xl font-bold text-white">
                         {product.price} ج.م
                       </span>
-                      <span className="text-xs text-gray-400 line-through">
+                      <span className="text-[10px] md:text-xs text-gray-400 line-through">
                         {product.originalPrice} ج.م
                       </span>
                     </div>
@@ -294,25 +343,11 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
                           e.stopPropagation();
                           onViewProduct?.(product);
                         }}
-                        className="flex-1 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-2 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1"
+                        className="flex-1 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-1.5 md:py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1"
                       >
-                        <EyeIcon className="w-4 h-4" />
+                        <EyeIcon className="w-3 h-3 md:w-4 md:h-4" />
                         معاينة
                       </button>
-                      {/* <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          const selectedData = {
-                            ...product,
-                            selectedColor: selectedColor[product.id]
-                          };
-                          onAddToCart?.(selectedData);
-                        }}
-                        className="flex-1 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-2 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1"
-                      >
-                        <ShoppingBagIcon className="w-4 h-4" />
-                        شراء
-                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -320,52 +355,140 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
             ))}
           </div>
 
-          {/* Center Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-r from-pink-500/30 to-purple-500/30 rounded-full blur-3xl pointer-events-none" />
+          {/* Center Glow - Reduced on Mobile */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 bg-gradient-to-r from-pink-500/30 to-purple-500/30 rounded-full blur-3xl pointer-events-none" />
         </div>
 
-       
-
-        {/* Auto-rotate Indicator */}
-        <div className="flex justify-center mt-8">
-          <div className="flex gap-2">
-            {trendingProducts.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => {
-                  setIsAutoRotating(false);
-                  const newRotation = idx * angleStep;
-                  setRotation(newRotation);
-                  setActiveIndex(idx);
-                  setTimeout(() => setIsAutoRotating(true), 5000);
-                }}
-                className={`transition-all duration-300 rounded-full ${
-                  activeIndex === idx
-                    ? 'w-8 h-2 bg-gradient-to-r from-pink-500 to-pink-600'
-                    : 'w-2 h-2 bg-gray-600 hover:bg-pink-400'
-                }`}
-              />
-            ))}
+        {/* Mobile Progress Indicator */}
+        {mobileView && (
+          <div className="flex justify-center mt-6">
+            <div className="flex gap-1.5">
+              {trendingProducts.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setActiveIndex(idx);
+                    const newRotation = idx * angleStep;
+                    setRotation(newRotation);
+                  }}
+                  className={`transition-all duration-300 rounded-full ${
+                    activeIndex === idx
+                      ? 'w-6 h-1.5 bg-gradient-to-r from-pink-500 to-pink-600'
+                      : 'w-1.5 h-1.5 bg-gray-600'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Desktop Auto-rotate Indicator */}
+        {!mobileView && (
+          <div className="flex justify-center mt-8">
+            <div className="flex gap-2">
+              {trendingProducts.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setIsAutoRotating(false);
+                    const newRotation = idx * angleStep;
+                    setRotation(newRotation);
+                    setActiveIndex(idx);
+                    setTimeout(() => setIsAutoRotating(true), 5000);
+                  }}
+                  className={`transition-all duration-300 rounded-full ${
+                    activeIndex === idx
+                      ? 'w-8 h-2 bg-gradient-to-r from-pink-500 to-pink-600'
+                      : 'w-2 h-2 bg-gray-600 hover:bg-pink-400'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* View All Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="text-center mt-12"
+          className="text-center mt-8 md:mt-12"
         >
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all"
+            className="inline-flex items-center gap-2 px-6 md:px-8 py-2 md:py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full font-semibold text-sm md:text-base shadow-lg hover:shadow-xl transition-all"
           >
             <span>عرض جميع المنتجات</span>
-            <ArrowRightIcon className="w-5 h-5" />
+            <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5" />
           </motion.button>
         </motion.div>
       </div>
+
+      {/* Mobile Product Details Modal */}
+      <AnimatePresence>
+        {selectedProduct && mobileView && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+            onClick={() => setSelectedProduct(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl max-w-sm w-full overflow-hidden border border-pink-500/30"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative">
+                <button
+                  onClick={() => setSelectedProduct(null)}
+                  className="absolute top-2 right-2 z-10 bg-black/50 rounded-full p-1"
+                >
+                  <XMarkIcon className="w-5 h-5 text-white" />
+                </button>
+                <img
+                  src={selectedProduct.image}
+                  alt={selectedProduct.name}
+                  className="w-full h-64 object-contain bg-gradient-to-br from-gray-700 to-gray-800 p-4"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-2">{selectedProduct.name}</h3>
+                <p className="text-pink-400 text-sm mb-4">{selectedProduct.brand}</p>
+                
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center">
+                    {[...Array(5)].map((_, i) => (
+                      <StarSolidIcon key={i} className={`w-4 h-4 ${i < Math.floor(selectedProduct.rating) ? 'text-yellow-400' : 'text-gray-600'}`} />
+                    ))}
+                  </div>
+                  <span className="text-sm text-gray-400">({selectedProduct.reviews})</span>
+                </div>
+
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-2xl font-bold text-white">{selectedProduct.price} ج.م</span>
+                  <span className="text-sm text-gray-400 line-through">{selectedProduct.originalPrice} ج.م</span>
+                  <span className="text-sm text-green-400">وفر {selectedProduct.originalPrice - selectedProduct.price} ج.م</span>
+                </div>
+
+                <button
+                  onClick={() => {
+                    onViewProduct?.(selectedProduct);
+                    setSelectedProduct(null);
+                  }}
+                  className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2"
+                >
+                  <EyeIcon className="w-5 h-5" />
+                  معاينة المنتج
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style jsx>{`
         .perspective-1000 {
