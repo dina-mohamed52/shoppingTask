@@ -326,13 +326,13 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
                   transition={{ duration: 0.3 }}
                   className="w-full max-w-[320px] mx-auto"
                 >
-                  <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-pink-500/30 backdrop-blur-sm">
+                  <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl mt-20 overflow-hidden shadow-2xl border border-pink-500/30 backdrop-blur-sm">
                     {/* Product Image */}
-                    <div className="relative h-56 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
+                    <div className="relative h-[20rem] overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
                       <img
                         src={trendingProducts[activeIndex]?.image}
                         alt={trendingProducts[activeIndex]?.name}
-                        className="w-full h-full object-contain p-3"
+                        className="w-full h-full object-cover p-3"
                       />
                       
                       {/* Discount Badge */}
