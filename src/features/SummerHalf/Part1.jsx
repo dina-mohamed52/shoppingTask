@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
 import {
@@ -21,6 +21,9 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   const [selectedColor, setSelectedColor] = useState({});
   const [mobileView, setMobileView] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const autoScrollRef = useRef(null);
   const [timeLeft, setTimeLeft] = useState({
     hours: 23,
     minutes: 59,
@@ -54,19 +57,10 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
     return () => clearInterval(timer);
   }, []);
 
-  // Auto rotation - disabled on mobile
-  useEffect(() => {
-    let interval;
-    if (isAutoRotating && !mobileView && trendingProducts.length > 0) {
-      interval = setInterval(() => {
-        setRotation(prev => prev + 72);
-        setActiveIndex(prev => (prev + 1) % trendingProducts.length);
-      }, 3000);
-    }
-    return () => clearInterval(interval);
-  }, [isAutoRotating, mobileView]);
 
-  // Transform HalfColoneData
+
+
+
   const trendingProducts = HalfColoneData?.map(product => ({
     id: product.id,
     name: product.name,
@@ -83,20 +77,81 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
     sizes: product.sizes || []
   })) || [];
 
+
+  // Auto scroll for mobile
+  useEffect(() => {
+    if (mobileView && isAutoRotating && trendingProducts.length > 0) {
+      autoScrollRef.current = setInterval(() => {
+        setActiveIndex(prev => (prev + 1) % trendingProducts.length);
+      }, 3000);
+    }
+    return () => {
+      if (autoScrollRef.current) {
+        clearInterval(autoScrollRef.current);
+      }
+    };
+  }, [mobileView, isAutoRotating, trendingProducts.length]);
+
+  // Auto rotation for desktop
+  useEffect(() => {
+    let interval;
+    if (!mobileView && isAutoRotating && trendingProducts.length > 0) {
+      interval = setInterval(() => {
+        setRotation(prev => prev + 72);
+        setActiveIndex(prev => (prev + 1) % trendingProducts.length);
+      }, 3000);
+    }
+    return () => clearInterval(interval);
+  }, [mobileView, isAutoRotating, trendingProducts.length]);
+
+  // Transform HalfColoneData
+
   const totalProducts = trendingProducts.length;
   const angleStep = 360 / totalProducts;
 
   const handlePrev = () => {
     setIsAutoRotating(false);
-    setRotation(prev => prev - angleStep);
-    setActiveIndex(prev => (prev - 1 + totalProducts) % totalProducts);
+    if (mobileView) {
+      setActiveIndex(prev => (prev - 1 + totalProducts) % totalProducts);
+    } else {
+      setRotation(prev => prev - angleStep);
+      setActiveIndex(prev => (prev - 1 + totalProducts) % totalProducts);
+    }
     setTimeout(() => setIsAutoRotating(true), 5000);
   };
 
   const handleNext = () => {
     setIsAutoRotating(false);
-    setRotation(prev => prev + angleStep);
-    setActiveIndex(prev => (prev + 1) % totalProducts);
+    if (mobileView) {
+      setActiveIndex(prev => (prev + 1) % totalProducts);
+    } else {
+      setRotation(prev => prev + angleStep);
+      setActiveIndex(prev => (prev + 1) % totalProducts);
+    }
+    setTimeout(() => setIsAutoRotating(true), 5000);
+  };
+
+  // Touch handlers for mobile swipe
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsAutoRotating(false);
+    if (autoScrollRef.current) {
+      clearInterval(autoScrollRef.current);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      // Swipe left
+      handleNext();
+    } else if (touchEnd - touchStart > 50) {
+      // Swipe right
+      handlePrev();
+    }
     setTimeout(() => setIsAutoRotating(true), 5000);
   };
 
@@ -104,11 +159,9 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
     if (mobileView) {
       return {
         transform: `translateX(0px) translateZ(0px) scale(1)`,
-        opacity: activeIndex === index ? 1 : 0,
-        zIndex: activeIndex === index ? 10 : 0,
+        opacity: 1,
+        zIndex: 1,
         transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-        position: activeIndex === index ? 'relative' : 'absolute',
-        display: activeIndex === index ? 'block' : 'none'
       };
     }
     
@@ -128,7 +181,16 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
     };
   };
 
-  const activeProduct = trendingProducts[activeIndex];
+  // Create an array with duplicate products for infinite loop effect on mobile
+  const getMobileProducts = () => {
+    if (!mobileView) return trendingProducts;
+    // Create a circular array for infinite effect
+    const extended = [...trendingProducts, ...trendingProducts, ...trendingProducts];
+    const startIndex = trendingProducts.length + activeIndex;
+    return extended.slice(startIndex, startIndex + 3);
+  };
+
+  const mobileProducts = getMobileProducts();
 
   return (
     <div className="relative py-8 md:py-12 px-3 md:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden min-h-screen">
@@ -137,7 +199,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
         </div>
-        {!mobileView && [...Array(20)].map((_, i) => (
+        {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
@@ -179,7 +241,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
             </p>
           </motion.div>
 
-          {/* Countdown Timer - Simplified on Mobile */}
+          {/* Countdown Timer */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -207,9 +269,9 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
           </motion.div>
         </div>
 
-        {/* 3D Carousel - Mobile Optimized */}
+        {/* Carousel Section */}
         <div className="relative h-[450px] md:h-[600px] perspective-1000">
-          {/* Navigation Buttons - Only on Desktop */}
+          {/* Navigation Buttons */}
           {!mobileView && (
             <>
               <button
@@ -228,184 +290,220 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
             </>
           )}
 
-          {/* Mobile Swipe Indicators */}
+          {/* Mobile Navigation Arrows */}
           {mobileView && (
-            <div className="absolute top-1/2 -translate-y-1/2 left-2 right-2 z-20 flex justify-between pointer-events-none">
-              <div className="bg-white/10 backdrop-blur-sm rounded-full p-2 pointer-events-auto cursor-pointer" onClick={handlePrev}>
+            <div className="absolute top-1/2 -translate-y-1/2 left-2 right-2 z-20 flex justify-between">
+              <button
+                onClick={handlePrev}
+                className="bg-white/10 backdrop-blur-sm rounded-full p-2 hover:bg-white/20 transition-all duration-300 border border-pink-500/30"
+              >
                 <ChevronLeftIcon className="w-5 h-5 text-white" />
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-full p-2 pointer-events-auto cursor-pointer" onClick={handleNext}>
+              </button>
+              <button
+                onClick={handleNext}
+                className="bg-white/10 backdrop-blur-sm rounded-full p-2 hover:bg-white/20 transition-all duration-300 border border-pink-500/30"
+              >
                 <ChevronRightIcon className="w-5 h-5 text-white" />
-              </div>
+              </button>
             </div>
           )}
 
-          {/* 3D Container */}
-          <div className={`absolute inset-0 flex items-center justify-center ${!mobileView ? 'preserve-3d' : ''}`}>
-            {trendingProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                style={getCardStyle(index)}
-                className={`${mobileView ? 'w-full max-w-[320px] mx-auto px-4' : 'absolute w-[280px] md:w-[320px]'} cursor-pointer`}
-                whileHover={!mobileView ? { scale: 1.05 } : {}}
-                transition={{ duration: 0.3 }}
-                onClick={() => {
-                  if (mobileView) {
-                    setSelectedProduct(product);
-                  } else {
-                    setActiveIndex(index);
-                  }
-                }}
-              >
-                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-pink-500/30 backdrop-blur-sm">
-                  {/* Product Image */}
-                  <div className="relative h-56 md:h-72 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-contain p-3 md:p-4"
-                    />
-                    
-                    {/* Discount Badge */}
-                    <div className="absolute top-2 right-2 md:top-3 md:right-3 z-10 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-xs md:text-sm font-bold shadow-lg">
-                      -{product.discount}%
+          {/* Container */}
+          <div 
+            className={`absolute inset-0 flex items-center justify-center ${!mobileView ? 'preserve-3d' : ''}`}
+            onTouchStart={mobileView ? handleTouchStart : undefined}
+            onTouchMove={mobileView ? handleTouchMove : undefined}
+            onTouchEnd={mobileView ? handleTouchEnd : undefined}
+          >
+            {mobileView ? (
+              // Mobile horizontal scroll view
+              <div className="w-full overflow-visible px-4">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -100 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full max-w-[320px] mx-auto"
+                >
+                  <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-pink-500/30 backdrop-blur-sm">
+                    {/* Product Image */}
+                    <div className="relative h-56 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
+                      <img
+                        src={trendingProducts[activeIndex]?.image}
+                        alt={trendingProducts[activeIndex]?.name}
+                        className="w-full h-full object-contain p-3"
+                      />
+                      
+                      {/* Discount Badge */}
+                      <div className="absolute top-2 right-2 z-10 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-lg">
+                        -{trendingProducts[activeIndex]?.discount}%
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Product Info */}
-                  <div className="p-3 md:p-4">
-                    <h3 className="font-bold text-white text-sm md:text-lg mb-1 line-clamp-2">
-                      {product.name}
-                    </h3>
-                    
-                    <p className="text-[10px] md:text-xs text-pink-400 font-semibold mb-2">{product.brand}</p>
+                    {/* Product Info */}
+                    <div className="p-4">
+                      <h3 className="font-bold text-white text-base mb-1 line-clamp-2">
+                        {trendingProducts[activeIndex]?.name}
+                      </h3>
+                      
+                      <p className="text-xs text-pink-400 font-semibold mb-2">
+                        {trendingProducts[activeIndex]?.brand}
+                      </p>
 
-                    {/* Colors */}
-                    {product.colors && product.colors.length > 0 && (
-                      <div className="mb-2 md:mb-3">
-                        <div className="flex gap-1 flex-wrap">
-                          {product.colors.slice(0, mobileView ? 3 : 4).map((color, idx) => (
-                            <button
-                              key={idx}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedColor({ ...selectedColor, [product.id]: color });
-                              }}
-                              className={`w-4 h-4 md:w-5 md:h-5 rounded-full border-2 transition-all ${
-                                selectedColor[product.id] === color 
-                                  ? 'border-pink-500 scale-110' 
-                                  : 'border-gray-600'
-                              }`}
-                              style={{ 
-                                backgroundColor: 
-                                  color === 'أبيض' ? '#ffffff' :
-                                  color === 'أسود' ? '#000000' :
-                                  color === 'بينك' ? '#ec4899' :
-                                  color === 'أحمر' ? '#ef4444' :
-                                  color === 'أصفر' ? '#eab308' :
-                                  color === 'لافندر' ? '#a855f7' :
-                                  color === 'موف' ? '#8b5cf6' :
-                                  color === 'بيج' ? '#d4a574' : '#cbd5e1'
-                              }}
-                            />
-                          ))}
-                          {product.colors.length > 3 && mobileView && (
-                            <span className="text-[10px] text-gray-400">+{product.colors.length - 3}</span>
-                          )}
+                      {/* Colors */}
+                      {trendingProducts[activeIndex]?.colors?.length > 0 && (
+                        <div className="mb-3">
+                          <div className="flex gap-1 flex-wrap">
+                            {trendingProducts[activeIndex].colors.slice(0, 4).map((color, idx) => (
+                              <button
+                                key={idx}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedColor({ 
+                                    ...selectedColor, 
+                                    [trendingProducts[activeIndex].id]: color 
+                                  });
+                                }}
+                                className={`w-5 h-5 rounded-full border-2 transition-all ${
+                                  selectedColor[trendingProducts[activeIndex].id] === color 
+                                    ? 'border-pink-500 scale-110' 
+                                    : 'border-gray-600'
+                                }`}
+                                style={{ 
+                                  backgroundColor: 
+                                    color === 'أبيض' ? '#ffffff' :
+                                    color === 'أسود' ? '#000000' :
+                                    color === 'بينك' ? '#ec4899' :
+                                    color === 'أحمر' ? '#ef4444' :
+                                    color === 'أصفر' ? '#eab308' :
+                                    color === 'لافندر' ? '#a855f7' :
+                                    color === 'موف' ? '#8b5cf6' :
+                                    color === 'بيج' ? '#d4a574' : '#cbd5e1'
+                                }}
+                              />
+                            ))}
+                          </div>
                         </div>
+                      )}
+
+                      {/* Rating */}
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <StarSolidIcon key={i} className={`w-3.5 h-3.5 ${i < Math.floor(trendingProducts[activeIndex]?.rating || 0) ? 'text-yellow-400' : 'text-gray-600'}`} />
+                          ))}
+                        </div>
+                        <span className="text-xs text-gray-400">({trendingProducts[activeIndex]?.reviews})</span>
                       </div>
-                    )}
 
-                    {/* Rating */}
-                    <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-3">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <StarSolidIcon key={i} className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-600'}`} />
-                        ))}
+                      {/* Price */}
+                      <div className="flex items-baseline gap-2 mb-3">
+                        <span className="text-xl font-bold text-white">
+                          {trendingProducts[activeIndex]?.price} ج.م
+                        </span>
+                        <span className="text-xs text-gray-400 line-through">
+                          {trendingProducts[activeIndex]?.originalPrice} ج.م
+                        </span>
                       </div>
-                      <span className="text-[10px] md:text-xs text-gray-400">({product.reviews})</span>
-                    </div>
 
-                    {/* Price */}
-                    <div className="flex items-baseline gap-1 md:gap-2 mb-2 md:mb-3">
-                      <span className="text-base md:text-xl font-bold text-white">
-                        {product.price} ج.م
-                      </span>
-                      <span className="text-[10px] md:text-xs text-gray-400 line-through">
-                        {product.originalPrice} ج.م
-                      </span>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onViewProduct?.(product);
-                        }}
-                        className="flex-1 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-1.5 md:py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1"
-                      >
-                        <EyeIcon className="w-3 h-3 md:w-4 md:h-4" />
-                        معاينة
-                      </button>
+                      {/* Action Buttons */}
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => onViewProduct?.(trendingProducts[activeIndex])}
+                          className="flex-1 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-2 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1"
+                        >
+                          <EyeIcon className="w-4 h-4" />
+                          معاينة
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              </div>
+            ) : (
+              // Desktop 3D view
+              trendingProducts.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  style={getCardStyle(index)}
+                  className="absolute w-[280px] md:w-[320px] cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => setActiveIndex(index)}
+                >
+                  <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-pink-500/30 backdrop-blur-sm">
+                    {/* Product Image */}
+                    <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-contain p-4"
+                      />
+                      
+                      <div className="absolute top-3 right-3 z-10 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold shadow-lg">
+                        -{product.discount}%
+                      </div>
+                    </div>
+
+                    <div className="p-4">
+                      <h3 className="font-bold text-white text-base md:text-lg mb-1 line-clamp-2">
+                        {product.name}
+                      </h3>
+                      <p className="text-xs text-pink-400 font-semibold mb-2">{product.brand}</p>
+
+                      <div className="flex gap-2 mt-3">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onViewProduct?.(product);
+                          }}
+                          className="flex-1 bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-2 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1"
+                        >
+                          <EyeIcon className="w-4 h-4" />
+                          معاينة
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
 
-          {/* Center Glow - Reduced on Mobile */}
+          {/* Center Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 bg-gradient-to-r from-pink-500/30 to-purple-500/30 rounded-full blur-3xl pointer-events-none" />
         </div>
 
-        {/* Mobile Progress Indicator */}
-        {mobileView && (
-          <div className="flex justify-center mt-6">
-            <div className="flex gap-1.5">
-              {trendingProducts.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
+        {/* Progress Indicators */}
+        <div className="flex justify-center mt-6 md:mt-8">
+          <div className="flex gap-1.5 md:gap-2">
+            {trendingProducts.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  setIsAutoRotating(false);
+                  if (mobileView) {
                     setActiveIndex(idx);
-                    const newRotation = idx * angleStep;
-                    setRotation(newRotation);
-                  }}
-                  className={`transition-all duration-300 rounded-full ${
-                    activeIndex === idx
-                      ? 'w-6 h-1.5 bg-gradient-to-r from-pink-500 to-pink-600'
-                      : 'w-1.5 h-1.5 bg-gray-600'
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Desktop Auto-rotate Indicator */}
-        {!mobileView && (
-          <div className="flex justify-center mt-8">
-            <div className="flex gap-2">
-              {trendingProducts.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setIsAutoRotating(false);
+                  } else {
                     const newRotation = idx * angleStep;
                     setRotation(newRotation);
                     setActiveIndex(idx);
-                    setTimeout(() => setIsAutoRotating(true), 5000);
-                  }}
-                  className={`transition-all duration-300 rounded-full ${
-                    activeIndex === idx
-                      ? 'w-8 h-2 bg-gradient-to-r from-pink-500 to-pink-600'
-                      : 'w-2 h-2 bg-gray-600 hover:bg-pink-400'
-                  }`}
-                />
-              ))}
-            </div>
+                  }
+                  if (autoScrollRef.current) {
+                    clearInterval(autoScrollRef.current);
+                  }
+                  setTimeout(() => setIsAutoRotating(true), 5000);
+                }}
+                className={`transition-all duration-300 rounded-full ${
+                  activeIndex === idx
+                    ? 'w-6 md:w-8 h-1.5 md:h-2 bg-gradient-to-r from-pink-500 to-pink-600'
+                    : 'w-1.5 md:w-2 h-1.5 md:h-2 bg-gray-600 hover:bg-pink-400'
+                }`}
+              />
+            ))}
           </div>
-        )}
+        </div>
 
         {/* View All Button */}
         <motion.div
@@ -425,81 +523,12 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
         </motion.div>
       </div>
 
-      {/* Mobile Product Details Modal */}
-      <AnimatePresence>
-        {selectedProduct && mobileView && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-            onClick={() => setSelectedProduct(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl max-w-sm w-full overflow-hidden border border-pink-500/30"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative">
-                <button
-                  onClick={() => setSelectedProduct(null)}
-                  className="absolute top-2 right-2 z-10 bg-black/50 rounded-full p-1"
-                >
-                  <XMarkIcon className="w-5 h-5 text-white" />
-                </button>
-                <img
-                  src={selectedProduct.image}
-                  alt={selectedProduct.name}
-                  className="w-full h-64 object-contain bg-gradient-to-br from-gray-700 to-gray-800 p-4"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2">{selectedProduct.name}</h3>
-                <p className="text-pink-400 text-sm mb-4">{selectedProduct.brand}</p>
-                
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <StarSolidIcon key={i} className={`w-4 h-4 ${i < Math.floor(selectedProduct.rating) ? 'text-yellow-400' : 'text-gray-600'}`} />
-                    ))}
-                  </div>
-                  <span className="text-sm text-gray-400">({selectedProduct.reviews})</span>
-                </div>
-
-                <div className="flex items-baseline gap-2 mb-6">
-                  <span className="text-2xl font-bold text-white">{selectedProduct.price} ج.م</span>
-                  <span className="text-sm text-gray-400 line-through">{selectedProduct.originalPrice} ج.م</span>
-                  <span className="text-sm text-green-400">وفر {selectedProduct.originalPrice - selectedProduct.price} ج.م</span>
-                </div>
-
-                <button
-                  onClick={() => {
-                    onViewProduct?.(selectedProduct);
-                    setSelectedProduct(null);
-                  }}
-                  className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2"
-                >
-                  <EyeIcon className="w-5 h-5" />
-                  معاينة المنتج
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <style jsx>{`
         .perspective-1000 {
           perspective: 1000px;
         }
         .preserve-3d {
           transform-style: preserve-3d;
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
         }
         .line-clamp-2 {
           display: -webkit-box;
