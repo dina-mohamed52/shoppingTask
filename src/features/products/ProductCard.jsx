@@ -62,7 +62,9 @@ function ProductCard({ product, onPreview }) {
   const badge = getBadgeType();
 
   return (
-    <div className="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-pink-500/20 hover:-translate-y-2 flex flex-col border border-gray-100">
+    <div className="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all
+     duration-500 hover:shadow-2xl hover:shadow-pink-500/20 hover:-translate-y-2 flex flex-col 
+     border border-gray-100">
       
       {/* Decorative Elements */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -75,7 +77,7 @@ function ProductCard({ product, onPreview }) {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-[20rem] object-auto transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-[20rem] object-contain transition-transform duration-700 group-hover:scale-110"
         />
 
         {/* Badge (Tag) */}

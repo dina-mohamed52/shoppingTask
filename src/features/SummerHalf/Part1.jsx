@@ -18,9 +18,8 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [rotation, setRotation] = useState(0);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
-  const [selectedColor, setSelectedColor] = useState({});
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const autoScrollRef = useRef(null);
+  const containerRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(0);
   const [timeLeft, setTimeLeft] = useState({
     hours: 23,
     minutes: 59,
@@ -60,20 +59,33 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
     sizes: product.sizes || []
   })) || [];
 
+  // تحديث عرض الحاوية
+  useEffect(() => {
+    const updateContainerWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+    
+    updateContainerWidth();
+    window.addEventListener('resize', updateContainerWidth);
+    return () => window.removeEventListener('resize', updateContainerWidth);
+  }, []);
+
+  const totalProducts = trendingProducts.length;
+  const angleStep = 360 / totalProducts;
+
   // Auto rotation
   useEffect(() => {
     let interval;
     if (isAutoRotating && trendingProducts.length > 0) {
       interval = setInterval(() => {
-        setRotation(prev => prev + 72);
+        setRotation(prev => prev + angleStep);
         setActiveIndex(prev => (prev + 1) % trendingProducts.length);
-      }, 3000);
+      }, 4000);
     }
     return () => clearInterval(interval);
-  }, [isAutoRotating, trendingProducts.length]);
-
-  const totalProducts = trendingProducts.length;
-  const angleStep = 360 / totalProducts;
+  }, [isAutoRotating, trendingProducts.length, angleStep]);
 
   const handlePrev = () => {
     setIsAutoRotating(false);
@@ -89,50 +101,56 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
     setTimeout(() => setIsAutoRotating(true), 5000);
   };
 
-  // حساب حجم البطاقات بناءً على حجم الشاشة
-  const getCardSize = () => {
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
-      if (width < 640) return 220; // موبايل صغير
-      if (width < 768) return 260; // موبايل كبير/تابلت صغير
-      return 300; // سطح مكتب
-    }
-    return 260;
-  };
+  // حجم البطاقة ثابت
+  const cardWidth = 260;
+  const cardHeight = 390;
 
-  const [cardSize, setCardSize] = useState(300);
+  // حساب radius المناسب
+  const radius = Math.min(containerWidth / 2.5, 350);
   
-  useEffect(() => {
-    const updateCardSize = () => setCardSize(getCardSize());
-    updateCardSize();
-    window.addEventListener('resize', updateCardSize);
-    return () => window.removeEventListener('resize', updateCardSize);
-  }, []);
-
-  const radius = typeof window !== 'undefined' && window.innerWidth < 768 ? 180 : 280;
-  const scaleFactor = typeof window !== 'undefined' && window.innerWidth < 768 ? 0.15 : 0.3;
-
   const getCardStyle = (index) => {
-    const angle = (index * angleStep - rotation) * (Math.PI / 180);
-    const x = Math.sin(angle) * radius;
-    const z = Math.cos(angle) * radius;
-    const scale = 0.7 + ((z + radius) / (radius * 2)) * scaleFactor;
-    const opacity = Math.max(0.3, (z + radius) / (radius * 1.5));
-    const zIndex = Math.floor((z + radius) * 10);
+    // الزاوية الحالية
+    const currentAngle = (index * angleStep - rotation);
+    const angleInRadians = currentAngle * (Math.PI / 180);
+    
+    // حساب الموضع
+    const x = Math.sin(angleInRadians) * radius;
+    const z = Math.cos(angleInRadians) * radius;
+    
+    // مقياس الحجم
+    const normalizedZ = (z + radius) / (radius * 2);
+    const scale = 0.65 + (normalizedZ * 0.25);
+    
+    // الشفافية - جميع البطاقات تبقى مرئية
+    const opacity = 0.6 + (normalizedZ * 0.4);
+    
+    // ترتيب الطبقات
+    const zIndex = Math.floor(normalizedZ * 50);
+    
+    // البطاقة النشطة
+    const isActive = index === activeIndex;
     
     return {
       transform: `translateX(${x}px) translateZ(${z}px) scale(${scale})`,
-      opacity,
-      zIndex,
+      opacity: isActive ? 1 : opacity,
+      zIndex: isActive ? 100 : zIndex,
       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-      width: `${cardSize}px`,
+      width: `${cardWidth}px`,
+      height: `${cardHeight}px`,
+      position: 'absolute',
+      left: `calc(50% - ${cardWidth/2}px)`,
+      top: '50%',
+      marginTop: `-${cardHeight/2}px`,
+      transformStyle: 'preserve-3d',
+      pointerEvents: 'auto',
+      visibility: 'visible',
     };
   };
 
   return (
-    <div className="relative py-8 md:py-12 px-3 md:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden min-h-screen">
+    <div className="relative py-8 md:py-12 px-3 md:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-x-hidden min-h-screen">
       {/* Background Decoration */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
         </div>
@@ -190,94 +208,123 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
           </motion.div>
         </div>
 
-        {/* 3D Carousel Section - يعمل على جميع الأجهزة */}
-        <div className="relative h-[450px] md:h-[550px] perspective-1000">
+        {/* 3D Carousel Section */}
+        <div 
+          ref={containerRef}
+          className="relative h-[500px] md:h-[550px] overflow-visible"
+          style={{ perspective: '1500px' }}
+        >
           {/* Navigation Buttons */}
           <button
             onClick={handlePrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-sm rounded-full p-2 md:p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
+            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-[200] bg-black/50 backdrop-blur-sm rounded-full p-2 md:p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
           >
             <ChevronLeftIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </button>
           
           <button
             onClick={handleNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-30 bg-white/10 backdrop-blur-sm rounded-full p-2 md:p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
+            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-[200] bg-black/50 backdrop-blur-sm rounded-full p-2 md:p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
           >
             <ChevronRightIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
           </button>
 
           {/* 3D Container */}
-          <div className="absolute inset-0 flex items-center justify-center preserve-3d">
-            {trendingProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                style={getCardStyle(index)}
-                className="absolute cursor-pointer"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                onClick={() => setActiveIndex(index)}
-              >
-                <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border border-pink-500/30 backdrop-blur-sm">
-                  {/* Product Image */}
-                  <div className="relative h-48 md:h-64 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-contain p-3 md:p-4"
-                    />
-                    
-                    {/* Discount Badge */}
-                    <div className="absolute top-2 right-2 z-10 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full w-7 h-7 md:w-10 md:h-10 flex items-center justify-center text-xs md:text-sm font-bold shadow-lg">
-                      -{product.discount}%
-                    </div>
-                  </div>
-
-                  <div className="p-3 md:p-4">
-                    <h3 className="font-bold text-white text-sm md:text-lg mb-1 line-clamp-2">
-                      {product.name}
-                    </h3>
-                    <p className="text-[10px] md:text-xs text-pink-400 font-semibold mb-2">{product.brand}</p>
-
-                    {/* Rating - للأجهزة الصغيرة يتم إخفاءه لتوفير مساحة */}
-                    <div className="hidden sm:flex items-center gap-2 mb-2">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <StarSolidIcon key={i} className={`w-3 h-3 ${i < Math.floor(product.rating || 0) ? 'text-yellow-400' : 'text-gray-600'}`} />
-                        ))}
+          <div 
+            className="relative w-full h-full overflow-visible"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {trendingProducts.map((product, index) => {
+              const isActive = index === activeIndex;
+              const style = getCardStyle(index);
+              
+              return (
+                <div
+                  key={product.id}
+                  style={style}
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (!isActive) {
+                      setActiveIndex(index);
+                      setIsAutoRotating(false);
+                      setRotation(index * angleStep);
+                      setTimeout(() => setIsAutoRotating(true), 5000);
+                    }
+                  }}
+                >
+                  <div className={`bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-sm w-full h-full flex flex-col transition-all duration-300 ${
+                    isActive 
+                      ? 'border-pink-500 shadow-pink-500/30 shadow-xl ring-1 ring-pink-500/50' 
+                      : 'border-pink-500/30'
+                  }`}>
+                    {/* Product Image */}
+                    <div className="relative h-48 md:h-52 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 flex-shrink-0">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-contain p-3 md:p-4"
+                      />
+                      
+                      {/* Discount Badge */}
+                      <div className="absolute top-2 right-2 z-10 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full w-7 h-7 md:w-9 md:h-9 flex items-center justify-center text-xs md:text-sm font-bold shadow-lg">
+                        -{product.discount}%
                       </div>
-                      <span className="text-[10px] text-gray-400">({product.reviews})</span>
+
+                      {/* Active Badge */}
+                      {isActive && (
+                        <div className="absolute top-2 left-2 z-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full px-2 py-1 text-[10px] md:text-xs font-bold shadow-lg flex items-center gap-1">
+                          <SparklesIcon className="w-3 h-3" />
+                          <span>رائج الآن</span>
+                        </div>
+                      )}
                     </div>
 
-                    {/* Price */}
-                    <div className="flex items-baseline gap-1 md:gap-2 mb-2 md:mb-3">
-                      <span className="text-base md:text-xl font-bold text-white">
-                        {product.price} ج.م
-                      </span>
-                      <span className="text-[10px] md:text-xs text-gray-400 line-through">
-                        {product.originalPrice} ج.م
-                      </span>
-                    </div>
+                    <div className="p-3 md:p-4 flex-1 flex flex-col">
+                      <h3 className="font-bold text-white text-sm md:text-base mb-1 line-clamp-2">
+                        {product.name}
+                      </h3>
+                      <p className="text-[10px] md:text-xs text-pink-400 font-semibold mb-2">{product.brand}</p>
 
-                    {/* Action Buttons */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onViewProduct?.(product);
-                      }}
-                      className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-1.5 md:py-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1"
-                    >
-                      <EyeIcon className="w-3 h-3 md:w-4 md:h-4" />
-                      معاينة سريعة
-                    </button>
+                      {/* Rating */}
+                      <div className="flex items-center gap-1 mb-2">
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <StarSolidIcon key={i} className={`w-2.5 h-2.5 md:w-3 md:h-3 ${i < Math.floor(product.rating || 0) ? 'text-yellow-400' : 'text-gray-600'}`} />
+                          ))}
+                        </div>
+                        <span className="text-[9px] md:text-[10px] text-gray-400">({product.reviews})</span>
+                      </div>
+
+                      {/* Price */}
+                      <div className="flex items-baseline gap-1 md:gap-2 mb-3">
+                        <span className="text-sm md:text-lg font-bold text-white">
+                          {product.price} ج.م
+                        </span>
+                        <span className="text-[9px] md:text-xs text-gray-400 line-through">
+                          {product.originalPrice} ج.م
+                        </span>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onViewProduct?.(product);
+                        }}
+                        className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-1.5 md:py-2 rounded-xl text-[11px] md:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1 group mt-auto"
+                      >
+                        <EyeIcon className="w-3 h-3 md:w-4 md:h-4 transition-transform group-hover:scale-110" />
+                        معاينة سريعة
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Center Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 bg-gradient-to-r from-pink-500/30 to-purple-500/30 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-56 md:h-56 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none" />
         </div>
 
         {/* Progress Indicators */}
@@ -288,8 +335,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
                 key={idx}
                 onClick={() => {
                   setIsAutoRotating(false);
-                  const newRotation = idx * angleStep;
-                  setRotation(newRotation);
+                  setRotation(idx * angleStep);
                   setActiveIndex(idx);
                   setTimeout(() => setIsAutoRotating(true), 5000);
                 }}
@@ -322,23 +368,22 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
       </div>
 
       <style jsx>{`
-        .perspective-1000 {
-          perspective: 1000px;
-          overflow: visible;
-        }
-        .preserve-3d {
-          transform-style: preserve-3d;
-        }
         .line-clamp-2 {
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
-        @media (max-width: 640px) {
-          .perspective-1000 {
-            perspective: 800px;
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.2;
           }
+          50% {
+            opacity: 0.4;
+          }
+        }
+        .animate-pulse {
+          animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
       `}</style>
     </div>

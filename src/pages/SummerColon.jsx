@@ -1,5 +1,6 @@
 import Part1 from "../features/SummerHalf/Part1"
 import { HalfColoneData } from '../data/HalfColon';
+import SproductList from "../features/SummerHalf/SproductList";
 
 function SummerColon() {
   return (
@@ -8,6 +9,7 @@ function SummerColon() {
       HalfColoneData={HalfColoneData}
     
     />
+    <SproductList/>
     </div>
   )
 }
