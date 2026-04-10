@@ -38,7 +38,7 @@ function SideBar() {
       icon: <Sparkles size={20} />,
       label: { ar: "هاف كولون وبندنات صيفي", en: " summer colons" },
       gradient: "from-pink-300 to-pink-500",
-      onClick: handleScrollToOffers,
+      // onClick: handleScrollToOffers,
     },
   ];
 
