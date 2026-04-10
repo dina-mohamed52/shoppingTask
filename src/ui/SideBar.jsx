@@ -34,9 +34,9 @@ function SideBar() {
       special: true,
     },
     {
-      to: "/SummerColon",
+      to: "/SummerHalfColon",
       icon: <Sparkles size={20} />,
-      label: { ar: "كولونات  صيفي", en: " summer colons" },
+      label: { ar: "هاف كولون وبندنات صيفي", en: " summer colons" },
       gradient: "from-pink-300 to-pink-500",
       onClick: handleScrollToOffers,
     },

@@ -26,7 +26,7 @@ function App() {
             <Route path="/orderForm" element={<OrderForm />} />
             <Route path="/Turbon" element={<Turbon />} />
             <Route path="/Offers" element={<Offers />} />
-            <Route path="/SummerColon" element={<SummerColon />} />
+            <Route path="/SummerHalfColon" element={<SummerColon />} />
 
 
             {/* <Route path="/orderCollection" element={<OrderCollection/>}/> */}
