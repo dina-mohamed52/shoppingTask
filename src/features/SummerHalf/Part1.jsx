@@ -13,6 +13,7 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
+import ProductModal from "../../ui/ProductModal"; // Add this import
 
 export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -25,6 +26,10 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
     minutes: 59,
     seconds: 59
   });
+  
+  // Add state for modal
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   // Countdown timer
   useEffect(() => {
@@ -56,8 +61,28 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
     reviews: product.reviews || 128,
     image: product.image,
     colors: product.avalibeColors || [],
-    sizes: product.sizes || []
+    sizes: product.sizes || [],
+    // Pass through the full product data for modal
+    fullProduct: product
   })) || [];
+
+  // Handle view product with modal
+  const handleViewProduct = (product) => {
+    // Prepare product data for modal
+    const allUrls = product.fullProduct?.productColors?.map((c) => c.img) || [product.image];
+    
+    setSelectedProduct({
+      ...product.fullProduct,
+      previewImages: allUrls,
+    });
+    
+    setOpenModal(true);
+    
+    // Call the original onViewProduct prop if provided
+    if (onViewProduct) {
+      onViewProduct(product);
+    }
+  };
 
   // تحديث عرض الحاوية
   useEffect(() => {
@@ -82,7 +107,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
       interval = setInterval(() => {
         setRotation(prev => prev + angleStep);
         setActiveIndex(prev => (prev + 1) % trendingProducts.length);
-      }, 4000);
+      }, 2000);
     }
     return () => clearInterval(interval);
   }, [isAutoRotating, trendingProducts.length, angleStep]);
@@ -309,7 +334,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          onViewProduct?.(product);
+                          handleViewProduct(product);
                         }}
                         className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white py-1.5 md:py-2 rounded-xl text-[11px] md:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-1 group mt-auto"
                       >
@@ -348,24 +373,16 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
             ))}
           </div>
         </div>
-
-        {/* View All Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-8 md:mt-12"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-6 md:px-8 py-2 md:py-3 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full font-semibold text-sm md:text-base shadow-lg hover:shadow-xl transition-all"
-          >
-            <span>عرض جميع المنتجات</span>
-            <ArrowRightIcon className="w-4 h-4 md:w-5 md:h-5" />
-          </motion.button>
-        </motion.div>
       </div>
+
+      {/* Product Modal */}
+      {selectedProduct && (
+        <ProductModal
+          open={openModal}
+          OnClose={() => setOpenModal(false)}
+          product={selectedProduct}
+        />
+      )}
 
       <style jsx>{`
         .line-clamp-2 {
