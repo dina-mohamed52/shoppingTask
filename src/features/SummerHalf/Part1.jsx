@@ -107,7 +107,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
       interval = setInterval(() => {
         setRotation(prev => prev + angleStep);
         setActiveIndex(prev => (prev + 1) % trendingProducts.length);
-      }, 3000);
+      }, 4000);
     }
     return () => clearInterval(interval);
   }, [isAutoRotating, trendingProducts.length, angleStep]);
