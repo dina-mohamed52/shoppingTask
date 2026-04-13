@@ -18,14 +18,12 @@ function ProductModal({ product, open, OnClose }) {
   }, []);
 
   // useEffect للصور فقط
-useEffect(() => {
-  if (product?.previewImages?.length) {
-    product.previewImages.forEach((img) => {
-      const image = new Image();
-      image.src = img;
-    });
-  }
-}, [product]);
+  useEffect(() => {
+    if (product?.previewImages?.length > 0) {
+      setSelectedImage(product.previewImages[0]);
+      setCurrentIndex(0);
+    }
+  }, [product]);
   // useEffect للـ back button
   useEffect(() => {
     if (!open) return;
@@ -137,7 +135,6 @@ useEffect(() => {
               onClick={() => setIsZoomed(!isZoomed)}
               animate={{ scale: isZoomed ? 1.2 : 1 }}
               transition={{ duration: 0.3 }}
-             
               style={{ originX: 0.5, originY: 0.5 }}
             >
               {/* Decorative Elements */}
@@ -156,11 +153,11 @@ useEffect(() => {
                   }
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 1.1 }}
-                 transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
+                  transition={{ type: "tween", ease: "easeOut", duration: 0.2 }}
                   className="w-full h-[400px] lg:h-[500px] object-contain"
                   loading="eager"
-  decoding="async"
-  draggable={false}
+                  decoding="async"
+                  draggable={false}
                 />
               </AnimatePresence>
 
@@ -280,8 +277,8 @@ const getColorCode = (colorName) => {
     موف: "#800080",
     أحمر: "#FF0000",
     احمر: "#FF0000",
-     "لافندر": "#E6E6FA",
-    "lavender": "#E6E6FA",
+    لافندر: "#E6E6FA",
+    lavender: "#E6E6FA",
     "موف فاتح": "#E6E6FA",
 
     // English fallback
