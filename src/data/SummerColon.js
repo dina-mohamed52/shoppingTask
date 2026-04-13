@@ -5,9 +5,9 @@ export const SummerColonData = [
     description:
       "كولون صيفي شبك قطن ناعم مدعوم بنسبة 10% ليكرا لمرونة عالية وراحة طوال اليوم، بتصميم قلوب أنيق مناسب للإطلالات اليومية والمناسبات.",
 
-   price: 70,
-originalPrice: 120,
-discount: 42,
+    price: 120,
+    originalPrice: 180,
+    discount: 42,
     rating: 5,
 
     productColors: [
@@ -39,9 +39,9 @@ discount: 42,
     description:
       "كولون صيفي شبك قطن بلمسة أنثوية ناعمة مع فيونكه أنيقة، مصنوع من خامة مرنة 10% ليكرا لتوفير راحة مثالية وحركة سهلة طوال اليوم.",
 
-    price: 70,
-originalPrice: 120,
-discount: 42,
+    price: 120,
+    originalPrice: 180,
+    discount: 42,
     rating: 5,
 
     productColors: [
@@ -73,9 +73,9 @@ discount: 42,
     description:
       "كولون صيفي شبك قطن بجودة عالية ونقشة جكار مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
 
-    price: 70,
-originalPrice: 120,
-discount: 42,
+    price: 120,
+    originalPrice: 180,
+    discount: 42,
     rating: 5,
 
     productColors: [
