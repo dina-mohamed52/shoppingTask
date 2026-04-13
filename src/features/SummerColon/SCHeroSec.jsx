@@ -156,14 +156,14 @@ function SCHeroSec() {
     } 
     else if (position === 1) {
       // RIGHT
-      x = isMobile ? 90 : 200;
+      x = isMobile ? 130 : 200;
       scale = 0.8;
       opacity = 0.7;
       zIndex = 5;
     } 
     else if (position === -1) {
       // LEFT (هنزود شوية يمين زي ما طلبتي)
-      x = isMobile ? -50 : -200;
+      x = isMobile ? -80 : -200;
       scale = 0.85;
       opacity = 0.7;
       zIndex = 5;
@@ -231,7 +231,7 @@ function SCHeroSec() {
 
               <h1
                 className="text-6xl md:text-7xl lg:text-8xl 
-              font-black text-white leading-tight mb-6 font-headline tracking-tighter"
+              font-black text-white leading-tight mb-6 font-headline  tracking-tighter"
               >
                 حصرياً كولكشن{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#ff8c93] to-[#ac89ff]">
@@ -267,11 +267,12 @@ function SCHeroSec() {
 
               <div className="flex flex-row gap-4 justify-center">
                 <button className="px-8 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
-                rounded-full font-bold text-md md:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
+                rounded-full font-bold text-sm md:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
                  transition-transform">
                   تسوق الآن
                 </button>
-                <button className="px-8 py-4 glass-card bg-black/50 text-white border border-white/10 rounded-full font-bold text-base md:text-lg hover:bg-white/10 transition-all flex items-center gap-2">
+                <button className="px-8 py-4 glass-card bg-black/50
+                 text-white border border-white/10 rounded-full font-bold text-md md:text-lg hover:bg-white/10 transition-all flex items-center gap-2">
                   <Play className="w-5 h-5" />
                   مشاهدة الكولونات
                 </button>
@@ -298,7 +299,7 @@ function SCHeroSec() {
                 {/* Navigation Buttons */}
                 <button
                   onClick={handlePrev}
-                  className="absolute left-0 sm:right-[99%] right-[12rem]  sm:top-1/2
+                  className="absolute left-0 sm:right-[99%] right-[10rem]  sm:top-1/2
                   top-2/3
                    -translate-y-1/2 z-20 w-10 h-10 bg-black/50
                     backdrop-blur-sm rounded-full flex items-center
@@ -311,7 +312,7 @@ function SCHeroSec() {
                 <button
                   onClick={handleNext}
                   className="absolute sm:right-0 sm:top-1/2 
-                  sm:left-0 left-[12rem]  
+                  sm:left-0 left-[10rem]  
                   top-2/3
                   -translate-y-1/2
                    z-20 w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full
