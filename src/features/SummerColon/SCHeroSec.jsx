@@ -266,13 +266,13 @@ function SCHeroSec() {
               </div>
 
               <div className="flex flex-row gap-4 justify-center">
-                <button className="sm:px-8 px-12 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
+                <button className="sm:px-8 px-10 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
                 rounded-full font-bold text-sm sm:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
                  transition-transform whitespace-nowrap">
                   تسوق الآن
                 </button>
                 <button className="px-8 py-4 glass-card bg-black/50
-                 text-white border border-white/10 rounded-full font-bold text-md md:text-lg hover:bg-white/10 transition-all flex items-center gap-2">
+                 text-white border whitespace-nowrap border-white/10 rounded-full font-bold text-md md:text-lg hover:bg-white/10 transition-all flex items-center gap-2">
                   <Play className="w-5 h-5" />
                   مشاهدة الكولونات
                 </button>
