@@ -40,6 +40,12 @@ function SideBar() {
       gradient: "from-pink-300 to-pink-500",
       // onClick: handleScrollToOffers,
     },
+    {
+    to: "/SummerColon",
+    icon: <Sparkles size={20} />,
+    label: { ar: "كولونات صيفي", en: "Summer Colon" },
+    gradient: "from-pink-400 via-pink-400 to-pink-600",
+  },
   ];
 
   return (

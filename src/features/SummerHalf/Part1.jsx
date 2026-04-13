@@ -73,7 +73,7 @@ CountdownTimer.propTypes = {
 };
 
 // ✅ Memoized Product Card Component
-const ProductCard = React.memo(({ product, index, activeIndex, style, onCardClick, onViewProduct, angleStep, setActiveIndex, setIsAutoRotating, setRotation }) => {
+export const ProductCardS = React.memo(({ product, index, activeIndex, style, onCardClick, onViewProduct, angleStep, setActiveIndex, setIsAutoRotating, setRotation }) => {
   const isActive = index === activeIndex;
   
   const handleCardClick = useCallback(() => {
@@ -161,7 +161,7 @@ const ProductCard = React.memo(({ product, index, activeIndex, style, onCardClic
   );
 });
 
-ProductCard.displayName = 'ProductCard';
+ProductCardS.displayName = 'ProductCardS';
 
 export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -394,7 +394,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
               const style = getCardStyle(index);
               
               return (
-                <ProductCard
+                <ProductCardS
                   key={product.id}
                   product={product}
                   index={index}
