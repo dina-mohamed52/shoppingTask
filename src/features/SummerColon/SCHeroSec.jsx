@@ -129,8 +129,8 @@ function SCHeroSec() {
   (index) => {
     const isMobile = window.innerWidth < 768;
 
-    const cardWidth = isMobile ? 120 : 360;
-    const cardHeight = isMobile ? 180 : 390;
+    const cardWidth = isMobile ? 160 : 360;
+    const cardHeight = isMobile ? 160 : 390;
 
     let diff = index - activeIndex;
 
@@ -267,7 +267,7 @@ function SCHeroSec() {
 
               <div className="flex flex-row gap-4 justify-center">
                 <button className="px-8 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
-                rounded-full font-bold text-sm md:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
+                rounded-full font-bold text-sm sm:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
                  transition-transform">
                   تسوق الآن
                 </button>
