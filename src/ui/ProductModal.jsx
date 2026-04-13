@@ -95,7 +95,7 @@ function ProductModal({ product, open, OnClose }) {
     setIsImageReady(false);
     setSelectedImage(img);
     setCurrentIndex(index);
-    setTimeout(() => setIsImageReady(true), 50);
+   
   };
 
   if (!product) return null;
