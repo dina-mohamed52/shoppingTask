@@ -129,8 +129,8 @@ function SCHeroSec() {
   (index) => {
     const isMobile = window.innerWidth < 768;
 
-    const cardWidth = isMobile ? 140 : 360;
-    const cardHeight = isMobile ? 200 : 390;
+    const cardWidth = isMobile ? 120 : 360;
+    const cardHeight = isMobile ? 180 : 390;
 
     let diff = index - activeIndex;
 
@@ -156,14 +156,14 @@ function SCHeroSec() {
     } 
     else if (position === 1) {
       // RIGHT
-      x = isMobile ? 120 : 200;
+      x = isMobile ? 90 : 200;
       scale = 0.8;
       opacity = 0.7;
       zIndex = 5;
     } 
     else if (position === -1) {
       // LEFT (هنزود شوية يمين زي ما طلبتي)
-      x = isMobile ? -90 : -200;
+      x = isMobile ? -50 : -200;
       scale = 0.85;
       opacity = 0.7;
       zIndex = 5;
@@ -230,7 +230,7 @@ function SCHeroSec() {
               </span>
 
               <h1
-                className="text-7xl md:text-7xl lg:text-8xl 
+                className="text-6xl md:text-7xl lg:text-8xl 
               font-black text-white leading-tight mb-6 font-headline tracking-tighter"
               >
                 حصرياً كولكشن{" "}
@@ -245,7 +245,7 @@ function SCHeroSec() {
               </p>
 
               {/* Countdown Timer */}
-              <div className="flex gap-3 justify-center mb-12 flex-wrap">
+              <div className="flex gap-2 justify-center mb-12 flex-wrap">
                 {timeUnits.map((unit, idx) => (
                   <React.Fragment key={unit.label}>
                     <div className="glass-card w-16 h-20 md:w-20 md:h-24 bg-black/50 rounded-lg flex flex-col items-center justify-center border border-white/5 shadow-[0px_0px_30px_rgba(255,140,147,0.1)]">
@@ -266,7 +266,9 @@ function SCHeroSec() {
               </div>
 
               <div className="flex flex-row gap-4 justify-center">
-                <button className="px-8 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black rounded-full font-bold text-base md:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105 transition-transform">
+                <button className="px-8 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
+                rounded-full font-bold text-md md:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
+                 transition-transform">
                   تسوق الآن
                 </button>
                 <button className="px-8 py-4 glass-card bg-black/50 text-white border border-white/10 rounded-full font-bold text-base md:text-lg hover:bg-white/10 transition-all flex items-center gap-2">
