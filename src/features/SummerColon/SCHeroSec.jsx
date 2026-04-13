@@ -231,7 +231,8 @@ function SCHeroSec() {
 
               <h1
                 className="text-6xl md:text-7xl lg:text-8xl 
-              font-black text-white leading-tight mb-6 font-headline  tracking-tighter"
+              font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff8c93] to-[#ac89ff]
+               leading-tight mb-6 font-headline tracking-tighter"
               >
                 حصرياً كولكشن{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#ff8c93] to-[#ac89ff]">
