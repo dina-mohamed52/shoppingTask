@@ -156,7 +156,7 @@ function SCHeroSec() {
     } 
     else if (position === 1) {
       // RIGHT
-      x = isMobile ? 130 : 200;
+      x = isMobile ? 100 : 200;
       scale = 0.8;
       opacity = 0.7;
       zIndex = 5;
@@ -266,7 +266,7 @@ function SCHeroSec() {
               </div>
 
               <div className="flex flex-row gap-4 justify-center">
-                <button className="px-8 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
+                <button className="sm:px-8 px-12 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
                 rounded-full font-bold text-sm sm:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
                  transition-transform">
                   تسوق الآن
