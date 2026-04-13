@@ -266,7 +266,7 @@ function SCHeroSec() {
               </div>
 
               <div className="flex flex-row gap-4 justify-center">
-                <button className="sm:px-8 px-10 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
+                <button className="sm:px-8 px-12 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
                 rounded-full font-bold text-sm sm:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
                  transition-transform whitespace-nowrap">
                   تسوق الآن
@@ -323,7 +323,7 @@ function SCHeroSec() {
 
                 {/* 3D Container */}
                 <div
-                  className="relative w-full h-full overflow-visible sm:mt-24 mt-0 sm:mr-48 mr-0 "
+                  className="relative w-full h-full overflow-visible sm:mt-24 mt-[-2rem] sm:mr-48 mr-0 "
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd}
                   style={{
