@@ -268,7 +268,7 @@ function SCHeroSec() {
               <div className="flex flex-row gap-4 justify-center">
                 <button className="sm:px-8 px-12 py-4 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
                 rounded-full font-bold text-sm sm:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
-                 transition-transform">
+                 transition-transform whitespace-nowrap">
                   تسوق الآن
                 </button>
                 <button className="px-8 py-4 glass-card bg-black/50
