@@ -32,7 +32,7 @@ function SCHeroSec() {
     autoRotateTimeout.current = setTimeout(() => {
       setIsInteracting(false);
       setIsAutoRotating(true);
-    }, 4000);
+    }, 3000);
   };
   const startX = useRef(0);
 
@@ -202,17 +202,17 @@ function SCHeroSec() {
   return (
     <section
       className="relative min-h-screen overflow-hidden 
-    self-start 
+    self-start  
     bg-gradient-to-bl from-[#ff8c93]/10 to-[#ffff] mb-8 sm:pt-1 pt-8"
     >
       {/* Background Effects */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#ff8c93]/20 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#ac89ff]/20 blur-[120px] rounded-full"></div>
+      <div className="absolute inset-0 z-0 ">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 !bg-[#ff8c93]/20 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 !bg-[#ac89ff]/20 blur-[120px] rounded-full"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-[#ff8c93]/5 to-[#ac89ff]/5 blur-[100px] rounded-full"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="flex flex-col lg:flex-row items-center ">
           {/* Left Side - Content */}
           <div className="flex-1 text-center">

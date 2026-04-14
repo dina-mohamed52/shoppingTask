@@ -12,6 +12,8 @@ import ProductBenefits from "../features/products/ProductBenifits";
 import OrderForm from "../ui/Orderform";
 import { useTranslation } from "react-i18next";
 import Reviews from "./Reviews";
+import { Data } from "../data/Data";
+import WHeader from "../features/home/WHeader";
 
 function Home() {
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -95,8 +97,8 @@ function Home() {
             </div>
           </div>
         </div>
-
-        <ProductList />
+<WHeader/>
+      <ProductList products={Data} />
         <SizeTable />
         <Header1st />
 
