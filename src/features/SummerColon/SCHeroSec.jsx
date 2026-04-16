@@ -1,9 +1,10 @@
-import { Play, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { Play, ChevronLeft, ChevronRight, Star, Sparkles } from "lucide-react";
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SummerColonData } from "../../data/SummerColon";
+import OfferButton from "../offer/OfferButton";
 
-function SCHeroSec() {
+function SCHeroSec({ scrollToOffers, scrollToProducts }) {
   const [timeLeft, setTimeLeft] = useState({
     days: 3,
     hours: 12,
@@ -35,25 +36,6 @@ function SCHeroSec() {
     }, 3000);
   };
   const startX = useRef(0);
-
-  // const handleTouchStart = (e) => {
-  //   startX.current = e.touches[0].clientX;
-  // };
-
-  // const handleTouchEnd = (e) => {
-  //   const endX = e.changedTouches[0].clientX;
-  //   const diff = startX.current - endX;
-
-  //   if (Math.abs(diff) > 40) {
-  //     resetAutoRotate();
-
-  //     if (diff > 0) {
-  //       handleNext();
-  //     } else {
-  //       handlePrev();
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -96,6 +78,7 @@ function SCHeroSec() {
   const totalProducts = products.length;
   const angleStep = 360 / totalProducts;
   const isMobile = containerWidth < 768;
+
   // Auto rotation
   useEffect(() => {
     let interval;
@@ -125,73 +108,84 @@ function SCHeroSec() {
     setTimeout(() => setIsAutoRotating(true), 5000);
   };
 
- const getCardStyle = useCallback(
-  (index) => {
-    const isMobile = window.innerWidth < 768;
-
-    const cardWidth = isMobile ? 160 : 360;
-    const cardHeight = isMobile ? 160 : 390;
-
-    let diff = index - activeIndex;
-
-    const total = products.length;
-
-    // infinite loop fix
-    if (diff > total / 2) diff -= total;
-    if (diff < -total / 2) diff += total;
-
-    const position = diff;
-
-    let x = 0;
-    let scale = 0.7;
-    let opacity = 0;
-    let zIndex = 0;
-
-    if (position === 0) {
-      // CENTER (مظبوط في النص)
-      x = isMobile ? 0 : 0;
-      scale = 1;
-      opacity = 1;
-      zIndex = 10;
-    } 
-    else if (position === 1) {
-      // RIGHT
-      x = isMobile ? 100 : 200;
-      scale = 0.8;
-      opacity = 0.7;
-      zIndex = 5;
-    } 
-    else if (position === -1) {
-      // LEFT (هنزود شوية يمين زي ما طلبتي)
-      x = isMobile ? -80 : -200;
-      scale = 0.85;
-      opacity = 0.7;
-      zIndex = 5;
-    } 
-    else {
-      x = position > 0 ? 400 : -400;
-      scale = 0.5;
-      opacity = 0;
-      zIndex = 0;
+  // دوال السكرول
+  const handleShopNow = () => {
+    if (scrollToOffers) {
+      scrollToOffers();
     }
+  };
 
-    return {
-      transform: `translateX(${x}px) scale(${scale})`,
-      opacity,
-      zIndex,
-      transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
-      width: `${cardWidth}px`,
-      height: `${cardHeight}px`,
-      position: "absolute",
-      left: "50%",
-      top: "50%",
-      marginTop: `-${cardHeight / 2}px`,
-      marginLeft: `-${cardWidth / 2.5}px`,
-      pointerEvents: position === 0 ? "auto" : "none",
-    };
-  },
-  [containerWidth, activeIndex, products.length]
-);
+  const handleViewProducts = () => {
+    if (scrollToProducts) {
+      scrollToProducts();
+    }
+  };
+
+  const getCardStyle = useCallback(
+    (index) => {
+      const isMobile = window.innerWidth < 768;
+
+      const cardWidth = isMobile ? 160 : 360;
+      const cardHeight = isMobile ? 160 : 390;
+
+      let diff = index - activeIndex;
+
+      const total = products.length;
+
+      // infinite loop fix
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+
+      const position = diff;
+
+      let x = 0;
+      let scale = 0.7;
+      let opacity = 0;
+      let zIndex = 0;
+
+      if (position === 0) {
+        // CENTER
+        x = isMobile ? 0 : 0;
+        scale = 1;
+        opacity = 1;
+        zIndex = 10;
+      } else if (position === 1) {
+        // RIGHT
+        x = isMobile ? 100 : 200;
+        scale = 0.8;
+        opacity = 0.7;
+        zIndex = 5;
+      } else if (position === -1) {
+        // LEFT
+        x = isMobile ? -80 : -200;
+        scale = 0.85;
+        opacity = 0.7;
+        zIndex = 5;
+      } else {
+        x = position > 0 ? 400 : -400;
+        scale = 0.5;
+        opacity = 0;
+        zIndex = 0;
+      }
+
+      return {
+        transform: `translateX(${x}px) scale(${scale})`,
+        opacity,
+        zIndex,
+        transition: "all 0.6s cubic-bezier(0.4, 0, 0.2, 1)",
+        width: `${cardWidth}px`,
+        height: `${cardHeight}px`,
+        position: "absolute",
+        left: "50%",
+        top: "50%",
+        marginTop: `-${cardHeight / 2}px`,
+        marginLeft: `-${cardWidth / 2.5}px`,
+        pointerEvents: position === 0 ? "auto" : "none",
+      };
+    },
+    [containerWidth, activeIndex, products.length],
+  );
+
   const timeUnits = [
     { value: timeLeft.days, label: "يوم" },
     { value: timeLeft.hours, label: "ساعة" },
@@ -267,13 +261,34 @@ function SCHeroSec() {
               </div>
 
               <div className="flex flex-row sm:gap-4 gap-2 justify-center">
-                <button className="sm:px-8 px-8 sm:py-4 py-2 bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-black 
-                rounded-full font-bold text-sm sm:text-lg shadow-[0px_8px_24px_rgba(255,140,147,0.3)] hover:scale-105
-                 transition-transform whitespace-nowrap">
-                  تسوق الآن
+                <button
+                  onClick={handleShopNow}
+                  className={`
+    // على الموبيل: ثابت في أسفل المنتصف
+    fixed bottom-5 left-1/2 -translate-x-1/2 z-[1000]
+    // على الشاشات الكبيرة: يرجع لمكانه الطبيعي
+    lg:static lg:bottom-auto lg:left-auto lg:translate-x-0 lg:z-auto
+    
+    // أبعاد وتنسيقات موحدة
+    sm:px-8 px-6 sm:py-4 py-3
+    bg-gradient-to-l from-[#ff8c93] to-[#e51245] text-white 
+    rounded-full font-bold text-sm sm:text-lg 
+    shadow-[0px_8px_24px_rgba(255,140,147,0.3)] 
+    hover:scale-105 transition-transform 
+    whitespace-nowrap cursor-pointer
+    flex items-center justify-center
+  `}
+                >
+                  <Sparkles className="w-5 h-5 sm:w-5 sm:h-5 text-[#864e63] animate-spin-slow ml-2" /> تسوق الآن
+                   <Sparkles className="w-5 h-5 sm:w-5 sm:h-5 text-[#864e63] animate-spin-slow mr-2" />
                 </button>
-                <button className="sm:px-8 p-6 sm:py-4 py-3 glass-card bg-black/50
-                 text-white border whitespace-nowrap border-white/10 rounded-full font-bold text-md md:text-lg hover:bg-white/10 transition-all flex items-center gap-2">
+                <button
+                  onClick={handleViewProducts}
+                  className="sm:px-8 p-6 sm:py-4 py-3 glass-card bg-black/50
+                   text-white border whitespace-nowrap hover:bg-black/10 transition-all flex items-center gap-2 cursor-pointer
+                    border-white/10 rounded-full font-bold
+                     text-md md:text-lg "
+                >
                   <Play className="w-5 h-5" />
                   مشاهدة الكولونات
                 </button>
@@ -325,11 +340,10 @@ function SCHeroSec() {
                 {/* 3D Container */}
                 <div
                   className="relative w-full h-full overflow-visible sm:mt-24 mt-[-2rem] sm:mr-48 mr-0 "
-                
                   style={{
                     transformStyle: "preserve-3d",
                     WebkitTransformStyle: "preserve-3d",
-                    touchAction: "pan-x pinch-zoom", // تحسين اللمس
+                    touchAction: "pan-x pinch-zoom",
                   }}
                 >
                   {products.map((product, index) => {
@@ -350,7 +364,6 @@ function SCHeroSec() {
                           }
                         }}
                         onTouchStart={(e) => {
-                          // تحسين التفاعل باللمس
                           e.stopPropagation();
                         }}
                       >
@@ -425,7 +438,10 @@ function SCHeroSec() {
                             </div>
 
                             {isActive && (
-                              <button className="w-full bg-gradient-to-r from-[#ff8c93] to-[#e51245] text-white py-1.5 rounded-lg text-xs font-semibold transition-all duration-300 hover:scale-105 mt-auto">
+                              <button
+                                onClick={handleShopNow}
+                                className="w-full bg-gradient-to-r from-[#ff8c93] to-[#e51245] text-white py-1.5 rounded-lg text-xs font-semibold transition-all duration-300 hover:scale-105 mt-auto cursor-pointer"
+                              >
                                 شراء الآن
                               </button>
                             )}

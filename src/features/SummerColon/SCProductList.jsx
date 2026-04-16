@@ -5,7 +5,7 @@ import { Sparkles, Heart } from "lucide-react";
 
 function SCProductList() {
   return (
-    <div className="px-4 lg:px-8 py-6 ">
+    <div className="px-4 lg:px-8 py-6 " id="productList">
       {/* Header Section - جمل تفاعلية */}
       <div className="mb-8 text-center shadow-md shadow-rose-700/60 p-6 rounded-full">
         <motion.div

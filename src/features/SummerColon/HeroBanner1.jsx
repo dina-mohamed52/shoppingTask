@@ -51,7 +51,7 @@ function HeroBanner1() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 p-5 md:p-8 lg:p-12">
+      <div className="relative  p-5 md:p-8 lg:p-12">
         {/* Floating Badge */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
