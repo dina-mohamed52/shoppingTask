@@ -17,6 +17,12 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
   const [isAutoRotating, setIsAutoRotating] = useState(true);
   const containerRef = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
+  
+  // Refs for touch handling
+  const touchStartY = useRef(0);
+  const touchStartX = useRef(0);
+  const isScrollingVertical = useRef(false);
+  const carouselContainerRef = useRef(null);
 
   // Products data for 360 carousel
   const products = SummerColonData;
@@ -35,7 +41,6 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
       setIsAutoRotating(true);
     }, 3000);
   };
-  const startX = useRef(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -118,6 +123,57 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
   const handleViewProducts = () => {
     if (scrollToProducts) {
       scrollToProducts();
+    }
+  };
+
+  // Handle touch start - تحديد اتجاه السكرول
+  const handleTouchStart = (e) => {
+    touchStartY.current = e.touches[0].clientY;
+    touchStartX.current = e.touches[0].clientX;
+    isScrollingVertical.current = false;
+  };
+
+  // Handle touch move - منع تداخل الأفقي مع العمودي
+  const handleTouchMove = (e) => {
+    const deltaY = Math.abs(e.touches[0].clientY - touchStartY.current);
+    const deltaX = Math.abs(e.touches[0].clientX - touchStartX.current);
+    
+    // إذا كان المستخدم يسكرول عمودي (أكثر من 10px)
+    if (deltaY > 10 && deltaY > deltaX) {
+      isScrollingVertical.current = true;
+      // السماح للسكرول العمودي بالمرور
+      return;
+    }
+    
+    // إذا كان المستخدم يريد التنقل الأفقي (swipe left/right)
+    if (deltaX > 10 && deltaX > deltaY && !isScrollingVertical.current) {
+      e.preventDefault(); // منع السكرول العمودي أثناء التنقل الأفقي
+    }
+  };
+
+  // Handle touch end - التنقل بين المنتجات
+  const handleTouchEnd = (e) => {
+    if (isScrollingVertical.current) {
+      // كان سكرول عمودي، لا نفعل شيء
+      return;
+    }
+    
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+    
+    // تجاهل الحركة إذا كانت عمودية أكثر من أفقية
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      return;
+    }
+    
+    // Swipe left/right للتنقل بين المنتجات
+    if (Math.abs(deltaX) > 40) {
+      resetAutoRotate();
+      if (deltaX > 0) {
+        handlePrev(); // سحب لليمين -> منتج سابق
+      } else {
+        handleNext(); // سحب لليسار -> منتج تالي
+      }
     }
   };
 
@@ -307,10 +363,13 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
               {/* 3D Carousel Container */}
               <div
                 ref={containerRef}
-                className="relative  flex gap-10 h-[500px] md:h-[600px] overflow-visible"
+                className="relative flex gap-10 h-[500px] md:h-[600px] overflow-visible"
                 style={{
                   perspective: containerWidth < 768 ? "1200px" : "1500px",
                 }}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
               >
                 {/* Navigation Buttons */}
                 <button
@@ -339,11 +398,12 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
 
                 {/* 3D Container */}
                 <div
+                  ref={carouselContainerRef}
                   className="relative w-full h-full overflow-visible sm:mt-24 mt-[-2rem] sm:mr-48 mr-0 "
                   style={{
                     transformStyle: "preserve-3d",
                     WebkitTransformStyle: "preserve-3d",
-                    touchAction: "pan-x pinch-zoom",
+                    touchAction: "pan-y pinch-zoom", // السماح بالسكرول العمودي فقط بشكل افتراضي
                   }}
                 >
                   {products.map((product, index) => {
@@ -354,7 +414,7 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
                       <div
                         key={product.id}
                         style={style}
-                        className="cursor-pointer group  "
+                        className="cursor-pointer group"
                         onClick={() => {
                           if (!isActive) {
                             setIsAutoRotating(false);
@@ -363,31 +423,27 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
                             setTimeout(() => setIsAutoRotating(true), 5000);
                           }
                         }}
-                        onTouchStart={(e) => {
-                          e.stopPropagation();
-                        }}
                       >
                         <div
                           className={`bg-gradient-to-br from-gray-800/90 to-gray-900/90
-         rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-sm 
-         sm:w-[16rem] w-[13rem] sm:h-[25rem] h-[22rem] sm:mt-[-5rem] mt-0
-        
-         flex flex-col transition-all duration-300 ${
-           isActive
-             ? "border-[#ff8c93] shadow-[#ff8c93]/30 shadow-xl ring-1 ring-[#ff8c93]/50 scale-105"
-             : "border-white/10"
-         }`}
+                            rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-sm 
+                            sm:w-[16rem] w-[13rem] sm:h-[25rem] h-[22rem] sm:mt-[-5rem] mt-0
+                            flex flex-col transition-all duration-300 ${
+                              isActive
+                                ? "border-[#ff8c93] shadow-[#ff8c93]/30 shadow-xl ring-1 ring-[#ff8c93]/50 scale-105"
+                                : "border-white/10"
+                            }`}
                         >
                           {/* Product Image */}
                           <div
                             className="relative h-[15rem] overflow-hidden 
-           bg-gradient-to-br from-gray-700 to-gray-800"
+                              bg-gradient-to-br from-gray-700 to-gray-800"
                           >
                             <img
                               src={product.image}
                               alt={product.name}
                               className="w-full h-full 
-              object-cover group-hover:scale-110 transition-transform duration-500"
+                                object-cover group-hover:scale-110 transition-transform duration-500"
                               loading="lazy"
                               draggable="false"
                             />
