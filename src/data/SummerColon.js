@@ -5,9 +5,9 @@ export const SummerColonData = [
     description:
       "كولون صيفي  قطن ناعم مدعوم بنسبة 10% ليكرا لمرونة عالية وراحة طوال اليوم، بتصميم قلوب أنيق مناسب للإطلالات اليومية والمناسبات.",
 
-    price: 120,
-    originalPrice: 180,
-    discount: 42,
+    price: 140,
+    originalPrice: 195,
+    discount: 28,
     rating: 5,
     category: "colon",
 
@@ -35,9 +35,9 @@ export const SummerColonData = [
     description:
       "كولون صيفي  قطن بلمسة أنثوية ناعمة مع فيونكه أنيقة، مصنوع من خامة مرنة 10% ليكرا لتوفير راحة مثالية وحركة سهلة طوال اليوم.",
 
-    price: 120,
-    originalPrice: 180,
-    discount: 42,
+    price: 140,
+    originalPrice: 195,
+    discount: 28,
     rating: 5,
     category: "colon",
 
@@ -65,9 +65,9 @@ export const SummerColonData = [
     description:
       "كولون صيفي  قطن بجودة عالية ونقشة جكار مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
 
-    price: 120,
-    originalPrice: 180,
-    discount: 42,
+    price: 140,
+    originalPrice: 195,
+    discount: 28,
     rating: 5,
     category: "colon",
 
@@ -97,9 +97,9 @@ export const SummerColonData = [
     description:
       "ليجن أوباك خامة قطن ناعمة غير شفافة، مريح جدًا للاستخدام اليومي، مناسب للمدرسة والخروجات.",
 
-    price: 130,
-    originalPrice: 190,
-    discount: 32,
+    price: 150,
+    originalPrice: 205,
+    discount: 28,
     rating: 5,
     category: "leggings",
 
@@ -128,9 +128,9 @@ export const SummerColonData = [
     description:
       "ليجن أوباك بتصميم فيونكة أنيق، خامة قطن مريحة غير شفافة مع مرونة عالية.",
 
-    price: 140,
-    originalPrice: 200,
-    discount: 30,
+    price: 150,
+    originalPrice: 205,
+    discount: 28,
     rating: 5,
     category: "leggings",
 
