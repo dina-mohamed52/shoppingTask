@@ -7,22 +7,22 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const offerDetails = [
-    { quantity: "3 كولون", price: 285, oldPrice: 330, value: 3, discount: 14 },
-    { quantity: "4 كولون", price: 360, oldPrice: 440, value: 4, discount: 18 },
+    { quantity: "3 كولون", price: 285, oldPrice: 420, value: 3, discount: 14 },
+    { quantity: "4 كولون", price: 360, oldPrice: 560, value: 4, discount: 18 },
     { 
       quantity: "6 كولون", 
       price: 510, 
-      oldPrice: 660,
+      oldPrice: 840,
       value: 6, 
       discount: 23,
       highlight: "الأكثر مبيعاً", 
       icon: <Star className="w-3.5 h-3.5" />,
     },
-    { quantity: "8 كولون", price: 640, oldPrice: 880, value: 8, discount: 27 },
+    { quantity: "8 كولون", price: 640, oldPrice: 1020, value: 8, discount: 27 },
     { 
       quantity: "12 كولون", 
       price: 900, 
-      oldPrice: 1320,
+      oldPrice:1680,
       value: 12, 
       discount: 32,
       highlight: "أفضل عرض", 
@@ -209,7 +209,7 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
         })}
       </div>
 
-      {/* Footer Note */}
+      {/* Footer Note
       <div className="relative  mt-10 text-center">
         <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#864e63]/5 to-[#c6abff]/5 backdrop-blur-sm rounded-full px-4 py-2 border border-[#864e63]/10">
           <Sparkles className="w-3.5 h-3.5 text-[#864e63]" />
@@ -218,7 +218,7 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
           </p>
           <Sparkles className="w-3.5 h-3.5 text-[#c6abff]" />
         </div>
-      </div>
+      </div> */}
 
       <style jsx>{`
         @keyframes spin-slow {
