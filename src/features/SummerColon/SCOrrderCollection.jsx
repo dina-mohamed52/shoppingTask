@@ -15,6 +15,18 @@ import {
 import { motion } from "framer-motion";
 import { Select } from "antd";
 
+// المقاسات الثابتة مع الأعمار المناسبة - دي بس اللي هتظهر
+const sizeData = [
+  { size: "1-0", age: "من حديث الولادة لحد 6 شهور" },
+  { size: "2-1", age: "من 9 شهور لحد سنة ونص" },
+  { size: "4-2", age: "من سنة ونص ل 3 سنين" },
+  { size: "6-4", age: "من 3 ل 5 سنين" },
+  { size: "8-6", age: "من 5 ل 7 سنين" },
+  { size: "10-8", age: "من 7 ل 9 سنين" },
+  { size: "12-10", age: "من 9 ل 11 سنة" },
+  { size: "14-12", age: "من 12 ل 14 سنة" },
+];
+
 function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers }) {
   const { t } = useTranslation();
   const count = selectedOffer?.value || selectedOffer?.count || 0;
@@ -81,9 +93,9 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
     return product ? product.avalibeColors : [];
   };
 
-  const getAvailableSizes = (productName) => {
-    const product = SummerColonData.find((item) => item.name === productName);
-    return product ? product.sizes : [];
+  // دالة لجلب المقاسات - نرجع sizeData الثابتة فقط
+  const getAvailableSizes = () => {
+    return sizeData;
   };
 
   const getColorCode = (colorName) => {
@@ -237,7 +249,7 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {pieces.map((piece, index) => {
               const colors = getAvailableColors(piece.name);
-              const sizes = getAvailableSizes(piece.name);
+              const sizes = getAvailableSizes(); // دي بترجع sizeData الثابتة
               const isCompleted = piece.name && piece.color && selectedSizes[piece.id];
               
               return (
@@ -340,27 +352,35 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
                         </Select>
                       </div>
 
-                      {/* Size Select */}
+                      {/* Size Select - باستخدام sizeData الثابتة فقط */}
                       {piece.name && (
                         <div>
                           <label className="block text-xs font-medium text-gray-700 mb-1.5">
                             <Ruler className="w-3.5 h-3.5 inline ml-1 text-[#864e63]" />
-                            اختر الحجم
+                            اختر المقاس
                           </label>
 
                           <Select
                             value={selectedSizes[piece.id] || undefined}
                             onChange={(value) => handleSizeChange(piece.id, value)}
-                            placeholder="اختر الحجم"
+                            placeholder="اختر المقاس"
                             className="w-full"
                             size="large"
                           >
-                            {sizes.map((size, idx) => (
-                              <Option key={idx} value={size.size}>
-                                {size.size} - {size.age}
+                            {sizes.map((sizeItem, idx) => (
+                              <Option key={idx} value={sizeItem.size}>
+                                <div className="flex flex-col">
+                                  <span className="font-medium">{sizeItem.size}</span>
+                                  <span className="text-xs text-gray-500">{sizeItem.age}</span>
+                                </div>
                               </Option>
                             ))}
                           </Select>
+                          
+                          {/* توضيح للمقاسات */}
+                          <p className="text-[10px] text-gray-400 mt-1 mr-1">
+                            * المقاسات مناسبة للأعمار المذكورة
+                          </p>
                         </div>
                       )}
                     </div>
