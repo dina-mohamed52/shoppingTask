@@ -1,33 +1,38 @@
 import { useState, useMemo, useEffect } from "react";
-import { SummerColonData } from "../../data/SummerColon"; 
+import { SummerColonData } from "../../data/SummerColon";
 import { useTranslation } from "react-i18next";
-import { 
-  ShoppingBag, 
-  CheckCircle, 
-  Palette, 
-  Ruler, 
+import {
+  ShoppingBag,
+  CheckCircle,
+  Palette,
+  Ruler,
   Sparkles,
   Heart,
   Gift,
   Droplet,
-  Tag
+  Tag,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Select } from "antd";
 
 // المقاسات الثابتة مع الأعمار المناسبة - دي بس اللي هتظهر
-const sizeData = [
-  { size: "1-0", age: "من حديث الولادة لحد 6 شهور" },
-  { size: "2-1", age: "من 9 شهور لحد سنة ونص" },
-  { size: "4-2", age: "من سنة ونص ل 3 سنين" },
-  { size: "6-4", age: "من 3 ل 5 سنين" },
-  { size: "8-6", age: "من 5 ل 7 سنين" },
-  { size: "10-8", age: "من 7 ل 9 سنين" },
-  { size: "12-10", age: "من 9 ل 11 سنة" },
-  { size: "14-12", age: "من 12 ل 14 سنة" },
-];
+// const sizeData = [
+//   { size: "1-0", age: "من حديث الولادة لحد 6 شهور" },
+//   { size: "2-1", age: "من 9 شهور لحد سنة ونص" },
+//   { size: "4-2", age: "من سنة ونص ل 3 سنين" },
+//   { size: "6-4", age: "من 3 ل 5 سنين" },
+//   { size: "8-6", age: "من 5 ل 7 سنين" },
+//   { size: "10-8", age: "من 7 ل 9 سنين" },
+//   { size: "12-10", age: "من 9 ل 11 سنة" },
+//   { size: "14-12", age: "من 12 ل 14 سنة" },
+// ];
 
-function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers }) {
+function SCOrderCollection({
+  selectedOffer,
+  setOrder,
+  formRef,
+  scrollToOffers,
+}) {
   const { t } = useTranslation();
   const count = selectedOffer?.value || selectedOffer?.count || 0;
 
@@ -49,8 +54,12 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
   // تحديث القطع المكتملة
   useEffect(() => {
     const completed = {};
-    pieces.forEach(piece => {
-      completed[piece.id] = !!(piece.name && piece.color && selectedSizes[piece.id]);
+    pieces.forEach((piece) => {
+      completed[piece.id] = !!(
+        piece.name &&
+        piece.color &&
+        selectedSizes[piece.id]
+      );
     });
     setCompletedPieces(completed);
   }, [pieces, selectedSizes]);
@@ -61,69 +70,90 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
 
   const handleChange = (id, field, value) => {
     const updated = pieces.map((p) =>
-      p.id === id ? { ...p, [field]: value } : p
+      p.id === id ? { ...p, [field]: value } : p,
     );
     setPieces(updated);
   };
+  const getAvailableColors = (productName) => {
+    const product = SummerColonData.find((item) => item.name === productName);
+    return product ? product.avalibeColors : [];
+  };
 
   const handleSizeChange = (id, size) => {
-    setSelectedSizes(prev => ({ ...prev, [id]: size }));
+    setSelectedSizes((prev) => ({ ...prev, [id]: size }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const invalid = pieces.some((p) => !p.name || !p.color || !selectedSizes[p.id]);
+    const invalid = pieces.some(
+      (p) => !p.name || !p.color || !selectedSizes[p.id],
+    );
 
     if (invalid) {
       alert("يرجى إكمال جميع البيانات (المنتج، اللون، المقاس)");
       return;
     }
 
-    const orderWithSizes = pieces.map(piece => ({
+    const orderWithSizes = pieces.map((piece) => ({
       ...piece,
-      size: selectedSizes[piece.id]
+      size: selectedSizes[piece.id],
     }));
     setOrder(orderWithSizes);
     formRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const getAvailableColors = (productName) => {
+  const getAvailableSizes = (productName, color) => {
     const product = SummerColonData.find((item) => item.name === productName);
-    return product ? product.avalibeColors : [];
-  };
 
-  // دالة لجلب المقاسات - نرجع sizeData الثابتة فقط
-  const getAvailableSizes = () => {
-    return sizeData;
+    if (!product) return [];
+
+    let sizes = product.sizes;
+
+    // الشرط بتاعك 👇
+    const isSpecialCase =
+      productName?.includes("ليجن") ||
+      productName?.includes("اوباك") ||
+      productName?.includes("ساده");
+
+    if (isSpecialCase && color === "بينك") {
+      // نبدأ من 6-8
+      sizes = sizes.filter((s) => {
+        const sizeNumber = parseInt(s.size.split("-")[0]);
+        return sizeNumber >= 8;
+      });
+    }
+
+    return sizes;
   };
 
   const getColorCode = (colorName) => {
     const colorMap = {
-      "أبيض": "#FFFFFF",
+      أبيض: "#FFFFFF",
       "أوف وايت": "#FDF5E6",
-      "أسود": "#000000",
-      "رمادي": "#808080",
-      "روز": "#FFC0CB",
-      "بينك": "#FF69B4",
-      "كحلي": "#000080",
-      "بيج": "#F5F5DC",
-      "لبني": "#FDF5E6",
-      "أحمر": "#FF0000",
-      "كافيه": "#6F4E37",
-      "أصفر": "#FFFF00",
-      "موف": "#E0B0FF",
-      "نبيتي": "#800020",
-      "زيتي": "#556B2F",
-      "تركواز": "#40E0D0",
-      "لافندر": "#E6E6FA",
-      default: "#CCCCCC"
+      أسود: "#000000",
+      رمادي: "#808080",
+      روز: "#FFC0CB",
+      بينك: "#FF69B4",
+      كحلي: "#000080",
+      بيج: "#F5F5DC",
+      لبني: "#FDF5E6",
+      أحمر: "#FF0000",
+      كافيه: "#6F4E37",
+      أصفر: "#FFFF00",
+      موف: "#E0B0FF",
+      نبيتي: "#800020",
+      زيتي: "#556B2F",
+      تركواز: "#40E0D0",
+      لافندر: "#E6E6FA",
+      default: "#CCCCCC",
     };
     return colorMap[colorName] || colorMap.default;
   };
 
   const getProductIcon = (productName) => {
-    if (productName?.includes("كولون")) return <Droplet className="w-8 h-8 text-[#864e63]" />;
+    if (productName?.includes("كولون"))
+      return <Droplet className="w-8 h-8 text-[#864e63]" />;
     return <ShoppingBag className="w-8 h-8 text-[#864e63]" />;
   };
 
@@ -142,7 +172,7 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
   if (!selectedOffer || count === 0) {
     return (
       <div className="p-8 text-center">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -155,12 +185,14 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
               <Droplet className="w-10 h-10 text-[#864e63] animate-pulse" />
             </div>
           </div>
-          
-          <h3 className="text-xl font-bold text-gray-800 mb-2">لم تختاري عرضاً بعد</h3>
+
+          <h3 className="text-xl font-bold text-gray-800 mb-2">
+            لم تختاري عرضاً بعد
+          </h3>
           <p className="text-gray-500 text-sm mb-6">
             اختاري أحد العروض أعلاه لتبدئي في اختيار الكولونات المفضلة لكِ
           </p>
-          
+
           <motion.button
             onClick={handleGoToOffers}
             whileHover={{ scale: 1.05 }}
@@ -171,20 +203,20 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
             اختاري عرضك المناسب
             <Sparkles className="w-4 h-4" />
           </motion.button>
-          
+
           {/* Decorative dots */}
           <div className="flex justify-center gap-1 mt-6">
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
-                animate={{ 
+                animate={{
                   scale: [1, 1.3, 1],
-                  opacity: [0.3, 0.8, 0.3]
+                  opacity: [0.3, 0.8, 0.3],
                 }}
-                transition={{ 
-                  duration: 1.5, 
-                  repeat: Infinity, 
-                  delay: i * 0.2 
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  delay: i * 0.2,
                 }}
                 className="w-1.5 h-1.5 rounded-full bg-[#864e63]/40"
               />
@@ -230,11 +262,12 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
               <div className="flex justify-between text-xs text-gray-500 mb-1">
                 <span>اكتمل</span>
                 <span className="text-[#864e63] font-bold">
-                  {Object.values(completedPieces).filter(Boolean).length}/{pieces.length}
+                  {Object.values(completedPieces).filter(Boolean).length}/
+                  {pieces.length}
                 </span>
               </div>
               <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                <motion.div 
+                <motion.div
                   className="h-full bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full"
                   style={{ width: `${completionPercentage}%` }}
                   initial={{ width: 0 }}
@@ -249,9 +282,12 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {pieces.map((piece, index) => {
               const colors = getAvailableColors(piece.name);
-              const sizes = getAvailableSizes(); // دي بترجع sizeData الثابتة
-              const isCompleted = piece.name && piece.color && selectedSizes[piece.id];
-              
+              //  const sizes = getAvailableSizes(piece.name);
+              // الصحيح
+              const sizes = getAvailableSizes(piece.name, piece.color);
+              const isCompleted =
+                piece.name && piece.color && selectedSizes[piece.id];
+
               return (
                 <motion.div
                   key={piece.id}
@@ -263,8 +299,8 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
                 >
                   <div
                     className={`relative bg-white/95 backdrop-blur-sm p-5 rounded-xl border transition-all duration-300 ${
-                      isCompleted 
-                        ? "border-[#864e63] shadow-md shadow-[#864e63]/10" 
+                      isCompleted
+                        ? "border-[#864e63] shadow-md shadow-[#864e63]/10"
                         : "border-gray-100 hover:border-[#864e63]/30 hover:shadow-md"
                     }`}
                   >
@@ -306,7 +342,6 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
                     </h2>
 
                     <div className="space-y-4">
-
                       {/* Product Select - كل الكولونات بدون فلتر */}
                       <div>
                         <label className="block text-xs font-medium text-gray-700 mb-1.5">
@@ -316,7 +351,9 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
 
                         <Select
                           value={piece.name || undefined}
-                          onChange={(value) => handleChange(piece.id, "name", value)}
+                          onChange={(value) =>
+                            handleChange(piece.id, "name", value)
+                          }
                           placeholder="اختر الكولون"
                           className="w-full"
                           size="large"
@@ -338,7 +375,9 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
 
                         <Select
                           value={piece.color || undefined}
-                          onChange={(value) => handleChange(piece.id, "color", value)}
+                          onChange={(value) =>
+                            handleChange(piece.id, "color", value)
+                          }
                           placeholder="اختر اللون"
                           disabled={!piece.name}
                           className="w-full"
@@ -362,7 +401,9 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
 
                           <Select
                             value={selectedSizes[piece.id] || undefined}
-                            onChange={(value) => handleSizeChange(piece.id, value)}
+                            onChange={(value) =>
+                              handleSizeChange(piece.id, value)
+                            }
                             placeholder="اختر المقاس"
                             className="w-full"
                             size="large"
@@ -370,13 +411,17 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
                             {sizes.map((sizeItem, idx) => (
                               <Option key={idx} value={sizeItem.size}>
                                 <div className="flex flex-col">
-                                  <span className="font-medium">{sizeItem.size}</span>
-                                  <span className="text-xs text-gray-500">{sizeItem.age}</span>
+                                  <span className="font-medium">
+                                    {sizeItem.size}
+                                  </span>
+                                  <span className="text-xs text-gray-500">
+                                    {sizeItem.age}
+                                  </span>
                                 </div>
                               </Option>
                             ))}
                           </Select>
-                          
+
                           {/* توضيح للمقاسات */}
                           <p className="text-[10px] text-gray-400 mt-1 mr-1">
                             * المقاسات مناسبة للأعمار المذكورة
@@ -409,7 +454,9 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
                             </div>
                           ))}
                           {colors.length > 5 && (
-                            <span className="text-[9px] text-gray-400">+{colors.length - 5}</span>
+                            <span className="text-[9px] text-gray-400">
+                              +{colors.length - 5}
+                            </span>
                           )}
                         </div>
                       </motion.div>
@@ -442,15 +489,22 @@ function SCOrderCollection({ selectedOffer, setOrder, formRef, scrollToOffers })
       {/* Custom Animations */}
       <style jsx>{`
         @keyframes blob {
-          0%, 100% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
+          0%,
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
         }
-        
+
         .animate-blob {
           animation: blob 7s infinite;
         }
-        
+
         .animation-delay-2000 {
           animation-delay: 2s;
         }
