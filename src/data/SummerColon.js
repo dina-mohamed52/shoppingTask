@@ -19,8 +19,9 @@ export const SummerColonData = [
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776093867/WhatsApp_Image_2026-04-13_at_8.13.21_AM_xpijif.jpg",
       },
       {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776093856/WhatsApp_Image_2026-04-13_at_8.13.21_AM_1_m1napz.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776610600/WhatsApp_Image_2026-04-19_at_4.26.08_AM_fso3aw.jpg",
       },
+      {img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776610600/WhatsApp_Image_2026-04-19_at_4.26.08_AM_1_h90nua.jpg",}
     ],
 
     // 👇 الألوان الجديدة
