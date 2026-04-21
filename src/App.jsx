@@ -12,6 +12,7 @@ import Offers from "./features/home/Offers";
 import Turbon from "./pages/Turbon";
 import SummerHalfColon from "./pages/SummerHalfColon";
 import SummerColon from "./pages/SummerColon";
+import MainPage from "./pages/MainPage";
 
 
 function App() {
@@ -23,8 +24,10 @@ function App() {
         <ToastContainer />
         <Routes>
           <Route path="/" element={<AppLayOut />}>
-            <Route index element={<Home />} />
-            <Route path="/cart" element={<Cart />} />
+
+            <Route index element={<MainPage />} />
+            <Route path="/WinterCollection" element={<Home />} />
+        
             <Route path="/orderForm" element={<OrderForm />} />
             <Route path="/Turbon" element={<Turbon />} />
             <Route path="/Offers" element={<Offers />} />

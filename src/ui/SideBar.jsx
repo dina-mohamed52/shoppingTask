@@ -23,6 +23,12 @@ function SideBar() {
     {
       to: "/",
       icon: <Home size={20} />,
+      label: { ar: "الرئيسية", en: "Home" },
+      gradient: "from-pink-400 to-pink-500",
+    },
+    {
+      to: "/WinterCollection",
+      icon: <Home size={20} />,
       label: { ar: "كولونات رسومات شتوي", en: "Home" },
       gradient: "from-pink-400 to-pink-500",
     },
