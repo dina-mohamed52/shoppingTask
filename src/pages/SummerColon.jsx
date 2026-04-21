@@ -7,17 +7,27 @@ import SCOrderCollection from "../features/SummerColon/SCOrrderCollection";
 import SCProductList from "../features/SummerColon/SCProductList";
 import Reviews from "../pages/Reviews";
 import SizeTable from "../pages/SizeTable";
+import OrderForm from "../ui/Orderform";
 
 function SummerColon() {
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [order, setOrder] = useState([]);
-  const orderCollectionRef = useRef(null);
+  const orderCollectionRef = useRef(null)
+    const formRef = useRef(null);;
 
   const scrollToOrderCollection = () => {
     orderCollectionRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
     });
+  };
+   const scrollToForm = () => {
+    if (formRef.current) {
+      formRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   const scrollToOffers = () => {
@@ -51,12 +61,23 @@ function SummerColon() {
         <SCOrderCollection
           selectedOffer={selectedOffer}
           setOrder={setOrder}
-          formRef={orderCollectionRef}
+           formRef={formRef}
           scrollToOffers={scrollToOffers}
         />
       </div>
       <Reviews/>
+
       <ProductBenefits />
+       {/* فورم الطلب */}
+            {order && order.length > 0 && (
+              <div ref={formRef} className="mt-10">
+                <OrderForm
+                  order={order}
+                  selectedOffer={selectedOffer}
+                  formRef={formRef}
+                />
+              </div>
+            )}
     </div>
   );
 }

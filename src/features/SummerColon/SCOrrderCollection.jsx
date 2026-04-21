@@ -401,6 +401,7 @@ function SCOrderCollection({
 
                           <Select
                             value={selectedSizes[piece.id] || undefined}
+                             optionLabelProp="label" 
                             onChange={(value) =>
                               handleSizeChange(piece.id, value)
                             }
@@ -409,7 +410,7 @@ function SCOrderCollection({
                             size="large"
                           >
                             {sizes.map((sizeItem, idx) => (
-                              <Option key={idx} value={sizeItem.size}>
+                              <Option key={idx} value={sizeItem.size}  label={sizeItem.size}  >
                                 <div className="flex flex-col">
                                   <span className="font-medium">
                                     {sizeItem.size}
