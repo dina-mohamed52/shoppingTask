@@ -15,18 +15,6 @@ import {
 import { motion } from "framer-motion";
 import { Select } from "antd";
 
-// المقاسات الثابتة مع الأعمار المناسبة - دي بس اللي هتظهر
-// const sizeData = [
-//   { size: "1-0", age: "من حديث الولادة لحد 6 شهور" },
-//   { size: "2-1", age: "من 9 شهور لحد سنة ونص" },
-//   { size: "4-2", age: "من سنة ونص ل 3 سنين" },
-//   { size: "6-4", age: "من 3 ل 5 سنين" },
-//   { size: "8-6", age: "من 5 ل 7 سنين" },
-//   { size: "10-8", age: "من 7 ل 9 سنين" },
-//   { size: "12-10", age: "من 9 ل 11 سنة" },
-//   { size: "14-12", age: "من 12 ل 14 سنة" },
-// ];
-
 function SCOrderCollection({
   selectedOffer,
   setOrder,
@@ -36,7 +24,6 @@ function SCOrderCollection({
   const { t } = useTranslation();
   const count = selectedOffer?.value || selectedOffer?.count || 0;
 
-  // كل منتجات الكولونات من غير فلتر
   const scProducts = SummerColonData;
 
   const initialPieces = useMemo(() => {
@@ -51,7 +38,20 @@ function SCOrderCollection({
   const [completedPieces, setCompletedPieces] = useState({});
   const [selectedSizes, setSelectedSizes] = useState({});
 
-  // تحديث القطع المكتملة
+  // دالة لعكس المقاس (تحويل 10-8 إلى 8-10)
+  const reverseSize = (size) => {
+    if (!size) return size;
+    const parts = size.split('-');
+    if (parts.length === 2) {
+      const first = parseInt(parts[0]);
+      const second = parseInt(parts[1]);
+      if (first > second) {
+        return `${second}-${first}`;
+      }
+    }
+    return size;
+  };
+
   useEffect(() => {
     const completed = {};
     pieces.forEach((piece) => {
@@ -74,6 +74,7 @@ function SCOrderCollection({
     );
     setPieces(updated);
   };
+
   const getAvailableColors = (productName) => {
     const product = SummerColonData.find((item) => item.name === productName);
     return product ? product.avalibeColors : [];
@@ -105,19 +106,17 @@ function SCOrderCollection({
 
   const getAvailableSizes = (productName, color) => {
     const product = SummerColonData.find((item) => item.name === productName);
-
+    
     if (!product) return [];
 
     let sizes = product.sizes;
 
-    // الشرط بتاعك 👇
     const isSpecialCase =
       productName?.includes("ليجن") ||
       productName?.includes("اوباك") ||
       productName?.includes("ساده");
 
     if (isSpecialCase && color === "بينك") {
-      // نبدأ من 6-8
       sizes = sizes.filter((s) => {
         const sizeNumber = parseInt(s.size.split("-")[0]);
         return sizeNumber >= 8;
@@ -162,7 +161,6 @@ function SCOrderCollection({
     return (completed / pieces.length) * 100;
   }, [completedPieces, pieces.length]);
 
-  // دالة للسكرول لقسم العروض
   const handleGoToOffers = () => {
     if (scrollToOffers) {
       scrollToOffers();
@@ -178,7 +176,6 @@ function SCOrderCollection({
           transition={{ duration: 0.5 }}
           className="max-w-md mx-auto bg-white/80 backdrop-blur-sm rounded-2xl p-8 border-2 border-[#864e63]/20 shadow-xl"
         >
-          {/* Animated Icon */}
           <div className="relative mb-6">
             <div className="absolute inset-0 bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full blur-2xl opacity-30 animate-pulse"></div>
             <div className="relative w-20 h-20 mx-auto bg-gradient-to-br from-[#864e63]/10 to-[#c6abff]/10 rounded-full flex items-center justify-center border-2 border-[#864e63]/30">
@@ -204,7 +201,6 @@ function SCOrderCollection({
             <Sparkles className="w-4 h-4" />
           </motion.button>
 
-          {/* Decorative dots */}
           <div className="flex justify-center gap-1 mt-6">
             {[...Array(3)].map((_, i) => (
               <motion.div
@@ -230,14 +226,12 @@ function SCOrderCollection({
   return (
     <div className="p-4 md:p-6 lg:p-8" id="scOrderCollection">
       <div className="relative max-w-7xl mx-auto">
-        {/* Decorative Background - بألوان بينك وموف */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#864e63]/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#c6abff]/30 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
         </div>
 
         <form onSubmit={handleSubmit} className="relative">
-          {/* Header with Progress */}
           <div className="mb-8 text-center">
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
@@ -257,7 +251,6 @@ function SCOrderCollection({
               </div>
             </motion.div>
 
-            {/* Progress Bar */}
             <div className="max-w-md mx-auto">
               <div className="flex justify-between text-xs text-gray-500 mb-1">
                 <span>اكتمل</span>
@@ -278,12 +271,9 @@ function SCOrderCollection({
             </div>
           </div>
 
-          {/* Pieces Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {pieces.map((piece, index) => {
               const colors = getAvailableColors(piece.name);
-              //  const sizes = getAvailableSizes(piece.name);
-              // الصحيح
               const sizes = getAvailableSizes(piece.name, piece.color);
               const isCompleted =
                 piece.name && piece.color && selectedSizes[piece.id];
@@ -304,7 +294,6 @@ function SCOrderCollection({
                         : "border-gray-100 hover:border-[#864e63]/30 hover:shadow-md"
                     }`}
                   >
-                    {/* Piece Number Badge - بألوان بينك */}
                     <div className="absolute -top-2 -right-2 z-10">
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full blur-md opacity-50"></div>
@@ -314,7 +303,6 @@ function SCOrderCollection({
                       </div>
                     </div>
 
-                    {/* Completed Check */}
                     {isCompleted && (
                       <motion.div
                         initial={{ scale: 0 }}
@@ -327,7 +315,6 @@ function SCOrderCollection({
                       </motion.div>
                     )}
 
-                    {/* Product Icon - بألوان بينك */}
                     <div className="flex justify-center mb-3">
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full blur-xl opacity-30"></div>
@@ -342,7 +329,6 @@ function SCOrderCollection({
                     </h2>
 
                     <div className="space-y-4">
-                      {/* Product Select - كل الكولونات بدون فلتر */}
                       <div>
                         <label className="block text-xs font-medium text-gray-700 mb-1.5">
                           <ShoppingBag className="w-3.5 h-3.5 inline ml-1 text-[#864e63]" />
@@ -359,14 +345,13 @@ function SCOrderCollection({
                           size="large"
                         >
                           {scProducts.map((product, idx) => (
-                            <Option key={idx} value={product.name}>
+                            <Select.Option key={idx} value={product.name}>
                               {product.name}
-                            </Option>
+                            </Select.Option>
                           ))}
                         </Select>
                       </div>
 
-                      {/* Color Select */}
                       <div>
                         <label className="block text-xs font-medium text-gray-700 mb-1.5">
                           <Palette className="w-3.5 h-3.5 inline ml-1 text-[#864e63]" />
@@ -384,14 +369,13 @@ function SCOrderCollection({
                           size="large"
                         >
                           {colors.map((color, idx) => (
-                            <Option key={idx} value={color}>
+                            <Select.Option key={idx} value={color}>
                               {color}
-                            </Option>
+                            </Select.Option>
                           ))}
                         </Select>
                       </div>
 
-                      {/* Size Select - باستخدام sizeData الثابتة فقط */}
                       {piece.name && (
                         <div>
                           <label className="block text-xs font-medium text-gray-700 mb-1.5">
@@ -401,16 +385,21 @@ function SCOrderCollection({
 
                           <Select
                             value={selectedSizes[piece.id] || undefined}
-                             optionLabelProp="label" 
-                            onChange={(value) =>
-                              handleSizeChange(piece.id, value)
-                            }
+                            optionLabelProp="label"
+                            onChange={(value) => {
+                              const reversedValue = reverseSize(value);
+                              handleSizeChange(piece.id, reversedValue);
+                            }}
                             placeholder="اختر المقاس"
                             className="w-full"
                             size="large"
                           >
                             {sizes.map((sizeItem, idx) => (
-                              <Option key={idx} value={sizeItem.size}  label={sizeItem.size}  >
+                              <Select.Option 
+                                key={idx} 
+                                value={sizeItem.size}
+                                label={sizeItem.size}
+                              >
                                 <div className="flex flex-col">
                                   <span className="font-medium">
                                     {sizeItem.size}
@@ -419,11 +408,10 @@ function SCOrderCollection({
                                     {sizeItem.age}
                                   </span>
                                 </div>
-                              </Option>
+                              </Select.Option>
                             ))}
                           </Select>
 
-                          {/* توضيح للمقاسات */}
                           <p className="text-[10px] text-gray-400 mt-1 mr-1">
                             * المقاسات مناسبة للأعمار المذكورة
                           </p>
@@ -431,7 +419,6 @@ function SCOrderCollection({
                       )}
                     </div>
 
-                    {/* Quick Color Guide */}
                     {piece.name && colors.length > 0 && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
@@ -468,7 +455,6 @@ function SCOrderCollection({
             })}
           </div>
 
-          {/* Submit Button - بألوان بينك وموف */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -487,7 +473,6 @@ function SCOrderCollection({
         </form>
       </div>
 
-      {/* Custom Animations */}
       <style jsx>{`
         @keyframes blob {
           0%,
