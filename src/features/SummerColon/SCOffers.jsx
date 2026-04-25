@@ -7,22 +7,22 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const offerDetails = [
-    { quantity: "3 كولون", price: 285, oldPrice: 420, value: 3, discount: 14 },
-    { quantity: "4 كولون", price: 360, oldPrice: 560, value: 4, discount: 18 },
+    { quantity: "3 كولون", price: 315, oldPrice: 460, value: 3, discount: 14 },
+    { quantity: "4 كولون", price: 380, oldPrice: 590, value: 4, discount: 18 },
     { 
       quantity: "6 كولون", 
-      price: 510, 
-      oldPrice: 840,
+      price: 540, 
+      oldPrice: 880,
       value: 6, 
       discount: 23,
       highlight: "الأكثر مبيعاً", 
       icon: <Star className="w-3.5 h-3.5" />,
     },
-    { quantity: "8 كولون", price: 640, oldPrice: 1020, value: 8, discount: 27 },
+    { quantity: "8 كولون", price: 680, oldPrice: 1080, value: 8, discount: 27 },
     { 
       quantity: "12 كولون", 
-      price: 900, 
-      oldPrice:1680,
+      price: 960, 
+      oldPrice:1720,
       value: 12, 
       discount: 32,
       highlight: "أفضل عرض", 

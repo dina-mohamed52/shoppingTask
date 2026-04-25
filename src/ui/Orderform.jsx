@@ -84,7 +84,7 @@ export default function OrderForm({ order, selectedOffer, formRef }) {
 
   const baseShipping = 60;
   const shipping = HIGH_SHIPPING_GOVS.includes(form.governorate)
-    ? baseShipping + 20
+    ? baseShipping + 30
     : baseShipping;
   const orderTotal = selectedOffer?.price || 0;
   const total = Number(orderTotal) + Number(shipping);
