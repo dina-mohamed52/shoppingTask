@@ -14,8 +14,6 @@ import {
   Crown,
 } from "lucide-react";
 
-
-
 function MainPage() {
   const navigate = useNavigate();
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -84,71 +82,8 @@ function MainPage() {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Hero Section - Full Screen Video Style */}
-      <div className="relative h-screen overflow-hidden">
-        {/* Animated Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e]">
-          <div className="absolute top-0 left-0 w-full h-full opacity-30">
-            <div className="absolute top-20 left-10 w-72 h-72 bg-purple-600 rounded-full blur-[100px] animate-pulse"></div>
-            <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-600 rounded-full blur-[120px] animate-pulse delay-1000"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600 rounded-full blur-[120px] animate-pulse delay-700"></div>
-          </div>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative h-full flex flex-col items-center justify-center text-center px-4 z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="inline-block mb-6"
-            >
-              <Crown className="w-14 h-14 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-400" />
-            </motion.div>
-
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#864e63] via-[#c6abff] to-pink-400">
-                BabyStyle
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-8">
-              حيث الأناقة تلتقي بالجودة لأطفالك
-            </p>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                const section = document.getElementById("categories");
-                section?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="group relative bg-gradient-to-r from-[#864e63] to-[#c6abff] px-8 py-4 rounded-full font-bold text-white text-lg overflow-hidden shadow-2xl hover:shadow-[#864e63]/50 transition-all duration-300"
-            >
-              <span className="relative z-10">اكتشفي المجموعات</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#c6abff] to-[#864e63] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </motion.button>
-          </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          >
-            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-              <div className="w-1 h-2 bg-white rounded-full mt-2"></div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Categories Section */}
-      <div id="categories" className="py-20 px-4 bg-black">
+      {/* Categories Section - MOVED TO TOP */}
+      <div id="categories" className="py-20 px-4  bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e]">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
           <motion.div
@@ -176,7 +111,7 @@ function MainPage() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.3 }}
                 onMouseEnter={() => setHoveredCard(category.id)}
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => navigate(category.path)}
@@ -230,6 +165,7 @@ function MainPage() {
         </div>
       </div>
 
+     
       {/* Stats Section */}
       <div className="bg-gradient-to-br from-[#0a0a0a] to-[#1a1a2e] py-16">
         <div className="max-w-7xl mx-auto px-4">
@@ -284,19 +220,10 @@ function MainPage() {
               >
                 تسوقي الآن
               </motion.button>
-              {/* <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 border border-white/30 text-white rounded-full font-bold hover:bg-white/10 transition-all duration-300"
-              >
-                شاهد العروض
-              </motion.button> */}
             </div>
           </motion.div>
         </div>
       </div>
-
-    
     </div>
   );
 }

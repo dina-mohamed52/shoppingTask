@@ -57,6 +57,9 @@ export const SummerColonData = [
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776093857/WhatsApp_Image_2026-04-13_at_8.13.20_AM_lh1f7a.jpg",
       },
       {
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777150015/WhatsApp_Image_2026-04-23_at_4.22.21_PM_ei6ige.jpg",
+      },
+      {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776093856/WhatsApp_Image_2026-04-13_at_8.13.20_AM_2_m5o6l4.jpg",
       },
       {
@@ -65,7 +68,7 @@ export const SummerColonData = [
     ],
 
     // 👇 بينك بس يبدأ من 6-8
-    avalibeColors: ["أبيض", "أسود", "بينك"],
+    avalibeColors: ["اوف وايت","أبيض", "أسود", "بينك"],
 
     image:
       "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776093857/WhatsApp_Image_2026-04-13_at_8.13.20_AM_lh1f7a.jpg",
