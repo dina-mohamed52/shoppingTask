@@ -62,16 +62,44 @@ const DeliveryInfo = () => (
 // ========== مكون التقييمات الاحترافي ==========
 const ReviewsSection = () => {
   const [showAll, setShowAll] = useState(false);
-  
+
   const reviews = [
-    { id: 1, name: "أم محمد", rating: 5, comment: "منتج رائع جداً، القماش ناعم ومريح للأطفال. أنصح فيه بشدة 👍", date: "منذ 3 أيام", verified: true },
-    { id: 2, name: "أحمد السيد", rating: 5, comment: "جودة عالية وسعر مناسب، أولادي حبوه مره 😍", date: "منذ أسبوع", verified: true },
-    { id: 3, name: "سارة خالد", rating: 4, comment: "جميل جداًوالمقاس مناسب، غير كده ممتاز", date: "منذ أسبوعين", verified: false },
-    { id: 4, name: "نور علي", rating: 5, comment: "التوصيل سريع والمنتج زي الصورة بالضبط. شكراً لكم", date: "منذ 3 أسابيع", verified: true },
+    {
+      id: 1,
+      name: "أم محمد",
+      rating: 5,
+      comment: "منتج رائع جداً، القماش ناعم ومريح للأطفال. أنصح فيه بشدة 👍",
+      date: "منذ 3 أيام",
+      verified: true,
+    },
+    {
+      id: 2,
+      name: "أحمد السيد",
+      rating: 5,
+      comment: "جودة عالية وسعر مناسب، أولادي حبوه مره 😍",
+      date: "منذ أسبوع",
+      verified: true,
+    },
+    {
+      id: 3,
+      name: "سارة خالد",
+      rating: 4,
+      comment: "جميل جداًوالمقاس مناسب، غير كده ممتاز",
+      date: "منذ أسبوعين",
+      verified: false,
+    },
+    {
+      id: 4,
+      name: "نور علي",
+      rating: 5,
+      comment: "التوصيل سريع والمنتج زي الصورة بالضبط. شكراً لكم",
+      date: "منذ 3 أسابيع",
+      verified: true,
+    },
   ];
-  
+
   const displayedReviews = showAll ? reviews : reviews.slice(0, 3);
-  
+
   return (
     <div className="space-y-5">
       {/* الهيدر حق التقييمات */}
@@ -85,7 +113,7 @@ const ReviewsSection = () => {
           <span className="text-gray-500 text-sm">127 تقييم</span>
         </div>
         {reviews.length > 3 && (
-          <button 
+          <button
             onClick={() => setShowAll(!showAll)}
             className="text-pink-500 text-sm font-medium hover:text-pink-600 transition-colors"
           >
@@ -93,7 +121,7 @@ const ReviewsSection = () => {
           </button>
         )}
       </div>
-      
+
       {/* قائمة التقييمات */}
       <div className="space-y-4">
         {displayedReviews.map((review, idx) => (
@@ -105,10 +133,12 @@ const ReviewsSection = () => {
                   {review.name.charAt(0)}
                 </span>
               </div>
-              
+
               <div className="flex-1">
                 <div className="flex items-center flex-wrap gap-2 mb-1">
-                  <span className="font-semibold text-gray-800 text-sm">{review.name}</span>
+                  <span className="font-semibold text-gray-800 text-sm">
+                    {review.name}
+                  </span>
                   {review.verified && (
                     <span className="flex items-center gap-0.5 text-xs text-green-600">
                       <Check className="w-3 h-3" />
@@ -117,20 +147,24 @@ const ReviewsSection = () => {
                   )}
                   <span className="text-xs text-gray-400">{review.date}</span>
                 </div>
-                
+
                 <div className="flex gap-0.5 mb-2">
                   {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      className={`w-3.5 h-3.5 ${i < review.rating ? "fill-yellow-400 text-yellow-400" : "text-gray-200"}`} 
+                    <Star
+                      key={i}
+                      className={`w-3.5 h-3.5 ${i < review.rating ? "fill-yellow-400 text-yellow-400" : "text-gray-200"}`}
                     />
                   ))}
                 </div>
-                
-                <p className="text-gray-600 text-sm leading-relaxed">{review.comment}</p>
+
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {review.comment}
+                </p>
               </div>
             </div>
-            {idx !== displayedReviews.length - 1 && <div className="border-b border-gray-50 mt-4" />}
+            {idx !== displayedReviews.length - 1 && (
+              <div className="border-b border-gray-50 mt-4" />
+            )}
           </div>
         ))}
       </div>
@@ -148,7 +182,7 @@ function ProductDetails() {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeTab, setActiveTab] = useState("description");
   const [isImageZoomed, setIsImageZoomed] = useState(false);
- 
+
   const [selectedOfferForOrder, setSelectedOfferForOrder] = useState(null);
   const [order, setOrder] = useState(null);
 
@@ -169,9 +203,27 @@ function ProductDetails() {
     if (!product) return;
 
     const offerMap = {
-      half: { name: "4 هاف كولون", quantity: 4, price: 240, originalPrice: 320, savings: 80 },
-      bandana: { name: "6 بندانات", quantity: 6, price: 270, originalPrice: 360, savings: 90 },
-      set: { name: "3 اطقم", quantity: 3, price: 285, originalPrice: 380, savings: 95 }
+      half: {
+        name: "4 هاف كولون",
+        quantity: 4,
+        price: 240,
+        originalPrice: 320,
+        savings: 80,
+      },
+      bandana: {
+        name: "6 بندانات",
+        quantity: 6,
+        price: 270,
+        originalPrice: 360,
+        savings: 90,
+      },
+      set: {
+        name: "3 اطقم",
+        quantity: 3,
+        price: 285,
+        originalPrice: 380,
+        savings: 95,
+      },
     };
 
     const getIcon = () => {
@@ -181,7 +233,8 @@ function ProductDetails() {
     };
 
     const getBadgeColor = () => {
-      if (product.tabType === "bandana") return "from-emerald-400 to-emerald-500";
+      if (product.tabType === "bandana")
+        return "from-emerald-400 to-emerald-500";
       if (product.tabType === "set") return "from-purple-400 to-purple-500";
       return "from-pink-400 to-pink-500";
     };
@@ -196,7 +249,7 @@ function ProductDetails() {
       icon: getIcon(),
       badgeColor: getBadgeColor(),
       popular: true,
-      badge: "الأكثر طلباً"
+      badge: "الأكثر طلباً",
     });
   }, [product]);
 
@@ -205,7 +258,10 @@ function ProductDetails() {
     setSelectedOfferForOrder(offer);
     setOrder(null);
     setTimeout(() => {
-      orderCollectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      orderCollectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }, 100);
   };
 
@@ -217,15 +273,15 @@ function ProductDetails() {
     offersRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
- 
-
   // لو المنتج مش موجود
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
         <div className="text-center">
           <div className="text-7xl mb-4">😢</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">المنتج غير موجود</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            المنتج غير موجود
+          </h2>
           <button
             onClick={() => navigate(-1)}
             className="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 py-2.5 rounded-full font-medium hover:shadow-lg transition-all"
@@ -239,9 +295,17 @@ function ProductDetails() {
 
   const currentColorData = product.productColors[selectedColor];
   const features = [
-    { icon: <Ruler className="w-4 h-4" />, label: "مقاسات", value: "جميع المقاسات" },
+    {
+      icon: <Ruler className="w-4 h-4" />,
+      label: "مقاسات",
+      value: "جميع المقاسات",
+    },
     { icon: <Droplet className="w-4 h-4" />, label: "خامة", value: "قطن 100%" },
-    { icon: <Wind className="w-4 h-4" />, label: "تهوية", value: "مريح للبشرة" },
+    {
+      icon: <Wind className="w-4 h-4" />,
+      label: "تهوية",
+      value: "مريح للبشرة",
+    },
   ];
 
   return (
@@ -264,11 +328,12 @@ function ProductDetails() {
               >
                 <Heart
                   className={`w-5 h-5 transition-all duration-200 ${
-                    isWishlisted ? "fill-red-500 text-red-500 scale-110" : "text-gray-600"
+                    isWishlisted
+                      ? "fill-red-500 text-red-500 scale-110"
+                      : "text-gray-600"
                   }`}
                 />
               </button>
-             
             </div>
           </div>
         </div>
@@ -311,7 +376,11 @@ function ProductDetails() {
                       : "ring-1 ring-gray-200 hover:ring-gray-300"
                   }`}
                 >
-                  <img src={color.img} alt={`لون ${index + 1}`} className="w-full h-full object-cover" />
+                  <img
+                    src={color.img}
+                    alt={`لون ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
                   {selectedColor === index && (
                     <div className="absolute inset-0 bg-pink-500/5 flex items-center justify-center">
                       <Check className="w-5 h-5 text-pink-500" />
@@ -324,7 +393,11 @@ function ProductDetails() {
 
           {/* معلومات المنتج */}
           <div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-5">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-5"
+            >
               {/* التصنيفات */}
               <div className="flex flex-wrap gap-2">
                 {product.category && (
@@ -340,7 +413,9 @@ function ProductDetails() {
               </div>
 
               {/* العنوان */}
-              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">{product.name}</h1>
+              <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+                {product.name}
+              </h1>
 
               {/* التقييم */}
               <div className="flex items-center gap-3">
@@ -366,7 +441,8 @@ function ProductDetails() {
               {/* اختيار اللون */}
               <div>
                 <label className="font-semibold text-gray-900 flex items-center gap-2 text-sm mb-2">
-                  <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر اللون
+                  <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر
+                  اللون
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {product.productColors.map((color, index) => (
@@ -413,7 +489,9 @@ function ProductDetails() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`pb-3 font-medium transition-all duration-200 relative ${
-                    activeTab === tab.id ? "text-pink-500" : "text-gray-500 hover:text-gray-700"
+                    activeTab === tab.id
+                      ? "text-pink-500"
+                      : "text-gray-500 hover:text-gray-700"
                   }`}
                 >
                   {tab.label}
@@ -438,7 +516,8 @@ function ProductDetails() {
                   exit={{ opacity: 0, y: -10 }}
                 >
                   <p className="text-gray-600 leading-relaxed">
-                    {product.description || "منتج عالي الجودة مصمم خصيصاً لأطفالك. يتميز بتصميم عصري وألوان زاهية."}
+                    {product.description ||
+                      "منتج عالي الجودة مصمم خصيصاً لأطفالك. يتميز بتصميم عصري وألوان زاهية."}
                   </p>
                 </motion.div>
               )}
@@ -453,11 +532,15 @@ function ProductDetails() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <span className="text-gray-500 text-sm">الخامة</span>
-                      <span className="font-semibold text-gray-800">{product.material || "قطن 100%"}</span>
+                      <span className="font-semibold text-gray-800">
+                        {product.material || "قطن 100%"}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <span className="text-gray-500 text-sm">الفصل</span>
-                      <span className="font-semibold text-gray-800">{product.season || "صيفي"}</span>
+                      <span className="font-semibold text-gray-800">
+                        {product.season || "صيفي"}
+                      </span>
                     </div>
                     {/* <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <span className="text-gray-500 text-sm">المقاسات</span>
@@ -465,7 +548,9 @@ function ProductDetails() {
                     </div> */}
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <span className="text-gray-500 text-sm">العناية</span>
-                      <span className="font-semibold text-gray-800">غسيل بارد</span>
+                      <span className="font-semibold text-gray-800">
+                        غسيل بارد
+                      </span>
                     </div>
                   </div>
                 </motion.div>
@@ -492,33 +577,44 @@ function ProductDetails() {
           filterByTabType={product.tabType || "half"}
           setSelectedOffer={handleOfferSelect}
           scrollToOrderCollection={() =>
-            orderCollectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+            orderCollectionRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            })
           }
         />
       </div>
 
       {/* قسم تجميع الطلب */}
       <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
-        {selectedOfferForOrder && (
-          <HalfOrderCollection
-            selectedOffer={selectedOfferForOrder}
-            setOrder={handleSetOrder}
-            formRef={formRef}
-            disableProductSelection={true}
-            defaultProductName={product.name}
-            onOrderConfirmed={() => {
-              setTimeout(() => {
-                formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-              }, 200);
-            }}
-          />
-        )}
+        {selectedOfferForOrder &&
+          !selectedOfferForOrder.id?.includes("default") && (
+            <HalfOrderCollection
+              selectedOffer={selectedOfferForOrder}
+              setOrder={handleSetOrder}
+              formRef={formRef}
+              disableProductSelection={true}
+              defaultProductName={product.name}
+              onOrderConfirmed={() => {
+                setTimeout(() => {
+                  formRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }, 200);
+              }}
+            />
+          )}
       </div>
 
       {/* نموذج الطلب */}
       {order && order.length > 0 && (
         <div ref={formRef} className="mt-10 scroll-mt-20">
-          <OrderForm order={order} selectedOffer={selectedOfferForOrder} formRef={formRef} />
+          <OrderForm
+            order={order}
+            selectedOffer={selectedOfferForOrder}
+            formRef={formRef}
+          />
         </div>
       )}
 
