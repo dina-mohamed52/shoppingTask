@@ -1,0 +1,108 @@
+import { Package, Shirt, Layers, Gift } from "lucide-react";
+
+export const halfOffersData = [
+  { 
+    name: "4 هاف كولون",
+    quantity: 4, 
+    price: 240, 
+    badge: "عرض خاص",
+    badgeColor: "from-[#e13485] to-[#c01e6f]",
+    icon: <Package className="w-4 h-4" />,
+    savings: 85,
+    originalPrice: 280,
+    unit: "هاف كولون",
+    popular: true,
+    tabType: "half"
+  },
+  { 
+    name: "6 هاف كولون",
+    quantity: 6, 
+    price: 330, 
+    badge: "عرض خاص",
+    badgeColor: "from-[#e13485] to-[#c01e6f]",
+    icon: <Package className="w-4 h-4" />,
+    savings: 85,
+    originalPrice: 405,
+    unit: "هاف كولون",
+    popular: true,
+    tabType: "half"
+  },
+  { 
+    name: "8 هاف كولون",
+    quantity: 8, 
+    price: 420, 
+    badge: "الأكثر طلباً",
+    badgeColor: "from-[#e13485] to-[#c01e6f]",
+    icon: <Package className="w-4 h-4" />,
+    savings: 140,
+    originalPrice: 560,
+    unit: "هاف كولون",
+    popular: true,
+    tabType: "half"
+  },
+  { 
+    name: "12 هاف كولون",
+    quantity: 12, 
+    price: 570, 
+    badge: "أفضل قيمة",
+    badgeColor: "from-[#e13485] to-[#c01e6f]",
+    icon: <Package className="w-4 h-4" />,
+    savings: 270,
+    originalPrice: 840,
+    unit: "هاف كولون",
+    popular: true,
+    tabType: "half"
+  },
+  { 
+    name: "6 بندانات",
+    quantity: 6, 
+    price: 270, 
+    badge: "عرض خاص",
+    badgeColor: "from-[#c01e6f] to-[#a0105a]",
+    icon: <Shirt className="w-4 h-4" />,
+    savings: 250,
+    originalPrice: 520,
+    unit: "بندانة",
+    popular: false,
+    tabType: "bandana"
+  },
+  { 
+    name: "12 بندانات",
+    quantity: 12, 
+    price: 510, 
+    badge: "عرض خاص",
+    badgeColor: "from-[#c01e6f] to-[#a0105a]",
+    icon: <Shirt className="w-4 h-4" />,
+    savings: 250,
+    originalPrice: 760,
+    unit: "بندانة",
+    popular: false,
+    tabType: "bandana"
+  },
+  { 
+    name: "3 اطقم",
+    quantity: 3, 
+    price: 285, 
+    badge: "أفضل قيمة",
+    badgeColor: "from-[#a0105a] to-[#e13485]",
+    icon: <Layers className="w-4 h-4" />,
+    savings: 115,
+    originalPrice: 400,
+    unit: "طقم",
+    popular: false,
+    tabType: "set"
+  },
+  { 
+    name: "6 اطقم",
+    quantity: 6, 
+    price: 535, 
+    badge: "أفضل عرض",
+    badgeColor: "from-[#e13485] to-[#801040]",
+    icon: <Gift className="w-4 h-4" />,
+    savings: 215,
+    originalPrice: 750,
+    unit: "قطعة",
+    popular: false,
+    tabType: "set"
+  },
+];

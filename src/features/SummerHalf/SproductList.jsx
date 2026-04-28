@@ -4,28 +4,22 @@ import { useState } from "react";
 import ProductModal from "../../ui/ProductModal";
 import { useTranslation } from "react-i18next";
 import { Sparkles, Gift } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function SproductList() {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
+  
   // فلترة المنتجات (غيري ال id حسب المنتج اللي عايزاه)
-  const sProducts = HalfColoneData
+  const sProducts = HalfColoneData;
 
-  const handlePreview = (product) => {
-    const allUrls = product.productColors.map((c) => c.img);
+  const navigate = useNavigate();
 
-    setSelectedProduct({
-      ...product,
-      previewImages: allUrls,
-    });
-
-    setOpen(true);
+  const handleProductClick = (product) => {
+    navigate(`/product/${product.id}`);
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-16 w-full ">
+    <div className="container mx-auto px-4 sm:px-6 py-16 w-full">
 
       {/* Header */}
       <div className="text-center mb-14 relative">
@@ -61,28 +55,20 @@ function SproductList() {
         {sProducts.map((product, index) => (
           <div
             key={product.id}
-            className="transform transition duration-500 hover:scale-105 hover:-translate-y-2"
+            className="transform transition duration-500 hover:scale-105 hover:-translate-y-2 cursor-pointer"
             style={{
               animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both`
             }}
+            onClick={() => handleProductClick(product)}
           >
             <ProductCard
               product={product}
-              onPreview={handlePreview}
+              onPreview={handleProductClick}
             />
           </div>
         ))}
 
       </div>
-
-      {/* Product Modal */}
-      {selectedProduct && (
-        <ProductModal
-          open={open}
-          OnClose={() => setOpen(false)}
-          product={selectedProduct}
-        />
-      )}
 
       {/* Animation */}
       <style jsx>{`

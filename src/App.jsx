@@ -13,6 +13,7 @@ import Turbon from "./pages/Turbon";
 import SummerHalfColon from "./pages/SummerHalfColon";
 import SummerColon from "./pages/SummerColon";
 import MainPage from "./pages/MainPage";
+import ProductDetails from "./ui/ProductDetails";
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
 
             <Route index element={<MainPage />} />
             <Route path="/WinterCollection" element={<Home />} />
-        
+        <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/orderForm" element={<OrderForm />} />
             <Route path="/Turbon" element={<Turbon />} />
             <Route path="/Offers" element={<Offers />} />
