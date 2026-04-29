@@ -19,7 +19,8 @@ function HalfOffers({
   setSelectedOffer, 
   scrollToOrderCollection, 
   filterByTabType = null,
-  filterByProductType = null
+  filterByProductType = null,
+  hideTabs = false  // 👈 Prop جديد للتحكم في إخفاء التبويبات
 }) {
   const { t } = useTranslation();
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -90,9 +91,6 @@ function HalfOffers({
     return null;
   }
 
-  // لو في صفحة منتج محدد (مش هنعرض التبويبات)
-  const isProductPage = filterByProductType !== null && filterByProductType !== undefined;
-
   return (
     <div id="halfOffersSection" className="relative py-12 px-4">
       {/* Header Section */}
@@ -126,8 +124,8 @@ function HalfOffers({
         </p>
       </motion.div>
 
-      {/* Tabs - تظهر فقط في صفحة العروض الرئيسية (مش في صفحة المنتج) */}
-      {!isProductPage && (
+      {/* Tabs - تظهر فقط إذا لم نطلب إخفاءها */}
+      {!hideTabs && (
         <div className="flex justify-center mb-8">
           <div className="inline-flex bg-gray-100 p-1 rounded-full">
             {allTabTypes.map((tab) => (

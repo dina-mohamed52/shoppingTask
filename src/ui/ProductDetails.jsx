@@ -639,6 +639,7 @@ function ProductDetails() {
           filterByTabType={product.tabType || "half"}
          filterByProductType={product.type} 
           setSelectedOffer={handleOfferSelect}
+             hideTabs={true}
           scrollToOrderCollection={() =>
             orderCollectionRef.current?.scrollIntoView({
               behavior: "smooth",
