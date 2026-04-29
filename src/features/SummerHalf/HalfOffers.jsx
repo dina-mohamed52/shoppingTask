@@ -138,7 +138,7 @@ function HalfOffers({
                     : "text-gray-600 hover:bg-gray-200"
                 }`}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center sm:text-base text-[0.8rem] gap-0  sm:gap-2">
                   {tab === "half" && <Package className="w-4 h-4" />}
                   {tab === "bandana" && <Shirt className="w-4 h-4" />}
                   {tab === "turbon" && <Shirt className="w-4 h-4" />}

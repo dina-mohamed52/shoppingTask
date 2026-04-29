@@ -181,7 +181,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   return HalfColoneData?.map(product => {
     
     const brand =
-      product.tabType === "halfcolone" ? "هاف كولون" :
+      product.tabType === "half" ? "هاف كولون" :
       product.tabType === "fioka" ? "هاف كولون فيونكه" :
       product.tabType === "bandana" ? "بندانه صيفي" :
       product.tabType === "turbon" ? "تربون" :

@@ -44,19 +44,40 @@ export const HalfColoneData = [
   },
   {
     id: 3,
+    name: "شراب دانتيل ابيض",
+    description:"شراب دانتيل  مصمم لاعطاء مظهر جذاب و تهوية جيدة لراحة رجل بنوتك متوفر باكثر لون يناسب جميع الاذواق و كل طقم لبنوتك",
+    tabType: "half", // إضافة tabType
+    productColors: [
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777470061/WhatsApp_Image_2026-04-28_at_4.10.24_AM_fcapor.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777470416/WhatsApp_Image_2026-04-28_at_4.11.02_AM_1_ttj1mr.jpg" },
+     
+    ],
+    avalibeColors: ["أبيض"],
+    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777470061/WhatsApp_Image_2026-04-28_at_4.10.24_AM_fcapor.jpg",
+    sizes: [
+      { size: "0-1", age: "من زيرو ل9 شهور" },
+      { size: "1-2", age: "من 9 شهور لسنه ونص" },
+     
+    ],
+  },
+  {
+    id: 13,
     name: "بندانات قطن مضلع",
     description:"مصنوعة من خامة قطن مضلع مستورد وفي نسبة ليكرا تعطي مطاطيه و راحه في اللبس مصممه بشكل عريض والوان زاهية تناسب كل الاذواق",
     tabType: "bandana", // إضافة tabType
-    productColors: [
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392025/WhatsApp_Image_2026-04-28_at_4.04.54_AM_4_wiezhl.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392059/WhatsApp_Image_2026-04-28_at_4.04.54_AM_3_gikwn3.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392066/WhatsApp_Image_2026-04-28_at_4.04.54_AM_2_hcl2u1.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.55_AM_vvw8cy.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.54_AM_wddzyw.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392191/WhatsApp_Image_2026-04-28_at_4.04.54_AM_1_arxjrr.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1775498996/WhatsApp_Image_2026-04-03_at_6.38.33_PM_1_zjeksc.jpg" },
-    ],
-    avalibeColors: ["أبيض", "أسود", "بينك", "أحمر", "أصفر", "موف", "بيج"],
+   productColors: [
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392025/WhatsApp_Image_2026-04-28_at_4.04.54_AM_4_wiezhl.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392059/WhatsApp_Image_2026-04-28_at_4.04.54_AM_3_gikwn3.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392066/WhatsApp_Image_2026-04-28_at_4.04.54_AM_2_hcl2u1.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.55_AM_vvw8cy.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.54_AM_wddzyw.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392191/WhatsApp_Image_2026-04-28_at_4.04.54_AM_1_arxjrr.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1775498996/WhatsApp_Image_2026-04-03_at_6.38.33_PM_1_zjeksc.jpg" },
+
+  // الجديد 👇
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392637/WhatsApp_Image_2026-04-28_at_4.05.46_AM_qbzrcx.jpg" },
+],
+   avalibeColors: ["أبيض", "أسود", "بينك", "أحمر", "أصفر", "موف", "بيج", "عباد شمس أحمر"],
     image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392066/WhatsApp_Image_2026-04-28_at_4.04.54_AM_2_hcl2u1.jpg",
     sizes: [
       { size: "0-2", age: "من زيرو لسنتين" },
@@ -65,7 +86,7 @@ export const HalfColoneData = [
   },
   {
     id: 4,
-    name: " طقم بندانه وهاف كولون فيونكه قطن",
+    name: "طقم بندانه وهاف كولون فيونكه",
     description: "   طقم كيوت ومتكامل يضيف لمسة أناقة مميزة لإطلالة بنتك مكون من بندانه شيك + هاف كولون مريح علشان لوك جاهز في ثواني",
     tabType: "set", 
       type: "set-bow",
