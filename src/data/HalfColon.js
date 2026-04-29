@@ -6,9 +6,9 @@ export const HalfColoneData = [
     tabType: "half", // إضافة tabType
     
     productColors: [
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775499022/WhatsApp_Image_2026-04-03_at_6.40.14_PM_1_bbdvk1.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775499023/WhatsApp_Image_2026-04-03_at_6.39.31_PM_xx372w.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775744004/WhatsApp_Image_2026-04-08_at_4.10.11_PM_dfghgu.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1775744004/WhatsApp_Image_2026-04-08_at_4.10.11_PM_dfghgu.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471778/WhatsApp_Image_2026-04-28_at_3.59.30_AM_2_bxipac.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471779/WhatsApp_Image_2026-04-28_at_3.59.29_AM_2_kjmil3.jpg" },
     ],
     avalibeColors: ["أبيض", "أسود", "بينك"],
     image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392479/WhatsApp_Image_2026-04-28_at_3.59.29_AM_emd7nb.jpg",
@@ -68,11 +68,11 @@ export const HalfColoneData = [
    productColors: [
   { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392025/WhatsApp_Image_2026-04-28_at_4.04.54_AM_4_wiezhl.jpg" },
   { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392059/WhatsApp_Image_2026-04-28_at_4.04.54_AM_3_gikwn3.jpg" },
-  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392066/WhatsApp_Image_2026-04-28_at_4.04.54_AM_2_hcl2u1.jpg" },
-  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.55_AM_vvw8cy.jpg" },
-  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.54_AM_wddzyw.jpg" },
   { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392191/WhatsApp_Image_2026-04-28_at_4.04.54_AM_1_arxjrr.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392066/WhatsApp_Image_2026-04-28_at_4.04.54_AM_2_hcl2u1.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.54_AM_wddzyw.jpg" },
   { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1775498996/WhatsApp_Image_2026-04-03_at_6.38.33_PM_1_zjeksc.jpg" },
+  { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.55_AM_vvw8cy.jpg" },
 
   // الجديد 👇
   { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392637/WhatsApp_Image_2026-04-28_at_4.05.46_AM_qbzrcx.jpg" },
@@ -91,15 +91,15 @@ export const HalfColoneData = [
     tabType: "set", 
       type: "set-bow",
     productColors: [
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775498996/WhatsApp_Image_2026-04-03_at_6.38.33_PM_srfuop.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775498997/WhatsApp_Image_2026-04-03_at_6.38.34_PM_nvkrjy.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775498997/WhatsApp_Image_2026-04-03_at_6.38.34_PM_1_wwwyhb.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775498997/WhatsApp_Image_2026-04-03_at_6.38.35_PM_4_ogd79s.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775498997/WhatsApp_Image_2026-04-03_at_6.38.35_PM_2_n88mda.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775498998/WhatsApp_Image_2026-04-03_at_6.38.35_PM_3_fezkgy.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471600/WhatsApp_Image_2026-04-28_at_4.04.18_AM_6_vthfqu.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471391/WhatsApp_Image_2026-04-28_at_4.04.18_AM_2_shzsbv.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471391/WhatsApp_Image_2026-04-28_at_4.04.18_AM_1_ki4svn.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471418/WhatsApp_Image_2026-04-28_at_4.04.18_AM_t9w61q.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392524/WhatsApp_Image_2026-04-28_at_4.04.18_AM_5_wzb6ha.jpg" },
+      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471515/WhatsApp_Image_2026-04-28_at_4.04.18_AM_7_bxi2rz.jpg" },
     ],
     avalibeColors: ["أبيض", "أسود", "بينك", "لافندر", "أحمر", "أصفر"],
-    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1775498997/WhatsApp_Image_2026-04-03_at_6.38.35_PM_4_ogd79s.jpg",
+    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392524/WhatsApp_Image_2026-04-28_at_4.04.18_AM_5_wzb6ha.jpg",
     sizes: [
       { size: "0-2", age: "من زيرو لسنتين" },
       { size: "2-4", age: "من 2 ل4 سنين" },
