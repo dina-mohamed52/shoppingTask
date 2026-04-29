@@ -33,6 +33,8 @@ function SummerHalfColon() {
     }
   };
 
+
+
   // دالة التمرير للعروض
   const scrollToOffers = () => {
     if (offersRef.current) {
@@ -70,6 +72,7 @@ function SummerHalfColon() {
         <HalfOffers
           setSelectedOffer={setSelectedOffer}
           scrollToOrderCollection={scrollToOrderCollection}
+          
         />
       </div>
       
@@ -78,7 +81,7 @@ function SummerHalfColon() {
 
       {/* جدول المقاسات */}
       <SizeChartTable
-        sizes={product.sizes}
+        // sizes={product.sizes}
         productName={product.name}
         className="mb-4"
       />
@@ -93,6 +96,7 @@ function SummerHalfColon() {
             setTimeout(scrollToForm, 200);
           }}
           formRef={formRef}
+           scrollToOffers={scrollToOffers}
         />
       </div>
 

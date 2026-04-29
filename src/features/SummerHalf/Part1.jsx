@@ -178,13 +178,23 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
 
   // ✅ Memoized trending products
   const trendingProducts = useMemo(() => {
-    return HalfColoneData?.map(product => ({
+  return HalfColoneData?.map(product => {
+    
+    const brand =
+      product.tabType === "halfcolone" ? "هاف كولون" :
+      product.tabType === "fioka" ? "هاف كولون فيونكه" :
+      product.tabType === "bandana" ? "بندانه صيفي" :
+      product.tabType === "turbon" ? "تربون" :
+      "طقم كامل";
+
+    const price =
+      product.tabType === "set" ? 160 : (product.price || 89);
+
+    return {
       id: product.id,
       name: product.name,
-      brand: product.name === "هاف كولون شبك" ? "هاف كولون" :
-             product.name === "هاف كولون فيونكه" ? "هاف كولون فيونكه" :
-             product.name === "بندانه" ? "بندانه صيفي" : "طقم كامل",
-      price: product.price || 89,
+      brand,
+      price,
       originalPrice: product.originalPrice || 149,
       discount: product.discount || 40,
       rating: product.rating || 4.8,
@@ -193,8 +203,9 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
       colors: product.avalibeColors || [],
       sizes: product.sizes || [],
       fullProduct: product
-    })) || [];
-  }, [HalfColoneData]);
+    };
+  }) || [];
+}, [HalfColoneData]);
 
   // Update container width
   useEffect(() => {

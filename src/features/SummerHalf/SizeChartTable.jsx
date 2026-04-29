@@ -1,119 +1,184 @@
-import { motion } from "framer-motion";
-import { FiInfo, FiCalendar } from "react-icons/fi";
-import { LuRuler } from "react-icons/lu";
+import { useTranslation } from "react-i18next";
+import { Ruler, Sparkles, HelpCircle, ArrowRightCircle } from "lucide-react";
+import { useState } from "react";
 
-const SizeChartTable = ({ sizes,className = "" }) => {
-  if (!sizes || sizes.length === 0) return null;
+function SizeChartTable({ alt = "جدول المقاسات", className = "w-full max-w-md mx-auto" }) {
+  const { t } = useTranslation();
+  const [isHovered, setIsHovered] = useState(false);
+  const [showTip, setShowTip] = useState(true);
 
-  const getAgeBadge = (age) => {
-    if (age.includes("زيرو"))
-      return { label: "حديثي الولادة", color: "bg-pink-500/30 text-pink-200", icon: "👶" };
-
-    if (age.includes("شهور"))
-      return { label: "رضع", color: "bg-blue-500/30 text-blue-200", icon: "🍼" };
-
-    if (age.includes("سنه") && !age.includes("سنتين"))
-      return { label: "طفل صغير", color: "bg-purple-500/30 text-purple-200", icon: "🧒" };
-
-    if (age.includes("سنتين"))
-      return { label: "طفل", color: "bg-orange-500/30 text-orange-200", icon: "👧" };
-
-    return { label: age, color: "bg-gray-500/30 text-gray-200", icon: "📏" };
-  };
+  // دليل المقاسات المعدل حسب طلبك
+  const sizeData = [
+    { size: "0-1", age: "من 0 إلى 9 شهور" },
+    { size: "1-2", age: "من 9 شهور إلى سنة ونص" },
+    { size: "2-4", age: "من سنة ونص إلى 3 سنين" },
+    { size: "4-6", age: "من 3 إلى 5 سنين" },
+    { size: "6-8", age: "من 5 إلى 7 سنين" },
+    { size: "8-10", age: "من 8 إلى 10 سنين" },
+  ];
 
   return (
-    <div className={`w-full max-w-6xl mx-auto bg-gray-900 pb-8 rounded-full ${className}`}>
+    <div className="my-8 px-4 sm:px-0">
+      {/* Main Container with Pink & Gray Theme */}
+      <div 
+        className="relative group"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Decorative Background Elements */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute -top-10 -right-10 w-40 h-40 bg-pink-300 rounded-full filter blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-gray-400 rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
+        </div>
 
-     {/* Header - Chic & Modern */}
-<div className="mb-10 p-8 text-center">
-  <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#e13485]/10 border border-[#e13485]/30 mb-5 backdrop-blur-sm">
-    <LuRuler className="w-4 h-4 text-[#e13485]" />
-    <span className="text-sm font-bold text-[#e13485] tracking-wide uppercase">
-      دليل المقاسات
-    </span>
-  </div>
-
-
-
-  <div className="flex items-center justify-center gap-2">
-    <div className="w-8 h-[2px] bg-gradient-to-r from-transparent to-[#e13485]"></div>
-    <p className="text-base font-medium bg-gradient-to-r from-[#e134c7] via-[#e13485]/80 to-[#890b83] bg-clip-text text-transparent">
-      اختاري المقاس المناسب لطفلك
-    </p>
-    <div className="w-8 h-[2px] bg-gradient-to-l from-transparent to-[#e13485]"></div>
-  </div>
-</div>
-
-      {/* Sizes Grid - Centered */}
-      
-       <div className="flex justify-center mt-[-2rem] pb-4">
-  <div className="flex flex-wrap justify-center gap-6 max-w-[72rem]">
-    {sizes.map((size, idx) => {
-      const ageBadge = getAgeBadge(size.age);
-
-      return (
-        <motion.div
-          key={idx}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: idx * 0.05 }}
-          whileHover={{ y: -6, scale: 1.03 }}
-          className="group w-[17rem] rounded-2xl border border-gray-700 
-          bg-gradient-to-br from-gray-800 to-gray-900 
-          p-6 transition-all duration-300
-          hover:border-purple-400 hover:shadow-xl hover:shadow-purple-500/20"
-        >
-          {/* Size */}
-          <div className="flex justify-center mb-4">
-            <div className="w-20 h-12 flex items-center justify-center 
-            rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 
-            text-white font-bold text-xl shadow-lg">
-              {size.size}
+        {/* Main Card */}
+        <div className="relative bg-gradient-to-br from-gray-900 to-gray-950 p-8 mb-8 rounded-3xl shadow-2xl border border-pink-500/30 overflow-hidden">
+          
+          {/* Glow Effect on Hover */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-pink-600 rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
+          
+          {/* Header with Icon */}
+          <div className="relative mb-8 text-center">
+            {/* Decorative Line */}
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
+            
+            {/* Title Container */}
+            <div className="relative inline-block bg-gray-900 px-6 py-3 rounded-full border border-pink-500/30 shadow-xl">
+              <div className="flex items-center justify-center gap-3">
+                <Ruler className="w-6 h-6 text-pink-400 animate-pulse" />
+                <h2 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-white">
+                  {t("sizeTable.header") || "دليل المقاسات"}
+                </h2>
+                <Sparkles className="w-5 h-5 text-pink-400 animate-spin-slow" />
+              </div>
             </div>
           </div>
 
-          {/* Age */}
-          <div className="flex items-center justify-center gap-2 text-gray-200 text-sm mb-3">
-            <FiCalendar className="w-4 h-4 text-purple-300" />
-            {size.age}
+          {/* Size Chart - Modified with your exact sizes */}
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+            {sizeData.map((item, index) => (
+              <div 
+                key={index}
+                className="relative group/item"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-xl blur-md opacity-0 group-hover/item:opacity-30 transition-opacity duration-300"></div>
+                <div className="relative bg-gray-800/50 backdrop-blur-sm rounded-xl p-3 border border-gray-700 hover:border-pink-400 transition-all duration-300 text-center">
+                  <div className="text-pink-400 font-bold text-lg">{item.size}</div>
+                  <div className="text-gray-300 text-[10px] sm:text-xs mt-2 line-clamp-2">{item.age}</div>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Badge */}
-          <div className="flex justify-center">
-            <span
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium ${ageBadge.color}`}
+          {/* Footer Note */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-400 text-sm flex items-center justify-center gap-2">
+              <span className="w-1 h-1 bg-pink-400 rounded-full"></span>
+              {t("sizeTable.note", "اختاري المقاس المناسب لطفلك")}
+              <span className="w-1 h-1 bg-pink-400 rounded-full"></span>
+            </p>
+          </div>
+
+          {/* Stylish Tip Tab */}
+          <div className="mt-8 relative">
+            {/* Toggle Button */}
+            {/* <button
+              onClick={() => setShowTip(!showTip)}
+              className="w-full group/tip relative overflow-hidden rounded-2xl bg-gradient-to-r from-pink-600/20 to-pink-500/10 p-4 border border-pink-500/30 hover:border-pink-400 transition-all duration-300"
             >
-              <span>{ageBadge.icon}</span>
-              {ageBadge.label}
-            </span>
-          </div>
-        </motion.div>
-      );
-    })}
-  </div>
-</div>
-      {/* Tip - Improved visibility */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="mt-4   flex gap-4 p-4 rounded-xl bg-purple-600/20 border border-purple-400/30 max-w-2xl mx-auto"
-      >
-        <div className="p-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md">
-          <FiInfo className="w-4 h-4" />
-        </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 opacity-0 group-hover/tip:opacity-10 transition-opacity duration-300"></div>
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <HelpCircle className="w-6 h-6 text-pink-400" />
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-pink-400 rounded-full animate-ping"></span>
+                  </div>
+                  <span className="text-gray-300 font-medium">
+                    {showTip ? "اخفاء النصيحة" : "محتارة بين مقاسين؟"}
+                  </span>
+                </div>
+                <div className={`transform transition-transform duration-300 ${showTip ? 'rotate-180' : ''}`}>
+                  <ArrowRightCircle className="w-5 h-5 text-pink-400" />
+                </div>
+              </div>
+            </button> */}
 
-        <p className="text-sm text-gray-100  leading-relaxed">
-          <span className="font-semibold text-purple-500">
-            نصيحة:
-          </span>{" "}
-          <span className="text-pink-500 font-semibold">
-            لو طفلك بين مقاسين اختاري المقاس الأكبر عشان الراحة ولمدة استخدام أطول.
-          </span>
-        </p>
-      </motion.div>
+            {/* Tip Content with Animation */}
+            <div 
+              className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                showTip ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+              }`}
+            >
+              <div className="relative p-6 rounded-2xl bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-pink-500/20">
+                {/* Decorative Elements */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-pink-500/10 rounded-full blur-2xl"></div>
+                <div className="absolute bottom-0 left-0 w-20 h-20 bg-pink-500/10 rounded-full blur-2xl"></div>
+                
+                {/* Tip Content */}
+                <div className="relative text-right">
+                  <h3 className="text-lg font-bold text-pink-400 mb-3 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5" />
+                    نصيحة مهمة
+                    <Sparkles className="w-5 h-5" />
+                  </h3>
+                  
+                  <p className="text-gray-300 leading-relaxed">
+                    إذا كان طفلك بين مقاسين، ننصحك باختيار المقاس الأكبر. 
+                    هذا يضمن راحة طفلك ويتيح له مساحة للنمو.
+                  </p>
+                  
+                  <div className="mt-4 flex items-center justify-center gap-4">
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-gray-400">مقاس أصغر</span>
+                      <span className="text-red-400">✕</span>
+                    </div>
+                    <div className="w-12 h-px bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="text-green-400">✓</span>
+                      <span className="text-gray-200 font-medium">المقاس الأكبر</span>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 p-3 bg-pink-500/10 rounded-xl border border-pink-500/20">
+                    <p className="text-pink-300 text-sm flex items-start gap-2">
+                      <span className="text-pink-400 text-lg">💡</span>
+                      <span>المقاس الأكبر يوفر راحة أكثر ومدة استخدام أطول لطفلك</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Custom Animations */}
+      <style jsx>{`
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        
+        .animate-spin-slow {
+          animation: spin-slow 3s linear infinite;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-5px); }
+        }
+
+        .group:hover .animate-float {
+          animation: float 2s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
-};
+}
 
 export default SizeChartTable;

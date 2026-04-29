@@ -439,27 +439,27 @@ function ProductDetails() {
               </div>
 
               {/* اختيار اللون */}
-              <div>
-                <label className="font-semibold text-gray-900 flex items-center gap-2 text-sm mb-2">
-                  <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر
-                  اللون
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {product.productColors.map((color, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedColor(index)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                        selectedColor === index
-                          ? "bg-pink-500 text-white shadow-md scale-105"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      {color.name || `لون ${index + 1}`}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              {/* اختيار اللون */}
+<div>
+  <label className="font-semibold text-gray-900 flex items-center gap-2 text-sm mb-2">
+    <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر اللون
+  </label>
+  <div className="flex flex-wrap gap-2">
+    {product.productColors.map((color, index) => (
+      <button
+        key={index}
+        onClick={() => setSelectedColor(index)}
+        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+          selectedColor === index
+            ? "bg-pink-500 text-white shadow-md scale-105"
+            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+        }`}
+      >
+        {product.avalibeColors?.[index] || `لون ${index + 1}`}
+      </button>
+    ))}
+  </div>
+</div>
 
               {/* زر عرض العروض */}
               <button
@@ -483,6 +483,7 @@ function ProductDetails() {
               {[
                 { id: "description", label: "الوصف" },
                 { id: "specifications", label: "المواصفات" },
+                 { id: "sizes", label: "المقاسات" },
                 { id: "reviews", label: "التقييمات" },
               ].map((tab) => (
                 <button
@@ -556,6 +557,67 @@ function ProductDetails() {
                 </motion.div>
               )}
 
+{/* 👇 تبويب المقاسات الجديد */}
+      {activeTab === "sizes" && (
+        <motion.div
+          key="sizes"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+        >
+          {product.sizes && product.sizes.length > 0 ? (
+            <div>
+              <div className="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
+                <Ruler className="w-5 h-5 text-pink-500" />
+                <h3 className="font-semibold text-gray-800">دليل مقاسات {product.name}</h3>
+              </div>
+              
+              <div className="overflow-x-auto rounded-xl border border-gray-100">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-pink-50 to-gray-50">
+                      <th className="text-right py-3 px-4 font-semibold text-gray-700 rounded-tr-xl">
+                        المقاس
+                      </th>
+                      <th className="text-right py-3 px-4 font-semibold text-gray-700 rounded-tl-xl">
+                        العمر المناسب
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {product.sizes.map((size, idx) => (
+                      <tr 
+                        key={idx} 
+                        className={`border-b border-gray-100 hover:bg-pink-50/30 transition-colors ${
+                          idx === product.sizes.length - 1 ? "border-b-0" : ""
+                        }`}
+                      >
+                        <td className="py-3 px-4 font-bold text-pink-600">{size.size}</td>
+                        <td className="py-3 px-4 text-gray-600">{size.age}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              
+              <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-400 bg-gray-50 p-3 rounded-lg">
+                <span>💡</span>
+                <span>نصيحة: إذا كان طفلك بين مقاسين، اختاري المقاس الأكبر لراحة أطول</span>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-400">
+              <Ruler className="w-12 h-12 mx-auto mb-3 opacity-50" />
+              <p>لا توجد مقاسات متاحة لهذا المنتج حالياً</p>
+            </div>
+          )}
+        </motion.div>
+      )}
+
+
+
+
+
               {activeTab === "reviews" && (
                 <motion.div
                   key="reviews"
@@ -575,6 +637,7 @@ function ProductDetails() {
       <div ref={offersRef} className="scroll-mt-20">
         <HalfOffers
           filterByTabType={product.tabType || "half"}
+         filterByProductType={product.type} 
           setSelectedOffer={handleOfferSelect}
           scrollToOrderCollection={() =>
             orderCollectionRef.current?.scrollIntoView({

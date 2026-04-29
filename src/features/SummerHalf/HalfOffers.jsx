@@ -15,27 +15,57 @@ import {
 } from "lucide-react";
 import { halfOffersData } from "./HalfOffersData"; 
 
-function HalfOffers({ setSelectedOffer, scrollToOrderCollection, filterByTabType = null }) {
+function HalfOffers({ 
+  setSelectedOffer, 
+  scrollToOrderCollection, 
+  filterByTabType = null,
+  filterByProductType = null
+}) {
   const { t } = useTranslation();
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [activeOfferTab, setActiveOfferTab] = useState(filterByTabType || "half");
 
-  // Filter offers based on tabType if provided
-  const filteredOffers = filterByTabType 
-    ? halfOffersData.filter(offer => offer.tabType === filterByTabType)
-    : halfOffersData;
+  // Get all available tab types from offers data
+  const allTabTypes = ["half", "bandana", "turbon", "set"];
+  
+  const tabLabels = {
+    half: "هاف كولون",
+    bandana: "بندانات",
+    turbon: "تربون",
+    set: "أطقم"
+  };
 
-  // Get dynamic title based on filter
+  // Filter offers based on active tab
+  const filteredOffers = (() => {
+    let offers = halfOffersData;
+    
+    // لو في صفحة منتج محدد (filterByProductType موجود)
+    if (filterByProductType) {
+      offers = offers.filter(offer => offer.type === filterByProductType);
+    } 
+    // لو في صفحة العروض الرئيسية (نستخدم الـ tab النشط)
+    else if (activeOfferTab) {
+      offers = offers.filter(offer => offer.tabType === activeOfferTab);
+    }
+    
+    return offers;
+  })();
+
+  // Get dynamic title
   const getTitle = () => {
-    if (filterByTabType === "half") return "عروض هاف الكولون";
-    if (filterByTabType === "bandana") return "عروض البندانات";
-    if (filterByTabType === "set") return "عروض الأطقم";
-    return "عروض هاف الكولون";
+    if (filterByProductType === "set-mesh") return "عروض طقم بندانه + هاف كولون شبك";
+    if (filterByProductType === "set-bow") return "عروض طقم بندانه + هاف كولون فيونكه قطن";
+    return "";
   };
 
   const getSubtitle = () => {
-    if (filterByTabType === "half") return "اشتري أكتر ووفّري أكتر مع أقوى عروض الهاف كولون";
-    if (filterByTabType === "bandana") return "عروض خاصة على البندانات - كل ما اشتريت أكتر، وفرت أكتر";
-    if (filterByTabType === "set") return "أفضل العروض على الأطقم - جودة عالية وأسعار مميزة";
+    if (filterByProductType === "set-mesh" || filterByProductType === "set-bow") {
+      return "عروض خاصة على هذا الطقم - اختاري عدد القطع المناسب لك";
+    }
+    if (activeOfferTab === "half") return "اشتري أكتر ووفّري أكتر مع أقوى عروض الهاف كولون";
+    if (activeOfferTab === "bandana") return "عروض خاصة على البندانات - كل ما اشتريت أكتر، وفرت أكتر";
+    if (activeOfferTab === "turbon") return "عروض خاصة على التربون - جودة عالية وأسعار مميزة";
+    if (activeOfferTab === "set") return "أفضل العروض على الأطقم - جودة عالية وأسعار مميزة";
     return "اشتري أكتر ووفّري أكتر مع أقوى العروض";
   };
 
@@ -55,10 +85,13 @@ function HalfOffers({ setSelectedOffer, scrollToOrderCollection, filterByTabType
     return (price / quantity).toFixed(0);
   };
 
-  // If no offers match the filter, don't render
+  // If no offers match the filter
   if (filteredOffers.length === 0) {
     return null;
   }
+
+  // لو في صفحة منتج محدد (مش هنعرض التبويبات)
+  const isProductPage = filterByProductType !== null && filterByProductType !== undefined;
 
   return (
     <div id="halfOffersSection" className="relative py-12 px-4">
@@ -84,7 +117,7 @@ function HalfOffers({ setSelectedOffer, scrollToOrderCollection, filterByTabType
 
         <h2 className="text-3xl md:text-4xl font-black mb-2">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#e13485] via-[#e13485]/80 to-gray-700">
-            {getTitle()}
+            {getTitle() || "عروض هاف الكولون"}
           </span>
         </h2>
 
@@ -93,7 +126,34 @@ function HalfOffers({ setSelectedOffer, scrollToOrderCollection, filterByTabType
         </p>
       </motion.div>
 
-      {/* Modern Compact Grid */}
+      {/* Tabs - تظهر فقط في صفحة العروض الرئيسية (مش في صفحة المنتج) */}
+      {!isProductPage && (
+        <div className="flex justify-center mb-8">
+          <div className="inline-flex bg-gray-100 p-1 rounded-full">
+            {allTabTypes.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveOfferTab(tab)}
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeOfferTab === tab
+                    ? "bg-gradient-to-r from-[#e13485] to-[#c01e6f] text-white shadow-md"
+                    : "text-gray-600 hover:bg-gray-200"
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  {tab === "half" && <Package className="w-4 h-4" />}
+                  {tab === "bandana" && <Shirt className="w-4 h-4" />}
+                  {tab === "turbon" && <Shirt className="w-4 h-4" />}
+                  {tab === "set" && <Layers className="w-4 h-4" />}
+                  {tabLabels[tab]}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Offers Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
         {filteredOffers.map((offer, index) => {
           const isHovered = hoveredIndex === index;

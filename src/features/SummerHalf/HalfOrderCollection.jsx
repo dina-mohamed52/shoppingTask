@@ -10,7 +10,8 @@ import {
   Layers,
   Lock,
   TrendingUp,
-  Sparkles
+  Sparkles,
+  Tag
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Select } from "antd";
@@ -22,6 +23,8 @@ function HalfOrderCollection({
   disableProductSelection = false, 
   defaultProductName = null,
   onOrderConfirmed 
+  ,
+   scrollToOffers
 }) {
   const count = selectedOffer?.quantity || 0;
   const [activeTab, setActiveTab] = useState("half");
@@ -32,14 +35,8 @@ function HalfOrderCollection({
 
   // Get products based on active tab
   const getFilteredProducts = () => {
-    const allProducts = HalfColoneData.filter(p => 
-      p.id === 1 || p.id === 2 || p.id === 3 || p.id === 4 || p.id === 5
-    );
+    return HalfColoneData.filter(p => p.tabType === activeTab);
     
-    if (activeTab === "half") return allProducts.filter(p => p.id === 1 || p.id === 2);
-    if (activeTab === "bandana") return allProducts.filter(p => p.id === 3 || p.id === 5);
-    if (activeTab === "set") return allProducts.filter(p => p.id === 4);
-    return allProducts;
   };
 
   const products = getFilteredProducts();
@@ -91,6 +88,14 @@ function HalfOrderCollection({
     const product = getProductById(productId);
     return product?.sizes || [];
   };
+
+
+const handleGoToOffers = () => {
+    if (scrollToOffers) {
+      scrollToOffers();
+    }
+  };
+
 
   const getColorCode = (colorName) => {
     const colors = {
@@ -165,6 +170,16 @@ function HalfOrderCollection({
           <h3 className="text-xl font-semibold text-gray-800 mb-1">اختار عرضك</h3>
           <p className="text-gray-400 text-sm">برجاء اختيار عرض مناسب من الأعلى</p>
         </motion.div>
+         <motion.button
+                    onClick={handleGoToOffers}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative mt-6 bg-gradient-to-r from-[#864e63] to-[#c6abff] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-[#864e63]/30 transition-all duration-300 flex items-center justify-center gap-2 mx-auto"
+                  >
+                    <Tag className="w-4 h-4" />
+                    اختاري عرضك المناسب
+                    <Sparkles className="w-4 h-4" />
+                  </motion.button>
       </div>
     );
   }
