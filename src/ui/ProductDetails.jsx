@@ -455,7 +455,7 @@ function ProductDetails() {
             : "bg-gray-100 text-gray-700 hover:bg-gray-200"
         }`}
       >
-        {product.avalibeColors?.[index] || `لون ${index + 1}`}
+        {product.avalibeColors?.[index]}
       </button>
     ))}
   </div>
@@ -634,20 +634,69 @@ function ProductDetails() {
       </main>
 
       {/* قسم العروض */}
-      <div ref={offersRef} className="scroll-mt-20">
-        <HalfOffers
-          filterByTabType={product.tabType || "half"}
-         filterByProductType={product.type} 
-          setSelectedOffer={handleOfferSelect}
-             hideTabs={true}
-          scrollToOrderCollection={() =>
-            orderCollectionRef.current?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            })
-          }
+      {/* قسم العروض - يظهر فقط للمنتجات التي ليست ID=3 */}
+{product.id !== 3 ? (
+  <>
+    <div ref={offersRef} className="scroll-mt-20">
+      <HalfOffers
+        filterByTabType={product.tabType || "half"}
+        filterByProductType={product.type} 
+        setSelectedOffer={handleOfferSelect}
+        hideTabs={true}
+        scrollToOrderCollection={() =>
+          orderCollectionRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          })
+        }
+      />
+    </div>
+
+    <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
+      {selectedOfferForOrder &&
+        !selectedOfferForOrder.id?.includes("default") && (
+          <HalfOrderCollection
+            selectedOffer={selectedOfferForOrder}
+            setOrder={handleSetOrder}
+            formRef={formRef}
+            disableProductSelection={true}
+            defaultProductName={product.name}
+            onOrderConfirmed={() => {
+              setTimeout(() => {
+                formRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }, 200);
+            }}
+          />
+        )}
+    </div>
+
+    {order && order.length > 0 && (
+      <div ref={formRef} className="mt-10 scroll-mt-20">
+        <OrderForm
+          order={order}
+          selectedOffer={selectedOfferForOrder}
+          formRef={formRef}
         />
       </div>
+    )}
+  </>
+) : (
+  /* رسالة للمنتج 3 */
+  <div className="text-center rounded-2xl mx-4 my-8 ">
+    <div className=" rounded-full flex items-center justify-center mx-auto mb-4">
+      {/* <Package className="w-10 h-10 text-gray-400" /> */}
+    </div>
+    {/* <h3 className="text-xl font-semibold text-gray-600 mb-2">
+      هذا المنتج غير متوفر في العروض حالياً
+    </h3> */}
+    {/* <p className="text-gray-400 text-sm max-w-md mx-auto">
+      نعتذر عن الإزعاج، هذا المنتج غير شامل للعروض الحالية. يمكنك متابعة صفحتنا لمعرفة العروض القادمة.
+    </p> */}
+  </div>
+)}
 
       {/* قسم تجميع الطلب */}
       <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
