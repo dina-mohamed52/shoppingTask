@@ -83,93 +83,49 @@ export const halfOffersData = [
     tabType: "bandana"
   },
 
-  // ========== أطقم بندانه + هاف كولون شبك ==========
-  { 
-    name: "3 طقم بندانه + هاف كولون شبك",
-    quantity: 3, 
-    price: 285, 
-    badge: "عرض خاص",
-    badgeColor: "from-[#a0105a] to-[#e13485]",
-    icon: <Layers className="w-4 h-4" />,
-    savings: 115,
-    originalPrice: 400,
-    unit: "طقم شبك",
-    popular: false,
-    tabType: "set",
-    type: "set-mesh"  // 👈 تحديد نوع المنتج
-  },
-  { 
-    name: "4 طقم بندانه + هاف كولون شبك",
-    quantity: 4, 
-    price: 380, 
-    badge: "أفضل قيمة",
-    badgeColor: "from-[#a0105a] to-[#e13485]",
-    icon: <Layers className="w-4 h-4" />,
-    savings: 115,
-    originalPrice: 495,
-    unit: "طقم شبك",
-    popular: false,
-    tabType: "set",
-    type: "set-mesh"
-  },
-  { 
-    name: "6 طقم بندانه + هاف كولون شبك",
-    quantity: 6, 
-    price: 535, 
-    badge: "الأكثر طلباً",
-    badgeColor: "from-[#e13485] to-[#801040]",
-    icon: <Gift className="w-4 h-4" />,
-    savings: 215,
-    originalPrice: 750,
-    unit: "طقم شبك",
-    popular: true,
-    tabType: "set",
-    type: "set-mesh"
-  },
-
-  // ========== أطقم بندانه + هاف كولون فيونكه قطن ==========
-  { 
-    name: "3 طقم بندانه + هاف كولون فيونكه قطن",
-    quantity: 3, 
-    price: 295, 
-    badge: "عرض خاص",
-    badgeColor: "from-[#a0105a] to-[#e13485]",
-    icon: <Sparkles className="w-4 h-4" />,
-    savings: 110,
-    originalPrice: 405,
-    unit: "طقم فيونكه",
-    popular: false,
-    tabType: "set",
-    type: "set-bow"
-  },
-  { 
-    name: "4 طقم بندانه + هاف كولون فيونكه قطن",
-    quantity: 4, 
-    price: 390, 
-    badge: "أفضل قيمة",
-    badgeColor: "from-[#a0105a] to-[#e13485]",
-    icon: <Sparkles className="w-4 h-4" />,
-    savings: 130,
-    originalPrice: 520,
-    unit: "طقم فيونكه",
-    popular: false,
-    tabType: "set",
-    type: "set-bow"
-  },
-  { 
-    name: "6 طقم بندانه + هاف كولون فيونكه قطن",
-    quantity: 6, 
-    price: 560, 
-    badge: "الأكثر طلباً",
-    badgeColor: "from-[#e13485] to-[#801040]",
-    icon: <Gift className="w-4 h-4" />,
-    savings: 190,
-    originalPrice: 750,
-    unit: "طقم فيونكه",
-    popular: true,
-    tabType: "set",
-    type: "set-bow"
-  },
+  // ========== أطقم بندانه + هاف كولون ==========
+{ 
+  name: "3 طقم بندانه + هاف كولون",
+  quantity: 3, 
+  price: 285, 
+  badge: "عرض خاص",
+  badgeColor: "from-[#a0105a] to-[#e13485]",
+  icon: <Layers className="w-4 h-4" />,
+  savings: 115,
+  originalPrice: 400,
+  unit: "طقم بندانه",
+  popular: false,
+  tabType: "set",
+  type: "set-bandana"
+},
+{ 
+  name: "4 طقم بندانه + هاف كولون",
+  quantity: 4, 
+  price: 380, 
+  badge: "أفضل قيمة",
+  badgeColor: "from-[#a0105a] to-[#e13485]",
+  icon: <Layers className="w-4 h-4" />,
+  savings: 115,
+  originalPrice: 495,
+  unit: "طقم بندانه",
+  popular: false,
+  tabType: "set",
+  type: "set-bandana"
+},
+{ 
+  name: "6 طقم بندانه + هاف كولون",
+  quantity: 6, 
+  price: 535, 
+  badge: "الأكثر طلباً",
+  badgeColor: "from-[#e13485] to-[#801040]",
+  icon: <Gift className="w-4 h-4" />,
+  savings: 215,
+  originalPrice: 750,
+  unit: "طقم بندانه",
+  popular: true,
+  tabType: "set",
+  type: "set-bandana"
+},
 
   // ========== تربون ==========
   { 

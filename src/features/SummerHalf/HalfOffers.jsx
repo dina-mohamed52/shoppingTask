@@ -30,10 +30,10 @@ function HalfOffers({
   const allTabTypes = ["half", "bandana", "turbon", "set"];
   
   const tabLabels = {
-    half: "هاف كولون",
-    bandana: "بندانات",
-    turbon: "تربون",
-    set: "أطقم"
+    half:" عروض الهاف كولون",
+    bandana: " عروض البندانات",
+    turbon:  " عروض التربون",
+    set:  " عروض الأطقم"
   };
 
   // Filter offers based on active tab
@@ -125,32 +125,36 @@ function HalfOffers({
       </motion.div>
 
       {/* Tabs - تظهر فقط إذا لم نطلب إخفاءها */}
-      {!hideTabs && (
-        <div className="flex justify-center mb-8">
-          <div className="inline-flex bg-gray-100 p-1 rounded-full">
-            {allTabTypes.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveOfferTab(tab)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeOfferTab === tab
-                    ? "bg-gradient-to-r from-[#e13485] to-[#c01e6f] text-white shadow-md"
-                    : "text-gray-600 hover:bg-gray-200"
-                }`}
-              >
-                <div className="flex items-center sm:text-base text-[0.8rem] gap-0  sm:gap-2">
-                  {tab === "half" && <Package className="w-4 h-4" />}
-                  {tab === "bandana" && <Shirt className="w-4 h-4" />}
-                  {tab === "turbon" && <Shirt className="w-4 h-4" />}
-                  {tab === "set" && <Layers className="w-4 h-4" />}
-                  {tabLabels[tab]}
-                </div>
-              </button>
-            ))}
+     {/* Tabs - تظهر فقط إذا لم نطلب إخفاءها */}
+{!hideTabs && (
+  <div className="flex justify-center mb-8 px-4">
+    <div className="inline-flex flex-wrap justify-center gap-2 bg-gray-100 p-2 rounded-2xl 
+    max-w-md sm:max-w-5xl mx-auto">
+      {allTabTypes.map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setActiveOfferTab(tab)}
+          className={`
+            flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0
+            px-2 py-2 rounded-xl text-sm font-medium transition-all duration-300
+            ${activeOfferTab === tab
+              ? "bg-gradient-to-r from-[#e13485] to-[#c01e6f] px-3 text-white shadow-md"
+              : "text-gray-600 hover:bg-gray-200"}
+          `}
+        >
+          <div className="flex items-center justify-center whitespace-nowrap gap-1
+           sm:gap-2 text-[0.8rem] sm:text-base font-bold">
+            {tab === "half" && <Package className="w-4 h-4" />}
+            {tab === "bandana" && <Shirt className="w-4 h-4" />}
+            {tab === "turbon" && <Shirt className="w-4 h-4" />}
+            {tab === "set" && <Layers className="w-4 h-4" />}
+            <span>{tabLabels[tab]}</span>
           </div>
-        </div>
-      )}
-
+        </button>
+      ))}
+    </div>
+  </div>
+)}
       {/* Offers Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
         {filteredOffers.map((offer, index) => {

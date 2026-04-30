@@ -89,7 +89,7 @@ export const HalfColoneData = [
     name: "طقم بندانه وهاف كولون فيونكه",
     description: "   طقم كيوت ومتكامل يضيف لمسة أناقة مميزة لإطلالة بنتك مكون من بندانه شيك + هاف كولون مريح علشان لوك جاهز في ثواني",
     tabType: "set", 
-      type: "set-bow",
+    type: "set-bandana",
     productColors: [
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471600/WhatsApp_Image_2026-04-28_at_4.04.18_AM_6_vthfqu.jpg" },
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471391/WhatsApp_Image_2026-04-28_at_4.04.18_AM_2_shzsbv.jpg" },
@@ -110,7 +110,7 @@ export const HalfColoneData = [
     name: " طقم بندانه وهاف كولون شبك",
     description: "   طقم كيوت ومتكامل يضيف لمسة أناقة مميزة لإطلالة بنتك مكون من بندانه شيك + هاف كولون مريح علشان لوك جاهز في ثواني",
     tabType: "set",
-     type: "set-mesh",
+    type: "set-bandana",
     productColors: [
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777400594/WhatsApp_Image_2026-04-28_at_4.04.18_AM_3_ydjfak.jpg" },
       { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392524/WhatsApp_Image_2026-04-28_at_4.04.18_AM_4_c9mvjd.jpg" },
@@ -125,37 +125,45 @@ export const HalfColoneData = [
     ],
   },
   {
-    id: 6,
-    name: "تربون ورده",
-    description: " تربونات أطفال قطن مريحة اختيار مثالي لراحة وأناقة طفلتك طول اليوم تربونات عملية وكيوت تناسب كل الإطلالات سواء في البيت أو الخروجات ",
-    tabType: "turbon", 
-    productColors: [
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784154/WhatsApp_Image_2026-02-21_at_10.28.04_AM_qpwxo0.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_2_gw3for.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_1_jgzfpu.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784144/WhatsApp_Image_2026-02-21_at_10.28.05_AM_cuebet.jpg" },
-      { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771844899/WhatsApp_Image_2026-02-23_at_3.06.01_AM_xvgu2h.jpg" },
-    ],
-    avalibeColors: [ "أوف وايت", "أصفر", "بيج", "بينك", "لافندر"],
-    image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784154/WhatsApp_Image_2026-02-21_at_10.28.04_AM_qpwxo0.jpg",
-    sizes: [
-      { size: "0-2", age: "من زيرو لسنه" },
-      { size: "2-4", age: "من سنه لسنتين" },
-      { size: "4-6", age: "من سنتين ل4 سنين" },
-    ],
-  },
-  {
-    id: 7,
-    name: "تربون فيونكه",
-    description: " تربونات أطفال قطن مريحة اختيار مثالي لراحة وأناقة طفلتك طول اليوم تربونات عملية وكيوت تناسب كل الإطلالات سواء في البيت أو الخروجات ",
-  tabType: "turbon", // ✅ مهم جدًا
+  id: 6,
+  name: "تربون أطفال",
+  description: "تربونات أطفال قطن مريحة اختيار مثالي لراحة وأناقة طفلتك طول اليوم تربونات عملية وكيوت تناسب كل الإطلالات سواء في البيت أو الخروجات",
+  tabType: "turbon",
+
   productColors: [
-    { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784215/WhatsApp_Image_2026-02-21_at_10.28.05_AM_3_epttvz.jpg" },
-    { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.05_AM_1_evw3eg.jpg" },
-    { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784125/WhatsApp_Image_2026-02-21_at_10.28.05_AM_2_mdqyi4.jpg" },
-    { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771844461/WhatsApp_Image_2026-02-21_at_10.28.06_AM_naf42w.jpg" },
+    // ورده 🌸
+    { color: "أوف وايت ورده", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_1_jgzfpu.jpg" },
+    { color: "أصفر ورده", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784154/WhatsApp_Image_2026-02-21_at_10.28.04_AM_qpwxo0.jpg" },
+    { color: "بيج ورده", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784144/WhatsApp_Image_2026-02-21_at_10.28.05_AM_cuebet.jpg" },
+    { color: "بينك ورده", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_2_gw3for.jpg" },
+    { color: "لافندر ورده", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771844899/WhatsApp_Image_2026-02-23_at_3.06.01_AM_xvgu2h.jpg" },
+
+    // فيونكه 🎀
+    { color: "أسود فيونكه", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784125/WhatsApp_Image_2026-02-21_at_10.28.05_AM_2_mdqyi4.jpg" },
+    { color: "أحمر فيونكه", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784215/WhatsApp_Image_2026-02-21_at_10.28.05_AM_3_epttvz.jpg" },
+    { color: "بينك فيونكه", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.05_AM_1_evw3eg.jpg" },
+    { color: "كافيه فيونكه", img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771844461/WhatsApp_Image_2026-02-21_at_10.28.06_AM_naf42w.jpg" },
   ],
-  avalibeColors: [ "أسود", "أحمر", "بينك", "كافيه"],
-  image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784215/WhatsApp_Image_2026-02-21_at_10.28.05_AM_3_epttvz.jpg",
+
+  // لو لسه محتاجة ليستة ألوان لوحدها
+  avalibeColors: [
+    "أوف وايت ورده",
+    "أصفر ورده",
+    "بيج ورده",
+    "بينك ورده",
+    "لافندر ورده",
+    "أسود فيونكه",
+    "أحمر فيونكه",
+    "بينك فيونكه",
+    "كافيه فيونكه",
+  ],
+
+  image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_1_jgzfpu.jpg",
+
+  sizes: [
+    { size: "0-2", age: "من زيرو لسنه" },
+    { size: "2-4", age: "من سنه لسنتين" },
+    { size: "4-6", age: "من سنتين ل4 سنين" },
+  ],
 }
 ];
