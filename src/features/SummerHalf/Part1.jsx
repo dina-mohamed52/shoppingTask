@@ -364,7 +364,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
               </span>
             </h2>
             
-            <p className="text-gray-400 max-w-2xl mx-auto text-xs md:text-base px-4">
+            <p className="text-gray-400 max-w-2xl mx-auto  pb-6 text-xs md:text-base px-4">
               جولة على أحدث تشكيلات الصيف - هاف كولون وبندانات عصرية
             </p>
           </motion.div>
