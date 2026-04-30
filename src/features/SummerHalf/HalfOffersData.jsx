@@ -16,9 +16,9 @@ export const halfOffersData = [
     tabType: "half"
   },
   { 
-    name: "8 هاف كولون",
-    quantity: 8, 
-    price: 420, 
+    name: "9 هاف كولون",
+    quantity: 9, 
+    price: 450, 
     badge: "الأكثر طلباً",
     badgeColor: "from-[#e13485] to-[#c01e6f]",
     icon: <Package className="w-4 h-4" />,

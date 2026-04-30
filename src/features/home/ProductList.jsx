@@ -12,6 +12,7 @@ function ProductList({products}) {
 
 const filteredProducts = products?.filter(product =>
   product.name.includes("كولون") || product.name.includes("ليجن")
+  || product.name.includes("شورت")
 ) || [];
 
   const handlePreview = (product) => {

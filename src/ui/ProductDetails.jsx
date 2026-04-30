@@ -652,27 +652,7 @@ function ProductDetails() {
       />
     </div>
 
-    <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
-      {selectedOfferForOrder &&
-        !selectedOfferForOrder.id?.includes("default") && (
-          <HalfOrderCollection
-            selectedOffer={selectedOfferForOrder}
-            setOrder={handleSetOrder}
-            formRef={formRef}
-            disableProductSelection={true}
-            defaultProductName={product.name}
-            onOrderConfirmed={() => {
-              setTimeout(() => {
-                formRef.current?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-              }, 200);
-            }}
-          />
-        )}
-    </div>
-
+    
     {order && order.length > 0 && (
       <div ref={formRef} className="mt-10 scroll-mt-20">
         <OrderForm
