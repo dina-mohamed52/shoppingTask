@@ -101,8 +101,12 @@ export const HalfColoneData = [
     avalibeColors: ["أبيض", "أسود", "بينك", "لافندر", "أحمر", "أصفر"],
     image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392524/WhatsApp_Image_2026-04-28_at_4.04.18_AM_5_wzb6ha.jpg",
     sizes: [
-      { size: "0-2", age: "من زيرو لسنتين" },
-      { size: "2-4", age: "من 2 ل4 سنين" },
+       { size: "0-1", age: "من زيرو ل9 شهور" },
+      { size: "1-2", age: "من 9 شهور لسنه ونص" },
+      { size: "2-4", age: "من سنه ونص ل3 سنين" },
+      { size: "4-6", age: "من 3 ل5 سنين" },
+      { size: "6-8", age: "من 5 ل7 سنين" },
+      { size: "8-10", age: "من 8 ل10 سنين" },
     ],
   },
   {
@@ -120,8 +124,9 @@ export const HalfColoneData = [
     avalibeColors: ["أبيض", "أسود", "بينك",],
     image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777400594/WhatsApp_Image_2026-04-28_at_4.04.18_AM_3_ydjfak.jpg",
     sizes: [
-      { size: "0-2", age: "من زيرو لسنتين" },
-      { size: "2-4", age: "من 2 ل4 سنين" },
+       { size: "0-2", age: "من زيرو لسنه" },
+      { size: "2-4", age: "من سنه لسنتين" },
+      { size: "4-6", age: "من سنتين ل4 سنين" }
     ],
   },
   {
