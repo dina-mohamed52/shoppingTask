@@ -20,7 +20,7 @@ const WhatsAppButton = ({ phone = "201001841284", message = "" }) => {
         transition-all duration-300
       "
     >
-      <FaWhatsapp  className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7" />
+      <FaWhatsapp  className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
     </button>
   );
 };
