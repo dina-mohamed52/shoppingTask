@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 
-const WhatsAppButton = ({ phone = "201234567890", message = "" }) => {
+const WhatsAppButton = ({ phone = "201001841284", message = "" }) => {
   const handleClick = () => {
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");

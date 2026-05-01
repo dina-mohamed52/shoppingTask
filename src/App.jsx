@@ -41,7 +41,6 @@ function App() {
           </Route>
         </Routes>
          <WhatsAppButton
-        phone="2010XXXXXXX"
         message="مرحبا، عايز أطلب منتجات من الموقع"
       />
       </QueryClientProvider>
