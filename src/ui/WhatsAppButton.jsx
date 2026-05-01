@@ -1,0 +1,28 @@
+import { MessageCircle } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+
+const WhatsAppButton = ({ phone = "201001841284", message = "" }) => {
+  const handleClick = () => {
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className="
+        fixed bottom-4 right-4 z-50
+        flex items-center justify-center
+        bg-green-500 text-white shadow-lg
+        rounded-full
+        w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16
+        hover:scale-110 active:scale-95
+        transition-all duration-300
+      "
+    >
+      <FaWhatsapp  className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7" />
+    </button>
+  );
+};
+
+export default WhatsAppButton;
