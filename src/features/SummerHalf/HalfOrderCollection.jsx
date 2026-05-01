@@ -35,9 +35,15 @@ function HalfOrderCollection({
 
   // Get products based on active tab
   const getFilteredProducts = () => {
-    return HalfColoneData.filter(p => p.tabType === activeTab);
-    
-  };
+  let filtered = HalfColoneData.filter(p => p.tabType === activeTab);
+  
+  // فلترة إضافية للأطقم حسب نوع العرض
+  if (activeTab === "set" && selectedOffer?.type) {
+    filtered = filtered.filter(p => p.type === selectedOffer.type);
+  }
+  
+  return filtered;
+};
 
   const products = getFilteredProducts();
   const [pieces, setPieces] = useState(() => 
@@ -97,14 +103,67 @@ const handleGoToOffers = () => {
   };
 
 
-  const getColorCode = (colorName) => {
-    const colors = {
-      "أبيض": "#FFFFFF", "أسود": "#111827", "رمادي": "#6B7280",
-      "روز": "#F9A8D4", "بينك": "#EC4899", "كحلي": "#1E3A5F",
-      "بيج": "#F5E6D3", "أحمر": "#EF4444", "موف": "#A855F7",
-      "زيتي": "#4B5563", "تركواز": "#14B8A6"
+   const getColorCode = (colorName) => {
+    const colorMap = {
+      أبيض: "#FFFFFF",
+      أسود: "#000000",
+      رمادي: "#9CA3AF",
+      بيج: "#E8D5B5",
+      لبني: "oklch(70.7% 0.165 254.624)",
+      سكري: "#FFF0DB",
+      أبيض: "#FFFFFF",
+      أسود: "#000000",
+      رمادي: "#9CA3AF",
+      بيج: "#E8D5B5",
+      لبني: "oklch(70.7% 0.165 254.624)",
+      عاجي: "#FFF0DB",
+      بينك: "#FF69B4",
+      وردي: "#FFB6C1",
+      فوشيا: "#FF00FF",
+      روز: "#FFC0CB",
+      موف: "#C8A2C8",
+      خوخي: "#FFDAB9",
+      سلمون: "#FA8072",
+      أحمر: "#FF4444",
+      أصفر: "#FFD700",
+      أخضر: "#98D8C8",
+      نعناعي: "#A7F0D9",
+      سماوي: "#87CEEB",
+      كحلي: "#1E2F4F",
+      نيلي: "#4B6A8B",
+      كافيه: "#8B5E3C",
+      بني: "#8B4513",
+      بندقي: "#D2B48C",
+
+      بينك: "#FF69B4",
+      وردي: "#FFB6C1",
+      فوشيا: "#FF00FF",
+      روز: "#FFC0CB",
+      موف: "#C8A2C8",
+      خوخي: "#FFDAB9",
+      سلمون: "#FA8072",
+
+      أحمر: "#FF4444",
+      أصفر: "#FFD700",
+      أخضر: "#98D8C8",
+      نعناعي: "#A7F0D9",
+      سماوي: "#87CEEB",
+      كحلي: "#1E2F4F",
+      نيلي: "#4B6A8B",
+
+      كافيه: "#8B5E3C",
+      بني: "#8B4513",
+      بندقي: "#D2B48C",
+      
+
+      default: "#E5E7EB",
     };
-    return colors[colorName] || "#E5E7EB";
+
+    // 🧠 استخرج اللون من النص
+    const extractedColor =
+      Object.keys(colorMap).find((c) => colorName.includes(c)) || "default";
+
+    return colorMap[extractedColor];
   };
 
   const handleProductChange = (id, productId) => {
@@ -360,7 +419,7 @@ const handleGoToOffers = () => {
                     </div>
 
                     {/* Color & Size Row */}
-                    <div className="grid grid-cols-2 gap-3">
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {/* Color Field */}
                       <div className="space-y-2">
                         <label className="flex items-center gap-2 text-sm font-medium text-gray-700">

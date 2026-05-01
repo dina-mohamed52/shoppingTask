@@ -8,44 +8,68 @@ function ProductCard({ product, onPreview }) {
   const lang = i18n.language;
 
   // دالة لتحويل اسم اللون العربي إلى كود لون - محدثة
-const getColorCode = (colorName) => {
-  const colorMap = {
-    "أبيض": "#FFFFFF",
-    "أسود": "#000000",
-    "رمادي": "#9CA3AF",
-    "بيج": "#E8D5B5",
-    "لبني": "oklch(70.7% 0.165 254.624)", 
-    "سكري": "#FFF0DB",
+   const getColorCode = (colorName) => {
+    const colorMap = {
+      أبيض: "#FFFFFF",
+      أسود: "#000000",
+      رمادي: "#9CA3AF",
+      بيج: "#E8D5B5",
+      لبني: "oklch(70.7% 0.165 254.624)",
+      سكري: "#FFF0DB",
+      أبيض: "#FFFFFF",
+      أسود: "#000000",
+      رمادي: "#9CA3AF",
+      بيج: "#E8D5B5",
+      لبني: "oklch(70.7% 0.165 254.624)",
+      عاجي: "#FFF0DB",
+      بينك: "#FF69B4",
+      وردي: "#FFB6C1",
+      فوشيا: "#FF00FF",
+      روز: "#FFC0CB",
+      موف: "#C8A2C8",
+      خوخي: "#FFDAB9",
+      سلمون: "#FA8072",
+      أحمر: "#FF4444",
+      أصفر: "#FFD700",
+      أخضر: "#98D8C8",
+      نعناعي: "#A7F0D9",
+      سماوي: "#87CEEB",
+      كحلي: "#1E2F4F",
+      نيلي: "#4B6A8B",
+      كافيه: "#8B5E3C",
+      بني: "#8B4513",
+      بندقي: "#D2B48C",
 
-    "بينك": "#FF69B4",
-    "وردي": "#FFB6C1",
-    "فوشيا": "#FF00FF",
-    "روز": "#FFC0CB",
-    "موف": "#C8A2C8",
-    "خوخي": "#FFDAB9",
-    "سلمون": "#FA8072",
+      بينك: "#FF69B4",
+      وردي: "#FFB6C1",
+      فوشيا: "#FF00FF",
+      روز: "#FFC0CB",
+      موف: "#C8A2C8",
+      خوخي: "#FFDAB9",
+      سلمون: "#FA8072",
 
-    "أحمر": "#FF4444",
-    "أصفر": "#FFD700",
-    "أخضر": "#98D8C8",
-    "نعناعي": "#A7F0D9",
-    "سماوي": "#87CEEB",
-    "كحلي": "#1E2F4F",
-    "نيلي": "#4B6A8B",
+      أحمر: "#FF4444",
+      أصفر: "#FFD700",
+      أخضر: "#98D8C8",
+      نعناعي: "#A7F0D9",
+      سماوي: "#87CEEB",
+      كحلي: "#1E2F4F",
+      نيلي: "#4B6A8B",
 
-    "كافيه": "#8B5E3C",
-    "بني": "#8B4513",
-    "بندقي": "#D2B48C",
+      كافيه: "#8B5E3C",
+      بني: "#8B4513",
+      بندقي: "#D2B48C",
+      
 
-    default: "#E5E7EB"
+      default: "#E5E7EB",
+    };
+
+    // 🧠 استخرج اللون من النص
+    const extractedColor =
+      Object.keys(colorMap).find((c) => colorName.includes(c)) || "default";
+
+    return colorMap[extractedColor];
   };
-
-  // 🧠 استخرج اللون من النص
-  const extractedColor =
-    Object.keys(colorMap).find((c) => colorName.includes(c)) || "default";
-
-  return colorMap[extractedColor];
-};
 
   // دالة لتحديد نوع الوسم (New, Sale, etc.)
   const getBadgeType = () => {
@@ -55,7 +79,10 @@ const getColorCode = (colorName) => {
     }
     // إذا كان منتج جديد
     if (product.isNew) {
-      return { text: lang === 'ar' ? "جديد" : "New", bg: "from-pink-400 to-pink-500" };
+      return {
+        text: lang === "ar" ? "جديد" : "New",
+        bg: "from-pink-400 to-pink-500",
+      };
     }
     return null;
   };
@@ -63,10 +90,11 @@ const getColorCode = (colorName) => {
   const badge = getBadgeType();
 
   return (
-    <div className="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all
+    <div
+      className="group relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all
      duration-500 hover:shadow-2xl hover:shadow-pink-500/20 hover:-translate-y-2 flex flex-col 
-     border border-gray-100">
-      
+     border border-gray-100"
+    >
       {/* Decorative Elements */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         <div className="absolute top-0 right-0 w-32 h-32 bg-pink-200 rounded-full filter blur-3xl opacity-20"></div>
@@ -85,7 +113,9 @@ const getColorCode = (colorName) => {
         {badge && (
           <div className="absolute top-3 left-3 z-10">
             <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full blur-md opacity-50 animate-pulse"></div>
-            <span className={`relative bg-gradient-to-r ${badge.bg} text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1`}>
+            <span
+              className={`relative bg-gradient-to-r ${badge.bg} text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1`}
+            >
               <Sparkles className="w-3 h-3" />
               {badge.text}
             </span>
@@ -99,10 +129,10 @@ const getColorCode = (colorName) => {
             onClick={() => setIsLiked(!isLiked)}
             className="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
           >
-            <Heart 
+            <Heart
               className={`w-4 h-4 transition-colors duration-300 ${
                 isLiked ? "fill-pink-500 text-pink-500" : "text-gray-600"
-              }`} 
+              }`}
             />
           </button>
 
@@ -118,7 +148,7 @@ const getColorCode = (colorName) => {
         {/* Product Info Overlay on Image */}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900/70 via-gray-900/30 to-transparent p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
           <p className="text-white text-sm line-clamp-2">
-            {lang === 'ar' ? product.description : product.descriptionEn}
+            {lang === "ar" ? product.description : product.descriptionEn}
           </p>
         </div>
       </div>
@@ -136,19 +166,20 @@ const getColorCode = (colorName) => {
         {product.avalibeColors && product.avalibeColors.length > 0 && (
           <div className="mb-4">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs text-gray-500">{t("productCard.colors", "الألوان المتاحة")}:</span>
-              <span className="text-xs text-pink-500">{product.avalibeColors.length} لون</span>
+              <span className="text-xs text-gray-500">
+                {t("productCard.colors", "الألوان المتاحة")}:
+              </span>
+              <span className="text-xs text-pink-500">
+                {product.avalibeColors.length} لون
+              </span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {product.avalibeColors.map((color, idx) => {
                 // الحصول على كود اللون
                 const colorCode = getColorCode(color);
-                
+
                 return (
-                  <div
-                    key={idx}
-                    className="group/color relative"
-                  >
+                  <div key={idx} className="group/color relative">
                     <div
                       className="w-6 h-6 rounded-full border-2 border-white shadow-md cursor-pointer transition-transform duration-300 hover:scale-110 hover:shadow-pink-500/50"
                       style={{ backgroundColor: colorCode }}
@@ -171,7 +202,7 @@ const getColorCode = (colorName) => {
         >
           {/* Button Background */}
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-gray-800 group-hover/btn:from-pink-500 group-hover/btn:to-pink-600 transition-all duration-300"></div>
-          
+
           {/* Button Content */}
           <span className="relative z-10 flex items-center justify-center gap-2 text-white">
             <ShoppingBag className="w-4 h-4" />

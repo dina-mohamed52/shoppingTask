@@ -164,11 +164,11 @@ export const HalfColoneData = [
 
   image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.04_AM_1_jgzfpu.jpg",
 
-  sizes: [
-    { size: "0-2", age: "من زيرو لسنه" },
-    { size: "2-4", age: "من سنه لسنتين" },
-    { size: "4-6", age: "من سنتين ل4 سنين" },
-  ],
+ 
+ sizes: [
+  { size: "One Size", age: "مناسب من 0 ل 4 سنين (مطاطي)" },
+
+]
 },
   {
   id: 7,
@@ -206,9 +206,10 @@ export const HalfColoneData = [
   image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556486/WhatsApp_Image_2026-04-29_at_11.12.12_AM_ywerwz.jpg",
 
   sizes: [
-    { size: "0-2", age: "من زيرو لسنه" },
-    { size: "2-4", age: "من سنه لسنتين" },
-    { size: "4-6", age: "من سنتين ل4 سنين" },
+    { size: "0-1", age: "من زيرو ل9 شهور" },
+      { size: "1-2", age: "من 9 شهور لسنه ونص" },
+      { size: "2-4", age: "من سنه ونص ل3 سنين" },
+      { size: "4-6", age: "من 3 ل5 سنين" },
   ],
 }
 ];
