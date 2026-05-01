@@ -85,7 +85,7 @@ export const SummerColonData = [
     ],
   },
     {
-    id: 8,
+    id: 3,
     name: "شورت اوباك ",
     description:
       "شورت اوباك صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
@@ -120,8 +120,42 @@ export const SummerColonData = [
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
   },
+    {
+    id: 4,
+    name: " ليجن مضلع ارنوب",
+    description:
+      "ليجن ارنوب  صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
+
+    price: 140,
+    originalPrice: 195,
+    discount: 28,
+    rating: 5,
+    category: "colon",
+
+    productColors: [
+      {
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563207/WhatsApp_Image_2026-04-30_at_8.26.23_AM_tevukf.jpg",
+      },
+      {
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563208/WhatsApp_Image_2026-04-30_at_8.26.24_AM_c4p7eo.jpg",
+      },
+    ],
+    avalibeColors: ["أبيض", "بينك"],
+    image:
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563207/WhatsApp_Image_2026-04-30_at_8.26.23_AM_tevukf.jpg",
+
+    sizes: [
+      { size: "4-2", age: "من سنة ونص ل 3 سنين" },
+      { size: "6-4", age: "من 3 ل 5 سنين" },
+      { size: "8-6", age: "من 5 ل 7 سنين" },
+      { size: "10-8", age: "من 7 ل 9 سنين" },
+      { size: "12-10", age: "من 9 ل 11 سنة" },
+      { size: "14-12", age: "من 12 ل 14 سنة" },
+    ],
+  },
+
   {
-    id: 3,
+    id: 5,
     name: "كولون قلوب",
     description:
       "كولون صيفي قطن ناعم مدعوم بنسبة 10% ليكرا لمرونة عالية وراحة طوال اليوم، بتصميم قلوب أنيق مناسب للإطلالات اليومية والمناسبات.",
@@ -154,8 +188,9 @@ export const SummerColonData = [
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
   },
+  
   {
-    id: 4,
+    id: 6,
     name: "كولون فيونكه",
     description:
       "كولون صيفي  قطن بلمسة أنثوية ناعمة مع فيونكه أنيقة، مصنوع من خامة مرنة 10% ليكرا لتوفير راحة مثالية وحركة سهلة طوال اليوم.",
@@ -191,7 +226,7 @@ export const SummerColonData = [
   },
 
   {
-    id: 5,
+    id: 7,
     name: "كولون جكار",
     description:
       "كولون صيفي  قطن بجودة عالية ونقشة جكار مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
@@ -229,7 +264,7 @@ export const SummerColonData = [
     ],
   },
   {
-    id: 6,
+    id: 8,
     name: "كولون كريستال ساده",
     description:
       "كولون صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
@@ -265,7 +300,7 @@ export const SummerColonData = [
     ],
   },
   {
-    id: 7,
+    id: 9,
     name: "كولون  شبك",
     description:
       "كولون شبك صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
