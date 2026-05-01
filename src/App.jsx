@@ -14,6 +14,7 @@ import SummerHalfColon from "./pages/SummerHalfColon";
 import SummerColon from "./pages/SummerColon";
 import MainPage from "./pages/MainPage";
 import ProductDetails from "./ui/ProductDetails";
+import WhatsAppButton from "./ui/WhatsAppButton";
 
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
             {/* <Route path="/orderCollection" element={<OrderCollection/>}/> */}
           </Route>
         </Routes>
+         <WhatsAppButton
+        phone="2010XXXXXXX"
+        message="مرحبا، عايز أطلب منتجات من الموقع"
+      />
       </QueryClientProvider>
     </>
   );
