@@ -182,13 +182,14 @@ export const HalfColoneData = [
    
     { img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556331/WhatsApp_Image_2026-04-29_at_11.12.02_AM_1_bwwsnb.jpg" },
     {  img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556331/WhatsApp_Image_2026-04-29_at_11.12.02_AM_2_iyj6dr.jpg" },
-    {  img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556379/WhatsApp_Image_2026-04-29_at_11.12.02_AM_3_ruhdvo.jpg" },
+    // {  img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556379/WhatsApp_Image_2026-04-29_at_11.12.02_AM_3_ruhdvo.jpg" },
 
     // ورده 🎀
     {  img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556398/WhatsApp_Image_2026-04-29_at_11.12.03_AM_akjru5.jpg" },
     {  img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556398/WhatsApp_Image_2026-04-29_at_11.12.02_AM_6_m4hs5u.jpg" },
     {  img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556331/WhatsApp_Image_2026-04-29_at_11.12.02_AM_5_qmx1ge.jpg" },
     {  img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556331/WhatsApp_Image_2026-04-29_at_11.12.02_AM_4_kpvl7e.jpg" },
+    {  img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1778153099/WhatsApp_Image_2026-05-06_at_2.22.23_AM_jk80cs.jpg" },
   ],
 
   // لو لسه محتاجة ليستة ألوان لوحدها
@@ -196,11 +197,12 @@ export const HalfColoneData = [
     
     "تربون فيونكه أحمر+ هاف أحمر",
     "تربون فيونكه أسود + هاف أسود",
-    "تربون فيونكه بينك + هاف بينك",
+    // "تربون فيونكه بينك + هاف بينك",
     "تربون ورده بينك + هاف بينك",
     "تربون ورده أصفر + هاف اصفر",
     "تربون ورده أوف وايت + هاف ابيض",
     "تربون ورده بيج + هاف اسود",
+    "تربون ورده لافندر + هاف لافندر",
   ],
 
   image: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556486/WhatsApp_Image_2026-04-29_at_11.12.12_AM_ywerwz.jpg",

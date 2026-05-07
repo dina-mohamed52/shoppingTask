@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect } from "react";
 import { HalfColoneData } from "../../data/HalfColon";
-import { 
-  ShoppingBag, 
-  CheckCircle, 
-  Palette, 
+import {
+  ShoppingBag,
+  CheckCircle,
+  Palette,
   Ruler,
   Package,
   Shirt,
@@ -45,7 +45,9 @@ function SuccessModal({ visible, onClose, message, onContinue, onCheckout }) {
             <div className="w-16 h-16 mx-auto bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mb-4">
               <CheckCircle className="w-8 h-8 text-green-500" />
             </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">🎉 تم بنجاح!</h3>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">
+              🎉 تم بنجاح!
+            </h3>
             <p className="text-gray-500 text-sm mb-6">{message}</p>
             <div className="flex flex-col sm:flex-row gap-3">
               <button
@@ -74,12 +76,12 @@ function SuccessModal({ visible, onClose, message, onContinue, onCheckout }) {
   );
 }
 
-function HalfOrderCollection({ 
-  selectedOffer, 
-  disableProductSelection = false, 
+function HalfOrderCollection({
+  selectedOffer,
+  disableProductSelection = false,
   defaultProductName = null,
   onOrderConfirmed,
-  scrollToOffers 
+  scrollToOffers,
 }) {
   const count = selectedOffer?.quantity || 0;
   const [activeTab, setActiveTab] = useState("half");
@@ -95,33 +97,40 @@ function HalfOrderCollection({
 
   // Get products based on active tab
   const getFilteredProducts = () => {
-    let filtered = HalfColoneData.filter(p => p.tabType === activeTab);
+    let filtered = HalfColoneData.filter((p) => p.tabType === activeTab);
     if (activeTab === "set" && selectedOffer?.type) {
-      filtered = filtered.filter(p => p.type === selectedOffer.type);
+      filtered = filtered.filter((p) => p.type === selectedOffer.type);
     }
     return filtered;
   };
 
-  const products = useMemo(() => getFilteredProducts(), [activeTab, selectedOffer]);
-  const [pieces, setPieces] = useState(() => 
+  const products = useMemo(
+    () => getFilteredProducts(),
+    [activeTab, selectedOffer],
+  );
+  const [pieces, setPieces] = useState(() =>
     Array.from({ length: count }, (_, i) => ({
       id: i + 1,
-      productId: disableProductSelection && defaultProductName 
-        ? products.find(p => p.name === defaultProductName)?.id || null
-        : null,
+      productId:
+        disableProductSelection && defaultProductName
+          ? products.find((p) => p.name === defaultProductName)?.id || null
+          : null,
       color: "",
-    }))
+    })),
   );
 
   // Update pieces when count or tab changes
   useEffect(() => {
-    setPieces(Array.from({ length: count }, (_, i) => ({
-      id: i + 1,
-      productId: disableProductSelection && defaultProductName 
-        ? products.find(p => p.name === defaultProductName)?.id || null
-        : null,
-      color: "",
-    })));
+    setPieces(
+      Array.from({ length: count }, (_, i) => ({
+        id: i + 1,
+        productId:
+          disableProductSelection && defaultProductName
+            ? products.find((p) => p.name === defaultProductName)?.id || null
+            : null,
+        color: "",
+      })),
+    );
     setSelectedSizes({});
     setCompletedCards({});
   }, [count, activeTab, disableProductSelection, defaultProductName]);
@@ -136,13 +145,17 @@ function HalfOrderCollection({
   // Check completion for each card
   useEffect(() => {
     const completed = {};
-    pieces.forEach(piece => {
-      completed[piece.id] = !!(piece.productId && piece.color && selectedSizes[piece.id]);
+    pieces.forEach((piece) => {
+      completed[piece.id] = !!(
+        piece.productId &&
+        piece.color &&
+        selectedSizes[piece.id]
+      );
     });
     setCompletedCards(completed);
   }, [pieces, selectedSizes]);
 
-  const getProductById = (id) => HalfColoneData.find(p => p.id === id);
+  const getProductById = (id) => HalfColoneData.find((p) => p.id === id);
   const getProductColors = (productId) => {
     const product = getProductById(productId);
     return product?.avalibeColors || [];
@@ -160,38 +173,60 @@ function HalfOrderCollection({
 
   const getColorCode = (colorName) => {
     const colorMap = {
-      أبيض: "#FFFFFF", أسود: "#000000", رمادي: "#9CA3AF", بيج: "#E8D5B5",
-      لبني: "oklch(70.7% 0.165 254.624)", سكري: "#FFF0DB", عاجي: "#FFF0DB",
-      بينك: "#FF69B4", وردي: "#FFB6C1", فوشيا: "#FF00FF", روز: "#FFC0CB",
-      موف: "#C8A2C8", خوخي: "#FFDAB9", سلمون: "#FA8072", أحمر: "#FF4444",
-      أصفر: "#FFD700", أخضر: "#98D8C8", نعناعي: "#A7F0D9", سماوي: "#87CEEB",
-      كحلي: "#1E2F4F", نيلي: "#4B6A8B", كافيه: "#8B5E3C", بني: "#8B4513", بندقي: "#D2B48C",
+      أبيض: "#FFFFFF",
+      أسود: "#000000",
+      رمادي: "#9CA3AF",
+      بيج: "#E8D5B5",
+      لبني: "oklch(70.7% 0.165 254.624)",
+      سكري: "#FFF0DB",
+      عاجي: "#FFF0DB",
+      بينك: "#FF69B4",
+      وردي: "#FFB6C1",
+      فوشيا: "#FF00FF",
+      روز: "#FFC0CB",
+      موف: "#C8A2C8",
+      خوخي: "#FFDAB9",
+      سلمون: "#FA8072",
+      أحمر: "#FF4444",
+      لافندر: "#E0B0FF",
+      أصفر: "#FFD700",
+      أخضر: "#98D8C8",
+      نعناعي: "#A7F0D9",
+      سماوي: "#87CEEB",
+      كحلي: "#1E2F4F",
+      نيلي: "#4B6A8B",
+      كافيه: "#8B5E3C",
+      بني: "#8B4513",
+      بندقي: "#D2B48C",
       default: "#E5E7EB",
     };
-    const extractedColor = Object.keys(colorMap).find((c) => colorName.includes(c)) || "default";
+    const extractedColor =
+      Object.keys(colorMap).find((c) => colorName.includes(c)) || "default";
     return colorMap[extractedColor];
   };
 
   const handleProductChange = (id, productId) => {
-    setPieces(prev => prev.map(p => 
-      p.id === id ? { ...p, productId, color: "" } : p
-    ));
+    setPieces((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, productId, color: "" } : p)),
+    );
   };
 
   const handleColorChange = (id, color) => {
-    setPieces(prev => prev.map(p => 
-      p.id === id ? { ...p, color } : p
-    ));
+    setPieces((prev) => prev.map((p) => (p.id === id ? { ...p, color } : p)));
   };
 
   const handleSizeChange = (id, size) => {
-    setSelectedSizes(prev => ({ ...prev, [id]: size }));
+    setSelectedSizes((prev) => ({ ...prev, [id]: size }));
   };
 
   const getProductImage = (product, colorName) => {
     if (!product) return "";
-    const colorIndex = product.avalibeColors?.findIndex(c => c === colorName);
-    if (colorIndex !== -1 && colorIndex >= 0 && product.productColors?.[colorIndex]) {
+    const colorIndex = product.avalibeColors?.findIndex((c) => c === colorName);
+    if (
+      colorIndex !== -1 &&
+      colorIndex >= 0 &&
+      product.productColors?.[colorIndex]
+    ) {
       return product.productColors[colorIndex].img;
     }
     return product.productColors?.[0]?.img || "";
@@ -199,7 +234,7 @@ function HalfOrderCollection({
 
   // دالة تجهيز العرض للإضافة للسلة
   const prepareCartItem = () => {
-    const orderWithDetails = pieces.map(piece => {
+    const orderWithDetails = pieces.map((piece) => {
       const product = getProductById(piece.productId);
       return {
         id: piece.id,
@@ -229,8 +264,8 @@ function HalfOrderCollection({
   };
 
   // التحقق من صحة البيانات
-  const isFormValid = pieces.every(piece => 
-    piece.productId && piece.color && selectedSizes[piece.id]
+  const isFormValid = pieces.every(
+    (piece) => piece.productId && piece.color && selectedSizes[piece.id],
   );
 
   // دالة الإضافة للسلة (مع خيار التوجيه)
@@ -248,22 +283,24 @@ function HalfOrderCollection({
     try {
       const cartItem = prepareCartItem();
       addToCart(cartItem);
-      
+
       // عرض Toast نجاح مع أيقونة
       toast.success(
         <div className="flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-green-500" />
-          <span>تم إضافة <strong>العرض</strong> إلى السلة بنجاح! 🛒</span>
+          <span>
+            تم إضافة <strong>العرض</strong> إلى السلة بنجاح! 🛒
+          </span>
         </div>,
         {
           position: "bottom-center",
           autoClose: 3000,
           icon: false,
-        }
+        },
       );
-      
+
       onOrderConfirmed?.();
-      
+
       if (shouldNavigate) {
         // عرض Modal قبل التوجيه
         setSuccessMessage(`🎁 تم إضافة العرض بنجاح إلى سلة التسوق!`);
@@ -276,7 +313,7 @@ function HalfOrderCollection({
           autoClose: 4000,
         });
       }
-      
+
       return true;
     } catch (error) {
       toast.error("❌ حدث خطأ في إضافة المنتج للسلة", {
@@ -339,8 +376,12 @@ function HalfOrderCollection({
           <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Package className="w-10 h-10 text-pink-300" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-1">اختار عرضك</h3>
-          <p className="text-gray-400 text-sm">برجاء اختيار عرض مناسب من الأعلى</p>
+          <h3 className="text-xl font-semibold text-gray-800 mb-1">
+            اختار عرضك
+          </h3>
+          <p className="text-gray-400 text-sm">
+            برجاء اختيار عرض مناسب من الأعلى
+          </p>
         </motion.div>
         <motion.button
           onClick={handleGoToOffers}
@@ -369,23 +410,27 @@ function HalfOrderCollection({
           <Sparkles className="w-3.5 h-3.5" />
           <span className="text-xs font-medium">تخصيص طلبك</span>
         </motion.div>
-        
+
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-          اختر تفاصيل{' '}
+          اختر تفاصيل{" "}
           <span className="bg-gradient-to-r from-pink-500 to-pink-600 bg-clip-text text-transparent">
             قطعتك
           </span>
         </h2>
-        <p className="text-gray-400 text-sm">قم بتخصيص كل قطعة بالمنتج واللون والمقاس المناسب</p>
-        
+        <p className="text-gray-400 text-sm">
+          قم بتخصيص كل قطعة بالمنتج واللون والمقاس المناسب
+        </p>
+
         {/* Premium Progress Bar */}
         <div className="max-w-md mx-auto mt-8">
           <div className="flex justify-between text-sm mb-2">
             <span className="text-gray-500">تقدم الطلب</span>
-            <span className="font-bold text-pink-500">{completedCount}/{pieces.length}</span>
+            <span className="font-bold text-pink-500">
+              {completedCount}/{pieces.length}
+            </span>
           </div>
           <div className="relative h-2 bg-pink-100 rounded-full overflow-hidden">
-            <motion.div 
+            <motion.div
               className="absolute top-0 left-0 h-full bg-gradient-to-r from-pink-400 to-pink-500 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${completionPercentage}%` }}
@@ -416,7 +461,8 @@ function HalfOrderCollection({
             <div className="inline-flex items-center gap-2 bg-pink-50 px-4 py-2 rounded-full border border-pink-100">
               <Lock className="w-3.5 h-3.5 text-pink-500" />
               <span className="text-sm text-pink-600">
-                المنتج محدد: <span className="font-semibold">{defaultProductName}</span>
+                المنتج محدد:{" "}
+                <span className="font-semibold">{defaultProductName}</span>
               </span>
             </div>
           </motion.div>
@@ -445,25 +491,32 @@ function HalfOrderCollection({
               {isHovered && (
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-300 to-pink-400 rounded-2xl blur-xl opacity-30 transition-opacity" />
               )}
-              
-              <div className={`
+
+              <div
+                className={`
                 relative bg-white rounded-2xl transition-all duration-300 overflow-hidden
                 ${isCompleted ? "ring-2 ring-pink-400 ring-offset-2" : "border border-gray-100"}
                 ${isHovered ? "shadow-2xl transform -translate-y-1" : "shadow-md hover:shadow-xl"}
-              `}>
-                <div className={`
+              `}
+              >
+                <div
+                  className={`
                   px-5 py-4 border-b transition-all duration-300
                   ${isCompleted ? "bg-gradient-to-r from-pink-50 to-white border-pink-100" : "bg-white border-gray-100"}
-                `}>
+                `}
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className={`
+                      <div
+                        className={`
                         w-10 h-10 rounded-xl flex items-center justify-center font-bold transition-all duration-300
-                        ${isCompleted 
-                          ? "bg-pink-500 text-white shadow-lg shadow-pink-200" 
-                          : "bg-gray-100 text-gray-600 group-hover:bg-pink-100 group-hover:text-pink-600"
+                        ${
+                          isCompleted
+                            ? "bg-pink-500 text-white shadow-lg shadow-pink-200"
+                            : "bg-gray-100 text-gray-600 group-hover:bg-pink-100 group-hover:text-pink-600"
                         }
-                      `}>
+                      `}
+                      >
                         {isCompleted ? (
                           <CheckCircle className="w-5 h-5" />
                         ) : (
@@ -472,16 +525,24 @@ function HalfOrderCollection({
                       </div>
                       <div>
                         <p className="text-xs text-gray-400">القطعة</p>
-                        <p className="text-lg font-bold text-gray-800">#{piece.id}</p>
+                        <p className="text-lg font-bold text-gray-800">
+                          #{piece.id}
+                        </p>
                       </div>
                     </div>
-                    
+
                     {product && (
                       <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-lg">
-                        {product.name.includes("هاف") ? <Package className="w-3 h-3 text-gray-400" /> :
-                         product.name.includes("بندانه") ? <Shirt className="w-3 h-3 text-gray-400" /> :
-                         <Layers className="w-3 h-3 text-gray-400" />}
-                        <span className="text-xs text-gray-500">{product.name.split(' ').slice(0,2).join(' ')}</span>
+                        {product.name.includes("هاف") ? (
+                          <Package className="w-3 h-3 text-gray-400" />
+                        ) : product.name.includes("بندانه") ? (
+                          <Shirt className="w-3 h-3 text-gray-400" />
+                        ) : (
+                          <Layers className="w-3 h-3 text-gray-400" />
+                        )}
+                        <span className="text-xs text-gray-500">
+                          {product.name.split(" ").slice(0, 2).join(" ")}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -503,16 +564,22 @@ function HalfOrderCollection({
                       style={{ borderRadius: 12 }}
                       dropdownStyle={{ borderRadius: 12 }}
                     >
-                      {products.map(p => (
+                      {products.map((p) => (
                         <Select.Option key={p.id} value={p.id}>
                           <div className="flex items-center gap-3 py-1">
                             <div className="w-8 h-8 bg-pink-50 rounded-lg flex items-center justify-center">
-                              {p.name.includes("هاف") ? <Package className="w-4 h-4 text-pink-500" /> :
-                               p.name.includes("بندانه") ? <Shirt className="w-4 h-4 text-pink-500" /> :
-                               <Layers className="w-4 h-4 text-pink-500" />}
+                              {p.name.includes("هاف") ? (
+                                <Package className="w-4 h-4 text-pink-500" />
+                              ) : p.name.includes("بندانه") ? (
+                                <Shirt className="w-4 h-4 text-pink-500" />
+                              ) : (
+                                <Layers className="w-4 h-4 text-pink-500" />
+                              )}
                             </div>
                             <div>
-                              <p className="font-medium text-gray-800 text-sm">{p.name}</p>
+                              <p className="font-medium text-gray-800 text-sm">
+                                {p.name}
+                              </p>
                             </div>
                           </div>
                         </Select.Option>
@@ -536,12 +603,16 @@ function HalfOrderCollection({
                         style={{ borderRadius: 12 }}
                         dropdownStyle={{ borderRadius: 12 }}
                       >
-                        {colors.map(c => (
+                        {colors.map((c) => (
                           <Select.Option key={c} value={c}>
                             <div className="flex items-center gap-2">
-                              <div 
+                              <div
                                 className="w-5 h-5 rounded-full shadow-inner"
-                                style={{ backgroundColor: getColorCode(c), border: c === "أبيض" ? "1px solid #E5E7EB" : "none" }}
+                                style={{
+                                  backgroundColor: getColorCode(c),
+                                  border:
+                                    c === "أبيض" ? "1px solid #E5E7EB" : "none",
+                                }}
                               />
                               <span>{c}</span>
                             </div>
@@ -565,11 +636,15 @@ function HalfOrderCollection({
                         style={{ borderRadius: 12 }}
                         dropdownStyle={{ borderRadius: 12 }}
                       >
-                        {sizes.map(s => (
+                        {sizes.map((s) => (
                           <Select.Option key={s.size} value={s.size}>
                             <div className="flex items-center justify-between">
-                              <span className="font-medium text-gray-800">{s.size}</span>
-                              <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">{s.age}</span>
+                              <span className="font-medium text-gray-800">
+                                {s.size}
+                              </span>
+                              <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
+                                {s.age}
+                              </span>
                             </div>
                           </Select.Option>
                         ))}
@@ -590,19 +665,25 @@ function HalfOrderCollection({
                   )}
                 </div>
 
-                <div className={`
+                <div
+                  className={`
                   px-5 py-3 border-t transition-all duration-300
                   ${isCompleted ? "bg-gradient-to-r from-pink-50 to-white border-pink-100" : "bg-gray-50 border-gray-100"}
-                `}>
+                `}
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
-                      <div className={`w-1.5 h-1.5 rounded-full ${isCompleted ? "bg-green-500" : "bg-gray-300"}`} />
+                      <div
+                        className={`w-1.5 h-1.5 rounded-full ${isCompleted ? "bg-green-500" : "bg-gray-300"}`}
+                      />
                       <span className="text-xs text-gray-500">
                         {isCompleted ? "مكتملة ✓" : "في انتظار التحديد"}
                       </span>
                     </div>
                     {isCompleted && (
-                      <span className="text-xs text-pink-500 font-medium">جاهز للإضافة</span>
+                      <span className="text-xs text-pink-500 font-medium">
+                        جاهز للإضافة
+                      </span>
                     )}
                   </div>
                 </div>
@@ -613,7 +694,6 @@ function HalfOrderCollection({
       </div>
 
       {/* ✨ زرارين متحركين مع شرح */}
-
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -642,9 +722,10 @@ function HalfOrderCollection({
             whileTap={isFormValid ? { scale: 0.98 } : {}}
             className={`
               relative group flex-1 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center gap-3
-              ${isFormValid && !isSubmitting
-                ? "bg-white border-2 border-pink-500 text-pink-600 hover:bg-pink-50 shadow-md hover:shadow-lg"
-                : "bg-gray-100 border-2 border-gray-200 text-gray-400 cursor-not-allowed"
+              ${
+                isFormValid && !isSubmitting
+                  ? "bg-white border-2 border-pink-500 text-pink-600 hover:bg-pink-50 shadow-md hover:shadow-lg"
+                  : "bg-gray-100 border-2 border-gray-200 text-gray-400 cursor-not-allowed"
               }
             `}
           >
@@ -670,16 +751,17 @@ function HalfOrderCollection({
             whileTap={isFormValid ? { scale: 0.98 } : {}}
             className={`
               relative group flex-1 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center gap-3 overflow-hidden
-              ${isFormValid && !isSubmitting
-                ? "bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-xl shadow-pink-200 hover:shadow-2xl"
-                : "bg-gray-100 text-gray-400 cursor-not-allowed"
+              ${
+                isFormValid && !isSubmitting
+                  ? "bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-xl shadow-pink-200 hover:shadow-2xl"
+                  : "bg-gray-100 text-gray-400 cursor-not-allowed"
               }
             `}
           >
             {isFormValid && !isSubmitting && (
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000" />
             )}
-            
+
             {isSubmitting ? (
               <>
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

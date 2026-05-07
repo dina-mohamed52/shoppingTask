@@ -27,7 +27,7 @@ function CheckoutPage() {
     cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
   const shippingCost = 60;
   const discount = subtotal > 500 ? 10 : 0;
-  const total = subtotal * (1 - discount / 100) + shippingCost;
+  const total = subtotal+ shippingCost;
 
   const handleOrderSuccess = () => {
     setOrderPlaced(true);
@@ -243,12 +243,12 @@ function CheckoutPage() {
                   <span>المجموع الفرعي</span>
                   <span>{subtotal} ج.م</span>
                 </div>
-                {discount > 0 && (
+                {/* {discount > 0 && (
                   <div className="flex justify-between text-pink-500">
                     <span>خصم {discount}%</span>
                     <span>-{Math.round((subtotal * discount) / 100)} ج.م</span>
                   </div>
-                )}
+                )} */}
                 <div className="flex justify-between text-gray-600">
                   <span>الشحن</span>
                   <span>{shippingCost} ج.م</span>
@@ -281,7 +281,7 @@ function CheckoutPage() {
               <div className="mt-5 p-3 bg-gradient-to-r from-pink-50 to-pink-50/30 rounded-xl text-center border border-pink-100">
                 <p className="text-pink-500 text-xs flex items-center justify-center gap-1">
                   <Sparkles className="w-3 h-3" />
-                  توصيل مجاني للطلبات فوق 500 ج.م
+                  {/* توصيل مجاني للطلبات فوق 500 ج.م */}
                 </p>
               </div>
             </motion.div>

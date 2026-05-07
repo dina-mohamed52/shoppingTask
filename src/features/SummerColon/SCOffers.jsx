@@ -7,10 +7,25 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const offerDetails = [
-    { quantity: "3 كولون", price: 315, oldPrice: 460, value: 3, discount: 14 },
-    { quantity: "4 كولون", price: 380, oldPrice: 590, value: 4, discount: 18 },
+    { 
+      quantity: "3 كولون", 
+      name: "عرض 3 كولون صيفي",  // إضافة اسم وصفي للعرض
+      price: 315, 
+      oldPrice: 460, 
+      value: 3, 
+      discount: 14 
+    },
+    { 
+      quantity: "4 كولون", 
+      name: "عرض 4 كولون صيفي",
+      price: 380, 
+      oldPrice: 590, 
+      value: 4, 
+      discount: 18 
+    },
     { 
       quantity: "6 كولون", 
+      name: "عرض 6 كولون صيفي",
       price: 540, 
       oldPrice: 880,
       value: 6, 
@@ -18,11 +33,19 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
       highlight: "الأكثر مبيعاً", 
       icon: <Star className="w-3.5 h-3.5" />,
     },
-    { quantity: "8 كولون", price: 680, oldPrice: 1080, value: 8, discount: 27 },
+    { 
+      quantity: "8 كولون", 
+      name: "عرض 8 كولون صيفي",
+      price: 680, 
+      oldPrice: 1080, 
+      value: 8, 
+      discount: 27 
+    },
     { 
       quantity: "12 كولون", 
+      name: "عرض 12 كولون صيفي",
       price: 960, 
-      oldPrice:1720,
+      oldPrice: 1720,
       value: 12, 
       discount: 32,
       highlight: "أفضل عرض", 
@@ -31,8 +54,8 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
   ];
 
   const handleSelect = (offer) => {
+    // إرسال العرض كاملاً مع الاسم الجديد
     if (setSelectedOffer) setSelectedOffer(offer);
-    // سكرول لـ SCOrderCollection بعد اختيار العرض
     setTimeout(() => {
       if (scrollToOrderCollection) {
         scrollToOrderCollection();
@@ -87,7 +110,7 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
       </div>
 
       {/* Offers Grid */}
-      <div className="relative  grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-5">
         {offerDetails.map((offer, index) => {
           const isHovered = hoveredIndex === index;
           const pricePerPiece = getPricePerPiece(offer.price, offer.value);
@@ -208,17 +231,6 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
           );
         })}
       </div>
-
-      {/* Footer Note
-      <div className="relative  mt-10 text-center">
-        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#864e63]/5 to-[#c6abff]/5 backdrop-blur-sm rounded-full px-4 py-2 border border-[#864e63]/10">
-          <Sparkles className="w-3.5 h-3.5 text-[#864e63]" />
-          <p className="text-gray-500 text-xs flex items-center gap-2">
-            🎁 خصم إضافي <strong className="text-[#864e63]">5%</strong> عند شراء عرضين أو أكثر
-          </p>
-          <Sparkles className="w-3.5 h-3.5 text-[#c6abff]" />
-        </div>
-      </div> */}
 
       <style jsx>{`
         @keyframes spin-slow {

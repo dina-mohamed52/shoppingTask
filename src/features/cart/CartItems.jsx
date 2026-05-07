@@ -36,7 +36,7 @@ function CartItem({ item, updateQuantity, removeItem }) {
                     </span>
                   </div>
                   <h3 className="font-bold text-gray-800 text-lg">
-                  عرض  {item.name}  
+                    {item.name}  
                   </h3>
                 </div>
                 <button
