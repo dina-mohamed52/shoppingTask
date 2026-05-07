@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { FaShoppingBag } from "react-icons/fa";
-import { HiOutlineHeart } from "react-icons/hi";
-import { MdPersonOutline } from "react-icons/md";
 import SideBar from "./SideBar";
 import { useEffect, useState } from "react";
+import { useCart } from "../features/cart/CartContext";
+
 
 function Header() {
-  const totalItems = useSelector((state) => state.cart.totalItems);
+  const { cartItems } = useCart();
   const [scrolled, setScrolled] = useState(false);
+  
+  // حساب totalItems من cartItems
+  const totalItems = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
   // تأثير التمرير
   useEffect(() => {
@@ -42,7 +44,7 @@ function Header() {
           >
             <div className="relative group">
               <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-fantasy bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-gray-200 animate-gradient-x drop-shadow-lg">
-                BabyStyle
+               Baby Style
               </span>
               <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-pink-500 to-gray-400 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
             </div>
@@ -50,9 +52,7 @@ function Header() {
 
           {/* Cart Icon - right side */}
           <Link to="/Checkout" className="group relative">
-            <div className="flex items-center justify-end gap-1 sm:gap-2 text-pink-400 transition-all 
-            duration-300 border border-gray-700 hover:border-pink-400/50 rounded-full
-             px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 bg-gray-800/50 backdrop-blur-sm">
+            <div className="flex items-center justify-end gap-1 sm:gap-2 text-pink-400 transition-all duration-300 border border-gray-700 hover:border-pink-400/50 rounded-full px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 bg-gray-800/50 backdrop-blur-sm">
               <FaShoppingBag className="text-base sm:text-lg group-hover:scale-110 transition-transform duration-300" />
               <span className="text-xs sm:text-sm font-medium hidden sm:inline">
                 السلة

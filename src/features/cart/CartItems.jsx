@@ -16,7 +16,7 @@ function CartItem({ item, updateQuantity, removeItem }) {
       >
         {/* Header - معلومات العرض */}
         <div className="p-3 sm:p-4 border-b border-rose-100">
-          <div className="flex gap-3 sm:gap-4">
+          <div className="flex gap-3 sm:gap-4 flex-row-reverse">
             {/* صورة العرض (أول قطعة) */}
             <img
               src={item.image}
@@ -25,9 +25,9 @@ function CartItem({ item, updateQuantity, removeItem }) {
             />
             
             <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-start gap-2">
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1">
+              <div className="flex justify-between items-start gap-2 flex-row-reverse">
+                <div className="min-w-0 flex-1 text-right">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1 justify-end">
                     <span className="text-[10px] sm:text-xs bg-pink-100 text-pink-600 px-1.5 sm:px-2 py-0.5 rounded-full whitespace-nowrap">
                       عرض خاص
                     </span>
@@ -47,9 +47,9 @@ function CartItem({ item, updateQuantity, removeItem }) {
                 </button>
               </div>
               
-              <div className="flex justify-between items-center mt-2 sm:mt-3">
+              <div className="flex justify-between items-center mt-2 sm:mt-3 flex-row-reverse">
                 <div className="flex items-center gap-2"></div>
-                <div className="text-right">
+                <div className="text-left">
                   <p className="text-pink-500 font-bold text-sm sm:text-base">
                     {item.price * item.quantity} ج.م
                   </p>
@@ -89,7 +89,7 @@ function CartItem({ item, updateQuantity, removeItem }) {
               className="p-3 sm:p-4 space-y-2 sm:space-y-3 bg-gray-50/30"
             >
               {item.offerDetails?.pieces?.map((piece, idx) => (
-                <div key={idx} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white rounded-lg sm:rounded-xl border border-gray-100 shadow-sm">
+                <div key={idx} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white rounded-lg sm:rounded-xl border border-gray-100 shadow-sm flex-row-reverse">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                     <img
                       src={piece.image}
@@ -98,8 +98,10 @@ function CartItem({ item, updateQuantity, removeItem }) {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs sm:text-sm font-medium text-gray-800 break-words">{piece.name}</p>
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1 sm:mt-1.5">
+                    <p className="text-xs sm:text-sm font-medium text-gray-800 break-words text-right">
+                      {piece.name}
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1 sm:mt-1.5 justify-end">
                       <span className="text-[10px] sm:text-xs text-gray-500 bg-rose-50 px-1.5 sm:px-2 py-0.5 rounded-full">
                         🎨 {piece.color}
                       </span>
@@ -128,15 +130,15 @@ function CartItem({ item, updateQuantity, removeItem }) {
       exit={{ opacity: 0 }}
       className="bg-white rounded-xl sm:rounded-2xl shadow-md border border-rose-100 p-3 sm:p-4 mb-3 sm:mb-4"
     >
-      <div className="flex gap-3 sm:gap-4">
+      <div className="flex gap-3 sm:gap-4 flex-row-reverse">
         <img
           src={item.image}
           alt={item.name}
           className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg sm:rounded-xl object-cover bg-rose-50 border border-rose-100 flex-shrink-0"
         />
         <div className="flex-1 min-w-0">
-          <div className="flex justify-between items-start gap-2">
-            <div className="min-w-0 flex-1">
+          <div className="flex justify-between items-start gap-2 flex-row-reverse">
+            <div className="min-w-0 flex-1 text-right">
               <h3 className="font-semibold text-gray-800 text-sm sm:text-base break-words">
                 {item.name}
               </h3>
@@ -146,7 +148,7 @@ function CartItem({ item, updateQuantity, removeItem }) {
                 </p>
               )}
               {(item.size || item.color) && (
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1.5 sm:mt-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-1.5 sm:mt-2 justify-end">
                   {item.size && (
                     <span className="text-[10px] sm:text-xs text-gray-500 bg-rose-50 px-1.5 sm:px-2 py-0.5 rounded-lg whitespace-nowrap">
                       {item.size}
@@ -186,7 +188,7 @@ function CartItem({ item, updateQuantity, removeItem }) {
                 <Plus className="w-3 h-3 text-gray-500" />
               </button>
             </div>
-            <div className="text-right w-full sm:w-auto">
+            <div className="text-left w-full sm:w-auto">
               <p className="text-pink-500 font-semibold text-sm sm:text-base">
                 {item.price * item.quantity} ج.م
               </p>
