@@ -27,7 +27,7 @@ function CheckoutPage() {
     cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
   const shippingCost = 60;
   const discount = subtotal > 500 ? 10 : 0;
-  const total = subtotal+ shippingCost;
+  const total = subtotal + shippingCost;
 
   const handleOrderSuccess = () => {
     setOrderPlaced(true);
@@ -224,65 +224,90 @@ function CheckoutPage() {
           {/* Order Summary Sidebar */}
           <div className="lg:w-96">
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="sticky top-24 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-pink-100/50"
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="sticky top-24 bg-gradient-to-br from-white to-pink-50/30 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 p-6 border border-pink-100"
             >
-              <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 bg-gradient-to-br from-pink-100 to-pink-50 rounded-xl flex items-center justify-center">
-                  <Gem className="w-4 h-4 text-pink-500" />
-                </div>
-                <h3 className="text-lg font-semibold text-[#1c2533]">
-                  ملخص الطلب
-                </h3>
-              </div>
-
-              <div className="space-y-3 pb-4 border-b border-pink-100 text-sm">
-                <div className="flex justify-between text-gray-600">
-                  <span>المجموع الفرعي</span>
-                  <span>{subtotal} ج.م</span>
-                </div>
-                {/* {discount > 0 && (
-                  <div className="flex justify-between text-pink-500">
-                    <span>خصم {discount}%</span>
-                    <span>-{Math.round((subtotal * discount) / 100)} ج.م</span>
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-pink-100">
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-pink-400 rounded-xl flex items-center justify-center shadow-md shadow-pink-200">
+                    <Gem className="w-5 h-5 text-white" />
                   </div>
-                )} */}
-                <div className="flex justify-between text-gray-600">
-                  <span>الشحن</span>
-                  <span>{shippingCost} ج.م</span>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800">
+                      ملخص الطلب
+                    </h3>
+                    <p className="text-xs text-gray-400">تفاصيل المشتريات</p>
+                  </div>
+                </div>
+                <div className="bg-pink-100/50 px-3 py-1.5 rounded-full">
+                  <span className="text-xs text-pink-600 font-medium">
+                    {cartItems.length} منتجات
+                  </span>
                 </div>
               </div>
 
-              <div className="pt-4 pb-5">
-                <div className="flex justify-between text-gray-800 text-lg font-semibold">
-                  <span>الإجمالي</span>
-                  <span className="text-pink-500">{total} ج.م</span>
+              {/* Price Details */}
+              <div className="space-y-3 mb-4">
+                <div className="flex justify-between items-center py-2">
+                  <span className="text-gray-500 text-sm">المجموع الفرعي</span>
+                  <span className="text-gray-800 font-medium">
+                    {subtotal} ج.م
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center py-2 border-b border-dashed border-pink-100">
+                  <span className="text-gray-500 text-sm">رسوم الشحن</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-800 font-medium">
+                      {shippingCost} ج.م
+                    </span>
+                    {subtotal > 500 && (
+                      <span className="text-[10px] text-green-500 bg-green-50 px-2 py-0.5 rounded-full">
+                        مجاني
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Total */}
+                <div className="flex justify-between items-center pt-3 mt-2">
+                  <span className="text-gray-800 font-bold text-lg">
+                    الإجمالي
+                  </span>
+                  <div className="text-right">
+                    <span className="text-pink-500 font-bold text-2xl">
+                      {total} ج.م
+                    </span>
+                    <p className="text-[10px] text-gray-400">شامل الضريبة</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-2 pt-4 border-t border-pink-100 text-xs text-gray-500">
-                <div className="flex items-center gap-2">
-                  <Shield className="w-3 h-3 text-pink-400" />
-                  <span>دفع آمن 100%</span>
+              {/* Features Grid */}
+              <div className="grid grid-cols-3 gap-2 mt-6 pt-4 border-t border-pink-100">
+                <div className="text-center p-2 rounded-xl bg-white/50 backdrop-blur-sm">
+                  <div className="w-8 h-8 mx-auto bg-pink-50 rounded-lg flex items-center justify-center mb-1">
+                    <Shield className="w-4 h-4 text-pink-500" />
+                  </div>
+                  <p className="text-[10px] text-gray-600">دفع آمن</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-3 h-3 text-pink-400" />
-                  <span>توصيل سريع 3-5 أيام</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Gem className="w-3 h-3 text-pink-400" />
-                  <span>منتجات أصلية 100%</span>
-                </div>
-              </div>
 
-              {/* Premium Note */}
-              <div className="mt-5 p-3 bg-gradient-to-r from-pink-50 to-pink-50/30 rounded-xl text-center border border-pink-100">
-                <p className="text-pink-500 text-xs flex items-center justify-center gap-1">
-                  <Sparkles className="w-3 h-3" />
-                  {/* توصيل مجاني للطلبات فوق 500 ج.م */}
-                </p>
+                <div className="text-center p-2 rounded-xl bg-white/50 backdrop-blur-sm">
+                  <div className="w-8 h-8 mx-auto bg-pink-50 rounded-lg flex items-center justify-center mb-1">
+                    <Clock className="w-4 h-4 text-pink-500" />
+                  </div>
+                  <p className="text-[10px] text-gray-600">توصيل سريع</p>
+                </div>
+
+                <div className="text-center p-2 rounded-xl bg-white/50 backdrop-blur-sm">
+                  <div className="w-8 h-8 mx-auto bg-pink-50 rounded-lg flex items-center justify-center mb-1">
+                    <Gem className="w-4 h-4 text-pink-500" />
+                  </div>
+                  <p className="text-[10px] text-gray-600">أصلي 100%</p>
+                </div>
               </div>
             </motion.div>
           </div>
