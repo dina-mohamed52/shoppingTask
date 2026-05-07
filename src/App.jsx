@@ -15,6 +15,7 @@ import SummerColon from "./pages/SummerColon";
 import MainPage from "./pages/MainPage";
 import ProductDetails from "./ui/ProductDetails";
 import WhatsAppButton from "./ui/WhatsAppButton";
+import CheckoutPage from "./pages/CheckoutPage";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path="/Offers" element={<Offers />} />
             <Route path="/SummerHalfColon" element={<SummerHalfColon />} />
             <Route path="/SummerColon" element={<SummerColon />} />
+            <Route path="/Checkout" element={<CheckoutPage />} />
 
 
             {/* <Route path="/orderCollection" element={<OrderCollection/>}/> */}

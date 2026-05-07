@@ -14,8 +14,7 @@ function SummerHalfColon() {
   const product = HalfColoneData[0];
   const location = useLocation();
   
-  // State للـ order و العرض المختار
-  const [order, setOrder] = useState(null);
+
   const [selectedOffer, setSelectedOffer] = useState(null);
 
   // Refs ثابتة
@@ -90,11 +89,7 @@ function SummerHalfColon() {
       <div ref={orderCollectionRef} className="scroll-mt-20">
         <HalfOrderCollection
           selectedOffer={selectedOffer}
-          setOrder={(newOrder) => {
-            setOrder(newOrder);
-            // تمرير للـ OrderForm تلقائيًا
-            setTimeout(scrollToForm, 200);
-          }}
+         
           formRef={formRef}
            scrollToOffers={scrollToOffers}
         />
@@ -107,7 +102,7 @@ function SummerHalfColon() {
       <OfferCountdown />
 
       {/* فورم الطلب - يظهر فقط بعد تأكيد الطلب */}
-      {order && order.length > 0 && (
+      {/* {order && order.length > 0 && (
         <div ref={formRef} className="mt-10 scroll-mt-20">
           <OrderForm
             order={order}
@@ -115,7 +110,7 @@ function SummerHalfColon() {
             formRef={formRef}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 }

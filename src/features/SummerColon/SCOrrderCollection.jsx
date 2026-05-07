@@ -14,17 +14,19 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Select } from "antd";
+import { useCart } from "../cart/CartContext";
+import { toast } from "react-toastify";
 
 function SCOrderCollection({
   selectedOffer,
-  setOrder,
-  formRef,
+ 
   scrollToOffers,
 }) {
   const { t } = useTranslation();
   const count = selectedOffer?.value || selectedOffer?.count || 0;
 
   const scProducts = SummerColonData;
+  const { addToCart } = useCart();
 
   const initialPieces = useMemo(() => {
     return Array.from({ length: count }, (_, i) => ({
@@ -100,8 +102,17 @@ function SCOrderCollection({
       ...piece,
       size: selectedSizes[piece.id],
     }));
-    setOrder(orderWithSizes);
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
+   addToCart([
+  {
+    id: Date.now(),
+    name: selectedOffer?.name,
+    price: selectedOffer?.price,
+    quantity: 1,
+    items: orderWithSizes,
+  },
+]);
+
+toast.success("تم إضافة المنتجات للسلة 🛒");
   };
 
   const getAvailableSizes = (productName, color) => {

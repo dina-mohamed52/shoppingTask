@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { Home, ShoppingBag, Phone, Sparkles, Heart } from "lucide-react";
@@ -50,6 +50,12 @@ function SideBar() {
     to: "/SummerColon",
     icon: <Sparkles size={20} />,
     label: { ar: "كولونات صيفي", en: "Summer Colon" },
+    gradient: "from-pink-400 via-pink-400 to-pink-600",
+  },
+    {
+    to: "/Checkout",
+    icon: <ShoppingCart size={20} />,
+    label: { ar: "السلة", en: "Summer Colon" },
     gradient: "from-pink-400 via-pink-400 to-pink-600",
   },
   ];

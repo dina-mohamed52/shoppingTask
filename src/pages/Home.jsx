@@ -17,7 +17,7 @@ import WHeader from "../features/home/WHeader";
 
 function Home() {
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const [order, setOrder] = useState(null);
+
   const formRef = useRef(null);
   const orderCollectionRef = useRef(null);
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ function Home() {
       orderCollectionRef.current.scrollIntoView({
         behavior: "smooth",
         block: "start",
-        inline: "nearest"
+        inline: "nearest",
       });
     }
   }, [selectedOffer]);
@@ -40,14 +40,13 @@ function Home() {
 
       <div className="container mx-auto px-4 mt-4">
         <CustomCarousel />
-        
+
         {/* Price Tag Section - Updated with Pink & Gray Theme */}
         <div className="relative mt-6 mb-4 p-5  overflow-hidden">
-          
           {/* Decorative Elements */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-pink-200 rounded-full filter blur-3xl opacity-30"></div>
           <div className="absolute bottom-0 left-0 w-24 h-24 bg-gray-300 rounded-full filter blur-3xl opacity-20"></div>
-          
+
           {/* Discount Badge */}
           <div className="relative flex items-center gap-4 flex-wrap">
             <div className="relative">
@@ -65,12 +64,17 @@ function Home() {
                   110
                 </span>
                 <span className="text-lg font-semibold text-gray-700">ج.م</span>
-                <span className="text-sm text-gray-500 mr-1"> / {t("pricing.perPiece")}</span>
+                <span className="text-sm text-gray-500 mr-1">
+                  {" "}
+                  / {t("pricing.perPiece")}
+                </span>
               </div>
 
               {/* Old Price */}
               <div className="flex items-center gap-2">
-                <span className="text-gray-400 line-through text-xl">250 ج.م</span>
+                <span className="text-gray-400 line-through text-xl">
+                  250 ج.م
+                </span>
                 <span className="bg-pink-100 text-pink-600 text-xs font-semibold px-2 py-1 rounded-full">
                   وفر 140 ج.م
                 </span>
@@ -97,8 +101,8 @@ function Home() {
             </div>
           </div>
         </div>
-<WHeader/>
-      <ProductList products={Data} />
+        <WHeader />
+        <ProductList products={Data} />
         <SizeTable />
         <Header1st />
 
@@ -106,11 +110,7 @@ function Home() {
 
         {selectedOffer && (
           <div ref={orderCollectionRef}>
-            <OrderCollection
-              selectedOffer={selectedOffer}
-              setOrder={setOrder}
-              formRef={formRef}
-            />
+            <OrderCollection selectedOffer={selectedOffer} formRef={formRef} />
           </div>
         )}
       </div>
@@ -121,12 +121,12 @@ function Home() {
         <div className="p-6">
           <ProductBenefits />
         </div>
-        <Reviews/>
+        <Reviews />
       </div>
 
-      <div className="bg-gray-900 py-8">
+      {/* <div className="bg-gray-900 py-8">
         <OrderForm order={order} selectedOffer={selectedOffer} formRef={formRef} />
-      </div>
+      </div> */}
     </>
   );
 }

@@ -15,8 +15,9 @@ import {
   X
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "../cart/CartContext";
 
-function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
+function TurbonOrderCollection({ selectedOffer,  formRef }) {
   const { t } = useTranslation();
   const count = selectedOffer?.value || 0;
 
@@ -35,7 +36,7 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
   const [completedPieces, setCompletedPieces] = useState({});
   const [openDropdown, setOpenDropdown] = useState({ type: null, id: null });
   const [activeTab, setActiveTab] = useState("all");
-
+const { addToCart } = useCart();
   useEffect(() => {
     const completed = {};
     pieces.forEach(piece => {
@@ -48,27 +49,39 @@ function TurbonOrderCollection({ selectedOffer, setOrder, formRef }) {
     setPieces(initialPieces);
   }
 
-  const handleChange = (id, field, value) => {
-    const updated = pieces.map((p) =>
-      p.id === id ? { ...p, [field]: value } : p
-    );
-    setPieces(updated);
-    setOrder(updated);
-    setOpenDropdown({ type: null, id: null });
-  };
+ const handleChange = (id, field, value) => {
+  const updated = pieces.map((p) =>
+    p.id === id ? { ...p, [field]: value } : p
+  );
+
+  setPieces(updated);
+  setOpenDropdown({ type: null, id: null });
+};
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const invalid = pieces.some((p) => !p.name || !p.color);
+  const invalid = pieces.some((p) => !p.name || !p.color);
 
-    if (invalid) {
-      alert(t("orderCollection.alert", "يرجى إكمال جميع البيانات"));
-      return;
-    }
+  if (invalid) {
+    alert(t("orderCollection.alert", "يرجى إكمال جميع البيانات"));
+    return;
+  }
 
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const itemsForCart = pieces.map((p, index) => ({
+    id: Date.now() + index,
+    name: p.name,
+    price: selectedOffer.price / pieces.length,
+    quantity: 1,
+    color: p.color,
+    size: "one size",
+    image: "your-image-url",
+  }));
+
+  addToCart(itemsForCart);
+
+
+};
 
   const getAvailableColors = (productName) => {
     const product = Data.find((item) => item.name === productName);

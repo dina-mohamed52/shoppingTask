@@ -1,15 +1,25 @@
 import { useState, useMemo, useEffect } from "react";
 import { Data } from "../../data/Data";
 import { useTranslation } from "react-i18next";
-import { ShoppingBag, CheckCircle, Package, Palette, Ruler, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  ShoppingBag,
+  CheckCircle,
+  Package,
+  Palette,
+  Ruler,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
+import { useCart } from "../cart/CartContext";
+import { toast } from "react-toastify";
 
-function OrderCollection({ selectedOffer, setOrder, formRef }) {
+function OrderCollection({ selectedOffer, formRef }) {
   const { t } = useTranslation();
   const count = selectedOffer?.value || 0;
-
+  const { addToCart } = useCart();
   // إنشاء مصفوفة منفصلة للكولونات فقط
   const colonProducts = useMemo(() => {
-    return Data.filter(product => product.name.includes("كولون"));
+    return Data.filter((product) => product.name.includes("كولون"));
   }, []);
 
   const initialPieces = useMemo(() => {
@@ -28,7 +38,7 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
   useEffect(() => {
     // تحديث حالة القطع المكتملة
     const completed = {};
-    pieces.forEach(piece => {
+    pieces.forEach((piece) => {
       completed[piece.id] = !!(piece.name && piece.size && piece.color);
     });
     setCompletedPieces(completed);
@@ -38,7 +48,14 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
     const product = Data.find((item) => item.name === productName);
 
     const allSizes = [
-      "0-1", "1-2", "2-4", "4-6", "6-8", "8-10", "10-12", "12-14"
+      "0-1",
+      "1-2",
+      "2-4",
+      "4-6",
+      "6-8",
+      "8-10",
+      "10-12",
+      "12-14",
     ];
 
     if (!product) return allSizes;
@@ -54,32 +71,45 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
     return allSizes;
   };
 
-  if (pieces.length !== count) {
+  useEffect(() => {
     setPieces(initialPieces);
-  }
+  }, [initialPieces]);
 
   const handleChange = (id, field, value) => {
     const updated = pieces.map((p) =>
-      p.id === id ? { ...p, [field]: value } : p
+      p.id === id ? { ...p, [field]: value } : p,
     );
     setPieces(updated);
-    setOrder(updated);
+  
+    // addToCart(updated);
     setOpenDropdown({ type: null, id: null });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = (e) => {
+  e.preventDefault();
 
-    const invalid = pieces.some((p) => !p.name || !p.size || !p.color);
+  const invalid = pieces.some((p) => !p.name || !p.size || !p.color);
 
-    if (invalid) {
-      alert(t("orderCollection.alert"));
-      return;
-    }
+  if (invalid) {
+    alert(t("orderCollection.alert"));
+    return;
+  }
 
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  addToCart([
+  {
+    id: Date.now(), 
+    name: selectedOffer?.name,
+    price: selectedOffer?.price,
+    quantity: 1,
+    items: pieces,
+  },
+]);
 
+  toast.success("تم إضافة الطلب للكارت ✅");
+
+  setPieces(initialPieces);
+  setCompletedPieces({});
+};
   const getAvailableColors = (productName) => {
     const product = Data.find((item) => item.name === productName);
     return product ? product.avalibeColors : [];
@@ -88,15 +118,15 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
   // دالة لتحويل اسم اللون العربي إلى كود لون
   const getColorCode = (colorName) => {
     const colorMap = {
-      "أبيض": "#FFFFFF",
-      "أسود": "#000000",
-      "رمادي": "#808080",
-      "روز": "#FFC0CB",
-      "بينك": "#FF69B4",
-      "كحلي": "#000080",
-      "بيج": "#F5F5DC",
-      "لبني": "#FDF5E6",
-      default: "#CCCCCC"
+      أبيض: "#FFFFFF",
+      أسود: "#000000",
+      رمادي: "#808080",
+      روز: "#FFC0CB",
+      بينك: "#FF69B4",
+      كحلي: "#000080",
+      بيج: "#F5F5DC",
+      لبني: "#FDF5E6",
+      default: "#CCCCCC",
     };
     return colorMap[colorName] || colorMap.default;
   };
@@ -108,20 +138,20 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
   }, [completedPieces, pieces.length]);
 
   // Custom Dropdown Component
-  const CustomDropdown = ({ 
-    id, 
-    field, 
-    value, 
-    options, 
-    placeholder, 
+  const CustomDropdown = ({
+    id,
+    field,
+    value,
+    options,
+    placeholder,
     icon: Icon,
     disabled = false,
     getOptionLabel = (opt) => opt,
     getOptionValue = (opt) => opt,
-    renderOption = null
+    renderOption = null,
   }) => {
     const isOpen = openDropdown.type === field && openDropdown.id === id;
-    const selectedOption = options.find(opt => getOptionValue(opt) === value);
+    const selectedOption = options.find((opt) => getOptionValue(opt) === value);
 
     const toggleDropdown = () => {
       if (disabled) return;
@@ -140,22 +170,24 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
           onClick={toggleDropdown}
           disabled={disabled}
           className={`w-full flex items-center justify-between gap-2 px-4 py-3.5 rounded-xl border-2 transition-all duration-300 ${
-            isOpen 
-              ? "border-pink-500 bg-gray-800/80 shadow-lg shadow-pink-500/20" 
+            isOpen
+              ? "border-pink-500 bg-gray-800/80 shadow-lg shadow-pink-500/20"
               : value
                 ? "border-pink-500/50 bg-gray-800/50 hover:border-pink-500"
                 : "border-gray-700 bg-gray-800/30 hover:border-gray-600"
           } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
         >
           <div className="flex items-center gap-3">
-            <Icon className={`w-5 h-5 ${value ? "text-pink-400" : "text-gray-500"}`} />
+            <Icon
+              className={`w-5 h-5 ${value ? "text-pink-400" : "text-gray-500"}`}
+            />
             <span className={`${value ? "text-gray-200" : "text-gray-500"}`}>
               {selectedOption ? getOptionLabel(selectedOption) : placeholder}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            {value && field === 'color' && (
-              <div 
+            {value && field === "color" && (
+              <div
                 className="w-5 h-5 rounded-full border-2 border-white shadow-md"
                 style={{ backgroundColor: getColorCode(value) }}
               ></div>
@@ -172,11 +204,11 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
         {isOpen && (
           <>
             {/* Backdrop for closing on click outside */}
-            <div 
+            <div
               className="fixed inset-0 z-40"
               onClick={() => setOpenDropdown({ type: null, id: null })}
             />
-            
+
             {/* Dropdown Options */}
             <div className="absolute z-50 w-full mt-2 bg-gray-800 border border-pink-500/30 rounded-xl shadow-2xl overflow-hidden backdrop-blur-sm">
               <div className="max-h-60 overflow-y-auto custom-scrollbar">
@@ -184,31 +216,35 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                   options.map((option, index) => {
                     const optionValue = getOptionValue(option);
                     const isSelected = optionValue === value;
-                    
+
                     return (
                       <button
                         key={index}
                         type="button"
                         onClick={() => handleSelect(optionValue)}
                         className={`w-full flex items-center gap-3 px-4 py-3 transition-all duration-300 hover:bg-gradient-to-r hover:from-pink-500/20 hover:to-pink-600/20 ${
-                          isSelected 
-                            ? "bg-gradient-to-r from-pink-500/30 to-pink-600/30 border-r-4 border-pink-500" 
+                          isSelected
+                            ? "bg-gradient-to-r from-pink-500/30 to-pink-600/30 border-r-4 border-pink-500"
                             : ""
                         }`}
                       >
-                        {field === 'color' && (
-                          <div 
+                        {field === "color" && (
+                          <div
                             className="w-6 h-6 rounded-full border-2 border-white shadow-md"
                             style={{ backgroundColor: getColorCode(option) }}
                           />
                         )}
-                        
-                        {renderOption ? renderOption(option) : (
-                          <span className={`flex-1 text-right ${isSelected ? "text-pink-400 font-medium" : "text-gray-300"}`}>
+
+                        {renderOption ? (
+                          renderOption(option)
+                        ) : (
+                          <span
+                            className={`flex-1 text-right ${isSelected ? "text-pink-400 font-medium" : "text-gray-300"}`}
+                          >
                             {getOptionLabel(option)}
                           </span>
                         )}
-                        
+
                         {isSelected && (
                           <CheckCircle className="w-4 h-4 text-pink-400" />
                         )}
@@ -259,13 +295,16 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                 {/* Progress Bar */}
                 <div className="max-w-2xl mx-auto">
                   <div className="flex justify-between text-sm text-gray-400 mb-2">
-                    <span>{t("orderCollection.completed", "القطع المكتملة")}</span>
+                    <span>
+                      {t("orderCollection.completed", "القطع المكتملة")}
+                    </span>
                     <span className="text-pink-400 font-bold">
-                      {Object.values(completedPieces).filter(Boolean).length}/{pieces.length}
+                      {Object.values(completedPieces).filter(Boolean).length}/
+                      {pieces.length}
                     </span>
                   </div>
                   <div className="w-full h-3 bg-gray-800 rounded-full overflow-hidden border border-gray-700">
-                    <div 
+                    <div
                       className="h-full bg-gradient-to-r from-pink-500 to-pink-600 rounded-full transition-all duration-500 relative"
                       style={{ width: `${completionPercentage}%` }}
                     >
@@ -280,18 +319,20 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                 {pieces.map((piece) => {
                   const colors = getAvailableColors(piece.name);
                   const isCompleted = piece.name && piece.size && piece.color;
-                  
+
                   return (
                     <div
                       key={piece.id}
                       className={`group relative bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-2xl border-2 transition-all duration-500 ${
-                        isCompleted 
-                          ? "border-pink-500 shadow-xl shadow-pink-500/20" 
+                        isCompleted
+                          ? "border-pink-500 shadow-xl shadow-pink-500/20"
                           : "border-gray-700 hover:border-pink-500/50"
                       }`}
                     >
                       {/* Glow Effect on Hover */}
-                      <div className={`absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-pink-600 rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`}></div>
+                      <div
+                        className={`absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-pink-600 rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
+                      ></div>
 
                       {/* Piece Number Badge */}
                       <div className="absolute -top-3 -right-3 z-10">
@@ -325,7 +366,7 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                           id={piece.id}
                           field="name"
                           value={piece.name}
-                          options={colonProducts}  // تم التغيير هنا
+                          options={colonProducts} // تم التغيير هنا
                           placeholder={t("orderCollection.selectProduct")}
                           icon={ShoppingBag}
                           getOptionLabel={(product) => product.name}
@@ -365,14 +406,14 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
                 <div className="relative group">
                   {/* Glow Effect */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-pink-600 rounded-2xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  
+
                   <button
                     type="submit"
                     className="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white px-10 py-4 rounded-2xl font-bold shadow-2xl border border-pink-500/30 hover:scale-105 active:scale-95 transition-all duration-300 overflow-hidden group/btn"
                   >
                     {/* Shine Effect */}
                     <div className="absolute inset-0 translate-x-[-100%] group-hover/btn:translate-x-[100%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000"></div>
-                    
+
                     <span className="relative z-10 flex items-center gap-3 text-lg">
                       <ShoppingBag className="w-5 h-5 text-pink-400" />
                       {t("orderCollection.confirmOrder")}
@@ -391,17 +432,17 @@ function OrderCollection({ selectedOffer, setOrder, formRef }) {
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-track {
           background: #1f2937;
           border-radius: 10px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
           background: linear-gradient(to bottom, #ec4899, #db2777);
           border-radius: 10px;
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: linear-gradient(to bottom, #f472b6, #ec4899);
         }
