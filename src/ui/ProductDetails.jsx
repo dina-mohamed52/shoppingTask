@@ -21,7 +21,8 @@ import {
 } from "lucide-react";
 import HalfOffers from "../features/SummerHalf/HalfOffers";
 import HalfOrderCollection from "../features/SummerHalf/HalfOrderCollection";
-import OrderForm from "../ui/Orderform";
+import { useCart } from "../features/cart/CartContext";
+
 
 // ========== مكونات مساعدة صغيرة ==========
 const RatingStars = () => (
@@ -176,6 +177,7 @@ const ReviewsSection = () => {
 function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart(); // ✅ استخدام الـ hook
 
   // حالات
   const [selectedColor, setSelectedColor] = useState(0);
@@ -184,11 +186,9 @@ function ProductDetails() {
   const [isImageZoomed, setIsImageZoomed] = useState(false);
 
   const [selectedOfferForOrder, setSelectedOfferForOrder] = useState(null);
-  const [order, setOrder] = useState(null);
 
   // مراجع
   const orderCollectionRef = useRef(null);
-  const formRef = useRef(null);
   const offersRef = useRef(null);
 
   // جلب المنتج
@@ -256,17 +256,12 @@ function ProductDetails() {
   // المعالجات
   const handleOfferSelect = (offer) => {
     setSelectedOfferForOrder(offer);
-    setOrder(null);
     setTimeout(() => {
       orderCollectionRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
     }, 100);
-  };
-
-  const handleSetOrder = (newOrder) => {
-    setOrder(newOrder);
   };
 
   const scrollToOffers = () => {
@@ -439,27 +434,26 @@ function ProductDetails() {
               </div>
 
               {/* اختيار اللون */}
-              {/* اختيار اللون */}
-<div>
-  <label className="font-semibold text-gray-900 flex items-center gap-2 text-sm mb-2">
-    <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر اللون
-  </label>
-  <div className="flex flex-wrap gap-2">
-    {product.productColors.map((color, index) => (
-      <button
-        key={index}
-        onClick={() => setSelectedColor(index)}
-        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-          selectedColor === index
-            ? "bg-pink-500 text-white shadow-md scale-105"
-            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-        }`}
-      >
-        {product.avalibeColors?.[index]}
-      </button>
-    ))}
-  </div>
-</div>
+              <div>
+                <label className="font-semibold text-gray-900 flex items-center gap-2 text-sm mb-2">
+                  <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر اللون
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {product.productColors.map((color, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedColor(index)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        selectedColor === index
+                          ? "bg-pink-500 text-white shadow-md scale-105"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      {product.avalibeColors?.[index]}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               {/* زر عرض العروض */}
               <button
@@ -483,7 +477,7 @@ function ProductDetails() {
               {[
                 { id: "description", label: "الوصف" },
                 { id: "specifications", label: "المواصفات" },
-                 { id: "sizes", label: "المقاسات" },
+                { id: "sizes", label: "المقاسات" },
                 { id: "reviews", label: "التقييمات" },
               ].map((tab) => (
                 <button
@@ -543,10 +537,6 @@ function ProductDetails() {
                         {product.season || "صيفي"}
                       </span>
                     </div>
-                    {/* <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                      <span className="text-gray-500 text-sm">المقاسات</span>
-                      <span className="font-semibold text-gray-800">S, M, L, XL</span>
-                    </div> */}
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <span className="text-gray-500 text-sm">العناية</span>
                       <span className="font-semibold text-gray-800">
@@ -557,66 +547,62 @@ function ProductDetails() {
                 </motion.div>
               )}
 
-{/* 👇 تبويب المقاسات الجديد */}
-      {activeTab === "sizes" && (
-        <motion.div
-          key="sizes"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-        >
-          {product.sizes && product.sizes.length > 0 ? (
-            <div>
-              <div className="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
-                <Ruler className="w-5 h-5 text-pink-500" />
-                <h3 className="font-semibold text-gray-800">دليل مقاسات {product.name}</h3>
-              </div>
-              
-              <div className="overflow-x-auto rounded-xl border border-gray-100">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="bg-gradient-to-r from-pink-50 to-gray-50">
-                      <th className="text-right py-3 px-4 font-semibold text-gray-700 rounded-tr-xl">
-                        المقاس
-                      </th>
-                      <th className="text-right py-3 px-4 font-semibold text-gray-700 rounded-tl-xl">
-                        العمر المناسب
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {product.sizes.map((size, idx) => (
-                      <tr 
-                        key={idx} 
-                        className={`border-b border-gray-100 hover:bg-pink-50/30 transition-colors ${
-                          idx === product.sizes.length - 1 ? "border-b-0" : ""
-                        }`}
-                      >
-                        <td className="py-3 px-4 font-bold text-pink-600">{size.size}</td>
-                        <td className="py-3 px-4 text-gray-600">{size.age}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              
-              <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-400 bg-gray-50 p-3 rounded-lg">
-                <span>💡</span>
-                <span>نصيحة: إذا كان طفلك بين مقاسين، اختاري المقاس الأكبر لراحة أطول</span>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-8 text-gray-400">
-              <Ruler className="w-12 h-12 mx-auto mb-3 opacity-50" />
-              <p>لا توجد مقاسات متاحة لهذا المنتج حالياً</p>
-            </div>
-          )}
-        </motion.div>
-      )}
-
-
-
-
+              {/* تبويب المقاسات الجديد */}
+              {activeTab === "sizes" && (
+                <motion.div
+                  key="sizes"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                >
+                  {product.sizes && product.sizes.length > 0 ? (
+                    <div>
+                      <div className="flex items-center gap-2 mb-4 pb-2 border-b border-gray-100">
+                        <Ruler className="w-5 h-5 text-pink-500" />
+                        <h3 className="font-semibold text-gray-800">دليل مقاسات {product.name}</h3>
+                      </div>
+                      
+                      <div className="overflow-x-auto rounded-xl border border-gray-100">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="bg-gradient-to-r from-pink-50 to-gray-50">
+                              <th className="text-right py-3 px-4 font-semibold text-gray-700 rounded-tr-xl">
+                                المقاس
+                              </th>
+                              <th className="text-right py-3 px-4 font-semibold text-gray-700 rounded-tl-xl">
+                                العمر المناسب
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {product.sizes.map((size, idx) => (
+                              <tr 
+                                key={idx} 
+                                className={`border-b border-gray-100 hover:bg-pink-50/30 transition-colors ${
+                                  idx === product.sizes.length - 1 ? "border-b-0" : ""
+                                }`}
+                              >
+                                <td className="py-3 px-4 font-bold text-pink-600">{size.size}</td>
+                                <td className="py-3 px-4 text-gray-600">{size.age}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      
+                      <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-400 bg-gray-50 p-3 rounded-lg">
+                        <span>💡</span>
+                        <span>نصيحة: إذا كان طفلك بين مقاسين، اختاري المقاس الأكبر لراحة أطول</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center py-8 text-gray-400">
+                      <Ruler className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                      <p>لا توجد مقاسات متاحة لهذا المنتج حالياً</p>
+                    </div>
+                  )}
+                </motion.div>
+              )}
 
               {activeTab === "reviews" && (
                 <motion.div
@@ -633,83 +619,43 @@ function ProductDetails() {
         </div>
       </main>
 
-      {/* قسم العروض */}
       {/* قسم العروض - يظهر فقط للمنتجات التي ليست ID=3 */}
-{product.id !== 3 ? (
-  <>
-    <div ref={offersRef} className="scroll-mt-20">
-      <HalfOffers
-        filterByTabType={product.tabType || "half"}
-        filterByProductType={product.type} 
-        setSelectedOffer={handleOfferSelect}
-        hideTabs={true}
-        scrollToOrderCollection={() =>
-          orderCollectionRef.current?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          })
-        }
-      />
-    </div>
-
-    
-    {order && order.length > 0 && (
-      <div ref={formRef} className="mt-10 scroll-mt-20">
-        <OrderForm
-          order={order}
-          selectedOffer={selectedOfferForOrder}
-          formRef={formRef}
-        />
-      </div>
-    )}
-  </>
-) : (
-  /* رسالة للمنتج 3 */
-  <div className="text-center rounded-2xl mx-4 my-8 ">
-    <div className=" rounded-full flex items-center justify-center mx-auto mb-4">
-      {/* <Package className="w-10 h-10 text-gray-400" /> */}
-    </div>
-    {/* <h3 className="text-xl font-semibold text-gray-600 mb-2">
-      هذا المنتج غير متوفر في العروض حالياً
-    </h3> */}
-    {/* <p className="text-gray-400 text-sm max-w-md mx-auto">
-      نعتذر عن الإزعاج، هذا المنتج غير شامل للعروض الحالية. يمكنك متابعة صفحتنا لمعرفة العروض القادمة.
-    </p> */}
-  </div>
-)}
-
-      {/* قسم تجميع الطلب */}
-      <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
-        {selectedOfferForOrder &&
-          !selectedOfferForOrder.id?.includes("default") && (
-            <HalfOrderCollection
-              selectedOffer={selectedOfferForOrder}
-              setOrder={handleSetOrder}
-              formRef={formRef}
-              disableProductSelection={true}
-              defaultProductName={product.name}
-              onOrderConfirmed={() => {
-                setTimeout(() => {
-                  formRef.current?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-                }, 200);
-              }}
+      {product.id !== 3 ? (
+        <>
+          <div ref={offersRef} className="scroll-mt-20">
+            <HalfOffers
+              filterByTabType={product.tabType || "half"}
+              filterByProductType={product.type} 
+              setSelectedOffer={handleOfferSelect}
+              hideTabs={true}
+              scrollToOrderCollection={() =>
+                orderCollectionRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+              }
             />
-          )}
-      </div>
-
-      {/* نموذج الطلب */}
-      {order && order.length > 0 && (
-        <div ref={formRef} className="mt-10 scroll-mt-20">
-          <OrderForm
-            order={order}
-            selectedOffer={selectedOfferForOrder}
-            formRef={formRef}
-          />
+          </div>
+        </>
+      ) : (
+        /* رسالة للمنتج 3 */
+        <div className="text-center rounded-2xl mx-4 my-8 ">
+          {/* محتوى فارغ */}
         </div>
       )}
+
+      {/* ✅ قسم تجميع الطلب المعدل */}
+      <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
+        {selectedOfferForOrder && (
+          <HalfOrderCollection
+            selectedOffer={selectedOfferForOrder}
+            onAddToCart={addToCart}
+            defaultProductName={product.name}
+            selectedColor={product.avalibeColors?.[selectedColor] || "اللون الأساسي"}
+            selectedColorImage={currentColorData?.img}
+          />
+        )}
+      </div>
 
       {/* مودال تكبير الصورة */}
       <AnimatePresence>

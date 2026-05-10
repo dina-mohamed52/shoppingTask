@@ -16,7 +16,7 @@ import TurbonOrderForm from "../features/TurbonParts/TurbonOrderForm";
 function Turbon() {
   const { t } = useTranslation();
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const [order, setOrder] = useState(null);
+
   const formRef = useRef(null);
   const orderCollectionRef = useRef(null);
 
@@ -148,7 +148,7 @@ function Turbon() {
             
             <TurbonOrderCollection
               selectedOffer={selectedOffer}
-              setOrder={setOrder}
+            
               formRef={formRef}
             />
           </div>
@@ -173,27 +173,6 @@ function Turbon() {
       <OfferCountDown />
       <ProductBenifits />
 
-      {/* Order Form Section */}
-      {order && order.length > 0 && (
-        <motion.section
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="bg-gradient-to-b from-gray-50 to-pink-50/30 py-16 mt-8"
-        >
-          {/* <OrderForm 
-            order={order} 
-            selectedOffer={selectedOffer} 
-            formRef={formRef} 
-          /> */}
-          <TurbonOrderForm
-           order={order} 
-            selectedOffer={selectedOffer} 
-            formRef={formRef} 
-          
-          />
-        </motion.section>
-      )}
 
       {/* Custom Animations */}
       <style jsx>{`

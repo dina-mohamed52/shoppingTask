@@ -3,10 +3,21 @@ import { Sparkles, Gift, Star, Crown } from "lucide-react";
 import { useState } from "react";
 
 const offerDetails = (t) => [
-  { quantity: t("offers.q3"), price: 270, value: 3 },
-  { quantity: t("offers.q4"), price: 340, value: 4 },
+  { 
+    quantity: t("offers.q3"), 
+    name: "عرض 3 كولون شتوي",  // إضافة اسم وصفي للعرض
+    price: 270, 
+    value: 3 
+  },
+  { 
+    quantity: t("offers.q4"), 
+    name: "عرض 4 كولون شتوي",
+    price: 340, 
+    value: 4 
+  },
   { 
     quantity: t("offers.q6"), 
+    name: "عرض 6 كولون شتوي - الأكثر مبيعاً",
     price: 480, 
     highlight: t("offers.mostWanted"), 
     badgeColor: "from-pink-500 to-pink-600",
@@ -14,9 +25,15 @@ const offerDetails = (t) => [
     icon: <Star className="w-4 h-4" />,
     value: 6 
   },
-  { quantity: t("offers.q8"), price: 600, value: 8 },
+  { 
+    quantity: t("offers.q8"), 
+    name: "عرض 8 كولون شتوي",
+    price: 600, 
+    value: 8 
+  },
   { 
     quantity: t("offers.q12"), 
+    name: "عرض 12 كولون شتوي - أفضل قيمة",
     price: 840, 
     highlight: t("offers.bestDeal"), 
     badgeColor: "from-pink-600 to-rose-600",
@@ -31,6 +48,7 @@ function Offers({ setSelectedOffer, scrollToOrderCollection }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const handleSelect = (offer) => {
+    // إرسال العرض كاملاً مع الاسم الجديد
     setSelectedOffer(offer);
     if (scrollToOrderCollection) {
       scrollToOrderCollection();
@@ -67,27 +85,27 @@ function Offers({ setSelectedOffer, scrollToOrderCollection }) {
       </div>
 
       {/* Title Badge - "عروضنا" */}
-     <div className="relative mb-12 flex justify-center px-4 sm:px-0">
-  <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full blur-xl opacity-30"></div>
-  <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 px-4 sm:px-8 py-4 rounded-full border border-pink-500/30 shadow-2xl flex items-center gap-2 sm:gap-3 max-w-full">
-    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400 animate-spin-slow flex-shrink-0" />
-    <h2 className="text-xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-white whitespace-nowrap overflow-x-auto scrollbar-hide text-center">
-      {t("offers.title")}
-    </h2>
-    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400 animate-spin-slow flex-shrink-0" style={{ animationDelay: "0.5s" }} />
-  </div>
-</div>
+      <div className="relative mb-12 flex justify-center px-4 sm:px-0">
+        <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full blur-xl opacity-30"></div>
+        <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 px-4 sm:px-8 py-4 rounded-full border border-pink-500/30 shadow-2xl flex items-center gap-2 sm:gap-3 max-w-full">
+          <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400 animate-spin-slow flex-shrink-0" />
+          <h2 className="text-xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-white whitespace-nowrap overflow-x-auto scrollbar-hide text-center">
+            {t("offers.title")}
+          </h2>
+          <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400 animate-spin-slow flex-shrink-0" style={{ animationDelay: "0.5s" }} />
+        </div>
+      </div>
 
-{/* أضف هذا الـ style لإخفاء شريط التمرير */}
-<style jsx>{`
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-`}</style>
+      {/* أضف هذا الـ style لإخفاء شريط التمرير */}
+      <style jsx>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
 
       {/* Offers Grid */}
       <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
@@ -181,6 +199,13 @@ function Offers({ setSelectedOffer, scrollToOrderCollection }) {
                     </div>
                   </div>
                 )}
+
+                {/* اسم العرض الصغير أسفل البطاقة (اختياري) */}
+                <div className="mt-3 text-center">
+                  <span className="text-[10px] text-gray-500 bg-gray-800/50 px-2 py-0.5 rounded-full">
+                    {offer.name}
+                  </span>
+                </div>
               </div>
             </div>
           );

@@ -11,7 +11,7 @@ import OrderForm from "../ui/Orderform";
 
 function SummerColon() {
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const [order, setOrder] = useState([]);
+  
   const orderCollectionRef = useRef(null)
     const formRef = useRef(null);;
 
@@ -60,7 +60,7 @@ function SummerColon() {
       <div ref={orderCollectionRef}>
         <SCOrderCollection
           selectedOffer={selectedOffer}
-          setOrder={setOrder}
+       
            formRef={formRef}
           scrollToOffers={scrollToOffers}
         />
@@ -69,7 +69,7 @@ function SummerColon() {
 
       <ProductBenefits />
        {/* فورم الطلب */}
-            {order && order.length > 0 && (
+            {/* {order && order.length > 0 && (
               <div ref={formRef} className="mt-10">
                 <OrderForm
                   order={order}
@@ -77,7 +77,7 @@ function SummerColon() {
                   formRef={formRef}
                 />
               </div>
-            )}
+            )} */}
     </div>
   );
 }
