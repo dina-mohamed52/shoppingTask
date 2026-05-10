@@ -16,15 +16,41 @@ import {
 import ConfirmOrderModal from "../../ui/ConfirmOrderModal";
 
 const EGYPT_GOVS = [
-  "القاهرة", "الإسكندرية", "الجيزة", "البحيرة", "كفر الشيخ",
-  "الدقهلية", "الشرقية", "الغربية", "المنوفية", "القليوبية",
-  "دمياط", "الإسماعيلية", "السويس", "بورسعيد", "الفيوم",
-  "بني سويف", "المنيا", "أسيوط", "سوهاج", "قنا", "الأقصر",
-  "أسوان", "مطروح", "شمال سيناء", "جنوب سيناء", "البحر الأحمر", "الوادي الجديد",
+  "القاهرة",
+  "الإسكندرية",
+  "الجيزة",
+  "البحيرة",
+  "كفر الشيخ",
+  "الدقهلية",
+  "الشرقية",
+  "الغربية",
+  "المنوفية",
+  "القليوبية",
+  "دمياط",
+  "الإسماعيلية",
+  "السويس",
+  "بورسعيد",
+  "الفيوم",
+  "بني سويف",
+  "المنيا",
+  "أسيوط",
+  "سوهاج",
+  "قنا",
+  "الأقصر",
+  "أسوان",
+  "مطروح",
+  "شمال سيناء",
+  "جنوب سيناء",
+  "البحر الأحمر",
+  "الوادي الجديد",
 ];
 
 const HIGH_SHIPPING_GOVS = [
-  "مطروح", "البحر الأحمر", "الوادي الجديد", "جنوب سيناء", "شمال سيناء",
+  "مطروح",
+  "البحر الأحمر",
+  "الوادي الجديد",
+  "جنوب سيناء",
+  "شمال سيناء",
 ];
 
 function ShippingStep({ onSuccess, onBack, cartItems }) {
@@ -41,15 +67,16 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   // حساب الشحن والمجموع
-  const subtotal = cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
+  const subtotal =
+    cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
   const shipping = HIGH_SHIPPING_GOVS.includes(formData.city) ? 90 : 60;
   const total = subtotal + shipping;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
@@ -75,14 +102,18 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
   // دالة إرسال الطلب إلى Google Sheet
   const sendToGoogleSheet = async () => {
     // تجهيز تفاصيل الأوردر من cartItems
-    const orderDetails = cartItems.map(item => {
-      if (item.isOffer) {
-        return item.offerDetails?.pieces?.map(piece => 
-          `${piece.name} - مقاس ${piece.size} - ${piece.color}`
-        ).join(" | ");
-      }
-      return `${item.name} - ${item.size || ''} - ${item.color || ''}`;
-    }).join(" | ");
+    const orderDetails = cartItems
+      .map((item) => {
+        if (item.isOffer) {
+          return item.offerDetails?.pieces
+            ?.map(
+              (piece) => `${piece.name} - مقاس ${piece.size} - ${piece.color}`,
+            )
+            .join(" | ");
+        }
+        return `${item.name} - ${item.size || ""} - ${item.color || ""}`;
+      })
+      .join(" | ");
 
     const payload = {
       data: {
@@ -90,10 +121,11 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
         الاسم: formData.fullName.trim(),
         التليفون: formData.phone.trim(),
         "التليفون 2": formData.phone2.trim() || "-",
-        العنوان: `${formData.city} - ${formData.address.trim()}`,
+        العنوان: `${formData.city} - ${formData.address.trim()}${
+          formData.notes.trim() ? ` | ملاحظات: ${formData.notes.trim()}` : ""
+        }`,
         الاوردر: orderDetails,
         المبلغ: `${total}`,
-        ملاحظات: formData.notes.trim() || "-",
       },
     };
 
@@ -112,7 +144,7 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -136,14 +168,13 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
       // ✅ إظهار مودال التأكيد
       setShowConfirmModal(true);
-      
+
       // ✅ انتظار 2 ثانية ثم إغلاق المودال والتنقل
       setTimeout(() => {
         setShowConfirmModal(false);
         // ✅ استدعاء onSuccess (اللي هيفرغ السلة ويظهر رسالة النجاح)
         onSuccess();
       }, 2000);
-      
     } catch (error) {
       console.error("Error:", error);
       setErrors({ submit: error.message || "حدث خطأ في إرسال الطلب" });
@@ -153,7 +184,8 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
   };
 
   const getFieldClass = (fieldName) => {
-    const baseClass = "w-full bg-rose-50/30 border-2 rounded-xl py-3.5 px-4 text-gray-700 text-sm outline-none transition-all duration-300 placeholder-gray-400";
+    const baseClass =
+      "w-full bg-rose-50/30 border-2 rounded-xl py-3.5 px-4 text-gray-700 text-sm outline-none transition-all duration-300 placeholder-gray-400";
     if (errors[fieldName]) {
       return `${baseClass} border-red-500/50 focus:border-red-500 pr-12`;
     }
@@ -171,18 +203,25 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
         exit={{ opacity: 0 }}
         className="space-y-6"
       >
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-rose-100">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-rose-100"
+        >
           <div className="flex items-center gap-2 mb-6 pb-3 border-b border-rose-100">
             <div className="w-8 h-8 bg-gradient-to-br from-[#d52c7d]/10 to-[#f6b0d7]/10 rounded-xl flex items-center justify-center">
               <User className="w-4 h-4 text-[#d52c7d]" />
             </div>
-            <h2 className="text-lg font-semibold text-gray-800">معلومات الشحن</h2>
+            <h2 className="text-lg font-semibold text-gray-800">
+              معلومات الشحن
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* الاسم الكامل */}
             <div className="md:col-span-2">
-              <label className="block text-gray-600 text-sm mb-2">الاسم الكامل *</label>
+              <label className="block text-gray-600 text-sm mb-2">
+                الاسم الكامل *
+              </label>
               <div className="relative">
                 <User className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -205,7 +244,9 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
             {/* رقم الهاتف */}
             <div>
-              <label className="block text-gray-600 text-sm mb-2">رقم الهاتف *</label>
+              <label className="block text-gray-600 text-sm mb-2">
+                رقم الهاتف *
+              </label>
               <div className="relative">
                 <Phone className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -228,7 +269,9 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
             {/* رقم هاتف إضافي */}
             <div>
-              <label className="block text-gray-600 text-sm mb-2">رقم هاتف إضافي (اختياري)</label>
+              <label className="block text-gray-600 text-sm mb-2">
+                رقم هاتف إضافي (اختياري)
+              </label>
               <div className="relative">
                 <Smartphone className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
@@ -251,7 +294,9 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
             {/* المحافظة */}
             <div>
-              <label className="block text-gray-600 text-sm mb-2">المحافظة *</label>
+              <label className="block text-gray-600 text-sm mb-2">
+                المحافظة *
+              </label>
               <div className="relative">
                 <MapPinned className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <select
@@ -261,8 +306,10 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
                   className={`${getFieldClass("city")} appearance-none cursor-pointer`}
                 >
                   <option value="">اختر المحافظة</option>
-                  {EGYPT_GOVS.map(gov => (
-                    <option key={gov} value={gov}>{gov}</option>
+                  {EGYPT_GOVS.map((gov) => (
+                    <option key={gov} value={gov}>
+                      {gov}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -277,7 +324,9 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
             {/* العنوان التفصيلي */}
             <div className="md:col-span-2">
-              <label className="block text-gray-600 text-sm mb-2">العنوان بالتفصيل *</label>
+              <label className="block text-gray-600 text-sm mb-2">
+                العنوان بالتفصيل *
+              </label>
               <div className="relative">
                 <Home className="absolute right-3 top-4 w-4 h-4 text-gray-400" />
                 <textarea
@@ -300,7 +349,9 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
             {/* ملاحظات */}
             <div className="md:col-span-2">
-              <label className="block text-gray-600 text-sm mb-2">ملاحظات إضافية (اختياري)</label>
+              <label className="block text-gray-600 text-sm mb-2">
+                ملاحظات إضافية (اختياري)
+              </label>
               <textarea
                 name="notes"
                 value={formData.notes}
@@ -324,8 +375,8 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
             </div>
             {HIGH_SHIPPING_GOVS.includes(formData.city) && (
               <div className="text-xs text-pink-500 mt-2 flex items-center gap-1">
-                <Sparkles className="w-3 h-3" />
-                * 30 ج.م إضافية للمحافظات البعيدة
+                <Sparkles className="w-3 h-3" />* 30 ج.م إضافية للمحافظات
+                البعيدة
               </div>
             )}
             <div className="border-t border-rose-200 mt-3 pt-3 flex justify-between items-center font-bold">

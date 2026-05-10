@@ -264,11 +264,7 @@ function CheckoutPage() {
                     <span className="text-gray-800 font-medium">
                       {shippingCost} ج.م
                     </span>
-                    {subtotal > 500 && (
-                      <span className="text-[10px] text-green-500 bg-green-50 px-2 py-0.5 rounded-full">
-                        مجاني
-                      </span>
-                    )}
+                   
                   </div>
                 </div>
 
