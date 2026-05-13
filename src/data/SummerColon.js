@@ -84,7 +84,7 @@ export const SummerColonData = [
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
   },
-    {
+  {
     id: 3,
     name: "شورت اوباك ",
     description:
@@ -120,7 +120,7 @@ export const SummerColonData = [
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
   },
-    {
+  {
     id: 4,
     name: " ليجن مضلع ارنوب",
     description:
@@ -188,7 +188,7 @@ export const SummerColonData = [
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
   },
-  
+
   {
     id: 6,
     name: "كولون فيونكه",
@@ -203,18 +203,30 @@ export const SummerColonData = [
 
     productColors: [
       {
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1778686629/WhatsApp_Image_2026-05-13_at_4.05.35_AM_l2icr8.jpg",
+      },
+      {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776011999/WhatsApp_Image_2026-04-08_at_5.56.54_PM_1_citpap.jpg",
       },
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776011999/WhatsApp_Image_2026-04-08_at_5.56.54_PM_qyphwk.jpg",
       },
     ],
-    avalibeColors: ["أبيض", "بينك"],
+    avalibeColors: ["أسود", "أبيض", "بينك"],
     image:
       "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776011999/WhatsApp_Image_2026-04-08_at_5.56.54_PM_1_citpap.jpg",
 
     sizes: [
       { size: "1-0", age: "من حديث الولادة لحد 6 شهور" },
+      { size: "2-1", age: "من 9 شهور لحد سنة ونص" },
+      { size: "4-2", age: "من سنة ونص ل 3 سنين" },
+      { size: "6-4", age: "من 3 ل 5 سنين" },
+      { size: "8-6", age: "من 5 ل 7 سنين" },
+      { size: "10-8", age: "من 7 ل 9 سنين" },
+      { size: "12-10", age: "من 9 ل 11 سنة" },
+      { size: "14-12", age: "من 12 ل 14 سنة" },
+    ],
+    blackColorSizes: [
       { size: "2-1", age: "من 9 شهور لحد سنة ونص" },
       { size: "4-2", age: "من سنة ونص ل 3 سنين" },
       { size: "6-4", age: "من 3 ل 5 سنين" },
@@ -332,5 +344,4 @@ export const SummerColonData = [
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
   },
-
 ];
