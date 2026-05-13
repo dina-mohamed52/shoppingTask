@@ -204,11 +204,11 @@ function ProductDetails() {
 
     const offerMap = {
       half: {
-        name: "4 هاف كولون",
-        quantity: 4,
-        price: 240,
-        originalPrice: 320,
-        savings: 80,
+        name: "6 هاف كولون",
+        quantity: 6,
+        price: 330,
+        originalPrice: 405,
+        savings: 85,
       },
       bandana: {
         name: "6 بندانات",
