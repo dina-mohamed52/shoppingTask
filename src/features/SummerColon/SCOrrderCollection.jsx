@@ -148,27 +148,38 @@ function SCOrderCollection({
   };
 
   const getAvailableSizes = (productName, color) => {
-    const product = SummerColonData.find((item) => item.name === productName);
-    
-    if (!product) return [];
+  const product = SummerColonData.find(
+    (item) => item.name === productName
+  );
 
-    let sizes = product.sizes;
+  if (!product) return [];
 
-    const isSpecialCase =
-      productName?.includes("ليجن") ||
-      productName?.includes("اوباك") ||
-      productName?.includes("ساده");
+  let sizes = product.sizes;
 
-    if (isSpecialCase && color === "بينك") {
-      sizes = sizes.filter((s) => {
-        const sizeNumber = parseInt(s.size.split("-")[0]);
-        return sizeNumber >= 8;
-      });
-    }
+  // ✅ كولون فيونكة الأسود
+  if (
+    productName === "كولون فيونكه" &&
+    (color === "أسود" || color === "اسود") &&
+    product.blackColorSizes
+  ) {
+    sizes = product.blackColorSizes;
+  }
 
-    return sizes;
-  };
+  // ✅ بينك الليجن يبدأ من 8-6
+  const isSpecialCase =
+    productName?.includes("ليجن") ||
+    productName?.includes("اوباك") ||
+    productName?.includes("ساده");
 
+  if (isSpecialCase && color === "بينك") {
+    sizes = sizes.filter((s) => {
+      const sizeNumber = parseInt(s.size.split("-")[0]);
+      return sizeNumber >= 8;
+    });
+  }
+
+  return sizes;
+};
   const getColorCode = (colorName) => {
     const colorMap = {
       أبيض: "#FFFFFF",
