@@ -9,7 +9,7 @@ import OfferButton from "../features/offer/OfferButton";
 import OfferCountdown from "../ui/OfferCountDown";
 import PurchaseNotifications from "../ui/PurchaseNotifications";
 import ProductBenefits from "../features/products/ProductBenifits";
-import OrderForm from "../ui/Orderform";
+
 import { useTranslation } from "react-i18next";
 import Reviews from "./Reviews";
 import { Data } from "../data/Data";
@@ -124,9 +124,7 @@ function Home() {
         <Reviews />
       </div>
 
-      {/* <div className="bg-gray-900 py-8">
-        <OrderForm order={order} selectedOffer={selectedOffer} formRef={formRef} />
-      </div> */}
+     
     </>
   );
 }

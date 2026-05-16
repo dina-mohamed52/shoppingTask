@@ -7,7 +7,7 @@ import HalfOffers from "../features/SummerHalf/HalfOffers";
 import OfferCountdown from "../ui/OfferCountDown";
 import ProductBenefits from "../features/products/ProductBenifits";
 import HalfOrderCollection from "../features/SummerHalf/HalfOrderCollection";
-import OrderForm from "../ui/Orderform";
+
 import { useLocation } from "react-router-dom";
 
 function SummerHalfColon() {
@@ -102,15 +102,7 @@ function SummerHalfColon() {
       <OfferCountdown />
 
       {/* فورم الطلب - يظهر فقط بعد تأكيد الطلب */}
-      {/* {order && order.length > 0 && (
-        <div ref={formRef} className="mt-10 scroll-mt-20">
-          <OrderForm
-            order={order}
-            selectedOffer={selectedOffer}
-            formRef={formRef}
-          />
-        </div>
-      )} */}
+    
     </div>
   );
 }

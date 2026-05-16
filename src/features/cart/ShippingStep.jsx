@@ -53,6 +53,10 @@ const HIGH_SHIPPING_GOVS = [
   "شمال سيناء",
 ];
 
+// ✅ [الحل رقم 1 + 4] نقل الثابت إلى خارج المكون + إضافة مسار صحيح
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwgp_vt9LBjp47TL5X4sHwYfyQB1OeyiwXun6TmLV9_q4hPaD9H02YFI-2JJXW8awAr0w/exec";
+
 function ShippingStep({ onSuccess, onBack, cartItems }) {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -99,15 +103,14 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
     return newErrors;
   };
 
-  // دالة إرسال الطلب إلى Google Sheet
+  // ✅ [الحل رقم 3] دالة sendToGoogleSheet مصححة - تم إغلاقها وإضافة return
   const sendToGoogleSheet = async () => {
-    // تجهيز تفاصيل الأوردر من cartItems
     const orderDetails = cartItems
       .map((item) => {
         if (item.isOffer) {
           return item.offerDetails?.pieces
             ?.map(
-              (piece) => `${piece.name} - مقاس ${piece.size} - ${piece.color}`,
+              (piece) => `${piece.name} - مقاس ${piece.size} - ${piece.color}`
             )
             .join(" | ");
         }
@@ -115,35 +118,35 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
       })
       .join(" | ");
 
-    const payload = {
-      data: {
-        التاريخ: new Date().toLocaleDateString("en-GB"),
-        الاسم: formData.fullName.trim(),
-        التليفون: formData.phone.trim(),
-        "التليفون 2": formData.phone2.trim() || "-",
-        العنوان: `${formData.city} - ${formData.address.trim()}${
-          formData.notes.trim() ? ` | ملاحظات: ${formData.notes.trim()}` : ""
-        }`,
-        الاوردر: orderDetails,
-        المبلغ: `${total}`,
-      },
-    };
-
-    const res = await fetch("https://sheetdb.io/api/v1/ud7ooi446r6mh", {
+    const res = await fetch(SCRIPT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+     headers: {
+  "Content-Type": "text/plain;charset=utf-8",
+},
+      body: JSON.stringify({
+        date: new Date().toLocaleDateString("en-GB"),
+        name: formData.fullName,
+        phone: formData.phone,
+        phone2: formData.phone2 || "-",
+        address: `${formData.city} - ${formData.address}`,
+        order: orderDetails,
+        total: total,
+      }),
     });
 
+    const data = await res.json().catch(() => ({}));
+
     if (!res.ok) {
-      throw new Error("فشل في إرسال الطلب");
+      throw new Error(data.error || "فشل في إرسال الطلب");
     }
 
-    return res;
+    return data; // ✅ إرجاع البيانات بشكل صريح
   };
 
+  // ✅ [الحل رقم 2] دالة handleSubmit مصححة - الآن الكود منظم والأقواس سليمة
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
 
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
@@ -166,14 +169,13 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
         });
       }
 
-      // ✅ إظهار مودال التأكيد
+      // إظهار مودال التأكيد
       setShowConfirmModal(true);
 
-      // ✅ انتظار 2 ثانية ثم إغلاق المودال والتنقل
+      // انتظار 2 ثانية ثم إغلاق المودال والتنقل
       setTimeout(() => {
         setShowConfirmModal(false);
-        // ✅ استدعاء onSuccess (اللي هيفرغ السلة ويظهر رسالة النجاح)
-        onSuccess();
+        onSuccess(); // استدعاء onSuccess (لتفريغ السلة وإظهار رسالة النجاح)
       }, 2000);
     } catch (error) {
       console.error("Error:", error);

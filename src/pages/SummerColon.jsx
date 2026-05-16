@@ -7,7 +7,7 @@ import SCOrderCollection from "../features/SummerColon/SCOrrderCollection";
 import SCProductList from "../features/SummerColon/SCProductList";
 import Reviews from "../pages/Reviews";
 import SizeTable from "../pages/SizeTable";
-import OrderForm from "../ui/Orderform";
+
 
 function SummerColon() {
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -68,16 +68,7 @@ function SummerColon() {
       <Reviews/>
 
       <ProductBenefits />
-       {/* فورم الطلب */}
-            {/* {order && order.length > 0 && (
-              <div ref={formRef} className="mt-10">
-                <OrderForm
-                  order={order}
-                  selectedOffer={selectedOffer}
-                  formRef={formRef}
-                />
-              </div>
-            )} */}
+     
     </div>
   );
 }
