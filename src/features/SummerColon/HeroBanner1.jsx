@@ -110,7 +110,7 @@ function HeroBanner1() {
 
           {/* Features Grid */}
           <div className="flex-1 w-full">
-            <div className="grid grid-cols-3 gap-3 md:gap-5">
+            <div className="grid sm:grid-cols-3 rid-cols-1 gap-3 md:gap-5">
               {features.map((feature, index) => (
                 <motion.div
                   key={index}

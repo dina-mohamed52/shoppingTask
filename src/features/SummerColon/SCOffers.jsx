@@ -74,8 +74,8 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
     <div 
       id="offersSection" 
       className="relative
-       bg-gradient-to-br from-pink-400 via-white to-blue-950/60 rounded-3xl  
-       shadow-lg max-w-4xl mx-auto my-16 p-8 sm:p-10 border border-slate-200 overflow-hidden"
+       bg-gradient-to-br from-pink-500/50 via-white to-blue-950/60 rounded-3xl  
+       shadow-lg max-w-4xl mx-auto my-16 p-6 sm:p-12 border border-slate-200 overflow-hidden"
     >
       {/* Decorative Background Elements - أخف وأكثر نعومة */}
       <div className="absolute inset-0 opacity-10">
