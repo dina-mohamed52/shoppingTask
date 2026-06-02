@@ -44,7 +44,7 @@ function SummerColon() {
   };
 
   return (
-    <div>
+    <div  dir="rtl" >
        
       <SCHeroSec
         scrollToOffers={scrollToOffers}

@@ -81,7 +81,7 @@ function MainPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div  dir="rtl" className="min-h-screen bg-black">
       {/* Categories Section - MOVED TO TOP */}
       <div id="categories" className="py-20 px-4  bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e]">
         <div className="max-w-7xl mx-auto">

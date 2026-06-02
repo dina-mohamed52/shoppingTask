@@ -211,8 +211,11 @@ export const SummerColonData = [
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776011999/WhatsApp_Image_2026-04-08_at_5.56.54_PM_qyphwk.jpg",
       },
+      {
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1780341610/WhatsApp_Image_2026-05-31_at_4.26.15_AM_ekatv6.jpg",
+      },
     ],
-    avalibeColors: ["أسود", "أبيض", "بينك"],
+    avalibeColors: ["أسود", "أبيض", "بينك","بيج"],
     image:
       "https://res.cloudinary.com/dxenvgjv5/image/upload/q_auto/f_auto/v1776011999/WhatsApp_Image_2026-04-08_at_5.56.54_PM_1_citpap.jpg",
 
@@ -226,15 +229,7 @@ export const SummerColonData = [
       { size: "12-10", age: "من 9 ل 11 سنة" },
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
-    blackColorSizes: [
-      { size: "2-1", age: "من 9 شهور لحد سنة ونص" },
-      { size: "4-2", age: "من سنة ونص ل 3 سنين" },
-      { size: "6-4", age: "من 3 ل 5 سنين" },
-      { size: "8-6", age: "من 5 ل 7 سنين" },
-      { size: "10-8", age: "من 7 ل 9 سنين" },
-      { size: "12-10", age: "من 9 ل 11 سنة" },
-      { size: "14-12", age: "من 12 ل 14 سنة" },
-    ],
+   
   },
 
   {

@@ -79,7 +79,7 @@ function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-pink-50/20 to-gray-50">
+    <div  dir="rtl" className="min-h-screen bg-gradient-to-br from-gray-50 via-pink-50/20 to-gray-50">
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-pink-100/50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-5">

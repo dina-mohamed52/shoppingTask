@@ -38,7 +38,7 @@ function Home() {
       {/* Offer Button - خارج الـ container عشان يثبت في الشاشة كلها */}
       <OfferButton />
 
-      <div className="container mx-auto px-4 mt-4">
+      <div  dir="rtl" className="container mx-auto px-4 mt-4">
         <CustomCarousel />
 
         {/* Price Tag Section - Updated with Pink & Gray Theme */}

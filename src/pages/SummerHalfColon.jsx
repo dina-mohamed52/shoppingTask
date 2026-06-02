@@ -62,7 +62,7 @@ function SummerHalfColon() {
   };
 
   return (
-    <div>
+    <div  dir="rtl">
       {/* الجزء الأول */}
       <Part1 HalfColoneData={HalfColoneData} />
 
