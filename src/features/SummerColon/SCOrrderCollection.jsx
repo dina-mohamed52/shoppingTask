@@ -289,12 +289,7 @@ function SCOrderCollection({
       productName?.includes("اوباك") ||
       productName?.includes("ساده");
 
-    if (isSpecialCase && color === "بينك") {
-      sizes = sizes.filter((s) => {
-        const sizeNumber = parseInt(s.size.split("-")[0]);
-        return sizeNumber >= 8;
-      });
-    }
+   
 
     return sizes;
   };
