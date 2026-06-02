@@ -121,10 +121,10 @@ export const HalfColoneData = [
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392020/WhatsApp_Image_2026-04-28_at_4.04.55_AM_vvw8cy.jpg",
       },
 
-      // الجديد 👇
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392637/WhatsApp_Image_2026-04-28_at_4.05.46_AM_qbzrcx.jpg",
-      },
+      // // الجديد 👇
+      // {
+      //   img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392637/WhatsApp_Image_2026-04-28_at_4.05.46_AM_qbzrcx.jpg",
+      // },
     ],
     avalibeColors: [
       "أبيض",
@@ -134,7 +134,7 @@ export const HalfColoneData = [
       "أصفر",
       "موف",
       "بيج",
-      "عباد شمس أحمر",
+      // "عباد شمس أحمر",
     ],
     image:
       "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392066/WhatsApp_Image_2026-04-28_at_4.04.54_AM_2_hcl2u1.jpg",

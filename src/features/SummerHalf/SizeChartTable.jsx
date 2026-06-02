@@ -18,7 +18,7 @@ function SizeChartTable({ alt = "جدول المقاسات", className = "w-full
   ];
 
   return (
-    <div className="my-8 px-4 sm:px-0">
+    <div className="my-8 px-4 sm:px-4">
       {/* Main Container with Pink & Gray Theme */}
       <div 
         className="relative group"

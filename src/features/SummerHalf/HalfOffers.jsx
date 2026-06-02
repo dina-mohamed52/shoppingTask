@@ -54,10 +54,32 @@ function HalfOffers({
 
   // Get dynamic title
   const getTitle = () => {
-    if (filterByProductType === "set-mesh") return "عروض طقم بندانه + هاف كولون شبك";
-    if (filterByProductType === "set-bow") return "عروض طقم بندانه + هاف كولون فيونكه قطن";
-    return "";
-  };
+  if (filterByProductType === "set-mesh") {
+    return "عروض طقم بندانه + هاف كولون شبك";
+  }
+
+  if (filterByProductType === "set-bow") {
+    return "عروض طقم بندانه + هاف كولون فيونكه قطن";
+  }
+
+  if (activeOfferTab === "half") {
+    return "عروض الهاف كولون";
+  }
+
+  if (activeOfferTab === "bandana") {
+    return "عروض البندانات";
+  }
+
+  if (activeOfferTab === "turbon") {
+    return "عروض التربون";
+  }
+
+  if (activeOfferTab === "set") {
+    return "عروض الأطقم";
+  }
+
+  return "العروض";
+};
 
   const getSubtitle = () => {
     if (filterByProductType === "set-mesh" || filterByProductType === "set-bow") {
@@ -124,10 +146,11 @@ function HalfOffers({
         </p>
       </motion.div>
 
-      {/* Tabs - تظهر فقط إذا لم نطلب إخفاءها */}
-     {/* Tabs - تظهر فقط إذا لم نطلب إخفاءها */}
+     
 {!hideTabs && (
-  <div className="flex justify-center mb-8 px-4">
+  <div
+    dir="rtl"
+  className="flex justify-center mb-8 px-4">
     <div className="inline-flex flex-wrap justify-center gap-2 bg-gray-100 p-2 rounded-2xl 
     max-w-md sm:max-w-5xl mx-auto">
       {allTabTypes.map((tab) => (
@@ -156,7 +179,9 @@ function HalfOffers({
   </div>
 )}
       {/* Offers Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
+      <div
+        dir="rtl"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
         {filteredOffers.map((offer, index) => {
           const isHovered = hoveredIndex === index;
           const pricePerPiece = getPricePerPiece(offer.price, offer.quantity);
@@ -173,7 +198,8 @@ function HalfOffers({
               onClick={() => handleSelect(offer)}
               className="relative group cursor-pointer"
             >
-              <div className={`relative bg-white rounded-2xl p-4 shadow-md border border-gray-100 transition-all duration-300 ${
+              <div className={`relative bg-white rounded-2xl p-4
+               shadow-md border border-gray-100 transition-all duration-300 ${
                 isHovered 
                   ? "shadow-xl border-[#e13485]/30 -translate-y-1" 
                   : "hover:shadow-lg"
