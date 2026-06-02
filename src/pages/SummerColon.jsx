@@ -50,11 +50,17 @@ function SummerColon() {
         scrollToOffers={scrollToOffers}
         scrollToProducts={scrollToProducts}
       />
+      <div className="p-6">
       <HeroBanner1 />
+
+      </div>
+      <div className="p-6">
+
       <SCOffers
         setSelectedOffer={setSelectedOffer}
         scrollToOrderCollection={scrollToOrderCollection}
-      />
+        />
+        </div>
       <SCProductList />
       <SizeTable/>
       <div ref={orderCollectionRef}>

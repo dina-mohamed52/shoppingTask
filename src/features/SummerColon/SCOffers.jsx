@@ -54,7 +54,6 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
   ];
 
   const handleSelect = (offer) => {
-    // إرسال العرض كاملاً مع الاسم الجديد
     if (setSelectedOffer) setSelectedOffer(offer);
     setTimeout(() => {
       if (scrollToOrderCollection) {
@@ -75,37 +74,32 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
     <div 
       id="offersSection" 
       className="relative
-       bg-gradient-to-br from-white via-[#f5f0f7] to-white rounded-3xl 
-       shadow-xl max-w-4xl mx-auto my-16 p-6 sm:p-10 border border-[#864e63]/15 overflow-hidden"
+       bg-gradient-to-br from-pink-400 via-white to-blue-950/60 rounded-3xl  
+       shadow-lg max-w-4xl mx-auto my-16 p-8 sm:p-10 border border-slate-200 overflow-hidden"
     >
-      {/* Decorative Background Elements */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute -top-20 -right-20 w-60 h-60 bg-[#864e63] rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-[#c6abff] rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
+      {/* Decorative Background Elements - أخف وأكثر نعومة */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute -top-20 -right-20 w-60 h-60 bg-[#F472B6] rounded-full filter blur-3xl"></div>
+        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-[#1A2A4F] rounded-full filter blur-3xl"></div>
       </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-[#864e63]/5 via-transparent to-[#c6abff]/5 pointer-events-none"></div>
-
       {/* Gift Icon */}
-      <div className="absolute -top-6 -right-6 z-30">
+      <div className="absolute top-4 right-4 z-30">
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full blur-xl opacity-40 animate-pulse"></div>
-          <div className="relative bg-gradient-to-br from-[#864e63] to-[#c6abff] p-3 rounded-full shadow-lg border border-white/30">
-            <Gift className="w-7 h-7 text-white" />
+          <div className="relative bg-white p-3 rounded-full shadow-md border border-slate-200">
+            <Gift className="w-7 h-7 text-[#F472B6]" />
           </div>
         </div>
       </div>
 
       {/* Title Badge */}
       <div className="relative mb-10 flex justify-center px-4 sm:px-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full blur-xl opacity-20"></div>
-        <div className="relative bg-white/90 backdrop-blur-sm px-6 sm:px-8 py-3 rounded-full border border-[#864e63]/20 shadow-md flex items-center gap-2 sm:gap-3">
-          <Sparkles className="w-5 h-5 sm:w-5 sm:h-5 text-[#864e63] animate-spin-slow" />
-          <h2 className="text-lg sm:text-2xl font-black bg-clip-text text-transparent bg-gradient-to-l from-[#864e63] to-[#c6abff]">
+        <div className="relative bg-white px-6 sm:px-8 py-3 rounded-full border border-slate-200 shadow-sm flex items-center gap-2 sm:gap-3">
+          <Sparkles className="w-5 h-5 sm:w-5 sm:h-5 text-[#F472B6]" />
+          <h2 className="text-lg sm:text-2xl font-bold text-slate-800">
             عروض الكولونات
           </h2>
-          <Heart className="w-4 h-4 sm:w-4 sm:h-4 text-[#864e63] animate-pulse" />
+          <Heart className="w-4 h-4 sm:w-4 sm:h-4 text-[#F472B6]" />
         </div>
       </div>
 
@@ -124,38 +118,27 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
               key={index}
               className="relative group cursor-pointer"
             >
-              {/* Glow Effect on Hover */}
-              <div className={`absolute -inset-0.5 bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-2xl blur-md transition-all duration-500 ${
-                isHovered ? "opacity-50" : "opacity-0"
-              }`}></div>
-
               {/* Main Card */}
-              <div className={`relative bg-white rounded-2xl p-5 transition-all duration-500 border ${
+              <div className={`relative bg-white rounded-2xl p-5 transition-all duration-300 border ${
                 offer.highlight 
-                  ? "border-[#864e63] shadow-lg shadow-[#864e63]/10" 
-                  : "border-gray-100 hover:border-[#864e63]/30 shadow-sm"
-                } ${isHovered ? "transform scale-[1.02]" : ""}`}
+                  ? "border-[#F472B6]/30 shadow-md" 
+                  : "border-slate-200 hover:border-slate-300 shadow-sm"
+                } ${isHovered ? "transform scale-[1.01] shadow-lg" : ""}`}
               >
                 {/* Special Badge */}
                 {offer.highlight && (
-                  <div className="absolute -top-3 -right-3 ">
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full blur-sm opacity-40"></div>
-                      <div className="relative bg-gradient-to-r from-[#864e63] to-[#c6abff] text-white font-bold px-2.5 py-1 rounded-full text-[11px] shadow-md flex items-center gap-1">
-                        {offer.icon}
-                        {offer.highlight}
-                      </div>
+                  <div className="absolute -top-3 -right-3">
+                    <div className="relative bg-[#F472B6] text-white font-bold px-2.5 py-1 rounded-full text-[11px] shadow-md flex items-center gap-1">
+                      {offer.icon}
+                      {offer.highlight}
                     </div>
                   </div>
                 )}
 
                 {/* Discount Badge */}
-                <div className="absolute -top-3 -left-3 ">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full blur-sm opacity-30"></div>
-                    <div className="relative bg-gradient-to-r from-[#864e63] to-[#c6abff] px-2 py-1 rounded-full shadow-sm">
-                      <span className="text-white text-[11px] font-bold">-{offer.discount}%</span>
-                    </div>
+                <div className="absolute -top-3 -left-3">
+                  <div className="relative bg-pink-500 px-2 py-1 rounded-full shadow-sm">
+                    <span className="text-white text-[11px] font-bold">-{offer.discount}%</span>
                   </div>
                 </div>
 
@@ -164,44 +147,46 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
                   {/* Quantity and Price Row */}
                   <div className="flex justify-between items-start">
                     <div className="flex items-center gap-2">
-                      <div className={`w-9 h-9 rounded-xl bg-gradient-to-br from-[#864e63]/10 to-[#c6abff]/10 
-                      flex items-center justify-center border border-[#864e63]/20 transition-all ${
-                        isHovered ? "scale-105" : ""
+                      <div className={`w-9 h-9 rounded-xl bg-slate-100 
+                      flex items-center justify-center transition-all ${
+                        isHovered ? "scale-105 bg-[#F472B6]/10" : ""
                       }`}>
-                        <Gift className="w-4 h-4 text-[#864e63]" />
+                        <Gift className={`w-4 h-4 transition-colors ${
+                          isHovered ? "text-[#F472B6]" : "text-slate-400"
+                        }`} />
                       </div>
                       <div>
-                        <span className="text-lg font-bold text-gray-700">{offer.quantity}</span>
+                        <span className="text-lg font-bold text-slate-700">{offer.quantity}</span>
                       </div>
                     </div>
 
                     <div className="text-right">
                       <div className="flex items-baseline gap-1">
-                        <span className="text-2xl font-black text-[#864e63]">
+                        <span className="text-2xl font-black text-[#F472B6]">
                           {offer.price}
                         </span>
-                        <span className="text-xs text-gray-400">ج.م</span>
+                        <span className="text-xs text-slate-400">ج.م</span>
                       </div>
-                      <div className="text-[11px] text-gray-400 line-through">
+                      <div className="text-[11px] text-slate-400 line-through">
                         {offer.oldPrice} ج.م
                       </div>
                     </div>
                   </div>
 
                   {/* Divider */}
-                  <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
+                  <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
 
                   {/* Price Per Piece & Savings */}
                   <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-1.5 bg-[#864e63]/5 px-2.5 py-1 rounded-full">
-                      <Zap className="w-3 h-3 text-[#864e63]" />
-                      <span className="text-[11px] text-gray-500">القطعة</span>
-                      <span className="text-sm font-bold text-[#864e63]">{pricePerPiece} ج</span>
+                    <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-full">
+                      <Zap className="w-3 h-3 text-slate-400" />
+                      <span className="text-[11px] text-slate-500">القطعة</span>
+                      <span className="text-sm font-bold text-slate-700">{pricePerPiece} ج</span>
                     </div>
                     <div className="flex items-center gap-1.5 bg-emerald-50 px-2.5 py-1 rounded-full">
-                      <Gem className="w-3 h-3 text-emerald-400" />
-                      <span className="text-[11px] text-gray-500">وفر</span>
-                      <span className="text-sm font-bold text-emerald-500">{savings} ج</span>
+                      <Gem className="w-3 h-3 text-pink-500" />
+                      <span className="text-[11px] text-slate-500">وفر</span>
+                      <span className="text-sm font-bold text-pink-600">{savings} ج</span>
                     </div>
                   </div>
                 </div>
@@ -209,39 +194,23 @@ function SCOffers({ setSelectedOffer, scrollToOrderCollection }) {
                 {/* Progress Bar */}
                 {offer.highlight && (
                   <div className="mt-4 pt-2">
-                    <div className="flex justify-between text-[10px] text-gray-400 mb-1">
-                      <span className="flex items-center gap-1">🔥 نفاذ سريع</span>
-                      <span>{offer.discount}% خصم</span>
+                    <div className="flex justify-between text-[10px] text-slate-400 mb-1">
+                      <span className="flex items-center gap-1 text-[#F472B6]">🔥 نفاذ سريع</span>
+                      <span className="text-[#F472B6]">{offer.discount}% خصم</span>
                     </div>
-                    <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-gradient-to-r from-[#864e63] to-[#c6abff] rounded-full"
+                        className="h-full bg-[#F472B6] rounded-full"
                         style={{ width: `${offer.discount * 2.5}%` }}
                       ></div>
                     </div>
                   </div>
                 )}
-
-                {/* Subtle hover indicator */}
-                <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-[#864e63] to-transparent rounded-full"></div>
-                </div>
               </div>
             </div>
           );
         })}
       </div>
-
-      <style jsx>{`
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        .animate-spin-slow {
-          animation: spin-slow 4s linear infinite;
-        }
-      `}</style>
     </div>
   );
 }

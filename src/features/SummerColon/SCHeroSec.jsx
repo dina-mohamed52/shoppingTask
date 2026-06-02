@@ -176,8 +176,9 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
   const getCardStyle = useCallback(
     (index) => {
       const isMobileDevice = window.innerWidth < 768;
-      const cardWidth = isMobileDevice ? 140 : 360;
-      const cardHeight = isMobileDevice ? 180 : 390;
+      // تكبير حجم الكارد في الموبيل
+      const cardWidth = isMobileDevice ? 220 : 360;
+      const cardHeight = isMobileDevice ? 320 : 390;
 
       let diff = index - activeIndex;
       const total = products.length;
@@ -202,28 +203,28 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
         zIndex = 10;
       } else if (position === 1) {
         // RIGHT
-        xPercent = isMobileDevice ? 85 : 55;
-        scale = isMobileDevice ? 0.7 : 0.8;
-        opacity = isMobileDevice ? 0.6 : 0.7;
+        xPercent = isMobileDevice ? 95 : 55;
+        scale = isMobileDevice ? 0.75 : 0.8;
+        opacity = isMobileDevice ? 0.7 : 0.7;
         zIndex = 5;
       } else if (position === -1) {
         // LEFT
-        xPercent = isMobileDevice ? -85 : -55;
-        scale = isMobileDevice ? 0.7 : 0.85;
-        opacity = isMobileDevice ? 0.6 : 0.7;
+        xPercent = isMobileDevice ? -95 : -55;
+        scale = isMobileDevice ? 0.75 : 0.85;
+        opacity = isMobileDevice ? 0.7 : 0.7;
         zIndex = 5;
       } else if (position === 2) {
-        xPercent = isMobileDevice ? 150 : 100;
-        scale = 0.4;
+        xPercent = isMobileDevice ? 180 : 100;
+        scale = 0.5;
         opacity = 0;
         zIndex = 0;
       } else if (position === -2) {
-        xPercent = isMobileDevice ? -150 : -100;
-        scale = 0.4;
+        xPercent = isMobileDevice ? -180 : -100;
+        scale = 0.5;
         opacity = 0;
         zIndex = 0;
       } else {
-        xPercent = position > 0 ? 250 : -250;
+        xPercent = position > 0 ? 280 : -280;
         scale = 0.3;
         opacity = 0;
         zIndex = 0;
@@ -362,9 +363,9 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
               {/* 3D Carousel Container */}
               <div
                 ref={containerRef}
-                className="relative w-full min-h-[400px] md:min-h-[500px] overflow-visible"
+                className="relative w-full min-h-[450px] md:min-h-[550px] overflow-visible"
                 style={{
-                  perspective: isMobile ? "800px" : "1200px",
+                  perspective: isMobile ? "1000px" : "1200px",
                 }}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
@@ -373,28 +374,28 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
                 {/* Navigation Buttons - Mobile friendly positioned */}
                 <button
                   onClick={handlePrev}
-                  className="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 z-20 
-                    w-8 h-8 md:w-10 md:h-10 bg-black/50 backdrop-blur-sm rounded-full 
+                  className="absolute left-0 md:left-0 top-1/2 -translate-y-1/2 z-20 
+                    w-10 h-10 md:w-12 md:h-12 bg-black/50 backdrop-blur-sm rounded-full 
                     flex items-center justify-center text-white hover:bg-[#ff8c93] 
-                    transition-all duration-300 border border-white/10"
+                    transition-all duration-300 border border-white/10 shadow-lg"
                 >
-                  <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
+                  <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
 
                 <button
                   onClick={handleNext}
-                  className="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 
-                    z-20 w-8 h-8 md:w-10 md:h-10 bg-black/50 backdrop-blur-sm rounded-full
+                  className="absolute right-0 md:right-0 top-1/2 -translate-y-1/2 
+                    z-20 w-10 h-10 md:w-12 md:h-12 bg-black/50 backdrop-blur-sm rounded-full
                     flex items-center justify-center text-white hover:bg-[#ff8c93] 
-                    transition-all duration-300 border border-white/10"
+                    transition-all duration-300 border border-white/10 shadow-lg"
                 >
-                  <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
+                  <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
 
                 {/* 3D Container - Centered on mobile */}
                 <div
                   ref={carouselContainerRef}
-                  className="relative w-full h-[380px] md:h-[500px] overflow-visible"
+                  className="relative w-full h-[420px] md:h-[550px] overflow-visible"
                   style={{
                     transformStyle: "preserve-3d",
                     WebkitTransformStyle: "preserve-3d",
@@ -429,7 +430,7 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
                         >
                           {/* Product Image */}
                           <div
-                            className="relative h-[60%] overflow-hidden 
+                            className="relative h-[65%] overflow-hidden 
                               bg-gradient-to-br from-gray-700 to-gray-800"
                           >
                             <img
@@ -441,44 +442,44 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
                             />
 
                             {/* Discount Badge */}
-                            <div className="absolute top-2 right-2 bg-gradient-to-r from-[#ff8c93] to-[#e51245] text-white rounded-full w-6 h-6 md:w-8 md:h-8 flex items-center justify-center text-[10px] md:text-xs font-bold shadow-lg">
+                            <div className="absolute top-2 right-2 bg-gradient-to-r from-[#ff8c93] to-[#e51245] text-white rounded-full w-7 h-7 md:w-8 md:h-8 flex items-center justify-center text-xs md:text-sm font-bold shadow-lg">
                               -{product.discount}%
                             </div>
 
                             {/* Active Indicator */}
                             {isActive && (
-                              <div className="absolute top-2 left-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full px-1.5 md:px-2 py-0.5 md:py-1 text-[8px] md:text-[10px] font-bold shadow-lg flex items-center gap-1">
+                              <div className="absolute top-2 left-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full px-2 md:px-3 py-1 text-[10px] md:text-xs font-bold shadow-lg flex items-center gap-1">
                                 <span className="text-yellow-400">★</span>
-                                <span className="hidden xs:inline">رائج</span>
+                                <span>رائج</span>
                               </div>
                             )}
                           </div>
 
-                          <div className="p-2 md:p-3 flex-1 flex flex-col">
-                            <h3 className="font-bold text-white text-xs md:text-sm mb-0.5 md:mb-1 line-clamp-1">
+                          <div className="p-3 md:p-4 flex-1 flex flex-col">
+                            <h3 className="font-bold text-white text-sm md:text-base mb-1 line-clamp-1">
                               {product.name}
                             </h3>
 
-                            <p className="text-[8px] md:text-[10px] text-[#ff8c93] font-semibold mb-1 md:mb-2">
+                            <p className="text-[10px] md:text-xs text-[#ff8c93] font-semibold mb-2">
                               {product.color}
                             </p>
 
                             {/* Rating */}
-                            <div className="flex items-center gap-0.5 mb-1 md:mb-2">
+                            <div className="flex items-center gap-0.5 mb-2">
                               {[...Array(5)].map((_, i) => (
                                 <Star
                                   key={i}
-                                  className={`w-2.5 h-2.5 md:w-3 md:h-3 ${i < product.rating ? "text-yellow-400 fill-current" : "text-gray-600"}`}
+                                  className={`w-3 h-3 md:w-4 md:h-4 ${i < product.rating ? "text-yellow-400 fill-current" : "text-gray-600"}`}
                                 />
                               ))}
                             </div>
 
                             {/* Price */}
-                            <div className="flex items-baseline gap-1 mb-2 md:mb-3">
-                              <span className="text-xs md:text-sm font-bold text-white">
+                            <div className="flex items-baseline gap-1.5 mb-3">
+                              <span className="text-sm md:text-base font-bold text-white">
                                 {product.price} ج.م
                               </span>
-                              <span className="text-[8px] md:text-[10px] text-gray-400 line-through">
+                              <span className="text-[10px] md:text-xs text-gray-400 line-through">
                                 {product.originalPrice} ج.م
                               </span>
                             </div>
@@ -486,7 +487,7 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
                             {isActive && (
                               <button
                                 onClick={handleShopNow}
-                                className="w-full bg-gradient-to-r from-[#ff8c93] to-[#e51245] text-white py-1 md:py-1.5 rounded-lg text-[10px] md:text-xs font-semibold transition-all duration-300 hover:scale-105 mt-auto cursor-pointer"
+                                className="w-full bg-gradient-to-r from-[#ff8c93] to-[#e51245] text-white py-2 md:py-2.5 rounded-lg text-xs md:text-sm font-semibold transition-all duration-300 hover:scale-105 mt-auto cursor-pointer"
                               >
                                 شراء الآن
                               </button>
@@ -499,11 +500,11 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
                 </div>
                 
                 {/* Center Glow Effect */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 md:w-32 md:h-32 bg-gradient-to-r from-[#ff8c93]/20 to-[#ac89ff]/20 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 md:w-32 md:h-32 bg-gradient-to-r from-[#ff8c93]/20 to-[#ac89ff]/20 rounded-full blur-2xl pointer-events-none" />
               </div>
 
               {/* Carousel Indicators */}
-              <div className="flex justify-center gap-1.5 md:gap-2 mt-4 md:mt-8">
+              <div className="flex justify-center gap-2 md:gap-3 mt-6 md:mt-8">
                 {products.map((_, idx) => (
                   <button
                     key={idx}
@@ -514,8 +515,8 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
                     }}
                     className={`transition-all duration-300 rounded-full ${
                       activeIndex === idx
-                        ? "w-6 md:w-8 h-1 bg-gradient-to-r from-[#ff8c93] to-[#ac89ff]"
-                        : "w-1 h-1 bg-gray-600 hover:bg-[#ff8c93]"
+                        ? "w-8 md:w-10 h-1.5 bg-gradient-to-r from-[#ff8c93] to-[#ac89ff]"
+                        : "w-1.5 h-1.5 bg-gray-600 hover:bg-[#ff8c93]"
                     }`}
                   />
                 ))}
@@ -549,12 +550,6 @@ function SCHeroSec({ scrollToOffers, scrollToProducts }) {
 
         .animate-pulse {
           animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @media (max-width: 480px) {
-          .xs\\:inline {
-            display: inline;
-          }
         }
       `}</style>
     </section>
