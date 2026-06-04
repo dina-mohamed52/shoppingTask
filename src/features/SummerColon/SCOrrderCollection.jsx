@@ -38,7 +38,7 @@ function MobileSelect({
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredOptions = options.filter((opt) =>
-    opt.label.toLowerCase().includes(searchTerm.toLowerCase())
+    opt.label.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const selectedOption = options.find((opt) => opt.value === value);
@@ -60,8 +60,12 @@ function MobileSelect({
             ${value ? "border-purple-300 ring-1 ring-purple-200" : "border-gray-200"}
           `}
         >
-          <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`} />
-          <span className={`text-sm ${value ? "text-gray-800 font-medium" : "text-gray-400"}`}>
+          <ChevronDown
+            className={`w-5 h-5 text-gray-400 transition-transform ${open ? "rotate-180" : ""}`}
+          />
+          <span
+            className={`text-sm ${value ? "text-gray-800 font-medium" : "text-gray-400"}`}
+          >
             {selectedOption?.label || placeholder}
           </span>
         </button>
@@ -88,7 +92,6 @@ function MobileSelect({
               <X className="w-4 h-4 text-gray-500" />
             </button>
           </div>
-          
         </div>
 
         <div className="divide-y divide-gray-50 max-h-[50vh] overflow-y-auto">
@@ -112,18 +115,25 @@ function MobileSelect({
                   ${value === option.value ? "bg-purple-50" : "hover:bg-gray-50"}
                 `}
               >
-                {renderOption ? renderOption(option) : (
+                {renderOption ? (
+                  renderOption(option)
+                ) : (
                   <div className="flex items-center gap-3">
                     {option.color && (
                       <div
                         className="w-6 h-6 rounded-full shadow-inner"
                         style={{
                           backgroundColor: option.color,
-                          border: option.color === "#FFFFFF" ? "1px solid #E5E7EB" : "none",
+                          border:
+                            option.color === "#FFFFFF"
+                              ? "1px solid #E5E7EB"
+                              : "none",
                         }}
                       />
                     )}
-                    <span className="text-sm text-gray-800">{option.label}</span>
+                    <span className="text-sm text-gray-800">
+                      {option.label}
+                    </span>
                   </div>
                 )}
                 {value === option.value && (
@@ -161,7 +171,9 @@ function SuccessModal({ visible, onClose, message, onContinue, onCheckout }) {
             <div className="w-16 h-16 mx-auto bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mb-4">
               <CheckCircle className="w-8 h-8 text-green-500" />
             </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">🎉 تم بنجاح!</h3>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">
+              🎉 تم بنجاح!
+            </h3>
             <p className="text-gray-500 text-sm mb-6">{message}</p>
             <div className="flex flex-col sm:flex-row gap-3">
               <button
@@ -190,10 +202,7 @@ function SuccessModal({ visible, onClose, message, onContinue, onCheckout }) {
   );
 }
 
-function SCOrderCollection({
-  selectedOffer,
-  scrollToOffers,
-}) {
+function SCOrderCollection({ selectedOffer, scrollToOffers }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const count = selectedOffer?.value || selectedOffer?.count || 0;
@@ -203,7 +212,7 @@ function SCOrderCollection({
   const [pendingNavigation, setPendingNavigation] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
-  
+
   const scProducts = SummerColonData;
   const { addToCart } = useCart();
 
@@ -232,7 +241,7 @@ function SCOrderCollection({
   // دالة لعكس المقاس (تحويل 10-8 إلى 8-10)
   const reverseSize = (size) => {
     if (!size) return size;
-    const parts = size.split('-');
+    const parts = size.split("-");
     if (parts.length === 2) {
       const first = parseInt(parts[0]);
       const second = parseInt(parts[1]);
@@ -276,9 +285,7 @@ function SCOrderCollection({
   };
 
   const getAvailableSizes = (productName, color) => {
-    const product = SummerColonData.find(
-      (item) => item.name === productName
-    );
+    const product = SummerColonData.find((item) => item.name === productName);
 
     if (!product) return [];
 
@@ -289,11 +296,9 @@ function SCOrderCollection({
       productName?.includes("اوباك") ||
       productName?.includes("ساده");
 
-   
-
     return sizes;
   };
-  
+
   const getColorCode = (colorName) => {
     const colorMap = {
       أبيض: "#FFFFFF",
@@ -337,25 +342,31 @@ function SCOrderCollection({
   };
 
   // التحقق من صحة النموذج
-  const isFormValid = pieces.every(piece => 
-    piece.name && piece.color && selectedSizes[piece.id]
+  const isFormValid = pieces.every(
+    (piece) => piece.name && piece.color && selectedSizes[piece.id],
   );
 
   // تجهيز عناصر العرض للإضافة للسلة
   const prepareCartItem = () => {
-    const orderWithDetails = pieces.map(piece => {
-      const product = SummerColonData.find(p => p.name === piece.name);
+    const orderWithDetails = pieces.map((piece) => {
+      const product = SummerColonData.find((p) => p.name === piece.name);
       // جلب الصورة المناسبة بناءً على اللون المختار
       let productImage = "";
       if (product && product.productColors) {
-        const colorIndex = product.avalibeColors?.findIndex(c => c === piece.color);
-        if (colorIndex !== -1 && colorIndex >= 0 && product.productColors?.[colorIndex]) {
+        const colorIndex = product.avalibeColors?.findIndex(
+          (c) => c === piece.color,
+        );
+        if (
+          colorIndex !== -1 &&
+          colorIndex >= 0 &&
+          product.productColors?.[colorIndex]
+        ) {
           productImage = product.productColors[colorIndex].img;
         } else if (product.productColors?.[0]) {
           productImage = product.productColors[0].img;
         }
       }
-      
+
       return {
         id: piece.id,
         name: piece.name,
@@ -366,7 +377,7 @@ function SCOrderCollection({
     });
 
     // استخدام أول صورة متاحة كصورة رئيسية للعرض
-    const mainImage = orderWithDetails.find(p => p.image)?.image || "";
+    const mainImage = orderWithDetails.find((p) => p.image)?.image || "";
 
     return {
       id: `sc-offer-${selectedOffer?.name}-${Date.now()}`,
@@ -400,23 +411,27 @@ function SCOrderCollection({
     try {
       const cartItem = prepareCartItem();
       addToCart(cartItem);
-      
+
       // عرض Toast نجاح مع أيقونة
       toast.success(
         <div className="flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-green-500" />
-          <span>تم إضافة <strong>{selectedOffer?.name}</strong> إلى السلة بنجاح! 🛒</span>
+          <span>
+            تم إضافة <strong>{selectedOffer?.name}</strong> إلى السلة بنجاح! 🛒
+          </span>
         </div>,
         {
           position: "bottom-center",
           autoClose: 3000,
           icon: false,
-        }
+        },
       );
-      
+
       if (shouldNavigate) {
         // عرض Modal قبل التوجيه
-        setSuccessMessage(`🎁 تم إضافة عرض ${selectedOffer?.name} بنجاح إلى سلة التسوق!`);
+        setSuccessMessage(
+          `🎁 تم إضافة عرض ${selectedOffer?.name} بنجاح إلى سلة التسوق!`,
+        );
         setShowSuccessModal(true);
         setPendingNavigation(true);
       } else {
@@ -426,7 +441,7 @@ function SCOrderCollection({
           autoClose: 4000,
         });
       }
-      
+
       return true;
     } catch (error) {
       toast.error("❌ حدث خطأ في إضافة المنتج للسلة", {
@@ -488,8 +503,12 @@ function SCOrderCollection({
           <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Droplet className="w-8 h-8 md:w-10 md:h-10 text-purple-300" />
           </div>
-          <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-1">اختار عرضك</h3>
-          <p className="text-gray-400 text-xs md:text-sm">برجاء اختيار عرض مناسب من الأعلى</p>
+          <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-1">
+            اختار عرضك
+          </h3>
+          <p className="text-gray-400 text-xs md:text-sm">
+            برجاء اختيار عرض مناسب من الأعلى
+          </p>
         </motion.div>
         <motion.button
           onClick={handleGoToOffers}
@@ -512,7 +531,10 @@ function SCOrderCollection({
   }));
 
   return (
-    <div ref={containerRef} className="py-6 md:py-12 px-3 md:px-4 max-w-7xl mx-auto">
+    <div
+      ref={containerRef}
+      className="py-6 md:py-12 px-3 md:px-4 max-w-7xl mx-auto"
+    >
       {/* Hero Header - ألوان موف */}
       <div className="text-center mb-8 md:mb-12">
         <motion.div
@@ -524,23 +546,27 @@ function SCOrderCollection({
           <Sparkles className="w-3 h-3" />
           <span className="text-[11px] md:text-xs font-medium">تخصيص طلبك</span>
         </motion.div>
-        
+
         <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 px-2">
-          اختر تفاصيل{' '}
+          اختر تفاصيل{" "}
           <span className="bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">
             الكولونات
           </span>
         </h2>
-        <p className="text-gray-400 text-xs md:text-sm px-4">قم بتخصيص كل كولون بالمنتج واللون والمقاس المناسب</p>
-        
+        <p className="text-gray-400 text-xs md:text-sm px-4">
+          قم بتخصيص كل كولون بالمنتج واللون والمقاس المناسب
+        </p>
+
         {/* Premium Progress Bar - ألوان موف */}
         <div className="max-w-md mx-auto mt-6 md:mt-8 px-4">
           <div className="flex justify-between text-xs md:text-sm mb-2">
             <span className="text-gray-500">تقدم الطلب</span>
-            <span className="font-bold text-purple-600">{completedCount}/{pieces.length}</span>
+            <span className="font-bold text-purple-600">
+              {completedCount}/{pieces.length}
+            </span>
           </div>
           <div className="relative h-2 bg-purple-100 rounded-full overflow-hidden">
-            <motion.div 
+            <motion.div
               className="absolute top-0 left-0 h-full bg-gradient-to-r from-purple-500 to-purple-600 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${completionPercentage}%` }}
@@ -560,13 +586,12 @@ function SCOrderCollection({
       </div>
 
       {/* Premium Cards Grid - ألوان موف ورمادي */}
-      <div
-      dir="rtl"
-      className="grid sm:grid-cols-2 grid-cols-1 gap-4 md:gap-6">
+      <div dir="rtl" className="grid sm:grid-cols-2 grid-cols-1 gap-4 md:gap-6">
         {pieces.map((piece, idx) => {
           const colors = getAvailableColors(piece.name);
           const sizes = getAvailableSizes(piece.name, piece.color);
-          const isCompleted = piece.name && piece.color && selectedSizes[piece.id];
+          const isCompleted =
+            piece.name && piece.color && selectedSizes[piece.id];
 
           // Prepare options for selects
           const colorOptions = colors.map((c) => ({
@@ -590,24 +615,31 @@ function SCOrderCollection({
               transition={{ delay: idx * 0.1, duration: 0.4 }}
               className="relative"
             >
-              <div className={`
+              <div
+                className={`
                 relative bg-white rounded-xl md:rounded-2xl transition-all duration-300 overflow-hidden
                 ${isCompleted ? "ring-2 ring-purple-400 ring-offset-2" : "border border-gray-200"}
                 shadow-md
-              `}>
-                <div className={`
+              `}
+              >
+                <div
+                  className={`
                   px-4 md:px-5 py-3 md:py-4 border-b transition-all duration-300
                   ${isCompleted ? "bg-gradient-to-r from-purple-50 to-gray-50 border-purple-100" : "bg-white border-gray-100"}
-                `}>
+                `}
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2 md:gap-3">
-                      <div className={`
+                      <div
+                        className={`
                         w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center font-bold transition-all duration-300
-                        ${isCompleted 
-                          ? "bg-purple-600 text-white shadow-lg shadow-purple-200" 
-                          : "bg-gray-100 text-gray-600"
+                        ${
+                          isCompleted
+                            ? "bg-purple-600 text-white shadow-lg shadow-purple-200"
+                            : "bg-gray-100 text-gray-600"
                         }
-                      `}>
+                      `}
+                      >
                         {isCompleted ? (
                           <CheckCircle className="w-4 h-4 md:w-5 md:h-5" />
                         ) : (
@@ -615,15 +647,21 @@ function SCOrderCollection({
                         )}
                       </div>
                       <div>
-                        <p className="text-[10px] md:text-xs text-gray-400">الكولون</p>
-                        <p className="text-base md:text-lg font-bold text-gray-800">#{piece.id}</p>
+                        <p className="text-[10px] md:text-xs text-gray-400">
+                          الكولون
+                        </p>
+                        <p className="text-base md:text-lg font-bold text-gray-800">
+                          #{piece.id}
+                        </p>
                       </div>
                     </div>
-                    
+
                     {piece.name && (
                       <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-100 rounded-lg">
                         <Droplet className="w-3 h-3 text-gray-500" />
-                        <span className="text-[10px] md:text-xs text-gray-600">{piece.name.split(' ').slice(0,2).join(' ')}</span>
+                        <span className="text-[10px] md:text-xs text-gray-600">
+                          {piece.name.split(" ").slice(0, 2).join(" ")}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -634,7 +672,9 @@ function SCOrderCollection({
                   {isMobile ? (
                     <MobileSelect
                       value={piece.name}
-                      onChange={(value) => handleChange(piece.id, "name", value)}
+                      onChange={(value) =>
+                        handleChange(piece.id, "name", value)
+                      }
                       options={productOptions}
                       placeholder="اختر الكولون"
                       label="الكولون"
@@ -645,7 +685,9 @@ function SCOrderCollection({
                             <Droplet className="w-4 h-4 text-purple-500" />
                           </div>
                           <div className="flex-1 text-right">
-                            <p className="font-medium text-gray-800 text-sm">{option.label}</p>
+                            <p className="font-medium text-gray-800 text-sm">
+                              {option.label}
+                            </p>
                           </div>
                         </div>
                       )}
@@ -658,7 +700,9 @@ function SCOrderCollection({
                       </label>
                       <Select
                         value={piece.name || undefined}
-                        onChange={(value) => handleChange(piece.id, "name", value)}
+                        onChange={(value) =>
+                          handleChange(piece.id, "name", value)
+                        }
                         placeholder="كولون"
                         className="w-full"
                         size="large"
@@ -672,7 +716,9 @@ function SCOrderCollection({
                                 <Droplet className="w-4 h-4 text-purple-500" />
                               </div>
                               <div>
-                                <p className="font-medium text-gray-800 text-sm">{product.name}</p>
+                                <p className="font-medium text-gray-800 text-sm">
+                                  {product.name}
+                                </p>
                               </div>
                             </div>
                           </Select.Option>
@@ -686,7 +732,9 @@ function SCOrderCollection({
                     {isMobile ? (
                       <MobileSelect
                         value={piece.color}
-                        onChange={(value) => handleChange(piece.id, "color", value)}
+                        onChange={(value) =>
+                          handleChange(piece.id, "color", value)
+                        }
                         options={colorOptions}
                         placeholder="اختر اللون"
                         label="اللون"
@@ -698,10 +746,15 @@ function SCOrderCollection({
                               className="w-6 h-6 rounded-full shadow-inner"
                               style={{
                                 backgroundColor: option.color,
-                                border: option.color === "#FFFFFF" ? "1px solid #E5E7EB" : "none",
+                                border:
+                                  option.color === "#FFFFFF"
+                                    ? "1px solid #E5E7EB"
+                                    : "none",
                               }}
                             />
-                            <span className="text-sm text-gray-800">{option.label}</span>
+                            <span className="text-sm text-gray-800">
+                              {option.label}
+                            </span>
                           </div>
                         )}
                       />
@@ -713,7 +766,9 @@ function SCOrderCollection({
                         </label>
                         <Select
                           value={piece.color || undefined}
-                          onChange={(value) => handleChange(piece.id, "color", value)}
+                          onChange={(value) =>
+                            handleChange(piece.id, "color", value)
+                          }
                           placeholder="لون"
                           className="w-full"
                           size="large"
@@ -724,9 +779,15 @@ function SCOrderCollection({
                           {colors.map((color, idx) => (
                             <Select.Option key={idx} value={color}>
                               <div className="flex items-center gap-2">
-                                <div 
+                                <div
                                   className="w-5 h-5 rounded-full shadow-inner"
-                                  style={{ backgroundColor: getColorCode(color), border: color === "أبيض" ? "1px solid #E5E7EB" : "none" }}
+                                  style={{
+                                    backgroundColor: getColorCode(color),
+                                    border:
+                                      color === "أبيض"
+                                        ? "1px solid #E5E7EB"
+                                        : "none",
+                                  }}
                                 />
                                 <span>{color}</span>
                               </div>
@@ -741,8 +802,7 @@ function SCOrderCollection({
                       <MobileSelect
                         value={selectedSizes[piece.id]}
                         onChange={(value) => {
-                          const reversedValue = reverseSize(value);
-                          handleSizeChange(piece.id, reversedValue);
+                          handleSizeChange(piece.id, value);
                         }}
                         options={sizeOptions}
                         placeholder="اختر المقاس"
@@ -782,8 +842,12 @@ function SCOrderCollection({
                           {sizes.map((sizeItem, idx) => (
                             <Select.Option key={idx} value={sizeItem.size}>
                               <div className="flex items-center justify-between">
-                                <span className="font-medium text-gray-800">{sizeItem.size}</span>
-                                <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">{sizeItem.age}</span>
+                                <span className="font-medium text-gray-800">
+                                  {sizeItem.size}
+                                </span>
+                                <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
+                                  {sizeItem.age}
+                                </span>
                               </div>
                             </Select.Option>
                           ))}
@@ -836,19 +900,25 @@ function SCOrderCollection({
                   )}
                 </div>
 
-                <div className={`
+                <div
+                  className={`
                   px-4 md:px-5 py-2 md:py-3 border-t transition-all duration-300
                   ${isCompleted ? "bg-gradient-to-r from-purple-50 to-gray-50 border-purple-100" : "bg-gray-50 border-gray-100"}
-                `}>
+                `}
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
-                      <div className={`w-1.5 h-1.5 rounded-full ${isCompleted ? "bg-green-500" : "bg-gray-300"}`} />
+                      <div
+                        className={`w-1.5 h-1.5 rounded-full ${isCompleted ? "bg-green-500" : "bg-gray-300"}`}
+                      />
                       <span className="text-[10px] md:text-xs text-gray-500">
                         {isCompleted ? "مكتملة ✓" : "في انتظار التحديد"}
                       </span>
                     </div>
                     {isCompleted && (
-                      <span className="text-[10px] md:text-xs text-purple-500 font-medium">جاهز للإضافة</span>
+                      <span className="text-[10px] md:text-xs text-purple-500 font-medium">
+                        جاهز للإضافة
+                      </span>
                     )}
                   </div>
                 </div>
@@ -886,9 +956,10 @@ function SCOrderCollection({
             whileTap={isFormValid ? { scale: 0.98 } : {}}
             className={`
               relative group flex-1 px-5 md:px-8 py-3 md:py-4 rounded-xl font-bold text-sm md:text-lg transition-all duration-300 flex items-center justify-center gap-2 md:gap-3
-              ${isFormValid && !isSubmitting
-                ? "bg-white border-2 border-purple-500 text-purple-600 hover:bg-purple-50 shadow-md active:scale-[0.98]"
-                : "bg-gray-100 border-2 border-gray-200 text-gray-400 cursor-not-allowed"
+              ${
+                isFormValid && !isSubmitting
+                  ? "bg-white border-2 border-purple-500 text-purple-600 hover:bg-purple-50 shadow-md active:scale-[0.98]"
+                  : "bg-gray-100 border-2 border-gray-200 text-gray-400 cursor-not-allowed"
               }
             `}
           >
@@ -913,16 +984,17 @@ function SCOrderCollection({
             whileTap={isFormValid ? { scale: 0.98 } : {}}
             className={`
               relative group flex-1 px-5 md:px-8 py-3 md:py-4 rounded-xl font-bold text-sm md:text-lg transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 overflow-hidden
-              ${isFormValid && !isSubmitting
-                ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-xl shadow-purple-200 active:scale-[0.98]"
-                : "bg-gray-100 text-gray-400 cursor-not-allowed"
+              ${
+                isFormValid && !isSubmitting
+                  ? "bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-xl shadow-purple-200 active:scale-[0.98]"
+                  : "bg-gray-100 text-gray-400 cursor-not-allowed"
               }
             `}
           >
             {isFormValid && !isSubmitting && (
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000" />
             )}
-            
+
             {isSubmitting ? (
               <>
                 <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
