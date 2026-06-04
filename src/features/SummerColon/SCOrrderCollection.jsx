@@ -268,12 +268,37 @@ function SCOrderCollection({ selectedOffer, scrollToOffers }) {
     setPieces(initialPieces);
   }
 
-  const handleChange = (id, field, value) => {
-    const updated = pieces.map((p) =>
-      p.id === id ? { ...p, [field]: value } : p,
-    );
-    setPieces(updated);
-  };
+ // داخل دالة SCOrderCollection، قم بتعديل دالة handleChange كالتالي:
+
+const handleChange = (id, field, value) => {
+  const updated = pieces.map((p) => {
+    if (p.id === id) {
+      // إذا كان الحقل المغير هو "name" (المنتج)
+      if (field === "name") {
+        // إعادة تعيين اللون و المقاس عند تغيير المنتج
+        return { 
+          ...p, 
+          name: value, 
+          color: "",      // ← مسح اللون القديم
+          size: ""        // ← مسح المقاس القديم (اختياري)
+        };
+      }
+      // لتحديث الحقول الأخرى بشكل طبيعي
+      return { ...p, [field]: value };
+    }
+    return p;
+  });
+  setPieces(updated);
+
+  // إذا تم تغيير المنتج، قم أيضاً بمسح المقاس المحدد لذلك القطعة
+  if (field === "name") {
+    setSelectedSizes((prev) => {
+      const newSizes = { ...prev };
+      delete newSizes[id]; // إزالة المقاس القديم من حالة الأحجام
+      return newSizes;
+    });
+  }
+};
 
   const getAvailableColors = (productName) => {
     const product = SummerColonData.find((item) => item.name === productName);
