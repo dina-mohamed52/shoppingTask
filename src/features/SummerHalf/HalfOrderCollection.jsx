@@ -88,7 +88,6 @@ function MobileSelect({
               <X className="w-4 h-4 text-gray-500" />
             </button>
           </div>
-         
         </div>
 
         <div className="divide-y divide-gray-50 max-h-[50vh] overflow-y-auto">
@@ -273,11 +272,16 @@ function HalfOrderCollection({
   useEffect(() => {
     const completed = {};
     pieces.forEach((piece) => {
-      completed[piece.id] = !!(
-        piece.productId &&
-        piece.color &&
-        selectedSizes[piece.id]
-      );
+      const product = getProductById(piece.productId);
+      const isOneSizeProduct = product?.id === 6; // تربون أطفال
+        
+      if (isOneSizeProduct) {
+        // للمنتج One Size، نحتاج فقط المنتج واللون
+        completed[piece.id] = !!(piece.productId && piece.color);
+      } else {
+        // للمنتجات العادية، نحتاج المنتج واللون والمقاس
+        completed[piece.id] = !!(piece.productId && piece.color && selectedSizes[piece.id]);
+      }
     });
     setCompletedCards(completed);
   }, [pieces, selectedSizes]);
@@ -290,6 +294,12 @@ function HalfOrderCollection({
   const getProductSizes = (productId) => {
     const product = getProductById(productId);
     return product?.sizes || [];
+  };
+
+  // دالة للتحقق إذا كان المنتج من نوع One Size
+  const isOneSizeProduct = (productId) => {
+    const product = getProductById(productId);
+    return product?.id === 6; // تربون أطفال
   };
 
   const handleGoToOffers = () => {
@@ -325,10 +335,19 @@ function HalfOrderCollection({
       كافيه: "#8B5E3C",
       بني: "#8B4513",
       بندقي: "#D2B48C",
+      "أوف وايت ورده": "#FDF5E6",
+      "أصفر ورده": "#FFD700",
+      "بيج ورده": "#F5F5DC",
+      "بينك ورده": "#FF69B4",
+      "لافندر ورده": "#E0B0FF",
+      "أسود فيونكه": "#000000",
+      "أحمر فيونكه": "#FF0000",
+      "بينك فيونكه": "#FF69B4",
+      "كافيه فيونكه": "#6F4E37",
       default: "#E5E7EB",
     };
     const extractedColor =
-      Object.keys(colorMap).find((c) => colorName.includes(c)) || "default";
+      Object.keys(colorMap).find((c) => colorName?.includes(c)) || "default";
     return colorMap[extractedColor];
   };
 
@@ -336,6 +355,12 @@ function HalfOrderCollection({
     setPieces((prev) =>
       prev.map((p) => (p.id === id ? { ...p, productId, color: "" } : p))
     );
+    // مسح المقاس المخزن عند تغيير المنتج
+    setSelectedSizes((prev) => {
+      const newSizes = { ...prev };
+      delete newSizes[id];
+      return newSizes;
+    });
   };
 
   const handleColorChange = (id, color) => {
@@ -362,12 +387,15 @@ function HalfOrderCollection({
   const prepareCartItem = () => {
     const orderWithDetails = pieces.map((piece) => {
       const product = getProductById(piece.productId);
+      const isOneSize = isOneSizeProduct(piece.productId);
+      
       return {
         id: piece.id,
         productId: piece.productId,
         name: product?.name,
         color: piece.color,
-        size: selectedSizes[piece.id],
+        // فقط أضف المقاس إذا لم يكن المنتج One Size
+        ...(isOneSize ? {} : { size: selectedSizes[piece.id] }),
         image: getProductImage(product, piece.color),
       };
     });
@@ -389,9 +417,18 @@ function HalfOrderCollection({
     };
   };
 
-  const isFormValid = pieces.every(
-    (piece) => piece.productId && piece.color && selectedSizes[piece.id]
-  );
+  // التحقق من صحة النموذج
+  const isFormValid = pieces.every((piece) => {
+    const isOneSize = isOneSizeProduct(piece.productId);
+    
+    if (isOneSize) {
+      // للمنتج One Size: نحتاج منتج ولون فقط
+      return !!(piece.productId && piece.color);
+    } else {
+      // للمنتجات العادية: نحتاج منتج ولون ومقاس
+      return !!(piece.productId && piece.color && selectedSizes[piece.id]);
+    }
+  });
 
   const handleAddToCart = async (shouldNavigate = false) => {
     if (!isFormValid) {
@@ -586,13 +623,14 @@ function HalfOrderCollection({
       </AnimatePresence>
 
       {/* Premium Cards Grid */}
-      <div className="grid sm:grid-cols-2  grid-cols-1 gap-4 md:gap-6">
+      <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 md:gap-6">
         {pieces.map((piece, idx) => {
           const product = getProductById(piece.productId);
           const colors = getProductColors(piece.productId);
           const sizes = getProductSizes(piece.productId);
           const isCompleted = completedCards[piece.id];
           const isHovered = hoveredCard === piece.id;
+          const isOneSize = isOneSizeProduct(piece.productId);
 
           // Prepare options for mobile selects
           const productOptions = products.map((p) => ({
@@ -806,56 +844,75 @@ function HalfOrderCollection({
                       </div>
                     )}
 
-                    {/* Size Selection */}
-                    {isMobile ? (
-                      <MobileSelect
-                        value={selectedSizes[piece.id]}
-                        onChange={(val) => handleSizeChange(piece.id, val)}
-                        options={sizeOptions}
-                        placeholder="اختر المقاس"
-                        label="المقاس"
-                        icon={Ruler}
-                        disabled={!piece.productId || !piece.color}
-                        renderOption={(option) => (
-                          <div className="flex items-center justify-between w-full">
-                            <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
-                              {option.age}
-                            </span>
-                            <span className="font-medium text-gray-800">
-                              {option.size}
-                            </span>
+                    {/* Size Selection - Only show for non-One Size products */}
+                    {!isOneSize && (
+                      <>
+                        {isMobile ? (
+                          <MobileSelect
+                            value={selectedSizes[piece.id]}
+                            onChange={(val) => handleSizeChange(piece.id, val)}
+                            options={sizeOptions}
+                            placeholder="اختر المقاس"
+                            label="المقاس"
+                            icon={Ruler}
+                            disabled={!piece.productId || !piece.color}
+                            renderOption={(option) => (
+                              <div className="flex items-center justify-between w-full">
+                                <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
+                                  {option.age}
+                                </span>
+                                <span className="font-medium text-gray-800">
+                                  {option.size}
+                                </span>
+                              </div>
+                            )}
+                          />
+                        ) : (
+                          <div className="space-y-2">
+                            <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                              <Ruler className="w-4 h-4 text-pink-500" />
+                              المقاس
+                            </label>
+                            <Select
+                              value={selectedSizes[piece.id]}
+                              onChange={(val) => handleSizeChange(piece.id, val)}
+                              placeholder="مقاس"
+                              className="w-full"
+                              size="large"
+                              disabled={!piece.productId || !piece.color}
+                              style={{ borderRadius: 12 }}
+                              dropdownStyle={{ borderRadius: 12 }}
+                            >
+                              {sizes.map((s) => (
+                                <Select.Option key={s.size} value={s.size}>
+                                  <div className="flex items-center justify-between">
+                                    <span className="font-medium text-gray-800">
+                                      {s.size}
+                                    </span>
+                                    <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
+                                      {s.age}
+                                    </span>
+                                  </div>
+                                </Select.Option>
+                              ))}
+                            </Select>
                           </div>
                         )}
-                      />
-                    ) : (
+                      </>
+                    )}
+
+                    {/* One Size Badge */}
+                    {isOneSize && piece.productId && (
                       <div className="space-y-2">
                         <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
                           <Ruler className="w-4 h-4 text-pink-500" />
                           المقاس
                         </label>
-                        <Select
-                          value={selectedSizes[piece.id]}
-                          onChange={(val) => handleSizeChange(piece.id, val)}
-                          placeholder="مقاس"
-                          className="w-full"
-                          size="large"
-                          disabled={!piece.productId || !piece.color}
-                          style={{ borderRadius: 12 }}
-                          dropdownStyle={{ borderRadius: 12 }}
-                        >
-                          {sizes.map((s) => (
-                            <Select.Option key={s.size} value={s.size}>
-                              <div className="flex items-center justify-between">
-                                <span className="font-medium text-gray-800">
-                                  {s.size}
-                                </span>
-                                <span className="text-xs text-gray-400 bg-gray-50 px-2 py-0.5 rounded-full">
-                                  {s.age}
-                                </span>
-                              </div>
-                            </Select.Option>
-                          ))}
-                        </Select>
+                        <div className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-right">
+                          <span className="text-sm text-gray-600 font-medium">
+                            One Size (مناسب من 0 ل 4 سنين)
+                          </span>
+                        </div>
                       </div>
                     )}
                   </div>

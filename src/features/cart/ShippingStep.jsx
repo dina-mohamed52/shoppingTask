@@ -110,7 +110,10 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
         if (item.isOffer) {
           return item.offerDetails?.pieces
             ?.map(
-              (piece) => `${piece.name} - مقاس ${piece.size} - ${piece.color}`
+              (piece) =>
+                `${piece.name}${
+                  piece.size ? ` - مقاس ${piece.size}` : ""
+                } - ${piece.color}`,
             )
             .join(" | ");
         }
@@ -120,9 +123,9 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
     const res = await fetch(SCRIPT_URL, {
       method: "POST",
-     headers: {
-  "Content-Type": "text/plain;charset=utf-8",
-},
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
       body: JSON.stringify({
         date: new Date().toLocaleDateString("en-GB"),
         name: formData.fullName,
