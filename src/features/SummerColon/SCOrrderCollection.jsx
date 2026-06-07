@@ -268,37 +268,36 @@ function SCOrderCollection({ selectedOffer, scrollToOffers }) {
     setPieces(initialPieces);
   }
 
- // داخل دالة SCOrderCollection، قم بتعديل دالة handleChange كالتالي:
-
-const handleChange = (id, field, value) => {
-  const updated = pieces.map((p) => {
-    if (p.id === id) {
-      // إذا كان الحقل المغير هو "name" (المنتج)
-      if (field === "name") {
-        // إعادة تعيين اللون و المقاس عند تغيير المنتج
-        return { 
-          ...p, 
-          name: value, 
-          color: "",      // ← مسح اللون القديم
-          size: ""        // ← مسح المقاس القديم (اختياري)
-        };
+  // داخل دالة SCOrderCollection، قم بتعديل دالة handleChange كالتالي:
+  const handleChange = (id, field, value) => {
+    const updated = pieces.map((p) => {
+      if (p.id === id) {
+        // إذا كان الحقل المغير هو "name" (المنتج)
+        if (field === "name") {
+          // إعادة تعيين اللون و المقاس عند تغيير المنتج
+          return { 
+            ...p, 
+            name: value, 
+            color: "",      // ← مسح اللون القديم
+            size: ""        // ← مسح المقاس القديم (اختياري)
+          };
+        }
+        // لتحديث الحقول الأخرى بشكل طبيعي
+        return { ...p, [field]: value };
       }
-      // لتحديث الحقول الأخرى بشكل طبيعي
-      return { ...p, [field]: value };
-    }
-    return p;
-  });
-  setPieces(updated);
-
-  // إذا تم تغيير المنتج، قم أيضاً بمسح المقاس المحدد لذلك القطعة
-  if (field === "name") {
-    setSelectedSizes((prev) => {
-      const newSizes = { ...prev };
-      delete newSizes[id]; // إزالة المقاس القديم من حالة الأحجام
-      return newSizes;
+      return p;
     });
-  }
-};
+    setPieces(updated);
+
+    // إذا تم تغيير المنتج، قم أيضاً بمسح المقاس المحدد لذلك القطعة
+    if (field === "name") {
+      setSelectedSizes((prev) => {
+        const newSizes = { ...prev };
+        delete newSizes[id]; // إزالة المقاس القديم من حالة الأحجام
+        return newSizes;
+      });
+    }
+  };
 
   const getAvailableColors = (productName) => {
     const product = SummerColonData.find((item) => item.name === productName);
@@ -309,21 +308,30 @@ const handleChange = (id, field, value) => {
     setSelectedSizes((prev) => ({ ...prev, [id]: size }));
   };
 
+  // Modified function to filter sizes based on product id and color
   const getAvailableSizes = (productName, color) => {
-    const product = SummerColonData.find((item) => item.name === productName);
+  const product = SummerColonData.find((item) => item.name === productName);
+  
+  if (!product) return [];
 
-    if (!product) return [];
+  let sizes = [...product.sizes]; // Create a copy of sizes array
 
-    let sizes = product.sizes;
+  // Special case: Product with id=2 and color "بينك" (Pink)
+  // Start sizes from "8-6" (which represents 6-8) and remove smaller sizes
+  if (product.id === 2 && color === "بينك") {
+    // Define the order of sizes as they appear in the array
+    const sizeOrder = ["4-2", "6-4", "8-6", "10-8", "12-10", "14-12"];
+    // Find the index of "8-6"
+    const startIndex = sizeOrder.indexOf("8-6");
+    // Filter sizes to only include those from "8-6" onwards
+    sizes = sizes.filter(sizeItem => {
+      const sizeIndex = sizeOrder.indexOf(sizeItem.size);
+      return sizeIndex >= startIndex;
+    });
+  }
 
-    const isSpecialCase =
-      productName?.includes("ليجن") ||
-      productName?.includes("اوباك") ||
-      productName?.includes("ساده");
-
-    return sizes;
-  };
-
+  return sizes;
+};
   const getColorCode = (colorName) => {
     const colorMap = {
       أبيض: "#FFFFFF",
