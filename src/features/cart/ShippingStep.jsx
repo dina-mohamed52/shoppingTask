@@ -1,5 +1,5 @@
 // src/features/checkout/ShippingStep.jsx
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -53,7 +53,6 @@ const HIGH_SHIPPING_GOVS = [
   "شمال سيناء",
 ];
 
-// ✅ [الحل رقم 1 + 4] نقل الثابت إلى خارج المكون + إضافة مسار صحيح
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbwgp_vt9LBjp47TL5X4sHwYfyQB1OeyiwXun6TmLV9_q4hPaD9H02YFI-2JJXW8awAr0w/exec";
 
@@ -70,6 +69,13 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
+  // Refs للسكرول التلقائي
+  const fullNameRef = useRef(null);
+  const phoneRef = useRef(null);
+  const phone2Ref = useRef(null);
+  const cityRef = useRef(null);
+  const addressRef = useRef(null);
+
   // حساب الشحن والمجموع
   const subtotal =
     cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
@@ -81,6 +87,57 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  // دالة السكرول إلى أول عنصر فيه خطأ
+  const scrollToFirstError = (errorFields) => {
+    const fieldOrder = ["fullName", "phone", "phone2", "city", "address"];
+    for (let field of fieldOrder) {
+      if (errorFields[field]) {
+        const refMap = {
+          fullName: fullNameRef,
+          phone: phoneRef,
+          phone2: phone2Ref,
+          city: cityRef,
+          address: addressRef,
+        };
+        const targetRef = refMap[field];
+        if (targetRef?.current) {
+          targetRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+        break;
+      }
+    }
+  };
+
+  // دالة عرض الأخطاء كـ Alert
+  const showErrorsInAlert = (errorFields) => {
+    const errorMessages = {
+      fullName: "⚠️ الاسم الكامل مطلوب",
+      phone: "⚠️ رقم الهاتف يجب أن يكون 11 رقم ويبدأ بـ 01",
+      phone2: "⚠️ رقم الهاتف الإضافي غير صحيح",
+      city: "⚠️ المحافظة مطلوبة",
+      address: "⚠️ العنوان مطلوب",
+    };
+
+    const errorList = [];
+    if (errorFields.fullName) errorList.push(errorMessages.fullName);
+    if (errorFields.phone) errorList.push(errorMessages.phone);
+    if (errorFields.phone2) errorList.push(errorMessages.phone2);
+    if (errorFields.city) errorList.push(errorMessages.city);
+    if (errorFields.address) errorList.push(errorMessages.address);
+    
+    // حالة خاصة لرقمين متطابقين
+    if (errorFields.phone2 === "رقم الهاتف الإضافي يجب أن يختلف عن الرقم الأساسي") {
+      errorList.push("⚠️ رقم الهاتف الإضافي يجب أن يختلف عن الرقم الأساسي");
+    }
+
+    if (errorList.length > 0) {
+      alert(`❌ الرجاء تصحيح الأخطاء التالية:\n\n${errorList.join("\n")}`);
     }
   };
 
@@ -103,7 +160,6 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
     return newErrors;
   };
 
-  // ✅ [الحل رقم 3] دالة sendToGoogleSheet مصححة - تم إغلاقها وإضافة return
   const sendToGoogleSheet = async () => {
     const orderDetails = cartItems
       .map((item) => {
@@ -143,10 +199,9 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
       throw new Error(data.error || "فشل في إرسال الطلب");
     }
 
-    return data; // ✅ إرجاع البيانات بشكل صريح
+    return data;
   };
 
-  // ✅ [الحل رقم 2] دالة handleSubmit مصححة - الآن الكود منظم والأقواس سليمة
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
@@ -154,16 +209,18 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      // عرض الأخطاء في Alert
+      showErrorsInAlert(newErrors);
+      // السكرول إلى أول حقل فيه خطأ
+      scrollToFirstError(newErrors);
       return;
     }
 
     setLoading(true);
 
     try {
-      // إرسال إلى Google Sheet
       await sendToGoogleSheet();
 
-      // تفعيل Facebook Pixel
       if (window.fbq) {
         window.fbq("track", "Purchase", {
           value: total,
@@ -172,16 +229,15 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
         });
       }
 
-      // إظهار مودال التأكيد
       setShowConfirmModal(true);
 
-      // انتظار 2 ثانية ثم إغلاق المودال والتنقل
       setTimeout(() => {
         setShowConfirmModal(false);
-        onSuccess(); // استدعاء onSuccess (لتفريغ السلة وإظهار رسالة النجاح)
+        onSuccess();
       }, 2000);
     } catch (error) {
       console.error("Error:", error);
+      alert(`❌ حدث خطأ في إرسال الطلب:\n${error.message || "يرجى المحاولة مرة أخرى"}`);
       setErrors({ submit: error.message || "حدث خطأ في إرسال الطلب" });
     } finally {
       setLoading(false);
@@ -223,7 +279,7 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* الاسم الكامل */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-2" ref={fullNameRef}>
               <label className="block text-gray-600 text-sm mb-2">
                 الاسم الكامل *
               </label>
@@ -238,17 +294,10 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
                   placeholder="أدخل اسمك الكامل"
                 />
               </div>
-              <AnimatePresence>
-                {errors.fullName && (
-                  <motion.p className="text-red-400 text-xs mt-1 mr-2 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" /> {errors.fullName}
-                  </motion.p>
-                )}
-              </AnimatePresence>
             </div>
 
             {/* رقم الهاتف */}
-            <div>
+            <div ref={phoneRef}>
               <label className="block text-gray-600 text-sm mb-2">
                 رقم الهاتف *
               </label>
@@ -263,17 +312,10 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
                   placeholder="01XXXXXXXXX"
                 />
               </div>
-              <AnimatePresence>
-                {errors.phone && (
-                  <motion.p className="text-red-400 text-xs mt-1 mr-2 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" /> {errors.phone}
-                  </motion.p>
-                )}
-              </AnimatePresence>
             </div>
 
             {/* رقم هاتف إضافي */}
-            <div>
+            <div ref={phone2Ref}>
               <label className="block text-gray-600 text-sm mb-2">
                 رقم هاتف إضافي (اختياري)
               </label>
@@ -288,17 +330,10 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
                   placeholder="رقم آخر (اختياري)"
                 />
               </div>
-              <AnimatePresence>
-                {errors.phone2 && (
-                  <motion.p className="text-red-400 text-xs mt-1 mr-2 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" /> {errors.phone2}
-                  </motion.p>
-                )}
-              </AnimatePresence>
             </div>
 
             {/* المحافظة */}
-            <div>
+            <div ref={cityRef}>
               <label className="block text-gray-600 text-sm mb-2">
                 المحافظة *
               </label>
@@ -318,17 +353,10 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
                   ))}
                 </select>
               </div>
-              <AnimatePresence>
-                {errors.city && (
-                  <motion.p className="text-red-400 text-xs mt-1 mr-2 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" /> {errors.city}
-                  </motion.p>
-                )}
-              </AnimatePresence>
             </div>
 
             {/* العنوان التفصيلي */}
-            <div className="md:col-span-2">
+            <div className="md:col-span-2" ref={addressRef}>
               <label className="block text-gray-600 text-sm mb-2">
                 العنوان بالتفصيل *
               </label>
@@ -343,13 +371,6 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
                   placeholder="رقم المبني، الشارع، الحي، العلامة المميزة..."
                 />
               </div>
-              <AnimatePresence>
-                {errors.address && (
-                  <motion.p className="text-red-400 text-xs mt-1 mr-2 flex items-center gap-1">
-                    <AlertCircle className="w-3 h-3" /> {errors.address}
-                  </motion.p>
-                )}
-              </AnimatePresence>
             </div>
 
             {/* ملاحظات */}
