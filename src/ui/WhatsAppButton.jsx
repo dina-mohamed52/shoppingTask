@@ -1,9 +1,8 @@
-import { MessageCircle } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaFacebookMessenger } from "react-icons/fa";
 
-const WhatsAppButton = ({ phone = "201001841284", message = "" }) => {
+const WhatsAppButton = ({ pageId = "856928450832907" }) => {
   const handleClick = () => {
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    const url = `https://m.me/${pageId}`;
     window.open(url, "_blank");
   };
 
@@ -13,14 +12,16 @@ const WhatsAppButton = ({ phone = "201001841284", message = "" }) => {
       className="
         fixed bottom-4 right-4 z-50
         flex items-center justify-center
-        bg-green-500 text-white shadow-lg
+        bg-[#0084FF] text-white shadow-lg
         rounded-full
         w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16
         hover:scale-110 active:scale-95
+        hover:bg-[#0073E6]
         transition-all duration-300
       "
+      aria-label="فتح المحادثة في ماسنجر"
     >
-      <FaWhatsapp  className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
+      <FaFacebookMessenger className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" />
     </button>
   );
 };
