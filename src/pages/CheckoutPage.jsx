@@ -136,10 +136,10 @@ function CheckoutPage() {
     const orderDetails = cartItems.map(item => {
       if (item.isOffer) {
         return item.offerDetails?.pieces?.map(piece => 
-          `${piece.name}${piece.size ? ` - مقاس ${piece.size}` : ""} - ${piece.color} (×${piece.quantity || 1})`
+          `${piece.name}${piece.size ? ` - مقاس ${piece.size}` : ""} - ${piece.color} )`
         ).join(" | ");
       }
-      return `${item.name} - ${item.size || ""} - ${item.color || ""} (×${item.quantity})`;
+      return `${item.name} - ${item.size || ""} - ${item.color || ""} `;
     }).join(" | ");
 
     const res = await fetch(SCRIPT_URL, {
