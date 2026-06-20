@@ -4,7 +4,7 @@ export const HalfColoneData = [
     name: "هاف كولون شبك",
     description:
       "هاف كولون شبك بفيونكه جانبيه ستان مصنوع بعناية لراحة طفلتك بتصميم عصري والوان زاهية للبس اليومي تحت الشورت او الجيبه او الفستان",
-    tabType: "half", // إضافة tabType
+    tabType: "half",
 
     productColors: [
       {
@@ -39,11 +39,12 @@ export const HalfColoneData = [
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392416/WhatsApp_Image_2026-04-28_at_3.58.15_AM_1_tvriqk.jpg",
       },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392419/WhatsApp_Image_2026-04-28_at_3.58.14_AM_uiu42x.jpg",
-      },
+
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392334/WhatsApp_Image_2026-04-28_at_3.58.15_AM_asgqus.jpg",
+      },
+      {
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1781882037/WhatsApp_Image_2026-06-08_at_3.56.21_AM_lefkl5.jpg",
       },
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392333/WhatsApp_Image_2026-04-28_at_3.58.16_AM_bwr0x8.jpg",
@@ -54,7 +55,7 @@ export const HalfColoneData = [
     ],
     avalibeColors: ["أبيض", "أسود", "بينك", "أحمر", "أصفر", "لافندر"],
     image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392419/WhatsApp_Image_2026-04-28_at_3.58.14_AM_uiu42x.jpg",
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1781882037/WhatsApp_Image_2026-06-08_at_3.56.21_AM_lefkl5.jpg ",
     sizes: [
       { size: "0-1", age: "من زيرو ل9 شهور" },
       { size: "1-2", age: "من 9 شهور لسنه ونص" },
