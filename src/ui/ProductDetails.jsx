@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { HalfColoneData } from "../data/HalfColon";
+import { BandanaTurbonData } from "../data/Turbon";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -20,9 +21,10 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import HalfOffers from "../features/SummerHalf/HalfOffers";
+import TurbonOffers from "../features/TurbonParts/TurbonOffers";
 import HalfOrderCollection from "../features/SummerHalf/HalfOrderCollection";
+import TurbonOrderCollection from "../features/TurbonParts/TurbonOrderCollection";
 import { useCart } from "../features/cart/CartContext";
-
 
 // ========== مكونات مساعدة صغيرة ==========
 const RatingStars = () => (
@@ -103,7 +105,6 @@ const ReviewsSection = () => {
 
   return (
     <div className="space-y-5">
-      {/* الهيدر حق التقييمات */}
       <div className="flex items-center justify-between pb-3 border-b border-gray-100">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
@@ -123,18 +124,15 @@ const ReviewsSection = () => {
         )}
       </div>
 
-      {/* قائمة التقييمات */}
       <div className="space-y-4">
         {displayedReviews.map((review, idx) => (
           <div key={review.id} className="group">
             <div className="flex items-start gap-3">
-              {/* صورة افتراضية للمستخدم */}
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center flex-shrink-0">
                 <span className="text-pink-500 font-semibold text-sm">
                   {review.name.charAt(0)}
                 </span>
               </div>
-
               <div className="flex-1">
                 <div className="flex items-center flex-wrap gap-2 mb-1">
                   <span className="font-semibold text-gray-800 text-sm">
@@ -148,7 +146,6 @@ const ReviewsSection = () => {
                   )}
                   <span className="text-xs text-gray-400">{review.date}</span>
                 </div>
-
                 <div className="flex gap-0.5 mb-2">
                   {[...Array(5)].map((_, i) => (
                     <Star
@@ -157,7 +154,6 @@ const ReviewsSection = () => {
                     />
                   ))}
                 </div>
-
                 <p className="text-gray-600 text-sm leading-relaxed">
                   {review.comment}
                 </p>
@@ -177,24 +173,21 @@ const ReviewsSection = () => {
 function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCart(); // ✅ استخدام الـ hook
+  const { addToCart } = useCart();
 
-  // حالات
   const [selectedColor, setSelectedColor] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeTab, setActiveTab] = useState("description");
   const [isImageZoomed, setIsImageZoomed] = useState(false);
-
   const [selectedOfferForOrder, setSelectedOfferForOrder] = useState(null);
 
-  // مراجع
   const orderCollectionRef = useRef(null);
   const offersRef = useRef(null);
 
-  // جلب المنتج
-  const product = HalfColoneData.find((item) => item.id === Number(id));
+  const product =
+    HalfColoneData.find((item) => item.id === Number(id)) ||
+    BandanaTurbonData.find((item) => item.id === Number(id));
 
-  // تأثيرات
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -202,58 +195,70 @@ function ProductDetails() {
   useEffect(() => {
     if (!product) return;
 
-    const offerMap = {
-      half: {
+    let offerConfig = null;
+    
+    if (product.tabType === "half") {
+      offerConfig = {
         name: "6 هاف كولون",
         quantity: 6,
         price: 330,
         originalPrice: 405,
         savings: 85,
-      },
-      bandana: {
+        tabType: "half",
+        unit: "قطعة",
+      };
+    } else if (product.tabType === "turbon") {
+      offerConfig = {
+        name: "6 تربونات",
+        quantity: 6,
+        price: 300,
+        originalPrice: 390,
+        savings: 90,
+        tabType: "turbon",
+        unit: "تربونة",
+      };
+    } else if (product.tabType === "bandana") {
+      offerConfig = {
         name: "6 بندانات",
         quantity: 6,
         price: 270,
         originalPrice: 360,
         savings: 90,
-      },
-      set: {
-        name: "3 اطقم",
+        tabType: "bandana",
+        unit: "بندانه",
+      };
+    } else if (product.tabType === "set") {
+      offerConfig = {
+        name: "3 أطقم",
         quantity: 3,
         price: 285,
         originalPrice: 380,
         savings: 95,
-      },
-    };
+        tabType: "set",
+        unit: "طقم",
+      };
+    }
+
+    if (!offerConfig) return;
 
     const getIcon = () => {
       if (product.tabType === "bandana") return <Shirt className="w-5 h-5" />;
       if (product.tabType === "set") return <Layers className="w-5 h-5" />;
+      if (product.tabType === "turbon") return <Package className="w-5 h-5" />;
       return <Package className="w-5 h-5" />;
     };
 
-    const getBadgeColor = () => {
-      if (product.tabType === "bandana")
-        return "from-emerald-400 to-emerald-500";
-      if (product.tabType === "set") return "from-purple-400 to-purple-500";
-      return "from-pink-400 to-pink-500";
-    };
-
-    const config = offerMap[product.tabType] || offerMap.half;
-
     setSelectedOfferForOrder({
       id: `default-${product.id}`,
-      ...config,
-      tabType: product.tabType || "half",
-      unit: "قطعة",
+      ...offerConfig,
       icon: getIcon(),
-      badgeColor: getBadgeColor(),
       popular: true,
       badge: "الأكثر طلباً",
+      selectedTabType: product.tabType,
+      type: product.type,
     });
   }, [product]);
 
-  // المعالجات
   const handleOfferSelect = (offer) => {
     setSelectedOfferForOrder(offer);
     setTimeout(() => {
@@ -268,7 +273,6 @@ function ProductDetails() {
     offersRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // لو المنتج مش موجود
   if (!product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
@@ -287,6 +291,11 @@ function ProductDetails() {
       </div>
     );
   }
+
+  // ✅ تحديد إذا كان المنتج من نوع Turbon/Bandana/Set
+  const isTurbonProduct = product?.tabType === "turbon" || 
+                          product?.tabType === "bandana" || 
+                          product?.tabType === "set";
 
   const currentColorData = product.productColors[selectedColor];
   const features = [
@@ -393,7 +402,6 @@ function ProductDetails() {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-5"
             >
-              {/* التصنيفات */}
               <div className="flex flex-wrap gap-2">
                 {product.category && (
                   <span className="bg-pink-50 text-pink-600 text-xs px-3 py-1 rounded-full font-medium">
@@ -407,12 +415,10 @@ function ProductDetails() {
                 )}
               </div>
 
-              {/* العنوان */}
               <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
                 {product.name}
               </h1>
 
-              {/* التقييم */}
               <div className="flex items-center gap-3">
                 <RatingStars />
                 <span className="text-sm text-gray-500">4.8 • 127 تقييم</span>
@@ -421,19 +427,16 @@ function ProductDetails() {
                 </span>
               </div>
 
-              {/* الوصف */}
               <p className="text-gray-600 leading-relaxed border-r-2 border-pink-200 pr-4">
                 {product.description || "منتج عالي الجودة مصمم خصيصاً لأطفالك."}
               </p>
 
-              {/* مميزات المنتج */}
               <div className="grid grid-cols-3 gap-2">
                 {features.map((feature, i) => (
                   <FeatureCard key={i} {...feature} />
                 ))}
               </div>
 
-              {/* اختيار اللون */}
               <div>
                 <label className="font-semibold text-gray-900 flex items-center gap-2 text-sm mb-2">
                   <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر اللون
@@ -455,7 +458,6 @@ function ProductDetails() {
                 </div>
               </div>
 
-              {/* زر عرض العروض */}
               <button
                 onClick={scrollToOffers}
                 className="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-3.5 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group"
@@ -464,7 +466,6 @@ function ProductDetails() {
                 شوف العروض
               </button>
 
-              {/* معلومات التوصيل */}
               <DeliveryInfo />
             </motion.div>
           </div>
@@ -547,7 +548,6 @@ function ProductDetails() {
                 </motion.div>
               )}
 
-              {/* تبويب المقاسات الجديد */}
               {activeTab === "sizes" && (
                 <motion.div
                   key="sizes"
@@ -619,13 +619,13 @@ function ProductDetails() {
         </div>
       </main>
 
-      {/* قسم العروض - يظهر فقط للمنتجات التي ليست ID=3 */}
+      {/* ✅ قسم العروض - حسب نوع المنتج */}
       {product.id !== 3 ? (
-        <>
-          <div ref={offersRef} className="scroll-mt-20">
-            <HalfOffers
-              filterByTabType={product.tabType || "half"}
-              filterByProductType={product.type} 
+        <div ref={offersRef} className="scroll-mt-20">
+          {isTurbonProduct ? (
+            <TurbonOffers
+              filterByTabType={product.tabType || "turbon"}
+              filterByProductType={product.type}
               setSelectedOffer={handleOfferSelect}
               hideTabs={true}
               scrollToOrderCollection={() =>
@@ -635,25 +635,43 @@ function ProductDetails() {
                 })
               }
             />
-          </div>
-        </>
-      ) : (
-        /* رسالة للمنتج 3 */
-        <div className="text-center rounded-2xl mx-4 my-8 ">
-          {/* محتوى فارغ */}
+          ) : (
+            <HalfOffers
+              filterByTabType={product.tabType || "half"}
+              filterByProductType={product.type}
+              setSelectedOffer={handleOfferSelect}
+              hideTabs={true}
+              scrollToOrderCollection={() =>
+                orderCollectionRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+              }
+            />
+          )}
         </div>
-      )}
+      ) : null}
 
-      {/* ✅ قسم تجميع الطلب المعدل */}
+      {/* ✅ قسم تجميع الطلب - حسب نوع المنتج */}
       <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
         {selectedOfferForOrder && (
-          <HalfOrderCollection
-            selectedOffer={selectedOfferForOrder}
-            onAddToCart={addToCart}
-            defaultProductName={product.name}
-            selectedColor={product.avalibeColors?.[selectedColor] || "اللون الأساسي"}
-            selectedColorImage={currentColorData?.img}
-          />
+          isTurbonProduct ? (
+            <TurbonOrderCollection
+              selectedOffer={selectedOfferForOrder}
+              disableProductSelection={true}
+              defaultProductName={product.name}
+              onOrderConfirmed={() => {}}
+              scrollToOffers={scrollToOffers}
+            />
+          ) : (
+            <HalfOrderCollection
+              selectedOffer={selectedOfferForOrder}
+              onAddToCart={addToCart}
+              defaultProductName={product.name}
+              selectedColor={product.avalibeColors?.[selectedColor] || "اللون الأساسي"}
+              selectedColorImage={currentColorData?.img}
+            />
+          )
         )}
       </div>
 

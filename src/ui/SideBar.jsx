@@ -35,14 +35,14 @@ function SideBar() {
     {
       to: "/Turbon",
       icon: <ShoppingBag size={20} />,
-      label: { ar: "تربونات", en: "Turbans" },
+      label: { ar: "تربونات وأطقم صيفية", en: "Turbans" },
       gradient: "from-pink-400 via-pink-500 to-pink-600",
       special: true,
     },
     {
       to: "/SummerHalfColon",
       icon: <Sparkles size={20} />,
-      label: { ar: "هاف كولون وبندنات صيفي", en: " summer colons" },
+      label: { ar: "هاف كولون", en: " summer colons" },
       gradient: "from-pink-300 to-pink-500",
       // onClick: handleScrollToOffers,
     },

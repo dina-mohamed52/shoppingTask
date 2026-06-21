@@ -3,262 +3,264 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
   Sparkles, 
-  Gift, 
-  Ribbon, 
-  Flower2, 
   Tag, 
-  Star, 
-  Crown,
   CheckCircle,
-  ShoppingBag
+  ShoppingBag,
+  Package,
+  Shirt,
+  Layers,
+  TrendingUp,
+  Flame
 } from "lucide-react";
+import { halfOffersData } from "../SummerHalf/HalfOffersData";
 
-function TurbonOffers({ setSelectedOffer, scrollToOrderCollection }) {
+function TurbonOffers({ 
+  setSelectedOffer, 
+  scrollToOrderCollection,
+  filterByTabType = null,
+  filterByProductType = null,
+  hideTabs = false
+}) {
   const { t } = useTranslation();
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [activeOfferTab, setActiveOfferTab] = useState(filterByTabType || "turbon");
 
-  const turbonOffers = [
-    { 
-      quantity: 3, 
-      price: 210, 
-      value: 3,
-      badge: t("turbonOffers.popular", "الأكثر طلباً"),
-      badgeColor: "from-pink-500 to-pink-600",
-      icon: <Ribbon className="w-5 h-5" />,
-      savings: 60,
-      originalPrice: 270
-    },
-    { 
-      quantity: 5, 
-      price: 310, 
-      value: 5,
-      badge: t("turbonOffers.bestValue", "أفضل قيمة"),
-      badgeColor: "from-pink-600 to-rose-600",
-      icon: <Crown className="w-5 h-5" />,
-      savings: 140,
-      originalPrice: 450
-    },
-    { 
-      quantity: 6, 
-      price: 360, 
-      value: 6,
-      badge: t("turbonOffers.bestDeal", "أفضل عرض"),
-      badgeColor: "from-pink-700 to-pink-800",
-      icon: <Star className="w-5 h-5" />,
-      savings: 180,
-      originalPrice: 540
-    },
-  ].sort((a, b) => a.price - b.price);
-
-  const handleSelect = (offer) => {
-    console.log("Offer selected:", offer); // للتأكد من أن الحدث شغال
-    setSelectedOffer(offer);
-    if (scrollToOrderCollection) {
-      setTimeout(() => {
-        scrollToOrderCollection(); // تأخير بسيط للتأكد من تحديث الـ state
-      }, 100);
-    }
+  // Get all available tab types from offers data
+  const allTabTypes = ["turbon", "bandana", "set"];
+  
+  const tabLabels = {
+    turbon: "عروض التربون",
+    bandana: "عروض البندانات",
+    set: "عروض الأطقم"
   };
 
-  // حساب سعر القطعة
+  // Filter offers based on active tab
+  const filteredOffers = (() => {
+    let offers = halfOffersData.filter(offer => offer.tabType !== "half");
+    
+    if (filterByProductType) {
+      offers = offers.filter(offer => offer.type === filterByProductType);
+    } 
+    else if (activeOfferTab) {
+      offers = offers.filter(offer => offer.tabType === activeOfferTab);
+    }
+    
+    return offers;
+  })();
+
+  const getTitle = () => {
+    if (filterByProductType === "set-bandana") {
+      return "عروض طقم بندانه + هاف كولون";
+    }
+    if (filterByProductType === "set-turbon") {
+      return "عروض طقم تربون + هاف كولون";
+    }
+    if (activeOfferTab === "turbon") {
+      return "عروض التربون";
+    }
+    if (activeOfferTab === "bandana") {
+      return "عروض البندانات";
+    }
+    if (activeOfferTab === "set") {
+      return "عروض الأطقم";
+    }
+    return "العروض";
+  };
+
+  const getSubtitle = () => {
+    if (filterByProductType === "set-bandana" || filterByProductType === "set-turbon") {
+      return "عروض خاصة على هذا الطقم - اختاري عدد القطع المناسب لك";
+    }
+    if (activeOfferTab === "turbon") return "عروض خاصة على التربون - جودة عالية وأسعار مميزة";
+    if (activeOfferTab === "bandana") return "عروض خاصة على البندانات - كل ما اشتريت أكتر، وفرت أكتر";
+    if (activeOfferTab === "set") return "أفضل العروض على الأطقم - جودة عالية وأسعار مميزة";
+    return "اشتري أكتر ووفّري أكتر مع أقوى العروض";
+  };
+
+ const handleSelect = (offer) => {
+  console.log("Offer selected:", offer);
+  if (setSelectedOffer) {
+    setSelectedOffer({
+      ...offer,
+      selectedTabType: activeOfferTab, // turbon, bandana, set
+    });
+  }
+  if (scrollToOrderCollection) {
+    setTimeout(() => {
+      scrollToOrderCollection();
+    }, 100);
+  }
+};
   const getPricePerPiece = (price, quantity) => {
     return (price / quantity).toFixed(0);
   };
 
+  if (filteredOffers.length === 0) {
+    return null;
+  }
+
   return (
-    <div id="turbonOffersSection" className="relative py-16 my-16 px-4 overflow-hidden bg-gradient-to-b from-gray-50 to-pink-50/30">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto">
-        {/* Header Section */}
+    <div id="turbonOffersSection" className="relative py-12 px-4 bg-gray-50">
+      {/* Header Section */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-8"
+      >
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          transition={{ delay: 0.2, type: "spring" }}
+          className="inline-flex items-center gap-2 bg-pink-500 text-white px-3 py-1.5 rounded-full mb-4 shadow-lg shadow-pink-500/30"
         >
-          {/* Floating Badge */}
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, type: "spring" }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white px-4 py-2 rounded-full mb-6 shadow-lg shadow-pink-500/30"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span className="text-sm font-semibold">
-              {t("turbonOffers.title", "عروض التربونات")}
-            </span>
-            <Sparkles className="w-4 h-4" />
-          </motion.div>
-
-          {/* Main Title */}
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-600 via-pink-500 to-gray-700">
-              {t("turbonOffers.heading", "اختر عروضنا ووفّر أكثر")}
-            </span>
-          </h2>
-
-          {/* Subtitle */}
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            {t("turbonOffers.subtitle", "عروض خاصة على التربونات - كل ما اشتريت أكتر، وفرت أكتر")}
-          </p>
+          <Flame className="w-3.5 h-3.5" />
+          <span className="text-xs font-semibold">عروض حصرية</span>
+          <Flame className="w-3.5 h-3.5" />
         </motion.div>
 
-        {/* Offers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {turbonOffers.map((offer, index) => {
-            const isHovered = hoveredIndex === index;
-            const pricePerPiece = getPricePerPiece(offer.price, offer.quantity);
-            
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2, duration: 0.5 }}
-                onHoverStart={() => setHoveredIndex(index)}
-                onHoverEnd={() => setHoveredIndex(null)}
-                onClick={() => handleSelect(offer)} // ✅ هنا الحدث الرئيسي
-                className="relative group cursor-pointer"
+        <h2 className="text-3xl md:text-4xl font-black mb-2">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-pink-400 to-gray-700">
+            {getTitle() || "عروض التربون"}
+          </span>
+        </h2>
+
+        <p className="text-gray-500 text-sm max-w-2xl mx-auto">
+          {getSubtitle()}
+        </p>
+      </motion.div>
+
+      {/* Tabs */}
+      {!hideTabs && (
+        <div dir="rtl" className="flex justify-center mb-8 px-4">
+          <div className="inline-flex flex-wrap justify-center gap-2 bg-white p-2 rounded-2xl shadow-md border border-gray-100 max-w-md sm:max-w-5xl mx-auto">
+            {allTabTypes.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveOfferTab(tab)}
+                className={`
+                  flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0
+                  px-2 py-2 rounded-xl text-sm font-medium transition-all duration-300
+                  ${activeOfferTab === tab
+                    ? "bg-pink-500 px-3 text-white shadow-md"
+                    : "text-gray-600 hover:bg-gray-100"}
+                `}
               >
-                {/* Glow Effect */}
-                <motion.div
-                  animate={{ scale: isHovered ? 1.05 : 1 }}
-                  className={`absolute -inset-1 bg-gradient-to-r ${offer.badgeColor} rounded-3xl blur-xl transition-opacity duration-500 ${
-                    isHovered ? "opacity-50" : "opacity-0"
-                  }`}
-                />
+                <div className="flex items-center justify-center whitespace-nowrap gap-1 sm:gap-2 text-[0.8rem] sm:text-base font-bold">
+                  {tab === "turbon" && <Shirt className="w-4 h-4" />}
+                  {tab === "bandana" && <Shirt className="w-4 h-4" />}
+                  {tab === "set" && <Layers className="w-4 h-4" />}
+                  <span>{tabLabels[tab]}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
-                {/* Main Card */}
-                <div className={`relative bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl border-2 transition-all duration-500 ${
-                  isHovered 
-                    ? "border-pink-500 scale-105" 
-                    : "border-pink-100"
-                }`}>
-                  
-                  {/* Badge */}
-                  <div className="absolute -top-4 -right-4">
-                    <div className="relative">
-                      <div className={`absolute inset-0 bg-gradient-to-r ${offer.badgeColor} rounded-full blur-md opacity-50`}></div>
-                      <div className={`relative bg-gradient-to-r ${offer.badgeColor} text-white font-bold px-4 py-2 rounded-full text-sm shadow-xl flex items-center gap-1`}>
-                        {offer.icon}
-                        {offer.badge}
-                      </div>
+      {/* Offers Grid */}
+      <div dir="rtl" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
+        {filteredOffers.map((offer, index) => {
+          const isHovered = hoveredIndex === index;
+          const pricePerPiece = getPricePerPiece(offer.price, offer.quantity);
+          
+          return (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05, duration: 0.4 }}
+              onHoverStart={() => setHoveredIndex(index)}
+              onHoverEnd={() => setHoveredIndex(null)}
+              onClick={() => handleSelect(offer)}
+              className="relative group cursor-pointer"
+            >
+              <div className={`relative bg-white rounded-2xl p-4 shadow-md border border-gray-100 transition-all duration-300 ${
+                isHovered 
+                  ? "shadow-xl border-pink-300 -translate-y-1" 
+                  : "hover:shadow-lg"
+              }`}>
+                
+                {offer.popular && (
+                  <div className="absolute top-3 left-3 z-10">
+                    <div className="bg-pink-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-md">
+                      <TrendingUp className="w-2.5 h-2.5" />
+                      <span>{offer.badge}</span>
                     </div>
                   </div>
+                )}
 
-                  {/* Savings Badge */}
-                  <div className="absolute -top-4 -left-4">
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-green-500 rounded-full blur-md opacity-50"></div>
-                      <div className="relative bg-gradient-to-r from-green-400 to-green-500 text-white font-bold px-3 py-1.5 rounded-full text-xs shadow-xl">
-                        وفر {offer.savings} ج.م
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Icon Container */}
-                  <div className="flex justify-center mb-6">
-                    <div className="relative">
-                      <div className={`absolute inset-0 bg-gradient-to-r ${offer.badgeColor} rounded-full blur-xl opacity-30`}></div>
-                      <div className={`relative w-20 h-20 bg-gradient-to-br ${offer.badgeColor} rounded-2xl flex items-center justify-center text-white transform group-hover:rotate-6 transition-transform duration-300`}>
-                        {offer.icon}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Quantity */}
-                  <h3 className="text-3xl font-bold text-center mb-2">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-pink-500">
-                      {offer.quantity} {t("turbonOffers.pieces", "تربونات")}
-                    </span>
-                  </h3>
-
-                  {/* Original Price */}
-                  <div className="text-center text-gray-400 line-through text-sm mb-1">
-                    {offer.originalPrice} ج.م
-                  </div>
-
-                  {/* Price */}
-                  <div className="text-center mb-4">
-                    <span className="text-4xl font-black text-gray-800">{offer.price}</span>
-                    <span className="text-gray-600 text-lg mr-1">ج.م</span>
-                  </div>
-
-                  {/* Price Per Piece */}
-                  <div className="bg-pink-50 rounded-full py-2 px-4 text-center mb-6">
-                    <span className="text-pink-600 font-semibold">
-                      {pricePerPiece} ج.م / {t("turbonOffers.perPiece", "للقطعة")}
-                    </span>
-                  </div>
-
-                  {/* Features */}
-                  <div className="space-y-2 mb-6">
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <CheckCircle className="w-4 h-4 text-pink-400" />
-                      <span className="text-sm">توفير {offer.savings} ج.م</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <CheckCircle className="w-4 h-4 text-pink-400" />
-                      <span className="text-sm">توصيل سريع</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600">
-                      <CheckCircle className="w-4 h-4 text-pink-400" />
-                      <span className="text-sm">ضمان الجودة</span>
-                    </div>
-                  </div>
-
-                  {/* Select Button - اختياري، ممكن يفضل أو يتشال */}
-                  <div className="w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-pink-500/20 transition-all duration-300 flex items-center justify-center gap-2 group/btn">
-                    <ShoppingBag className="w-4 h-4 text-pink-400 group-hover/btn:scale-110 transition-transform" />
-                    <span>{t("turbonOffers.select", "اختر العرض")}</span>
+                <div className="absolute top-1 right-3 z-10">
+                  <div className="bg-gray-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-md">
+                    وفر {offer.savings}ج
                   </div>
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
 
-        {/* Bottom Note */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-12"
-        >
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-pink-200">
-            <Tag className="w-4 h-4 text-pink-400" />
-            <span className="text-gray-700">
-              {t("turbonOffers.note", "العروض سارية لفترة محدودة. استفد الآن!")}
-            </span>
-          </div>
-        </motion.div>
+                <div className="flex items-center gap-3 mb-3 pt-2">
+                  <div className="w-10 h-10 bg-pink-500 rounded-xl flex items-center justify-center text-white shadow-md shrink-0">
+                    {offer.icon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-gray-800 text-sm truncate">
+                      {offer.name}
+                    </h3>
+                    <div className="flex items-baseline gap-1 flex-wrap">
+                      <span className="text-gray-400 line-through text-[10px]">
+                        {offer.originalPrice}ج
+                      </span>
+                      <span className="text-pink-500 font-black text-base">
+                        {offer.price}
+                      </span>
+                      <span className="text-gray-500 text-[10px]">ج</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-pink-50 rounded-lg py-1 px-2 mb-3">
+                  <span className="text-pink-500 font-semibold text-[11px] flex items-center justify-center gap-1">
+                    <Tag className="w-3 h-3" />
+                    {pricePerPiece} ج / {offer.unit}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 mb-3 text-[10px] text-gray-500">
+                  <div className="flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3 text-green-500" />
+                    <span>{offer.quantity} قطعة</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3 text-green-500" />
+                    <span>توصيل سريع</span>
+                  </div>
+                </div>
+
+                <button className="w-full bg-gray-800 text-white py-2 rounded-xl font-semibold text-xs flex items-center justify-center gap-2 hover:bg-pink-500 transition-all duration-300">
+                  <ShoppingBag className="w-3.5 h-3.5" />
+                  <span>اختر العرض</span>
+                </button>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Custom Animations */}
-      <style jsx>{`
-        @keyframes blob {
-          0%, 100% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-      `}</style>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.4 }}
+        className="text-center mt-8"
+      >
+        <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100">
+          <Sparkles className="w-3.5 h-3.5 text-pink-400" />
+          <span className="text-gray-600 text-xs">
+            العروض سارية لفترة محدودة
+          </span>
+        </div>
+      </motion.div>
     </div>
   );
 }

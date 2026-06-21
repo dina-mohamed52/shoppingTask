@@ -102,7 +102,10 @@ function ProductCard({ product, onPreview }) {
       </div>
 
       {/* Image Container */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+      <div
+      
+      onClick={() => onPreview(product)}
+      className="relative overflow-hidden cursor-pointer bg-gradient-to-br from-gray-50 to-gray-100">
         <img
           src={product.image}
           alt={product.name}
@@ -123,7 +126,10 @@ function ProductCard({ product, onPreview }) {
         )}
 
         {/* Quick Action Buttons */}
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-5 group-hover:translate-x-0">
+        <div 
+        
+        onClick={() => onPreview(product)}
+        className="absolute top-3 cursor-pointer right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-5 group-hover:translate-x-0">
           {/* Favorite Button */}
           <button
             onClick={() => setIsLiked(!isLiked)}
