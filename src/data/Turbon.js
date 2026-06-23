@@ -7,7 +7,7 @@ export const BandanaTurbonData = [
     tabType: "bandana",
     productColors: [
       {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1781883764/WhatsApp_Image_2026-06-18_at_3.03.57_PM_4_qlkcop.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782241925/WhatsApp_Image_2026-06-21_at_2.34.32_PM_jxcdhv.jpg",
       },
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1781882384/WhatsApp_Image_2026-06-18_at_3.03.57_PM_lh1han.jpg",
@@ -121,15 +121,15 @@ export const BandanaTurbonData = [
     productColors: [
       {
         color: "أسود فيونكه",
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784125/WhatsApp_Image_2026-02-21_at_10.28.05_AM_2_mdqyi4.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242324/WhatsApp_Image_2026-06-23_at_11.59.26_AM_q89jlc.jpg",
       },
       {
         color: "أحمر فيونكه",
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784215/WhatsApp_Image_2026-02-21_at_10.28.05_AM_3_epttvz.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242307/WhatsApp_Image_2026-06-19_at_10.22.36_AM_2_vribro.jpg",
       },
       {
         color: "بينك فيونكه",
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784141/WhatsApp_Image_2026-02-21_at_10.28.05_AM_1_evw3eg.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242307/WhatsApp_Image_2026-06-19_at_10.22.36_AM_ztfdvk.jpg",
       },
       {
         color: "كافيه فيونكه",
@@ -137,7 +137,7 @@ export const BandanaTurbonData = [
       },
       {
         color: "أوف وايت فيونكه",
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784119/WhatsApp_Image_2026-02-21_at_10.28.06_AM_1_rnv8kp.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242307/WhatsApp_Image_2026-06-19_at_10.22.36_AM_1_j4aftc.jpg",
       },
     ],
     avalibeColors: [
@@ -148,7 +148,7 @@ export const BandanaTurbonData = [
       "أوف وايت فيونكه"
     ],
     image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1771784119/WhatsApp_Image_2026-02-21_at_10.28.06_AM_1_rnv8kp.jpg",
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242307/WhatsApp_Image_2026-06-19_at_10.22.36_AM_2_vribro.jpg",
     sizes: [{ size: "One Size", age: "مناسب من 0 ل 4 سنين (مطاطي)" }],
   },
   {
@@ -160,10 +160,10 @@ export const BandanaTurbonData = [
     type: "set-bandana",
     productColors: [
       {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471600/WhatsApp_Image_2026-04-28_at_4.04.18_AM_6_vthfqu.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242319/WhatsApp_Image_2026-06-19_at_10.22.37_AM_1_igjxhm.jpg",
       },
       {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471391/WhatsApp_Image_2026-04-28_at_4.04.18_AM_2_shzsbv.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242320/WhatsApp_Image_2026-06-23_at_11.59.27_AM_goinmd.jpg",
       },
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471391/WhatsApp_Image_2026-04-28_at_4.04.18_AM_1_ki4svn.jpg",
@@ -172,15 +172,18 @@ export const BandanaTurbonData = [
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471418/WhatsApp_Image_2026-04-28_at_4.04.18_AM_t9w61q.jpg",
       },
       {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392524/WhatsApp_Image_2026-04-28_at_4.04.18_AM_5_wzb6ha.jpg",
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242307/WhatsApp_Image_2026-06-19_at_10.22.36_AM_3_qotj3r.jpg",
       },
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471515/WhatsApp_Image_2026-04-28_at_4.04.18_AM_7_bxi2rz.jpg",
       },
+      {
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242330/WhatsApp_Image_2026-06-23_at_11.59.26_AM_1_opiegh.jpg",
+      },
     ],
-    avalibeColors: ["أبيض", "أسود", "بينك", "لافندر", "أحمر", "أصفر"],
+    avalibeColors: ["أبيض", "أسود", "بينك", "لافندر", "أحمر", "أصفر","كافية"],
     image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392524/WhatsApp_Image_2026-04-28_at_4.04.18_AM_5_wzb6ha.jpg",
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242307/WhatsApp_Image_2026-06-19_at_10.22.36_AM_3_qotj3r.jpg",
     sizes: [
       { size: "0-1", age: "من زيرو ل9 شهور" },
       { size: "1-2", age: "من 9 شهور لسنه ونص" },
@@ -232,31 +235,31 @@ export const BandanaTurbonData = [
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556379/WhatsApp_Image_2026-04-29_at_11.12.02_AM_3_ruhdvo.jpg",
       },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556398/WhatsApp_Image_2026-04-29_at_11.12.03_AM_akjru5.jpg",
-      },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556398/WhatsApp_Image_2026-04-29_at_11.12.02_AM_6_m4hs5u.jpg",
-      },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556331/WhatsApp_Image_2026-04-29_at_11.12.02_AM_5_qmx1ge.jpg",
-      },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556331/WhatsApp_Image_2026-04-29_at_11.12.02_AM_4_kpvl7e.jpg",
-      },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1778153099/WhatsApp_Image_2026-05-06_at_2.22.23_AM_jk80cs.jpg",
-      },
+      // {
+      //   img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556398/WhatsApp_Image_2026-04-29_at_11.12.03_AM_akjru5.jpg",
+      // },
+      // {
+      //   img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556398/WhatsApp_Image_2026-04-29_at_11.12.02_AM_6_m4hs5u.jpg",
+      // },
+      // {
+      //   img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556331/WhatsApp_Image_2026-04-29_at_11.12.02_AM_5_qmx1ge.jpg",
+      // },
+      // {
+      //   img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556331/WhatsApp_Image_2026-04-29_at_11.12.02_AM_4_kpvl7e.jpg",
+      // },
+      // {
+      //   img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1778153099/WhatsApp_Image_2026-05-06_at_2.22.23_AM_jk80cs.jpg",
+      // },
     ],
     avalibeColors: [
       "تربون فيونكه أحمر+ هاف أحمر",
       "تربون فيونكه أسود + هاف أسود",
       "تربون فيونكه بينك + هاف بينك",
-      "تربون ورده بينك + هاف بينك",
-      "تربون ورده أصفر + هاف اصفر",
-      "تربون ورده أوف وايت + هاف ابيض",
-      "تربون ورده بيج + هاف اسود",
-      "تربون ورده لافندر + هاف لافندر",
+      // "تربون ورده بينك + هاف بينك",
+      // "تربون ورده أصفر + هاف اصفر",
+      // "تربون ورده أوف وايت + هاف ابيض",
+      // "تربون ورده بيج + هاف اسود",
+      // "تربون ورده لافندر + هاف لافندر",
     ],
     image:
       "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777556486/WhatsApp_Image_2026-04-29_at_11.12.12_AM_ywerwz.jpg",
