@@ -37,3 +37,14 @@
   50% { transform: rotate(180deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* منع السكرول الأفقي نهائياً */
+html, body {
+  overflow-x: hidden !important;
+  width: 100%;
+ 
+}
+
+
+
+

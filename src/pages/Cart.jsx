@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import CartItems from '../features/cart/CartItems';
-import CartTotals from '../features/cart/CartTotals';
+// import CartTotals from '../features/cart/CartTotals';
 
 function Cart() {
     const cartItems = useSelector((state) => state.cart.cartItems);
@@ -22,12 +22,12 @@ function Cart() {
                 <CartItems />
 
                 {/* Right Section: Cart Totals */}
-                <CartTotals 
+                {/* <CartTotals 
                     totalPrice={totalPrice} 
                     shippingCost={shippingCost} 
                     handleShippingChange={handleShippingChange} 
                     cartItems={cartItems} // Pass cartItems here
-                />
+                /> */}
             </div>
         </div>
     );
