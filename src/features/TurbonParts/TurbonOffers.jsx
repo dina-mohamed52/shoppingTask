@@ -23,15 +23,14 @@ function TurbonOffers({
 }) {
   const { t } = useTranslation();
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [activeOfferTab, setActiveOfferTab] = useState(filterByTabType || "turbon");
+  const [activeOfferTab, setActiveOfferTab] = useState(filterByTabType || "bandana");
 
-  // Get all available tab types from offers data
-  const allTabTypes = ["turbon", "bandana", "set"];
+  // Get all available tab types from offers data - الآن تابين فقط
+  const allTabTypes = ["bandana", "turbon"];
   
   const tabLabels = {
-    turbon: "عروض التربون",
-    bandana: "عروض البندانات",
-    set: "عروض الأطقم"
+    bandana: "البندانات",
+    turbon: "التربون "
   };
 
   // Filter offers based on active tab
@@ -42,7 +41,20 @@ function TurbonOffers({
       offers = offers.filter(offer => offer.type === filterByProductType);
     } 
     else if (activeOfferTab) {
-      offers = offers.filter(offer => offer.tabType === activeOfferTab);
+      // عرض كل ما يتعلق بالبندانات (فردي + أطقم)
+      if (activeOfferTab === "bandana") {
+        offers = offers.filter(offer => 
+          offer.tabType === "bandana" || 
+          (offer.tabType === "set" && offer.type?.includes("bandana"))
+        );
+      } 
+      // عرض كل ما يتعلق بالتربون (فردي + أطقم)
+      else if (activeOfferTab === "turbon") {
+        offers = offers.filter(offer => 
+          offer.tabType === "turbon" || 
+          (offer.tabType === "set" && offer.type?.includes("turbon"))
+        );
+      }
     }
     
     return offers;
@@ -55,14 +67,11 @@ function TurbonOffers({
     if (filterByProductType === "set-turbon") {
       return "عروض طقم تربون + هاف كولون";
     }
-    if (activeOfferTab === "turbon") {
-      return "عروض التربون";
-    }
     if (activeOfferTab === "bandana") {
-      return "عروض البندانات";
+      return "عروض البندانات والأطقم";
     }
-    if (activeOfferTab === "set") {
-      return "عروض الأطقم";
+    if (activeOfferTab === "turbon") {
+      return "عروض التربون والأطقم";
     }
     return "العروض";
   };
@@ -71,28 +80,35 @@ function TurbonOffers({
     if (filterByProductType === "set-bandana" || filterByProductType === "set-turbon") {
       return "عروض خاصة على هذا الطقم - اختاري عدد القطع المناسب لك";
     }
-    if (activeOfferTab === "turbon") return "عروض خاصة على التربون - جودة عالية وأسعار مميزة";
-    if (activeOfferTab === "bandana") return "عروض خاصة على البندانات - كل ما اشتريت أكتر، وفرت أكتر";
-    if (activeOfferTab === "set") return "أفضل العروض على الأطقم - جودة عالية وأسعار مميزة";
+    if (activeOfferTab === "bandana") return "عروض خاصة على البندانات والأطقم - جودة عالية وأسعار مميزة";
+    if (activeOfferTab === "turbon") return "عروض خاصة على التربون والأطقم - جودة عالية وأسعار مميزة";
     return "اشتري أكتر ووفّري أكتر مع أقوى العروض";
   };
 
- const handleSelect = (offer) => {
-  console.log("Offer selected:", offer);
-  if (setSelectedOffer) {
-    setSelectedOffer({
-      ...offer,
-      selectedTabType: activeOfferTab, // turbon, bandana, set
-    });
-  }
-  if (scrollToOrderCollection) {
-    setTimeout(() => {
-      scrollToOrderCollection();
-    }, 100);
-  }
-};
+  const handleSelect = (offer) => {
+    console.log("Offer selected:", offer);
+    if (setSelectedOffer) {
+      setSelectedOffer({
+        ...offer,
+        selectedTabType: activeOfferTab,
+      });
+    }
+    if (scrollToOrderCollection) {
+      setTimeout(() => {
+        scrollToOrderCollection();
+      }, 100);
+    }
+  };
+
   const getPricePerPiece = (price, quantity) => {
     return (price / quantity).toFixed(0);
+  };
+
+  // أيقونة التاب حسب النوع
+  const getTabIcon = (tab) => {
+    if (tab === "bandana") return <Shirt className="w-4 h-4" />;
+    if (tab === "turbon") return <Layers className="w-4 h-4" />;
+    return null;
   };
 
   if (filteredOffers.length === 0) {
@@ -132,26 +148,24 @@ function TurbonOffers({
         </p>
       </motion.div>
 
-      {/* Tabs */}
+      {/* Tabs - الآن تابين فقط */}
       {!hideTabs && (
         <div dir="rtl" className="flex justify-center mb-8 px-4">
-          <div className="inline-flex flex-wrap justify-center gap-2 bg-white p-2 rounded-2xl shadow-md border border-gray-100 max-w-md sm:max-w-5xl mx-auto">
+          <div className="inline-flex flex-wrap justify-center gap-2 bg-white p-2 rounded-2xl shadow-md border border-gray-100 max-w-md mx-auto">
             {allTabTypes.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveOfferTab(tab)}
                 className={`
-                  flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0
-                  px-2 py-2 rounded-xl text-sm font-medium transition-all duration-300
+                  flex-1 min-w-[120px] sm:min-w-[140px]
+                  px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-300
                   ${activeOfferTab === tab
-                    ? "bg-pink-500 px-3 text-white shadow-md"
+                    ? "bg-pink-500 text-white shadow-md"
                     : "text-gray-600 hover:bg-gray-100"}
                 `}
               >
-                <div className="flex items-center justify-center whitespace-nowrap gap-1 sm:gap-2 text-[0.8rem] sm:text-base font-bold">
-                  {tab === "turbon" && <Shirt className="w-4 h-4" />}
-                  {tab === "bandana" && <Shirt className="w-4 h-4" />}
-                  {tab === "set" && <Layers className="w-4 h-4" />}
+                <div className="flex items-center justify-center gap-2 text-[0.8rem] sm:text-sm font-bold whitespace-nowrap">
+                  {getTabIcon(tab)}
                   <span>{tabLabels[tab]}</span>
                 </div>
               </button>

@@ -64,7 +64,6 @@ function Turbon() {
   // ✅ التمرير لـ OrderCollection عند اختيار عرض
   useEffect(() => {
     if (selectedOffer) {
-      // ننتظر عشان الـ DOM يتحدث والـ TurbonOrderCollection يظهر
       const timer = setTimeout(() => {
         if (orderCollectionRef.current) {
           orderCollectionRef.current.scrollIntoView({
@@ -81,7 +80,8 @@ function Turbon() {
   return (
     <div dir="rtl" className="min-h-screen bg-gradient-to-b from-white via-pink-50/30 to-white">
       
-      {/* Carousel Section */}
+      {/* ===== 1. CAROUSEL - أول شيء يظهر ===== */}
+      {/* السلايدر الرئيسي لجذب الانتباه */}
       <section className="relative w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -100,26 +100,26 @@ function Turbon() {
             </div>
           </div>
           
-          {/* Carousel */}
           <div className="relative w-full">
             <TurbonCarousal />
           </div>
-
-          {/* Scroll Indicator */}
-        
         </motion.div>
       </section>
 
+      {/* ===== 2. PURCHASE NOTIFICATIONS - إشعارات الشراء ===== */}
+      {/* تظهر بعد الكاروسيل مباشرة لخلق حالة من الإلحاح */}
       <PurchaseNotifications />
 
-      
-
+      {/* ===== 3. OFFER BUTTON - زر العرض الرئيسي ===== */}
+      {/* زر جذاب للانتقال السريع للعروض */}
       <TurbonOfferBtn />
 
-      {/* قائمة المنتجات */}
+      {/* ===== 4. PRODUCT LIST - قائمة المنتجات ===== */}
+      {/* عرض المنتجات المتاحة قبل العروض الخاصة */}
       <TurbonProductList />
 
-      {/* العروض */}
+      {/* ===== 5. OFFERS - العروض الخاصة ===== */}
+      {/* العروض المميزة تأتي بعد المنتجات لتشجيع الشراء */}
       <div ref={offersRef} className="scroll-mt-20">
         <TurbonOffers
           setSelectedOffer={setSelectedOffer}
@@ -127,7 +127,8 @@ function Turbon() {
         />
       </div>
 
-      {/* اختيار القطع - Order Collection */}
+      {/* ===== 6. ORDER COLLECTION - اختيار القطع ===== */}
+      {/* بعد اختيار العرض، يظهر خيار اختيار القطع */}
       <div ref={orderCollectionRef} className="scroll-mt-20">
         <TurbonOrderCollection
           selectedOffer={selectedOffer}
@@ -135,12 +136,16 @@ function Turbon() {
           scrollToOffers={scrollToOffers}
         />
       </div>
+      {/* تكرار لتعزيز الرسالة */}
 
-      {/* فوائد المنتجات */}
+      <OfferCountdown />
+      {/* ===== 7. PRODUCT BENEFITS - فوائد المنتجات ===== */}
+      {/* تعزيز الثقة في المنتج بعد عرض التفاصيل */}
       <ProductBenefits />
       
-      {/* العد التنازلي */}
-      <OfferCountdown />
+ 
+      
+      {/* ===== 9. OFFER COUNTDOWN () - العد التنازلي ===== */}
 
       {/* Custom Animations */}
       <style jsx>{`

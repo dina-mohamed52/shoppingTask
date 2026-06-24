@@ -120,39 +120,39 @@ export const SummerColonData = [
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
   },
-  {
-    id: 4,
-    name: " ليجن مضلع ارنوب",
-    description:
-      "ليجن ارنوب  صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
+  // {
+  //   id: 4,
+  //   name: " ليجن مضلع ارنوب",
+  //   description:
+  //     "ليجن ارنوب  صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
 
-    price: 140,
-    originalPrice: 195,
-    discount: 28,
-    rating: 5,
-    category: "colon",
+  //   price: 140,
+  //   originalPrice: 195,
+  //   discount: 28,
+  //   rating: 5,
+  //   category: "colon",
 
-    productColors: [
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563207/WhatsApp_Image_2026-04-30_at_8.26.23_AM_tevukf.jpg",
-      },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563208/WhatsApp_Image_2026-04-30_at_8.26.24_AM_c4p7eo.jpg",
-      },
-    ],
-    avalibeColors: ["أبيض", "بينك"],
-    image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563207/WhatsApp_Image_2026-04-30_at_8.26.23_AM_tevukf.jpg",
+  //   productColors: [
+  //     {
+  //       img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563207/WhatsApp_Image_2026-04-30_at_8.26.23_AM_tevukf.jpg",
+  //     },
+  //     {
+  //       img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563208/WhatsApp_Image_2026-04-30_at_8.26.24_AM_c4p7eo.jpg",
+  //     },
+  //   ],
+  //   avalibeColors: ["أبيض", "بينك"],
+  //   image:
+  //     "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777563207/WhatsApp_Image_2026-04-30_at_8.26.23_AM_tevukf.jpg",
 
-    sizes: [
-      { size: "4-2", age: "من سنة ونص ل 3 سنين" },
-      { size: "6-4", age: "من 3 ل 5 سنين" },
-      { size: "8-6", age: "من 5 ل 7 سنين" },
-      { size: "10-8", age: "من 7 ل 9 سنين" },
-      { size: "12-10", age: "من 9 ل 11 سنة" },
-      { size: "14-12", age: "من 12 ل 14 سنة" },
-    ],
-  },
+  //   sizes: [
+  //     { size: "4-2", age: "من سنة ونص ل 3 سنين" },
+  //     { size: "6-4", age: "من 3 ل 5 سنين" },
+  //     { size: "8-6", age: "من 5 ل 7 سنين" },
+  //     { size: "10-8", age: "من 7 ل 9 سنين" },
+  //     { size: "12-10", age: "من 9 ل 11 سنة" },
+  //     { size: "14-12", age: "من 12 ل 14 سنة" },
+  //   ],
+  // },
 
   {
     id: 5,
