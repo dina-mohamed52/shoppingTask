@@ -196,48 +196,8 @@ function ProductDetails() {
     if (!product) return;
 
     let offerConfig = null;
-    
-    if (product.tabType === "half") {
-      offerConfig = {
-        name: "6 هاف كولون",
-        quantity: 6,
-        price: 330,
-        originalPrice: 405,
-        savings: 85,
-        tabType: "half",
-        unit: "قطعة",
-      };
-    } else if (product.tabType === "turbon") {
-      offerConfig = {
-        name: "6 تربونات",
-        quantity: 6,
-        price: 300,
-        originalPrice: 390,
-        savings: 90,
-        tabType: "turbon",
-        unit: "تربونة",
-      };
-    } else if (product.tabType === "bandana") {
-      offerConfig = {
-        name: "6 بندانات",
-        quantity: 6,
-        price: 270,
-        originalPrice: 360,
-        savings: 90,
-        tabType: "bandana",
-        unit: "بندانه",
-      };
-    } else if (product.tabType === "set") {
-      offerConfig = {
-        name: "3 أطقم",
-        quantity: 3,
-        price: 285,
-        originalPrice: 380,
-        savings: 95,
-        tabType: "set",
-        unit: "طقم",
-      };
-    }
+
+
 
     if (!offerConfig) return;
 
@@ -248,15 +208,7 @@ function ProductDetails() {
       return <Package className="w-5 h-5" />;
     };
 
-    setSelectedOfferForOrder({
-      id: `default-${product.id}`,
-      ...offerConfig,
-      icon: getIcon(),
-      popular: true,
-      badge: "الأكثر طلباً",
-      selectedTabType: product.tabType,
-      type: product.type,
-    });
+    setSelectedOfferForOrder(null);
   }, [product]);
 
   const handleOfferSelect = (offer) => {
@@ -293,9 +245,9 @@ function ProductDetails() {
   }
 
   // ✅ تحديد إذا كان المنتج من نوع Turbon/Bandana/Set
-  const isTurbonProduct = product?.tabType === "turbon" || 
-                          product?.tabType === "bandana" || 
-                          product?.tabType === "set";
+  const isTurbonProduct = product?.tabType === "turbon" ||
+    product?.tabType === "bandana" ||
+    product?.tabType === "set";
 
   const currentColorData = product.productColors[selectedColor];
   const features = [
@@ -331,11 +283,10 @@ function ProductDetails() {
                 className="p-2 rounded-full hover:bg-gray-100 transition-colors"
               >
                 <Heart
-                  className={`w-5 h-5 transition-all duration-200 ${
-                    isWishlisted
+                  className={`w-5 h-5 transition-all duration-200 ${isWishlisted
                       ? "fill-red-500 text-red-500 scale-110"
                       : "text-gray-600"
-                  }`}
+                    }`}
                 />
               </button>
             </div>
@@ -374,11 +325,10 @@ function ProductDetails() {
                 <button
                   key={index}
                   onClick={() => setSelectedColor(index)}
-                  className={`relative flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden transition-all duration-200 ${
-                    selectedColor === index
+                  className={`relative flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden transition-all duration-200 ${selectedColor === index
                       ? "ring-2 ring-pink-500 ring-offset-2 shadow-lg"
                       : "ring-1 ring-gray-200 hover:ring-gray-300"
-                  }`}
+                    }`}
                 >
                   <img
                     src={color.img}
@@ -446,11 +396,10 @@ function ProductDetails() {
                     <button
                       key={index}
                       onClick={() => setSelectedColor(index)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                        selectedColor === index
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${selectedColor === index
                           ? "bg-pink-500 text-white shadow-md scale-105"
                           : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
+                        }`}
                     >
                       {product.avalibeColors?.[index]}
                     </button>
@@ -484,11 +433,10 @@ function ProductDetails() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`pb-3 font-medium transition-all duration-200 relative ${
-                    activeTab === tab.id
+                  className={`pb-3 font-medium transition-all duration-200 relative ${activeTab === tab.id
                       ? "text-pink-500"
                       : "text-gray-500 hover:text-gray-700"
-                  }`}
+                    }`}
                 >
                   {tab.label}
                   {activeTab === tab.id && (
@@ -561,7 +509,7 @@ function ProductDetails() {
                         <Ruler className="w-5 h-5 text-pink-500" />
                         <h3 className="font-semibold text-gray-800">دليل مقاسات {product.name}</h3>
                       </div>
-                      
+
                       <div className="overflow-x-auto rounded-xl border border-gray-100">
                         <table className="w-full text-sm">
                           <thead>
@@ -576,11 +524,10 @@ function ProductDetails() {
                           </thead>
                           <tbody>
                             {product.sizes.map((size, idx) => (
-                              <tr 
-                                key={idx} 
-                                className={`border-b border-gray-100 hover:bg-pink-50/30 transition-colors ${
-                                  idx === product.sizes.length - 1 ? "border-b-0" : ""
-                                }`}
+                              <tr
+                                key={idx}
+                                className={`border-b border-gray-100 hover:bg-pink-50/30 transition-colors ${idx === product.sizes.length - 1 ? "border-b-0" : ""
+                                  }`}
                               >
                                 <td className="py-3 px-4 font-bold text-pink-600">{size.size}</td>
                                 <td className="py-3 px-4 text-gray-600">{size.age}</td>
@@ -589,7 +536,7 @@ function ProductDetails() {
                           </tbody>
                         </table>
                       </div>
-                      
+
                       <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-400 bg-gray-50 p-3 rounded-lg">
                         <span>💡</span>
                         <span>نصيحة: إذا كان طفلك بين مقاسين، اختاري المقاس الأكبر لراحة أطول</span>
@@ -620,37 +567,38 @@ function ProductDetails() {
       </main>
 
       {/* ✅ قسم العروض - حسب نوع المنتج */}
-      {product.id !== 3 ? (
-        <div ref={offersRef} className="scroll-mt-20">
-          {isTurbonProduct ? (
-            <TurbonOffers
-              filterByTabType={product.tabType || "turbon"}
-              filterByProductType={product.type}
-              setSelectedOffer={handleOfferSelect}
-              hideTabs={true}
-              scrollToOrderCollection={() =>
-                orderCollectionRef.current?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                })
-              }
-            />
-          ) : (
-            <HalfOffers
-              filterByTabType={product.tabType || "half"}
-              filterByProductType={product.type}
-              setSelectedOffer={handleOfferSelect}
-              hideTabs={true}
-              scrollToOrderCollection={() =>
-                orderCollectionRef.current?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                })
-              }
-            />
-          )}
-        </div>
-      ) : null}
+    {product.id !== 3 ? (
+  <div ref={offersRef} className="scroll-mt-20">
+    {isTurbonProduct ? (
+      <TurbonOffers
+        filterByTabType={product.tabType || "turbon"}
+        // ✅ لو التربون نوعه "turbon" نبعت "turbon" مش "bow"
+        filterByProductType={product.type === "turbon" ? "turbon" : product.type || null}
+        setSelectedOffer={handleOfferSelect}
+        hideTabs={true}
+        scrollToOrderCollection={() =>
+          orderCollectionRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          })
+        }
+      />
+    ) : (
+      <HalfOffers
+        filterByTabType={product.tabType || "half"}
+        filterByProductType={product.type || null}
+        setSelectedOffer={handleOfferSelect}
+        hideTabs={true}
+        scrollToOrderCollection={() =>
+          orderCollectionRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          })
+        }
+      />
+    )}
+  </div>
+) : null}
 
       {/* ✅ قسم تجميع الطلب - حسب نوع المنتج */}
       <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
@@ -660,7 +608,7 @@ function ProductDetails() {
               selectedOffer={selectedOfferForOrder}
               disableProductSelection={true}
               defaultProductName={product.name}
-              onOrderConfirmed={() => {}}
+              onOrderConfirmed={() => { }}
               scrollToOffers={scrollToOffers}
             />
           ) : (
