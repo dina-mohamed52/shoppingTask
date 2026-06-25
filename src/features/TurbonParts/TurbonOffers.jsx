@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  Sparkles, 
-  Tag, 
+import {
+  Sparkles,
+  Tag,
   CheckCircle,
   ShoppingBag,
   Package,
@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import { halfOffersData } from "../SummerHalf/HalfOffersData";
 
-function TurbonOffers({ 
-  setSelectedOffer, 
+function TurbonOffers({
+  setSelectedOffer,
   scrollToOrderCollection,
   filterByTabType = null,
   filterByProductType = null,
@@ -25,47 +25,117 @@ function TurbonOffers({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeOfferTab, setActiveOfferTab] = useState(filterByTabType || "bandana");
 
-  // Get all available tab types from offers data - الآن تابين فقط
+  // Get all available tab types from offers data
   const allTabTypes = ["bandana", "turbon"];
-  
+
   const tabLabels = {
     bandana: "البندانات",
-    turbon: "التربون "
+    turbon: "التربون"
   };
 
-  // Filter offers based on active tab
+  // ✅ Filter offers based on active tab AND product type
   const filteredOffers = (() => {
     let offers = halfOffersData.filter(offer => offer.tabType !== "half");
-    
+
+    // ✅ لو في filterByProductType محدد (من ProductDetails)
     if (filterByProductType) {
-      offers = offers.filter(offer => offer.type === filterByProductType);
-    } 
-    else if (activeOfferTab) {
-      // عرض كل ما يتعلق بالبندانات (فردي + أطقم)
-      if (activeOfferTab === "bandana") {
-        offers = offers.filter(offer => 
-          offer.tabType === "bandana" || 
-          (offer.tabType === "set" && offer.type?.includes("bandana"))
-        );
-      } 
-      // عرض كل ما يتعلق بالتربون (فردي + أطقم)
-      else if (activeOfferTab === "turbon") {
-        offers = offers.filter(offer => 
-          offer.tabType === "turbon" || 
-          (offer.tabType === "set" && offer.type?.includes("turbon"))
+      console.log("🔍 Filtering by product type:", filterByProductType);
+      console.log("📦 All offers:", offers.map(o => ({ name: o.name, type: o.type, tabType: o.tabType })));
+      
+      // ✅ IMPORTANT: التربونات الفردية معندهمش type محدد
+      // فلو filterByProductType = "turbon" أو "bow" أو أي حاجة تانية
+      // نرجع التربونات الفردية اللي tabType = "turbon"
+      if (filterByProductType === "turbon" || filterByTabType === "turbon") {
+        return offers.filter(offer => 
+          offer.tabType === "turbon" && 
+          !offer.type?.includes("set")
         );
       }
+      
+      // لو في type محدد (زي set-bandana أو set-turbon)
+      if (filterByProductType === "set-bandana" || filterByProductType === "set-turbon") {
+        return offers.filter(offer => offer.type === filterByProductType);
+      }
+      
+      // لو بندانه فردية
+      if (filterByTabType === "bandana") {
+        return offers.filter(offer => 
+          offer.tabType === "bandana" && 
+          !offer.type?.includes("set")
+        );
+      }
+      
+      // Fallback: لو مفيش match, نرجع العروض حسب الـ tabType
+      return offers.filter(offer => offer.tabType === filterByTabType);
     }
-    
+
+    // ✅ لو في filterByTabType محدد بس من غير product type
+    if (filterByTabType) {
+      console.log("🔍 Filtering by tab type only:", filterByTabType);
+      
+      if (filterByTabType === "bandana") {
+        // نرجع البندانات الفردية بس (من غير الأطقم)
+        return offers.filter(offer => 
+          offer.tabType === "bandana" && 
+          !offer.type?.includes("set")
+        );
+      }
+      
+      if (filterByTabType === "turbon") {
+        // نرجع التربونات الفردية بس (من غير الأطقم)
+        return offers.filter(offer => 
+          offer.tabType === "turbon" && 
+          !offer.type?.includes("set")
+        );
+      }
+      
+      if (filterByTabType === "set") {
+        // نرجع الأطقم حسب النوع
+        if (filterByProductType === "set-bandana") {
+          return offers.filter(offer => offer.type === "set-bandana");
+        }
+        if (filterByProductType === "set-turbon") {
+          return offers.filter(offer => offer.type === "set-turbon");
+        }
+        return offers.filter(offer => offer.tabType === "set");
+      }
+    }
+
+    // ✅ لو مفيش filter (الصفحة الرئيسية) - نستخدم التاب النشط
+    if (activeOfferTab === "bandana") {
+      return offers.filter(offer =>
+        offer.tabType === "bandana" ||
+        offer.type === "set-bandana"
+      );
+    }
+
+    if (activeOfferTab === "turbon") {
+      return offers.filter(offer =>
+        offer.tabType === "turbon" ||
+        offer.type === "set-turbon"
+      );
+    }
+
     return offers;
   })();
 
+  // ✅ Debug - طباعة العروض المفلترة
+  console.log("📦 Filtered Offers:", filteredOffers);
+  console.log("📋 Product type filter:", filterByProductType);
+  console.log("📋 Tab type filter:", filterByTabType);
+
   const getTitle = () => {
     if (filterByProductType === "set-bandana") {
-      return "عروض طقم بندانه + هاف كولون";
+      return "عروض أطقم البندانات";
     }
     if (filterByProductType === "set-turbon") {
-      return "عروض طقم تربون + هاف كولون";
+      return "عروض أطقم التربونات";
+    }
+    if (filterByTabType === "bandana" && !filterByProductType) {
+      return "عروض البندانات الفردية";
+    }
+    if (filterByTabType === "turbon" || filterByProductType === "turbon") {
+      return "عروض التربونات الفردية";
     }
     if (activeOfferTab === "bandana") {
       return "عروض البندانات والأطقم";
@@ -77,20 +147,34 @@ function TurbonOffers({
   };
 
   const getSubtitle = () => {
-    if (filterByProductType === "set-bandana" || filterByProductType === "set-turbon") {
-      return "عروض خاصة على هذا الطقم - اختاري عدد القطع المناسب لك";
+    if (filterByProductType === "set-bandana") {
+      return "عروض خاصة على أطقم البندانات - اختاري عدد القطع المناسب لك";
     }
-    if (activeOfferTab === "bandana") return "عروض خاصة على البندانات والأطقم - جودة عالية وأسعار مميزة";
-    if (activeOfferTab === "turbon") return "عروض خاصة على التربون والأطقم - جودة عالية وأسعار مميزة";
+    if (filterByProductType === "set-turbon") {
+      return "عروض خاصة على أطقم التربونات - اختاري عدد القطع المناسب لك";
+    }
+    if (filterByTabType === "bandana" && !filterByProductType) {
+      return "عروض خاصة على البندانات الفردية - جودة عالية وأسعار مميزة";
+    }
+    if (filterByTabType === "turbon" || filterByProductType === "turbon") {
+      return "عروض خاصة على التربونات الفردية - جودة عالية وأسعار مميزة";
+    }
+    if (activeOfferTab === "bandana") {
+      return "عروض خاصة على البندانات والأطقم - جودة عالية وأسعار مميزة";
+    }
+    if (activeOfferTab === "turbon") {
+      return "عروض خاصة على التربون والأطقم - جودة عالية وأسعار مميزة";
+    }
     return "اشتري أكتر ووفّري أكتر مع أقوى العروض";
   };
 
   const handleSelect = (offer) => {
-    console.log("Offer selected:", offer);
+    console.log("🛒 Offer selected:", offer);
     if (setSelectedOffer) {
       setSelectedOffer({
         ...offer,
-        selectedTabType: activeOfferTab,
+        selectedTabType: offer.tabType,
+        selectedType: offer.type
       });
     }
     if (scrollToOrderCollection) {
@@ -112,6 +196,7 @@ function TurbonOffers({
   };
 
   if (filteredOffers.length === 0) {
+    console.log("⚠️ No offers found for this product");
     return null;
   }
 
@@ -148,7 +233,7 @@ function TurbonOffers({
         </p>
       </motion.div>
 
-      {/* Tabs - الآن تابين فقط */}
+      {/* Tabs - بس في الصفحة الرئيسية مش في ProductDetails */}
       {!hideTabs && (
         <div dir="rtl" className="flex justify-center mb-8 px-4">
           <div className="inline-flex flex-wrap justify-center gap-2 bg-white p-2 rounded-2xl shadow-md border border-gray-100 max-w-md mx-auto">
@@ -179,7 +264,7 @@ function TurbonOffers({
         {filteredOffers.map((offer, index) => {
           const isHovered = hoveredIndex === index;
           const pricePerPiece = getPricePerPiece(offer.price, offer.quantity);
-          
+
           return (
             <motion.div
               key={index}
@@ -192,12 +277,11 @@ function TurbonOffers({
               onClick={() => handleSelect(offer)}
               className="relative group cursor-pointer"
             >
-              <div className={`relative bg-white rounded-2xl p-4 shadow-md border border-gray-100 transition-all duration-300 ${
-                isHovered 
-                  ? "shadow-xl border-pink-300 -translate-y-1" 
-                  : "hover:shadow-lg"
-              }`}>
-                
+              <div className={`relative bg-white rounded-2xl p-4 shadow-md border border-gray-100 transition-all duration-300 ${isHovered
+                ? "shadow-xl border-pink-300 -translate-y-1"
+                : "hover:shadow-lg"
+                }`}>
+
                 {offer.popular && (
                   <div className="absolute top-3 left-3 z-10">
                     <div className="bg-pink-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-md">
