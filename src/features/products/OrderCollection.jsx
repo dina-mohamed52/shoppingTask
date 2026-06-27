@@ -397,10 +397,18 @@ function OrderCollection({ selectedOffer, scrollToOffers }) {
   };
 
   const handleBuyNow = (e) => {
-    e.preventDefault();
-    handleAddToCart(true);
-  };
+  e.preventDefault();
 
+  if (!isFormValid) {
+    toast.error("⚠️ يرجى إكمال جميع البيانات أولاً", {
+      position: "bottom-center",
+      autoClose: 3000,
+    });
+    return;
+  }
+
+  navigate("/checkout");
+};
   const handleContinueShopping = () => {
     setShowSuccessModal(false);
     setPendingNavigation(false);

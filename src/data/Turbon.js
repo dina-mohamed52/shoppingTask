@@ -173,11 +173,9 @@ export const BandanaTurbonData = [
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471515/WhatsApp_Image_2026-04-28_at_4.04.18_AM_7_bxi2rz.jpg",
       },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1782242330/WhatsApp_Image_2026-06-23_at_11.59.26_AM_1_opiegh.jpg",
-      },
+    
     ],
-    avalibeColors: ["أبيض", "أسود", "بينك", "لافندر", "أحمر", "أصفر", "كافية"],
+    avalibeColors: ["أبيض", "أسود", "بينك", "لافندر", "أحمر", "أصفر"],
     image:
       "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392524/WhatsApp_Image_2026-04-28_at_4.04.18_AM_5_wzb6ha.jpg",
     sizes: [
