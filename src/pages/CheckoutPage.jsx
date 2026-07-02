@@ -87,8 +87,8 @@ function CheckoutPage() {
   const addressRef = useRef(null);
 
   const subtotal = cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
-  const shipping = HIGH_SHIPPING_GOVS.includes(formData.city) ? 90 : 60;
-  const total = subtotal + shipping;
+  const shipping = HIGH_SHIPPING_GOVS.includes(formData.city) ? 110 : 60;
+  const total = subtotal + shipping ;
 
   const handleChange = (e) => {
     const { name, value } = e.target;

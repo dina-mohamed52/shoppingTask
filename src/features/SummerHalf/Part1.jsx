@@ -40,11 +40,11 @@ const CountdownTimer = ({ initialTime }) => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.2 }}
-      className="inline-flex items-center gap-2 md:gap-4 bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl px-3 md:px-6 py-1.5 md:py-3 shadow-lg border border-pink-500/30"
+      className="inline-flex items-center gap-2 md:gap-4 bg-white/90 backdrop-blur-sm rounded-xl md:rounded-2xl px-3 md:px-6 py-1.5 md:py-3 shadow-lg border border-pink-200"
     >
       <div className="flex items-center gap-1 md:gap-2">
-        <ClockIcon className="w-3 h-3 md:w-5 md:h-5 text-pink-400" />
-        <span className="text-[10px] md:text-sm text-white font-medium">ينتهي خلال:</span>
+        <ClockIcon className="w-3 h-3 md:w-5 md:h-5 text-pink-500" />
+        <span className="text-[10px] md:text-sm text-gray-700 font-medium">ينتهي خلال:</span>
       </div>
       <div className="flex gap-1 md:gap-3">
         {[
@@ -53,10 +53,10 @@ const CountdownTimer = ({ initialTime }) => {
           { value: timeLeft.seconds, label: "ث" }
         ].map((item, idx) => (
           <div key={idx} className="text-center">
-            <div className="bg-gradient-to-br from-pink-600 to-pink-700 text-white rounded-lg px-1.5 md:px-3 py-0.5 md:py-1 min-w-[30px] md:min-w-[50px]">
+            <div className="bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-lg px-1.5 md:px-3 py-0.5 md:py-1 min-w-[30px] md:min-w-[50px]">
               <span className="text-sm md:text-xl font-bold">{String(item.value).padStart(2, '0')}</span>
             </div>
-            <span className="text-[8px] md:text-xs text-gray-400">{item.label}</span>
+            <span className="text-[8px] md:text-xs text-gray-500">{item.label}</span>
           </div>
         ))}
       </div>
@@ -93,13 +93,13 @@ export const ProductCardS = React.memo(({ product, index, activeIndex, style, on
       className="cursor-pointer"
       onClick={handleCardClick}
     >
-      <div className={`bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-sm w-full h-full flex flex-col transition-all duration-300 ${
+      <div className={`bg-white rounded-2xl overflow-hidden shadow-lg border w-full h-full flex flex-col transition-all duration-300 ${
         isActive 
-          ? 'border-pink-500 shadow-pink-500/30 shadow-xl ring-1 ring-pink-500/50' 
-          : 'border-pink-500/30'
+          ? 'border-pink-500 shadow-pink-200/50 shadow-xl ring-1 ring-pink-400' 
+          : 'border-gray-200'
       }`}>
         {/* Product Image */}
-        <div className="relative h-48 md:h-52 overflow-hidden bg-gradient-to-br from-gray-700 to-gray-800 flex-shrink-0">
+        <div className="relative h-48 md:h-52 overflow-hidden bg-gray-50 flex-shrink-0">
           <img
             src={product.image}
             alt={product.name}
@@ -122,16 +122,16 @@ export const ProductCardS = React.memo(({ product, index, activeIndex, style, on
         </div>
 
         <div className="p-3 md:p-4 flex-1 flex flex-col">
-          <h3 className="font-bold text-white text-sm md:text-base mb-1 line-clamp-2">
+          <h3 className="font-bold text-gray-800 text-sm md:text-base mb-1 line-clamp-2">
             {product.name}
           </h3>
-          <p className="text-[10px] md:text-xs text-pink-400 font-semibold mb-2">{product.brand}</p>
+          <p className="text-[10px] md:text-xs text-pink-500 font-semibold mb-2">{product.brand}</p>
 
           {/* Rating */}
           <div className="flex items-center gap-1 mb-2">
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (
-                <StarSolidIcon key={i} className={`w-2.5 h-2.5 md:w-3 md:h-3 ${i < Math.floor(product.rating || 0) ? 'text-yellow-400' : 'text-gray-600'}`} />
+                <StarSolidIcon key={i} className={`w-2.5 h-2.5 md:w-3 md:h-3 ${i < Math.floor(product.rating || 0) ? 'text-yellow-400' : 'text-gray-300'}`} />
               ))}
             </div>
             <span className="text-[9px] md:text-[10px] text-gray-400">({product.reviews})</span>
@@ -139,7 +139,7 @@ export const ProductCardS = React.memo(({ product, index, activeIndex, style, on
 
           {/* Price */}
           <div className="flex items-baseline gap-1 md:gap-2 mb-3">
-            <span className="text-sm md:text-lg font-bold text-white">
+            <span className="text-sm md:text-lg font-bold text-gray-800">
               {product.price} ج.م
             </span>
             <span className="text-[9px] md:text-xs text-gray-400 line-through">
@@ -337,11 +337,11 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
   if (totalProducts === 0) return null;
 
   return (
-    <div className="relative py-8 md:py-12 px-3 md:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-x-hidden min-h-screen">
+    <div className="relative py-8 md:py-12 px-3 md:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-x-hidden min-h-screen">
       {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-gradient-to-r from-pink-200/40 to-purple-200/40 rounded-full blur-3xl animate-pulse" />
         </div>
       </div>
 
@@ -353,18 +353,18 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full text-white text-xs md:text-sm font-medium mb-3 md:mb-4 shadow-lg">
+            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-full text-xs md:text-sm font-medium mb-3 md:mb-4 shadow-lg">
               <FireIcon className="w-3 h-3 md:w-4 md:h-4" />
               <span>🔥 الأكثر طلباً اليوم</span>
             </div>
             
             <h2 className="text-2xl md:text-5xl font-bold mb-2 md:mb-3">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500">
                 حصرياً كولكشين صيف 2026
               </span>
             </h2>
             
-            <p className="text-gray-400 max-w-2xl mx-auto  pb-6 text-xs md:text-base px-4">
+            <p className="text-gray-600 max-w-2xl mx-auto pb-6 text-xs md:text-base px-4">
               جولة على أحدث تشكيلات الصيف - هاف كولون وبندانات عصرية
             </p>
           </motion.div>
@@ -382,18 +382,18 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
           {/* Navigation Buttons */}
           <button
             onClick={handlePrev}
-            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-[200] bg-black/50 backdrop-blur-sm rounded-full p-2 md:p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
+            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-[200] bg-white/80 backdrop-blur-sm rounded-full p-2 md:p-3 hover:bg-white transition-all duration-300 hover:scale-110 border border-pink-200 shadow-lg"
             aria-label="Previous product"
           >
-            <ChevronLeftIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            <ChevronLeftIcon className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
           </button>
           
           <button
             onClick={handleNext}
-            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-[200] bg-black/50 backdrop-blur-sm rounded-full p-2 md:p-3 hover:bg-white/20 transition-all duration-300 hover:scale-110 border border-pink-500/30"
+            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-[200] bg-white/80 backdrop-blur-sm rounded-full p-2 md:p-3 hover:bg-white transition-all duration-300 hover:scale-110 border border-pink-200 shadow-lg"
             aria-label="Next product"
           >
-            <ChevronRightIcon className="w-5 h-5 md:w-6 md:h-6 text-white" />
+            <ChevronRightIcon className="w-5 h-5 md:w-6 md:h-6 text-gray-700" />
           </button>
 
           {/* 3D Container */}
@@ -423,7 +423,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
           </div>
 
           {/* Center Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-56 md:h-56 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 md:w-56 md:h-56 bg-gradient-to-r from-pink-200/30 to-purple-200/30 rounded-full blur-3xl pointer-events-none" />
         </div>
 
         {/* Progress Indicators */}
@@ -436,7 +436,7 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
                 className={`transition-all duration-300 rounded-full ${
                   activeIndex === idx
                     ? 'w-6 md:w-8 h-1.5 md:h-2 bg-gradient-to-r from-pink-500 to-pink-600'
-                    : 'w-1.5 md:w-2 h-1.5 md:h-2 bg-gray-600 hover:bg-pink-400'
+                    : 'w-1.5 md:w-2 h-1.5 md:h-2 bg-gray-300 hover:bg-pink-400'
                 }`}
                 aria-label={`Go to product ${idx + 1}`}
               />
@@ -461,10 +461,10 @@ export default function Part1({ onAddToCart, onViewProduct, HalfColoneData }) {
         }
         @keyframes pulse {
           0%, 100% {
-            opacity: 0.2;
+            opacity: 0.3;
           }
           50% {
-            opacity: 0.4;
+            opacity: 0.6;
           }
         }
         .animate-pulse {

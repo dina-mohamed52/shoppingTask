@@ -173,11 +173,14 @@ export const BandanaTurbonData = [
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777471515/WhatsApp_Image_2026-04-28_at_4.04.18_AM_7_bxi2rz.jpg",
       },
+      {
+        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783006087/WhatsApp_Image_2026-06-28_at_5.38.23_PM_d7vhmp.jpg",
+      },
     
     ],
-    avalibeColors: ["أبيض", "أسود", "بينك", "لافندر", "أحمر", "أصفر"],
+    avalibeColors: ["أبيض", "أسود", "بينك", "لافندر", "أحمر", "أصفر","بيج"],
     image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777392524/WhatsApp_Image_2026-04-28_at_4.04.18_AM_5_wzb6ha.jpg",
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783006087/WhatsApp_Image_2026-06-28_at_5.38.23_PM_d7vhmp.jpg",
     sizes: [
       { size: "0-1", age: "من زيرو ل9 شهور" },
       { size: "1-2", age: "من 9 شهور لسنه ونص" },
@@ -255,7 +258,7 @@ export const BandanaTurbonData = [
       "تربون فيونكه كافية + هاف اسود",
       // "تربون ورده بينك + هاف بينك",
       // "تربون ورده أصفر + هاف اصفر",
-      "تربون ورده أوف وايت + هاف ابيض",
+      "تربون فيونكه أوف وايت + هاف ابيض",
       // "تربون ورده بيج + هاف اسود",
       // "تربون ورده لافندر + هاف لافندر",
     ],
