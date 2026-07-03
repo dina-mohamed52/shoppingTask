@@ -363,29 +363,38 @@ function CheckoutPage() {
                         </div>
 
                         {/* Offer pieces - Modern Design */}
-                        {item.isOffer && item.offerDetails?.pieces && (
-                          <div className="mt-4 pt-3 border-t border-dashed border-[#F5A0CA]/20">
-                            <p className="text-xs font-semibold text-gray-500 mb-2 flex items-center gap-1">
-                              <Layers className="w-3.5 h-3.5" />
-                              مكونات الباقة:
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                              {item.offerDetails.pieces.map((piece, pIdx) => (
-                                <div key={pIdx} className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-xl text-xs border border-gray-100 shadow-sm">
-                                  <span className="font-medium text-gray-700">{piece.name}</span>
-                                  {piece.color && (
-                                    <div className="flex items-center gap-1">
-                                      <div className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: getColorCode(piece.color) }}></div>
-                                      <span className="text-gray-500">{piece.color}</span>
-                                    </div>
-                                  )}
-                                  {piece.size && <span className="text-gray-500">م {piece.size}</span>}
-                                  {piece.quantity > 1 && <span className="text-[#F472B6] font-medium">×{piece.quantity}</span>}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                       {item.isOffer && item.offerDetails?.pieces && (
+  <div className="mt-4 pt-3 border-t border-dashed border-[#F5A0CA]/20">
+    <p className="text-xs font-semibold text-gray-500 mb-2 flex items-center gap-1">
+      <Layers className="w-3.5 h-3.5" />
+      مكونات الباقة:
+    </p>
+    <div className="flex flex-wrap gap-2">
+      {item.offerDetails.pieces.map((piece, pIdx) => (
+        <div key={pIdx} className="flex flex-col gap-0.5 bg-gray-50 px-3 py-1.5 rounded-xl text-xs border border-gray-100 shadow-sm min-w-[120px]">
+          {/* اسم القطعة */}
+          <span className="font-medium text-gray-700 text-[11px]">{piece.name}</span>
+          
+          {/* اللون والمقاس في سطرين منفصلين */}
+          <div className="flex flex-col gap-0.5 mt-0.5">
+            {piece.color && (
+              <div className="flex items-center gap-1">
+                <div className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: getColorCode(piece.color) }}></div>
+                <span className="text-gray-500 text-[10px]">اللون: {piece.color}</span>
+              </div>
+            )}
+            {piece.size && (
+              <span className="text-gray-500 text-[10px]">المقاس: {piece.size}</span>
+            )}
+            {piece.quantity > 1 && (
+              <span className="text-[#F472B6] font-medium text-[10px]">×{piece.quantity}</span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
                         {/* Remove button */}
                         <button
