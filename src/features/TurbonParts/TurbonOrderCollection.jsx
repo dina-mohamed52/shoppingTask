@@ -227,36 +227,31 @@ function TurbonOrderCollection({
     }
   }, [selectedOffer]);
 
-  // Get products based on selected offer type
-  const getFilteredProducts = () => {
-    // إذا كان العرض من نوع set
-    if (selectedOffer?.selectedTabType === "set") {
-      // إذا كان العرض طقم بندانه
-      if (selectedOffer?.type === "set-bandana") {
-        return BandanaTurbonData.filter((p) => p.type === "set-bandana");
-      }
-      // إذا كان العرض طقم تربون
-      if (selectedOffer?.type === "set-turbon") {
-        return BandanaTurbonData.filter((p) => p.type === "set-turbon");
-      }
-      // كل الأطقم
-      return BandanaTurbonData.filter((p) => p.tabType === "set");
-    }
-    
-    // إذا كان العرض تربون
-    if (selectedOffer?.selectedTabType === "turbon") {
-      return BandanaTurbonData.filter((p) => p.tabType === "turbon");
-    }
-    
-    // إذا كان العرض بندانه
-    if (selectedOffer?.selectedTabType === "bandana") {
-      return BandanaTurbonData.filter((p) => p.tabType === "bandana");
-    }
-    
-    // افتراضي: تربونات فقط
-    return BandanaTurbonData.filter((p) => p.tabType === "turbon");
-  };
+  // Get products based on selected offer
+ const getFilteredProducts = () => {
+  const tabType = selectedOffer?.selectedTabType;
+  const type = selectedOffer?.selectedType;
 
+  console.log("tabType:", tabType, "type:", type);
+
+  if (type === "set-bandana") {
+    return BandanaTurbonData.filter(p => p.type === "set-bandana");
+  }
+
+  if (type === "set-turbon") {
+    return BandanaTurbonData.filter(p => p.type === "set-turbon");
+  }
+
+  if (tabType === "bandana") {
+    return BandanaTurbonData.filter(p => p.tabType === "bandana");
+  }
+
+  if (tabType === "turbon") {
+    return BandanaTurbonData.filter(p => p.tabType === "turbon");
+  }
+
+  return [];
+};
   const products = useMemo(
     () => getFilteredProducts(),
     [selectedOffer?.selectedTabType, selectedOffer?.type]
@@ -296,10 +291,8 @@ function TurbonOrderCollection({
       const isOneSize = isOneSizeProduct(piece.productId);
       
       if (isOneSize) {
-        // للمنتج One Size: نحتاج فقط المنتج واللون
         completed[piece.id] = !!(piece.productId && piece.color);
       } else {
-        // للمنتجات العادية (بندانات وأطقم): نحتاج المنتج واللون والمقاس
         completed[piece.id] = !!(piece.productId && piece.color && selectedSizes[piece.id]);
       }
     });
@@ -316,10 +309,9 @@ function TurbonOrderCollection({
     return product?.sizes || [];
   };
 
-  // دالة للتحقق إذا كان المنتج من نوع One Size
   const isOneSizeProduct = (productId) => {
     const product = getProductById(productId);
-    return product?.tabType === "turbon"; // التربونات كلها One Size
+    return product?.tabType === "turbon" || product?.type === "set-turbon";
   };
 
   const handleGoToOffers = () => {
@@ -365,7 +357,6 @@ function TurbonOrderCollection({
     setPieces((prev) =>
       prev.map((p) => (p.id === id ? { ...p, productId, color: "" } : p))
     );
-    // مسح المقاس المخزن عند تغيير المنتج
     setSelectedSizes((prev) => {
       const newSizes = { ...prev };
       delete newSizes[id];
@@ -404,7 +395,6 @@ function TurbonOrderCollection({
         productId: piece.productId,
         name: product?.name,
         color: piece.color,
-        // فقط أضف المقاس إذا لم يكن المنتج One Size
         ...(isOneSize ? {} : { size: selectedSizes[piece.id] }),
         image: getProductImage(product, piece.color),
       };
@@ -422,20 +412,19 @@ function TurbonOrderCollection({
         totalPieces: pieces.length,
         pieces: orderWithDetails,
         tabType: selectedOffer?.selectedTabType || "turbon",
+        offerType: selectedOffer?.type || null,
       },
       image: orderWithDetails[0]?.image || "",
     };
   };
 
-  // التحقق من صحة النموذج
+  // Form validation
   const isFormValid = pieces.every((piece) => {
     const isOneSize = isOneSizeProduct(piece.productId);
     
     if (isOneSize) {
-      // للمنتج One Size: نحتاج منتج ولون فقط
       return !!(piece.productId && piece.color);
     } else {
-      // للمنتجات العادية: نحتاج منتج ولون ومقاس
       return !!(piece.productId && piece.color && selectedSizes[piece.id]);
     }
   });
@@ -500,9 +489,18 @@ function TurbonOrderCollection({
   };
 
   const handleBuyNow = (e) => {
-    e.preventDefault();
-    handleAddToCart(true);
-  };
+  e.preventDefault();
+
+  if (!isFormValid) {
+    toast.error("⚠️ يرجى إكمال جميع البيانات أولاً", {
+      position: "bottom-center",
+      autoClose: 3000,
+    });
+    return;
+  }
+
+  navigate("/checkout");
+};
 
   const handleContinueShopping = () => {
     setShowSuccessModal(false);
@@ -527,6 +525,33 @@ function TurbonOrderCollection({
 
   const completedCount = Object.values(completedCards).filter(Boolean).length;
   const completionPercentage = (completedCount / pieces.length) * 100 || 0;
+
+  // ⭐⭐⭐ LABEL FUNCTION - ده اللي هيعرض للمستخدم هو فين ⭐⭐⭐
+  const getOfferTypeLabel = () => {
+    const tabType = selectedOffer?.selectedTabType;
+    const offerType = selectedOffer?.type;
+    
+    // عرض بندانه فردي
+    if (tabType === "bandana" && !offerType?.includes("set")) {
+      return "📌 بندانات فردية";
+    }
+    // عرض طقم بندانه
+    if ((tabType === "bandana" && offerType === "set-bandana") || 
+        (tabType === "set" && offerType === "set-bandana")) {
+      return "📌 أطقم بندانات";
+    }
+    // عرض تربون فردي
+    if (tabType === "turbon" && !offerType?.includes("set")) {
+      return "📌 تربونات فردية";
+    }
+    // عرض طقم تربون
+    if ((tabType === "turbon" && offerType === "set-turbon") || 
+        (tabType === "set" && offerType === "set-turbon")) {
+      return "📌 أطقم تربونات";
+    }
+    
+    return "📌 المنتجات";
+  };
 
   if (!selectedOffer || count === 0) {
     return (
@@ -571,17 +596,32 @@ function TurbonOrderCollection({
           className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-3 md:px-4 py-1 rounded-full mb-4 shadow-lg shadow-purple-200"
         >
           <Sparkles className="w-3 h-3" />
-          <span className="text-[11px] md:text-xs font-medium">تخصيص طلبك</span>
+          <span className="text-[11px] md:text-xs font-medium">
+            {getOfferTypeLabel()}
+          </span>
         </motion.div>
 
         <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 px-2">
           اختر تفاصيل{" "}
           <span className="bg-gradient-to-r from-purple-500 to-purple-600 bg-clip-text text-transparent">
-        {selectedOffer.name}
+            {selectedOffer.name}
           </span>
         </h2>
+        
+        {/* ⭐ إضافة توضيح للمستخدم ⭐ */}
+        <p className="text-gray-500 text-xs md:text-sm px-4 mt-1">
+          {selectedOffer?.selectedTabType === "bandana" && !selectedOffer?.type?.includes("set") && "🟣 اختر البندانات الفردية المناسبة لك"}
+          {selectedOffer?.selectedTabType === "bandana" && selectedOffer?.type === "set-bandana" && "🟣 اختر أطقم البندانات المناسبة لك"}
+          {selectedOffer?.selectedTabType === "turbon" && !selectedOffer?.type?.includes("set") && "🟣 اختر التربونات الفردية المناسبة لك"}
+          {selectedOffer?.selectedTabType === "turbon" && selectedOffer?.type === "set-turbon" && "🟣 اختر أطقم التربونات المناسبة لك"}
+          {selectedOffer?.selectedTabType === "set" && selectedOffer?.type === "set-bandana" && "🟣 اختر أطقم البندانات المناسبة لك"}
+          {selectedOffer?.selectedTabType === "set" && selectedOffer?.type === "set-turbon" && "🟣 اختر أطقم التربونات المناسبة لك"}
+        </p>
+
         <p className="text-gray-400 text-xs md:text-sm px-4">
-          قم بتخصيص كل قطعة بالمنتج واللون والمقاس المناسب
+          قم بتخصيص كل قطعة بالمنتج واللون
+          {selectedOffer?.selectedTabType !== "turbon" && selectedOffer?.type !== "set-turbon" && " والمقاس"} 
+          المناسب
         </p>
 
         {/* Premium Progress Bar */}
@@ -612,6 +652,8 @@ function TurbonOrderCollection({
         </div>
       </div>
 
+      {/* باقي الكود كما هو - products grid والbuttons */}
+
       {/* Locked Product Badge */}
       <AnimatePresence>
         {disableProductSelection && defaultProductName && (
@@ -632,7 +674,7 @@ function TurbonOrderCollection({
         )}
       </AnimatePresence>
 
-      {/* Premium Cards Grid */}
+      {/* Products Grid */}
       <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 md:gap-6">
         {pieces.map((piece, idx) => {
           const product = getProductById(piece.productId);
@@ -642,11 +684,9 @@ function TurbonOrderCollection({
           const isHovered = hoveredCard === piece.id;
           const isOneSize = isOneSizeProduct(piece.productId);
 
-          // Prepare options for mobile selects
           const productOptions = products.map((p) => ({
             value: p.id,
             label: p.name,
-            icon: p.type === "flower" ? "Flower2" : p.type === "set-bandana" ? "Layers" : "Ribbon",
           }));
 
           const colorOptions = colors.map((c) => ({
@@ -676,6 +716,8 @@ function TurbonOrderCollection({
                   ${isCompleted ? "ring-2 ring-purple-400 ring-offset-2" : "border border-gray-100"}
                   shadow-md
                 `}
+                onMouseEnter={() => setHoveredCard(piece.id)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
                 <div
                   className={`
@@ -713,7 +755,7 @@ function TurbonOrderCollection({
                       <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-lg">
                         {product.type === "flower" ? (
                           <span className="text-xs">🌸</span>
-                        ) : product.type === "set-bandana" ? (
+                        ) : product.type === "set-bandana" || product.type === "set-turbon" ? (
                           <Layers className="w-3 h-3 text-gray-400" />
                         ) : (
                           <span className="text-xs">🎀</span>
@@ -778,7 +820,7 @@ function TurbonOrderCollection({
                               <div className="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center">
                                 {p.type === "flower" ? (
                                   <span className="text-sm">🌸</span>
-                                ) : p.type === "set-bandana" ? (
+                                ) : p.type === "set-bandana" || p.type === "set-turbon" ? (
                                   <Layers className="w-4 h-4 text-purple-500" />
                                 ) : (
                                   <span className="text-sm">🎀</span>
@@ -854,7 +896,7 @@ function TurbonOrderCollection({
                       </div>
                     )}
 
-                    {/* Size Selection - Only show for non-One Size products */}
+                    {/* Size Selection */}
                     {!isOneSize && piece.productId && (
                       <>
                         {isMobile ? (
@@ -911,7 +953,7 @@ function TurbonOrderCollection({
                       </>
                     )}
 
-                    {/* One Size Badge - للتربونات فقط */}
+                    {/* One Size Badge */}
                     {isOneSize && piece.productId && (
                       <div className="space-y-2">
                         <label className="flex items-center gap-2 text-sm font-medium text-gray-700">

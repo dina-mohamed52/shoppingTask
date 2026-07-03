@@ -20,31 +20,26 @@ function HalfOffers({
   scrollToOrderCollection, 
   filterByTabType = null,
   filterByProductType = null,
-  hideTabs = false  // 👈 Prop جديد للتحكم في إخفاء التبويبات
+  hideTabs = false
 }) {
   const { t } = useTranslation();
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeOfferTab, setActiveOfferTab] = useState(filterByTabType || "half");
 
   // Get all available tab types from offers data
-  const allTabTypes = ["half", "bandana", "turbon", "set"];
+  const allTabTypes = ["half"]; // 👈 فقط هاف
   
   const tabLabels = {
-    half:" عروض الهاف كولون",
-    bandana: " عروض البندانات",
-    turbon:  " عروض التربون",
-    set:  " عروض الأطقم"
+    half: "عروض الهاف كولون"
   };
 
   // Filter offers based on active tab
   const filteredOffers = (() => {
     let offers = halfOffersData;
     
-    // لو في صفحة منتج محدد (filterByProductType موجود)
     if (filterByProductType) {
       offers = offers.filter(offer => offer.type === filterByProductType);
     } 
-    // لو في صفحة العروض الرئيسية (نستخدم الـ tab النشط)
     else if (activeOfferTab) {
       offers = offers.filter(offer => offer.tabType === activeOfferTab);
     }
@@ -54,42 +49,11 @@ function HalfOffers({
 
   // Get dynamic title
   const getTitle = () => {
-  if (filterByProductType === "set-mesh") {
-    return "عروض طقم بندانه + هاف كولون شبك";
-  }
-
-  if (filterByProductType === "set-bow") {
-    return "عروض طقم بندانه + هاف كولون فيونكه قطن";
-  }
-
-  if (activeOfferTab === "half") {
     return "عروض الهاف كولون";
-  }
-
-  if (activeOfferTab === "bandana") {
-    return "عروض البندانات";
-  }
-
-  if (activeOfferTab === "turbon") {
-    return "عروض التربون";
-  }
-
-  if (activeOfferTab === "set") {
-    return "عروض الأطقم";
-  }
-
-  return "العروض";
-};
+  };
 
   const getSubtitle = () => {
-    if (filterByProductType === "set-mesh" || filterByProductType === "set-bow") {
-      return "عروض خاصة على هذا الطقم - اختاري عدد القطع المناسب لك";
-    }
-    if (activeOfferTab === "half") return "اشتري أكتر ووفّري أكتر مع أقوى عروض الهاف كولون";
-    if (activeOfferTab === "bandana") return "عروض خاصة على البندانات - كل ما اشتريت أكتر، وفرت أكتر";
-    if (activeOfferTab === "turbon") return "عروض خاصة على التربون - جودة عالية وأسعار مميزة";
-    if (activeOfferTab === "set") return "أفضل العروض على الأطقم - جودة عالية وأسعار مميزة";
-    return "اشتري أكتر ووفّري أكتر مع أقوى العروض";
+    return "اشتري أكتر ووفّري أكتر مع أقوى عروض الهاف كولون";
   };
 
   const handleSelect = (offer) => {
@@ -137,7 +101,7 @@ function HalfOffers({
 
         <h2 className="text-3xl md:text-4xl font-black mb-2">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#e13485] via-[#e13485]/80 to-gray-700">
-            {getTitle() || "عروض هاف الكولون"}
+            {getTitle()}
           </span>
         </h2>
 
@@ -146,42 +110,34 @@ function HalfOffers({
         </p>
       </motion.div>
 
-     
-{!hideTabs && (
-  <div
-    dir="rtl"
-  className="flex justify-center mb-8 px-4">
-    <div className="inline-flex flex-wrap justify-center gap-2 bg-gray-100 p-2 rounded-2xl 
-    max-w-md sm:max-w-5xl mx-auto">
-      {allTabTypes.map((tab) => (
-        <button
-          key={tab}
-          onClick={() => setActiveOfferTab(tab)}
-          className={`
-            flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0
-            px-2 py-2 rounded-xl text-sm font-medium transition-all duration-300
-            ${activeOfferTab === tab
-              ? "bg-gradient-to-r from-[#e13485] to-[#c01e6f] px-3 text-white shadow-md"
-              : "text-gray-600 hover:bg-gray-200"}
-          `}
-        >
-          <div className="flex items-center justify-center whitespace-nowrap gap-1
-           sm:gap-2 text-[0.8rem] sm:text-base font-bold">
-            {tab === "half" && <Package className="w-4 h-4" />}
-            {tab === "bandana" && <Shirt className="w-4 h-4" />}
-            {tab === "turbon" && <Shirt className="w-4 h-4" />}
-            {tab === "set" && <Layers className="w-4 h-4" />}
-            <span>{tabLabels[tab]}</span>
+      {/* 👈 تم إزالة التبويبات بالكامل */}
+      {!hideTabs && allTabTypes.length > 1 && (
+        <div dir="rtl" className="flex justify-center mb-8 px-4">
+          <div className="inline-flex flex-wrap justify-center gap-2 bg-gray-100 p-2 rounded-2xl max-w-md sm:max-w-5xl mx-auto">
+            {allTabTypes.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveOfferTab(tab)}
+                className={`
+                  flex-1 min-w-[calc(50%-0.5rem)] sm:min-w-0
+                  px-2 py-2 rounded-xl text-sm font-medium transition-all duration-300
+                  ${activeOfferTab === tab
+                    ? "bg-gradient-to-r from-[#e13485] to-[#c01e6f] px-3 text-white shadow-md"
+                    : "text-gray-600 hover:bg-gray-200"}
+                `}
+              >
+                <div className="flex items-center justify-center whitespace-nowrap gap-1 sm:gap-2 text-[0.8rem] sm:text-base font-bold">
+                  {tab === "half" && <Package className="w-4 h-4" />}
+                  <span>{tabLabels[tab]}</span>
+                </div>
+              </button>
+            ))}
           </div>
-        </button>
-      ))}
-    </div>
-  </div>
-)}
+        </div>
+      )}
+
       {/* Offers Grid */}
-      <div
-        dir="rtl"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
+      <div dir="rtl" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 max-w-7xl mx-auto">
         {filteredOffers.map((offer, index) => {
           const isHovered = hoveredIndex === index;
           const pricePerPiece = getPricePerPiece(offer.price, offer.quantity);
@@ -198,8 +154,7 @@ function HalfOffers({
               onClick={() => handleSelect(offer)}
               className="relative group cursor-pointer"
             >
-              <div className={`relative bg-white rounded-2xl p-4
-               shadow-md border border-gray-100 transition-all duration-300 ${
+              <div className={`relative bg-white rounded-2xl p-4 shadow-md border border-gray-100 transition-all duration-300 ${
                 isHovered 
                   ? "shadow-xl border-[#e13485]/30 -translate-y-1" 
                   : "hover:shadow-lg"

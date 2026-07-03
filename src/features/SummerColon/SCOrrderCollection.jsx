@@ -494,11 +494,19 @@ function SCOrderCollection({ selectedOffer, scrollToOffers }) {
   };
 
   // شراء الآن (يضيف للسلة ويذهب للدفع)
-  const handleBuyNow = (e) => {
-    e.preventDefault();
-    handleAddToCart(true);
-  };
+const handleBuyNow = (e) => {
+  e.preventDefault();
 
+  if (!isFormValid) {
+    toast.error("⚠️ يرجى إكمال جميع البيانات أولاً", {
+      position: "bottom-center",
+      autoClose: 3000,
+    });
+    return;
+  }
+
+  navigate("/checkout");
+};
   // متابعة التسوق بعد الإضافة
   const handleContinueShopping = () => {
     setShowSuccessModal(false);

@@ -68,9 +68,9 @@ function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [errors, setErrors] = useState({});
-  
+
   const { cartItems, removeItem, clearCart } = useCart();
-  
+
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -114,7 +114,7 @@ function CheckoutPage() {
     if (errorFields.phone2 === "رقم الهاتف الإضافي غير صحيح") errorList.push("⚠️ رقم الهاتف الإضافي غير صحيح");
     if (errorFields.city) errorList.push("⚠️ المحافظة مطلوبة");
     if (errorFields.address) errorList.push("⚠️ العنوان مطلوب");
-    if (errorFields.phone2 === "رقم الهاتف الإضافي يجب أن يختلف عن الرقم الأساسي") 
+    if (errorFields.phone2 === "رقم الهاتف الإضافي يجب أن يختلف عن الرقم الأساسي")
       errorList.push("⚠️ رقم الهاتف الإضافي يجب أن يختلف عن الرقم الأساسي");
     if (errorList.length) alert(`❌ الرجاء تصحيح الأخطاء التالية:\n\n${errorList.join("\n")}`);
   };
@@ -149,8 +149,7 @@ function CheckoutPage() {
           return item.offerDetails?.pieces
             ?.map(
               (piece) =>
-                `${piece.name}${
-                  piece.size ? ` - مقاس ${piece.size}` : ""
+                `${piece.name}${piece.size ? ` - مقاس ${piece.size}` : ""
                 } - ${piece.color}`,
             )
             .join(" | ");
@@ -284,7 +283,7 @@ function CheckoutPage() {
           {/* Left Column - Cart Items & Form */}
           <div className="lg:col-span-7 space-y-6">
             {/* Cart Items - Modern Cards with Animation */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-[#F5A0CA]/30 overflow-hidden"
@@ -299,7 +298,7 @@ function CheckoutPage() {
 
               <div className="divide-y divide-[#F5A0CA]/20">
                 {cartItems.map((item, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={item.id || idx}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -311,15 +310,15 @@ function CheckoutPage() {
                       {item.image && (
                         <div className="flex-shrink-0">
                           <div className="w-24 h-24 rounded-2xl overflow-hidden shadow-md border-2 border-white">
-                            <img 
-                              src={item.image} 
-                              alt={item.name} 
+                            <img
+                              src={item.image}
+                              alt={item.name}
                               className="w-full h-full object-cover"
                             />
                           </div>
                         </div>
                       )}
-                      
+
                       {/* Details */}
                       <div className="flex-1">
                         <div className="flex flex-wrap justify-between gap-2">
@@ -390,7 +389,7 @@ function CheckoutPage() {
 
                         {/* Remove button */}
                         <button
-                          onClick={() => removeItem(item)}
+                          onClick={() => removeItem(item.id)}
                           className="flex items-center gap-1 text-xs text-gray-400 hover:text-red-500 mt-3 transition-all hover:gap-2"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -404,7 +403,7 @@ function CheckoutPage() {
             </motion.div>
 
             {/* Shipping Form - Modern Glassmorphism */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -455,11 +454,11 @@ function CheckoutPage() {
                   </div>
                 )}
 
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  type="submit" 
-                  disabled={loading} 
+                  type="submit"
+                  disabled={loading}
                   className="w-full mt-6 py-4 bg-gradient-to-r from-[#F472B6] via-[#F5A0CA] to-[#F472B6] text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
                 >
                   {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <><CreditCard className="w-5 h-5" /> تأكيد الطلب - {total} ج.م</>}
@@ -470,7 +469,7 @@ function CheckoutPage() {
 
           {/* Right Column - Order Summary Premium */}
           <div className="lg:col-span-5">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               className="sticky top-24"
@@ -483,7 +482,7 @@ function CheckoutPage() {
                   </h3>
                   <p className="text-white/80 text-sm mt-0.5">تفاصيل مشترياتك</p>
                 </div>
-                
+
                 <div className="p-6 space-y-5">
                   {/* Products quick list */}
                   <div className="space-y-2 max-h-48 overflow-y-auto">
