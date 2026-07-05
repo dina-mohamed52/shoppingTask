@@ -102,7 +102,7 @@ const SEASONS = {
     accentDark: "#2563EB",
     soft: "#DBEAFE",
     softLight: "#EFF6FF",
-    tagline: "دفء وأناقة بأجواء البلوك الناعمة",
+   tagline: "دفء وأناقة بأجواء دافئة وإطلالة ناعمة",
     categories: [
       {
         id: 4,
