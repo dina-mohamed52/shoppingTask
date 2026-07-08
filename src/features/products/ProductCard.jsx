@@ -77,6 +77,13 @@ function ProductCard({ product, onPreview, onClick }) {
     setIsLiked(!isLiked);
   };
 
+  // تحديد الألوان المراد عرضها
+  const displayColors = product.avalibeColors || [];
+  const totalColors = displayColors.length;
+  const maxDisplayColors = 4; // عدد الألوان المعروضة في الموبيل
+  const showMore = totalColors > maxDisplayColors;
+  const visibleColors = showMore ? displayColors.slice(0, maxDisplayColors) : displayColors;
+
   return (
     <div
       onClick={handleCardClick}
@@ -155,18 +162,18 @@ function ProductCard({ product, onPreview, onClick }) {
         </div>
 
         {/* Available Colors */}
-        {product.avalibeColors && product.avalibeColors.length > 0 && (
+        {totalColors > 0 && (
           <div className="mb-3 sm:mb-4">
             <div className="flex items-center gap-1 sm:gap-2 mb-1 sm:mb-2">
               <span className="text-[10px] sm:text-xs text-gray-500">
                 {t("productCard.colors", "الألوان المتاحة")}:
               </span>
               <span className="text-[10px] sm:text-xs text-pink-500">
-                {product.avalibeColors.length} لون
+                {totalColors} لون
               </span>
             </div>
-            <div className="flex flex-wrap gap-1 sm:gap-1.5">
-              {product.avalibeColors.map((color, idx) => {
+            <div className="flex flex-wrap gap-1 sm:gap-1.5 items-center">
+              {visibleColors.map((color, idx) => {
                 const colorCode = getColorCode(color);
                 return (
                   <div key={idx} className="group/color relative">
@@ -180,6 +187,18 @@ function ProductCard({ product, onPreview, onClick }) {
                   </div>
                 );
               })}
+              
+              {/* عرض "+N" للموبيل فقط إذا كان هناك ألوان إضافية */}
+              {showMore && (
+                <div className="relative group/color">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-white shadow-md flex items-center justify-center bg-gray-100 text-gray-700 text-[10px] sm:text-xs font-bold cursor-pointer transition-transform duration-300 hover:scale-110 hover:shadow-pink-500/50 active:scale-95">
+                    +{totalColors - maxDisplayColors}
+                  </div>
+                  <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover/color:opacity-100 transition-opacity duration-300 whitespace-nowrap z-20 hidden sm:block">
+                    {totalColors - maxDisplayColors} {lang === 'ar' ? 'لون إضافي' : 'more colors'}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         )}
