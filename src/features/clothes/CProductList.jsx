@@ -16,7 +16,7 @@ function CProductList() {
   }, []);
 
   const products = Clothes;
-  const shirts = Clothes.filter((c) => c.category === "shirts");
+  const shirts = Clothes.filter((c) => c.category === "top");
 
   const handleProductClick = (product) => {
     navigate(`/product/${product.id}`);
@@ -45,7 +45,7 @@ function CProductList() {
             </h1>
 
             <p className="text-[#5B4458] text-base sm:text-lg max-w-2xl mx-auto">
-              {top.length}+ تصاميم توب بقطن ريب مضلع ناعم ومرن، بفيونكات بأشكال مختلفة وألوان زاهية
+              {shirts.length}+ تصاميم توب بقطن ريب مضلع ناعم ومرن، بفيونكات بأشكال مختلفة وألوان زاهية
             </p>
           </div>
         </div>
