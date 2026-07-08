@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { HalfColoneData } from "../data/HalfColon";
 import { BandanaTurbonData } from "../data/Turbon";
+import { Clothes } from "../data/Clothes";
+import { SummerColonData } from "../data/SummerColon";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -22,8 +24,10 @@ import {
 } from "lucide-react";
 import HalfOffers from "../features/SummerHalf/HalfOffers";
 import TurbonOffers from "../features/TurbonParts/TurbonOffers";
+import ClothesOffers from "../features/clothes/ClothesOffers"; // 👈 إضافة استيراد ClothesOffers
 import HalfOrderCollection from "../features/SummerHalf/HalfOrderCollection";
 import TurbonOrderCollection from "../features/TurbonParts/TurbonOrderCollection";
+import ClothesOrderCollection from "../features/clothes/ClothesOrderCollection"; // 👈 إضافة استيراد ClothesOrderCollection
 import { useCart } from "../features/cart/CartContext";
 
 // ========== مكونات مساعدة صغيرة ==========
@@ -184,30 +188,22 @@ function ProductDetails() {
   const orderCollectionRef = useRef(null);
   const offersRef = useRef(null);
 
+  // 👈 البحث عن المنتج في جميع مصادر البيانات
   const product =
     HalfColoneData.find((item) => item.id === Number(id)) ||
-    BandanaTurbonData.find((item) => item.id === Number(id));
+    BandanaTurbonData.find((item) => item.id === Number(id)) ||
+    Clothes.find((item) => item.id === Number(id)) ||
+    SummerColonData.find((item) => item.id === Number(id));
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  // 👈 التحقق إذا كان المنتج من نوع Clothes
+  const isClothesProduct = Clothes.some((item) => item.id === Number(id));
+
   useEffect(() => {
     if (!product) return;
-
-    let offerConfig = null;
-
-
-
-    if (!offerConfig) return;
-
-    const getIcon = () => {
-      if (product.tabType === "bandana") return <Shirt className="w-5 h-5" />;
-      if (product.tabType === "set") return <Layers className="w-5 h-5" />;
-      if (product.tabType === "turbon") return <Package className="w-5 h-5" />;
-      return <Package className="w-5 h-5" />;
-    };
-
     setSelectedOfferForOrder(null);
   }, [product]);
 
@@ -249,7 +245,7 @@ function ProductDetails() {
     product?.tabType === "bandana" ||
     product?.tabType === "set";
 
-  const currentColorData = product.productColors[selectedColor];
+  const currentColorData = product.productColors?.[selectedColor] || product.productColors?.[0];
   const features = [
     {
       icon: <Ruler className="w-4 h-4" />,
@@ -263,6 +259,16 @@ function ProductDetails() {
       value: "مريح للبشرة",
     },
   ];
+
+  // 👈 تحديد نوع المنتج لعرض العروض المناسبة
+  const getProductTypeForOffers = () => {
+    if (product.category === "top") return "top";
+    if (product.category === "legging") return "legging";
+    if (product.category === "colon") return "short";
+    return null;
+  };
+
+  const productTypeForOffers = getProductTypeForOffers();
 
   return (
     <div className="min-h-screen bg-white" dir="rtl">
@@ -307,7 +313,7 @@ function ProductDetails() {
               onClick={() => setIsImageZoomed(true)}
             >
               <img
-                src={currentColorData?.img || product.productColors[0]?.img}
+                src={currentColorData?.img || product.productColors?.[0]?.img || product.image}
                 alt={product.name}
                 className="w-full h-[420px] object-contain p-6 transition-transform duration-700 group-hover:scale-105"
               />
@@ -320,29 +326,31 @@ function ProductDetails() {
             </motion.div>
 
             {/* الصور المصغرة */}
-            <div className="flex gap-3 overflow-x-auto pb-2">
-              {product.productColors.map((color, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedColor(index)}
-                  className={`relative flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden transition-all duration-200 ${selectedColor === index
-                      ? "ring-2 ring-pink-500 ring-offset-2 shadow-lg"
-                      : "ring-1 ring-gray-200 hover:ring-gray-300"
-                    }`}
-                >
-                  <img
-                    src={color.img}
-                    alt={`لون ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                  {selectedColor === index && (
-                    <div className="absolute inset-0 bg-pink-500/5 flex items-center justify-center">
-                      <Check className="w-5 h-5 text-pink-500" />
-                    </div>
-                  )}
-                </button>
-              ))}
-            </div>
+            {product.productColors && product.productColors.length > 0 && (
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {product.productColors.map((color, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedColor(index)}
+                    className={`relative flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden transition-all duration-200 ${selectedColor === index
+                        ? "ring-2 ring-pink-500 ring-offset-2 shadow-lg"
+                        : "ring-1 ring-gray-200 hover:ring-gray-300"
+                      }`}
+                  >
+                    <img
+                      src={color.img}
+                      alt={`لون ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                    {selectedColor === index && (
+                      <div className="absolute inset-0 bg-pink-500/5 flex items-center justify-center">
+                        <Check className="w-5 h-5 text-pink-500" />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* معلومات المنتج */}
@@ -355,7 +363,9 @@ function ProductDetails() {
               <div className="flex flex-wrap gap-2">
                 {product.category && (
                   <span className="bg-pink-50 text-pink-600 text-xs px-3 py-1 rounded-full font-medium">
-                    {product.category}
+                    {product.category === "top" ? "توب" : 
+                     product.category === "legging" ? "ليجن" : 
+                     product.category === "colon" ? "شورت" : product.category}
                   </span>
                 )}
                 {product.season && (
@@ -387,25 +397,27 @@ function ProductDetails() {
                 ))}
               </div>
 
-              <div>
-                <label className="font-semibold text-gray-900 flex items-center gap-2 text-sm mb-2">
-                  <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر اللون
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {product.productColors.map((color, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedColor(index)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${selectedColor === index
-                          ? "bg-pink-500 text-white shadow-md scale-105"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}
-                    >
-                      {product.avalibeColors?.[index]}
-                    </button>
-                  ))}
+              {product.avalibeColors && product.avalibeColors.length > 0 && (
+                <div>
+                  <label className="font-semibold text-gray-900 flex items-center gap-2 text-sm mb-2">
+                    <div className="w-4 h-4 rounded-full bg-pink-500" /> اختر اللون
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {product.avalibeColors.map((color, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedColor(index)}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${selectedColor === index
+                            ? "bg-pink-500 text-white shadow-md scale-105"
+                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          }`}
+                      >
+                        {color}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <button
                 onClick={scrollToOffers}
@@ -567,48 +579,70 @@ function ProductDetails() {
       </main>
 
       {/* ✅ قسم العروض - حسب نوع المنتج */}
-    {product.id !== 3 ? (
-  <div ref={offersRef} className="scroll-mt-20">
-    {isTurbonProduct ? (
-      <TurbonOffers
-        filterByTabType={product.tabType || "turbon"}
-        // ✅ لو التربون نوعه "turbon" نبعت "turbon" مش "bow"
-        filterByProductType={product.type === "turbon" ? "turbon" : product.type || null}
-        setSelectedOffer={handleOfferSelect}
-        hideTabs={true}
-        scrollToOrderCollection={() =>
-          orderCollectionRef.current?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          })
-        }
-      />
-    ) : (
-      <HalfOffers
-        filterByTabType={product.tabType || "half"}
-        filterByProductType={product.type || null}
-        setSelectedOffer={handleOfferSelect}
-        hideTabs={true}
-        scrollToOrderCollection={() =>
-          orderCollectionRef.current?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          })
-        }
-      />
-    )}
-  </div>
-) : null}
+      <div ref={offersRef} className="scroll-mt-20">
+        {isClothesProduct && productTypeForOffers ? (
+          // 👈 عرض عروض الملابس (توب، ليجن، شورت)
+          <ClothesOffers
+            filterByTabType={productTypeForOffers}
+            filterByProductType={product.type || null}
+            setSelectedOffer={handleOfferSelect}
+            hideTabs={true}
+            scrollToOrderCollection={() =>
+              orderCollectionRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              })
+            }
+          />
+        ) : isTurbonProduct ? (
+          // عرض عروض التربون
+          <TurbonOffers
+            filterByTabType={product.tabType || "turbon"}
+            filterByProductType={product.type === "turbon" ? "turbon" : product.type || null}
+            setSelectedOffer={handleOfferSelect}
+            hideTabs={true}
+            scrollToOrderCollection={() =>
+              orderCollectionRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              })
+            }
+          />
+        ) : (
+          // عرض عروض الهاف
+          <HalfOffers
+            filterByTabType={product.tabType || "half"}
+            filterByProductType={product.type || null}
+            setSelectedOffer={handleOfferSelect}
+            hideTabs={true}
+            scrollToOrderCollection={() =>
+              orderCollectionRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              })
+            }
+          />
+        )}
+      </div>
 
       {/* ✅ قسم تجميع الطلب - حسب نوع المنتج */}
       <div ref={orderCollectionRef} className="mt-12 scroll-mt-20">
         {selectedOfferForOrder && (
-          isTurbonProduct ? (
+          isClothesProduct ? (
+            // 👈 عرض تجميع طلب الملابس
+            <ClothesOrderCollection
+              selectedOffer={selectedOfferForOrder}
+              disableProductSelection={true}
+              defaultProductName={product.name}
+              onOrderConfirmed={() => {}}
+              scrollToOffers={scrollToOffers}
+            />
+          ) : isTurbonProduct ? (
             <TurbonOrderCollection
               selectedOffer={selectedOfferForOrder}
               disableProductSelection={true}
               defaultProductName={product.name}
-              onOrderConfirmed={() => { }}
+              onOrderConfirmed={() => {}}
               scrollToOffers={scrollToOffers}
             />
           ) : (
@@ -637,7 +671,7 @@ function ProductDetails() {
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.9 }}
-              src={currentColorData?.img || product.productColors[0]?.img}
+              src={currentColorData?.img || product.productColors?.[0]?.img || product.image}
               alt={product.name}
               className="max-w-full max-h-full object-contain"
             />
