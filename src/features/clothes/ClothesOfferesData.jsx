@@ -124,6 +124,19 @@ export const ClothesOffersData = [
 
   // ========== التوبات ==========
   {
+    name: "1 توب",
+    quantity: 1,
+    price: 280,
+    badge: "عرض خاص",
+    badgeColor: "from-[#a0105a] to-[#e13485]",
+    icon: <Sparkles className="w-4 h-4" />,
+    savings: 50,
+    originalPrice: 330,
+    unit: "توب",
+    popular: false,
+    tabType: "top",
+  },
+  {
     name: "2 توب",
     quantity: 2,
     price: 490,
