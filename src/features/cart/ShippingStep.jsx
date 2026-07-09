@@ -234,7 +234,7 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
       setTimeout(() => {
         setShowConfirmModal(false);
         onSuccess();
-      }, 2000);
+      }, 6000);
     } catch (error) {
       console.error("Error:", error);
       alert(`❌ حدث خطأ في إرسال الطلب:\n${error.message || "يرجى المحاولة مرة أخرى"}`);
