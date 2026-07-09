@@ -45,6 +45,11 @@ function SideBar() {
           label: { ar: "كولونات صيفي", en: "Summer Colon" },
           badge: "تخفيضات",
         },
+        {
+          to: "/Clothes",
+          label: { ar: "ملابس صيفي", en: "Summer clothes" },
+          badge: "جديد",
+        },
       ],
     },
     {
