@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
-import { Clothes } from "../../data/Clothes";
 
-function CHeadSection({ scrollToProductList }) {
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { Clothes } from "../../data/Clothes";
+import ImagesOfHeadSec from "./ImagesOfHeadSec"; // استيراد الكومبوننت الجديد
+
+function CHeadSection({ scrollToProductList ,category }) {
   const [mounted, setMounted] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 100);
     return () => clearTimeout(t);
   }, []);
 
-  const shirts = Clothes.filter((c) => c.category === "top");
-
-  const maxDiscount = Math.max(...Clothes.map((c) => c.discount));
-  const hero = Clothes[0];
-  const collage = [Clothes[1], Clothes[3], Clothes[6]];
+  // استخدام useMemo لتجنب إعادة الحساب غير الضروري
+  const shirts = useMemo(() => Clothes.filter((c) => c.category === "top"), []);
+  const maxDiscount = useMemo(() => Math.max(...Clothes.map((c) => c.discount)), []);
+  const hero = useMemo(() => Clothes[0], []);
+  const collage = useMemo(() => [Clothes[1], Clothes[3], Clothes[6]], []);
 
   const colorSwatches = {
     أبيض: "#FFFFFF",
@@ -28,12 +31,16 @@ function CHeadSection({ scrollToProductList }) {
     اورنج: "#F0924A",
   };
 
-  // 👈 دالة للتعامل مع النقر على زر "تسوقي الكوليكشن"
-  const handleShopClick = () => {
+  // استخدام useCallback لمنع إعادة إنشاء الدالة
+  const handleShopClick = useCallback(() => {
     if (scrollToProductList) {
       scrollToProductList();
     }
-  };
+  }, [scrollToProductList]);
+
+  const handleImagesLoad = useCallback(() => {
+    setImagesLoaded(true);
+  }, []);
 
   return (
     <div
@@ -46,6 +53,7 @@ function CHeadSection({ scrollToProductList }) {
       }}
     >
       <style>{`
+        /* جميع الـ styles كما هي */
         @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&family=Cairo:wght@400;500;600;700&display=swap');
 
         .khs-eyebrow-font { font-family: 'Cairo', sans-serif; }
@@ -162,7 +170,7 @@ function CHeadSection({ scrollToProductList }) {
         .khs-visual { order: 0; }
         .khs-content { order: 1; }
 
-        /* Mobile Layout - Modern & Dynamic */
+        /* Mobile Layout - جميع الـ media queries كما هي */
         @media (max-width: 900px) {
           .khs-grid {
             grid-template-columns: 1fr;
@@ -177,7 +185,6 @@ function CHeadSection({ scrollToProductList }) {
           }
           .khs-content { order: 1; }
 
-          /* Hero Image - Modern card style */
           .khs-hero-wrapper {
             width: 92% !important;
             max-width: 320px !important;
@@ -188,7 +195,6 @@ function CHeadSection({ scrollToProductList }) {
             height: 260px !important;
           }
 
-          /* Mobile Collage - Mini floating items */
           .khs-collage-mobile {
             display: flex !important;
             gap: 10px;
@@ -211,7 +217,6 @@ function CHeadSection({ scrollToProductList }) {
             transform: scale(0.92);
           }
 
-          /* Mobile Heading */
           .khs-heading {
             font-size: clamp(26px, 7vw, 32px) !important;
             text-align: center !important;
@@ -224,7 +229,6 @@ function CHeadSection({ scrollToProductList }) {
             content: ' ✨';
           }
 
-          /* Mobile Description */
           .khs-description {
             text-align: center !important;
             margin: 12px auto 0 !important;
@@ -233,7 +237,6 @@ function CHeadSection({ scrollToProductList }) {
             padding: 0 4px;
           }
 
-          /* Mobile Eyebrow */
           .khs-eyebrow {
             margin: 0 auto !important;
             font-size: 12px !important;
@@ -241,7 +244,6 @@ function CHeadSection({ scrollToProductList }) {
             gap: 6px !important;
           }
 
-          /* Mobile Colors */
           .khs-colors {
             justify-content: center !important;
             gap: 8px !important;
@@ -256,7 +258,6 @@ function CHeadSection({ scrollToProductList }) {
             border-width: 2px !important;
           }
 
-          /* Mobile CTA - Modern stacked */
           .khs-cta-group {
             flex-direction: column !important;
             width: 100% !important;
@@ -271,7 +272,6 @@ function CHeadSection({ scrollToProductList }) {
             border-radius: 14px !important;
           }
 
-          /* Mobile Stats - Modern cards */
           .khs-stats {
             gap: 10px !important;
             margin-top: 24px !important;
@@ -309,7 +309,6 @@ function CHeadSection({ scrollToProductList }) {
             font-size: 11px !important;
           }
 
-          /* Mobile Badges */
           .khs-badge {
             font-size: 12px !important;
             padding: 4px 12px !important;
@@ -330,7 +329,6 @@ function CHeadSection({ scrollToProductList }) {
             font-size: 11px !important;
           }
 
-          /* Mobile Dots - repositioned */
           .khs-dot-mobile {
             display: block !important;
           }
@@ -338,7 +336,6 @@ function CHeadSection({ scrollToProductList }) {
             display: none !important;
           }
 
-          /* Mobile Blobs - smaller */
           .khs-blob-mobile {
             width: 200px !important;
             height: 200px !important;
@@ -375,7 +372,7 @@ function CHeadSection({ scrollToProductList }) {
         }
       `}</style>
 
-      {/* Background Blobs - Mobile optimized */}
+      {/* Background Blobs - كما هي */}
       <div
         className="khs-blob khs-blob-mobile"
         style={{
@@ -453,227 +450,14 @@ function CHeadSection({ scrollToProductList }) {
             />
           </svg>
 
-          {/* Main Hero Image */}
-          <div
-            className="khs-card khs-hero-wrapper khs-float-mobile"
-            style={{
-              position: "relative",
-              width: "min(72%, 340px)",
-              margin: "0 auto",
-              borderRadius: "28px 28px 28px 10px",
-              overflow: "hidden",
-              boxShadow:
-                "0 20px 45px -14px rgba(59,31,56,0.3), 0 0 0 1px rgba(255,255,255,0.3)",
-              zIndex: 2,
-              opacity: mounted ? 1 : 0,
-              transition: "opacity 0.7s ease, transform 0.7s ease",
-              transform: mounted
-                ? "rotate(-2deg)"
-                : "rotate(-2deg) translateY(25px)",
-              "--r": "-2deg",
-            }}
-          >
-            <img
-              src={hero.image}
-              alt={hero.name}
-              className="khs-hero-image"
-              style={{
-                width: "100%",
-                height: 380,
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
-
-            {/* Discount Badge */}
-            <div
-              className="khs-badge"
-              style={{
-                position: "absolute",
-                top: 16,
-                left: 16,
-                background: "linear-gradient(135deg, #FBCB5C, #F5A623)",
-                color: "#3B1F38",
-                padding: "6px 14px",
-                borderRadius: 20,
-                fontSize: 14,
-                fontWeight: 800,
-                boxShadow: "0 4px 14px rgba(251,203,92,0.4)",
-                zIndex: 3,
-              }}
-            >
-              {hero.discount}% OFF
-            </div>
-
-            {/* Price Tag */}
-            <div
-              className="khs-price-tag"
-              style={{
-                position: "absolute",
-                bottom: 16,
-                right: 16,
-                background: "rgba(255,248,240,0.92)",
-                backdropFilter: "blur(8px)",
-                borderRadius: 14,
-                padding: "10px 16px",
-                boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
-                border: "1px solid rgba(255,255,255,0.5)",
-                zIndex: 3,
-              }}
-            >
-              <div
-                className="khs-body-font name"
-                style={{ fontSize: 14, fontWeight: 700, color: "#3B1F38" }}
-              >
-                {hero.name}
-              </div>
-              <div
-                className="khs-eyebrow-font price"
-                style={{ fontSize: 13, color: "#B65C7C", fontWeight: 700 }}
-              >
-                {hero.price} ج.م
-                <span
-                  style={{
-                    color: "#8A6E86",
-                    textDecoration: "line-through",
-                    marginRight: 8,
-                    fontWeight: 400,
-                  }}
-                >
-                  {hero.originalPrice}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Collage - Mini floating items */}
-          <div
-            className="khs-collage-mobile khs-slide-up"
-            style={{ animationDelay: ".3s" }}
-          >
-            {collage.map((item, i) => (
-              <div
-                key={item.id}
-                className="khs-collage-mobile-item khs-float-mobile"
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 16,
-                  overflow: "hidden",
-                  border: "3px solid #FFF8F0",
-                  boxShadow: "0 8px 20px -8px rgba(59,31,56,0.25)",
-                  transition: "all .3s ease",
-                  animationDelay: `${i * 0.2}s`,
-                  "--r": `${[4, -6, 8][i]}deg`,
-                }}
-              >
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile Dots */}
-          <div className="khs-dot-mobile">
-            {[
-              { top: "8%", right: "8%", c: "#FBCB5C", size: 12, delay: 0 },
-              { top: "85%", right: "5%", c: "#9CC084", size: 10, delay: 0.5 },
-              { top: "50%", left: "5%", c: "#F6A6C1", size: 14, delay: 1 },
-            ].map((d, i) => (
-              <span
-                key={i}
-                style={{
-                  position: "absolute",
-                  top: d.top,
-                  right: d.right,
-                  left: d.left,
-                  width: d.size,
-                  height: d.size,
-                  borderRadius: "50%",
-                  background: d.c,
-                  boxShadow: `0 0 20px ${d.c}44`,
-                  animation: `khsPulseDot ${2.8 + i * 0.3}s ease-in-out ${d.delay}s infinite`,
-                  zIndex: 1,
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Desktop Collage & Dots - hidden on mobile */}
-          <div className="khs-dot-desktop">
-            {collage.map((item, i) => {
-              const pos = [
-                { top: "75%", right: "-2%", w: 140, rot: 8, delay: 0.1 },
-                { top: "8%", right: "-8%", w: 118, rot: -12, delay: 0.2 },
-                { top: "45%", right: "58%", w: 110, rot: 15, delay: 0.3 },
-              ][i];
-              return (
-                <div
-                  key={item.id}
-                  className="khs-card khs-float"
-                  style={{
-                    position: "absolute",
-                    top: pos.top,
-                    right: pos.right,
-                    width: pos.w,
-                    borderRadius: 18,
-                    overflow: "hidden",
-                    boxShadow:
-                      "0 16px 36px -14px rgba(59,31,56,0.28), 0 0 0 3px #FFF8F0",
-                    transform: mounted
-                      ? `rotate(${pos.rot}deg)`
-                      : `rotate(${pos.rot}deg) translateY(40px) scale(0.9)`,
-                    opacity: mounted ? 1 : 0,
-                    transition: `opacity 0.6s ease ${pos.delay}s, transform 0.6s ease ${pos.delay}s`,
-                    zIndex: 3,
-                    animationDelay: `${i * 0.5}s`,
-                    "--r": `${pos.rot}deg`,
-                  }}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    style={{
-                      width: "100%",
-                      height: pos.w * 1.1,
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                  />
-                </div>
-              );
-            })}
-            {[
-              { top: "5%", right: "45%", c: "#FBCB5C", size: 14, delay: 0 },
-              { top: "88%", right: "15%", c: "#9CC084", size: 12, delay: 0.4 },
-              { top: "35%", right: "78%", c: "#F6A6C1", size: 16, delay: 0.8 },
-              { top: "65%", right: "30%", c: "#C9BBEE", size: 10, delay: 1.2 },
-            ].map((d, i) => (
-              <span
-                key={i}
-                style={{
-                  position: "absolute",
-                  top: d.top,
-                  right: d.right,
-                  width: d.size,
-                  height: d.size,
-                  borderRadius: "50%",
-                  background: d.c,
-                  boxShadow: `0 0 20px ${d.c}44`,
-                  animation: `khsPulseDot ${2.6 + i * 0.3}s ease-in-out ${d.delay}s infinite`,
-                  zIndex: 1,
-                }}
-              />
-            ))}
-          </div>
+          {/* استدعاء كومبوننت الصور */}
+          <ImagesOfHeadSec
+            hero={hero}
+            collage={collage}
+             category={category}
+            mounted={mounted}
+            onImageLoad={handleImagesLoad}
+          />
         </div>
 
         {/* ===== Content Column ===== */}
@@ -730,7 +514,7 @@ function CHeadSection({ scrollToProductList }) {
               animationDelay: ".18s",
             }}
           >
-          {`${shirts.length} تصاميم توب بقطن ريب مضلع ناعم ومرن، بفيونكات بأشكال مختلفة وألوان زاهية، لكل بنت طلتها الخاصة.`}
+            {`${shirts.length} تصاميم توب بقطن ريب مضلع ناعم ومرن، بفيونكات بأشكال مختلفة وألوان زاهية، لكل بنت طلتها الخاصة.`}
           </p>
 
           {/* Color Swatches */}
@@ -791,7 +575,7 @@ function CHeadSection({ scrollToProductList }) {
             }}
           >
             <button
-              onClick={handleShopClick} // 👈 إضافة onClick
+              onClick={handleShopClick}
               className="khs-cta-primary khs-body-font"
               style={{
                 color: "#FFF8F0",
@@ -833,7 +617,7 @@ function CHeadSection({ scrollToProductList }) {
             </button>
           </div>
 
-          {/* Stats - Modern cards on mobile */}
+          {/* Stats */}
           <div
             className="khs-stats khs-fadeup"
             style={{
