@@ -4,12 +4,15 @@ import ClothesOffers from "../features/clothes/ClothesOffers";
 import CProductList from "../features/clothes/CProductList";
 import ClothesOrderCollection from "../features/clothes/ClothesOrderCollection";
 import ClothesCountdownTimer from "../features/clothes/ClothesCountdownTimer";
+import { useParams } from "react-router-dom";
 
 function Clothes() {
   const [selectedOffer, setSelectedOffer] = useState(null);
   const orderCollectionRef = useRef(null);
   const offersRef = useRef(null);
   const productListRef = useRef(null); 
+
+  const { category } = useParams();
 
 
   const scrollToOrderCollection = () => {
@@ -50,7 +53,7 @@ function Clothes() {
       
       {/* 👈 إضافة ref لقسم المنتجات */}
       <div ref={productListRef}>
-        <CProductList />
+        <CProductList category={category} />
       </div>
       
       {/* قسم العروض */}
