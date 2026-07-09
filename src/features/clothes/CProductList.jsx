@@ -11,9 +11,8 @@ function CProductList() {
   const { category } = useParams();
   
   const [mounted, setMounted] = useState(false);
-  const productsRef = useRef(null); // Reference to products section
+  const productsRef = useRef(null);
 
-  // Get active tab from URL params - default to "all" if no category
   const activeTab = category || "all";
 
   useEffect(() => {
@@ -21,14 +20,12 @@ function CProductList() {
     return () => clearTimeout(t);
   }, []);
 
-  // Get unique categories from products
   const categories = [
     { id: "top", label: "التوبات", icon: "👕", path: "/clothes/top" },
     { id: "legging", label: "الليجنز", icon: "👖", path: "/clothes/legging" },
     { id: "short", label: "الشورت", icon: "🩳", path: "/clothes/short" },
   ];
 
-  // Filter products based on active tab
   const filteredProducts = activeTab === "all"
     ? Clothes
     : Clothes.filter((p) => p.category === activeTab);
@@ -45,12 +42,10 @@ function CProductList() {
     navigate(`/product/${product.id}`);
   };
 
-  // Handle tab change with navigation
   const handleTabChange = (tabId, path) => {
     navigate(path);
   };
 
-  // Handle scroll to products section
   const scrollToProducts = () => {
     if (productsRef.current) {
       productsRef.current.scrollIntoView({ 
@@ -88,33 +83,35 @@ function CProductList() {
           </div>
         </div>
 
-        {/* Tabs Section */}
+        {/* Tabs Section - Updated for single line on mobile */}
         <div className="max-w-7xl mx-auto mb-8">
           <div className="flex flex-col items-center gap-4">
-            {/* Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 bg-white/60 backdrop-blur-sm rounded-2xl p-2 shadow-sm border border-white/50">
-              {categories.map((tab) => {
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => handleTabChange(tab.id, tab.path)}
-                    className={`
-                      flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300
-                      ${isActive
-                        ? "bg-gradient-to-r from-[#F6A6C1] to-[#B65C7C] text-white shadow-lg shadow-pink-200/50 scale-105"
-                        : "text-[#5B4458] hover:bg-pink-50 hover:text-[#3B1F38]"
-                      }
-                    `}
-                  >
-                    <span className="text-lg">{tab.icon}</span>
-                    <span>{tab.label}</span>
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                    )}
-                  </button>
-                );
-              })}
+            {/* Tabs - Now with overflow handling for single line */}
+            <div className="w-full bg-white/60 backdrop-blur-sm rounded-2xl p-2 shadow-sm border border-white/50">
+              <div className="flex justify-center gap-2 overflow-x-auto hide-scrollbar">
+                {categories.map((tab) => {
+                  const isActive = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => handleTabChange(tab.id, tab.path)}
+                      className={`
+                        flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-300 whitespace-nowrap flex-shrink-0
+                        ${isActive
+                          ? "bg-gradient-to-r from-[#F6A6C1] to-[#B65C7C] text-white shadow-lg shadow-pink-200/50 scale-105"
+                          : "text-[#5B4458] hover:bg-pink-50 hover:text-[#3B1F38]"
+                        }
+                      `}
+                    >
+                      <span className="text-base sm:text-lg">{tab.icon}</span>
+                      <span>{tab.label}</span>
+                      {isActive && (
+                        <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Tab Results Counter */}
@@ -126,7 +123,7 @@ function CProductList() {
           </div>
         </div>
 
-        {/* Products Grid - Added ref here */}
+        {/* Products Grid */}
         <div 
           ref={productsRef}
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto scroll-mt-20"
