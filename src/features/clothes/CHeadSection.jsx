@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Clothes } from "../../data/Clothes";
 
-function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
+function CHeadSection({ scrollToProductList }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -9,22 +9,23 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
     return () => clearTimeout(t);
   }, []);
 
-  const shirts = Clothes.filter((c) => c.category === "shirts");
+  const shirts = Clothes.filter((c) => c.category === "top");
+  // console.log("صصصصصصصصصصصصصصصصصصصصصصصصصصصص",shirts.length);
   const maxDiscount = Math.max(...Clothes.map((c) => c.discount));
   const hero = Clothes[0];
   const collage = [Clothes[1], Clothes[3], Clothes[6]];
 
   const colorSwatches = {
-    "أبيض": "#FFFFFF",
-    "أسود": "#2A2A2A",
-    "بينك": "#F6A6C1",
-    "احمر": "#D6483D",
-    "لبني": "#BFD7EA",
-    "اصفر": "#FBCB5C",
-    "كيوي": "#9CC084",
-    "لافندر": "#C9BBEE",
-    "سكري": "#F4D4C4",
-    "اورنج": "#F0924A",
+    أبيض: "#FFFFFF",
+    أسود: "#2A2A2A",
+    بينك: "#F6A6C1",
+    احمر: "#D6483D",
+    لبني: "#BFD7EA",
+    اصفر: "#FBCB5C",
+    كيوي: "#9CC084",
+    لافندر: "#C9BBEE",
+    سكري: "#F4D4C4",
+    اورنج: "#F0924A",
   };
 
   // 👈 دالة للتعامل مع النقر على زر "تسوقي الكوليكشن"
@@ -35,7 +36,15 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
   };
 
   return (
-    <div dir="rtl" style={{ background: "linear-gradient(160deg, #FFF8F0 0%, #FFEFE8 50%, #FFF5F0 100%)", overflow: "hidden", position: "relative" }}>
+    <div
+      dir="rtl"
+      style={{
+        background:
+          "linear-gradient(160deg, #FFF8F0 0%, #FFEFE8 50%, #FFF5F0 100%)",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&family=Cairo:wght@400;500;600;700&display=swap');
 
@@ -422,12 +431,12 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
           {/* Desktop Decorative Ribbon */}
           <svg
             viewBox="0 0 420 480"
-            style={{ 
-              position: "absolute", 
-              inset: 0, 
-              width: "100%", 
-              height: "100%", 
-              zIndex: 0, 
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 0,
               pointerEvents: "none",
               display: "none",
             }}
@@ -453,11 +462,14 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
               margin: "0 auto",
               borderRadius: "28px 28px 28px 10px",
               overflow: "hidden",
-              boxShadow: "0 20px 45px -14px rgba(59,31,56,0.3), 0 0 0 1px rgba(255,255,255,0.3)",
+              boxShadow:
+                "0 20px 45px -14px rgba(59,31,56,0.3), 0 0 0 1px rgba(255,255,255,0.3)",
               zIndex: 2,
               opacity: mounted ? 1 : 0,
               transition: "opacity 0.7s ease, transform 0.7s ease",
-              transform: mounted ? "rotate(-2deg)" : "rotate(-2deg) translateY(25px)",
+              transform: mounted
+                ? "rotate(-2deg)"
+                : "rotate(-2deg) translateY(25px)",
               "--r": "-2deg",
             }}
           >
@@ -465,9 +477,14 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
               src={hero.image}
               alt={hero.name}
               className="khs-hero-image"
-              style={{ width: "100%", height: 380, objectFit: "cover", display: "block" }}
+              style={{
+                width: "100%",
+                height: 380,
+                objectFit: "cover",
+                display: "block",
+              }}
             />
-            
+
             {/* Discount Badge */}
             <div
               className="khs-badge"
@@ -504,12 +521,25 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
                 zIndex: 3,
               }}
             >
-              <div className="khs-body-font name" style={{ fontSize: 14, fontWeight: 700, color: "#3B1F38" }}>
+              <div
+                className="khs-body-font name"
+                style={{ fontSize: 14, fontWeight: 700, color: "#3B1F38" }}
+              >
                 {hero.name}
               </div>
-              <div className="khs-eyebrow-font price" style={{ fontSize: 13, color: "#B65C7C", fontWeight: 700 }}>
+              <div
+                className="khs-eyebrow-font price"
+                style={{ fontSize: 13, color: "#B65C7C", fontWeight: 700 }}
+              >
                 {hero.price} ج.م
-                <span style={{ color: "#8A6E86", textDecoration: "line-through", marginRight: 8, fontWeight: 400 }}>
+                <span
+                  style={{
+                    color: "#8A6E86",
+                    textDecoration: "line-through",
+                    marginRight: 8,
+                    fontWeight: 400,
+                  }}
+                >
                   {hero.originalPrice}
                 </span>
               </div>
@@ -517,7 +547,10 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
           </div>
 
           {/* Mobile Collage - Mini floating items */}
-          <div className="khs-collage-mobile khs-slide-up" style={{ animationDelay: ".3s" }}>
+          <div
+            className="khs-collage-mobile khs-slide-up"
+            style={{ animationDelay: ".3s" }}
+          >
             {collage.map((item, i) => (
               <div
                 key={item.id}
@@ -537,7 +570,12 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
                 <img
                   src={item.image}
                   alt={item.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                  }}
                 />
               </div>
             ))}
@@ -588,7 +626,8 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
                     width: pos.w,
                     borderRadius: 18,
                     overflow: "hidden",
-                    boxShadow: "0 16px 36px -14px rgba(59,31,56,0.28), 0 0 0 3px #FFF8F0",
+                    boxShadow:
+                      "0 16px 36px -14px rgba(59,31,56,0.28), 0 0 0 3px #FFF8F0",
                     transform: mounted
                       ? `rotate(${pos.rot}deg)`
                       : `rotate(${pos.rot}deg) translateY(40px) scale(0.9)`,
@@ -602,7 +641,12 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
                   <img
                     src={item.image}
                     alt={item.name}
-                    style={{ width: "100%", height: pos.w * 1.1, objectFit: "cover", display: "block" }}
+                    style={{
+                      width: "100%",
+                      height: pos.w * 1.1,
+                      objectFit: "cover",
+                      display: "block",
+                    }}
                   />
                 </div>
               );
@@ -633,7 +677,10 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
         </div>
 
         {/* ===== Content Column ===== */}
-        <div className="khs-content" style={{ position: "relative", zIndex: 2 }}>
+        <div
+          className="khs-content"
+          style={{ position: "relative", zIndex: 2 }}
+        >
           {/* Eyebrow Badge */}
           <div
             className="khs-eyebrow khs-eyebrow-font khs-fadeup"
@@ -683,23 +730,25 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
               animationDelay: ".18s",
             }}
           >
-            7+ تصاميم توب بقطن ريب مضلع ناعم ومرن، بفيونكات
-            بأشكال مختلفة وألوان زاهية، لكل بنت طلتها الخاصة.
+          {`${shirts.length} تصاميم توب بقطن ريب مضلع ناعم ومرن، بفيونكات بأشكال مختلفة وألوان زاهية، لكل بنت طلتها الخاصة.`}
           </p>
 
           {/* Color Swatches */}
           <div
             className="khs-colors khs-fadeup"
-            style={{ 
-              display: "flex", 
-              alignItems: "center", 
-              gap: 12, 
-              marginTop: 22, 
-              animationDelay: ".24s", 
-              flexWrap: "wrap" 
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              marginTop: 22,
+              animationDelay: ".24s",
+              flexWrap: "wrap",
             }}
           >
-            <span className="khs-eyebrow-font" style={{ fontSize: 14, fontWeight: 600, color: "#8A6E86" }}>
+            <span
+              className="khs-eyebrow-font"
+              style={{ fontSize: 14, fontWeight: 600, color: "#8A6E86" }}
+            >
               الألوان المتاحة:
             </span>
             <div style={{ display: "flex", gap: 8 }}>
@@ -714,12 +763,17 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
                     borderRadius: "50%",
                     background: colorSwatches[c] || "#ddd",
                     border: "3px solid #FFF8F0",
-                    boxShadow: "0 0 0 1.5px rgba(59,31,56,0.1), 0 4px 12px rgba(0,0,0,0.05)",
+                    boxShadow:
+                      "0 0 0 1.5px rgba(59,31,56,0.1), 0 4px 12px rgba(0,0,0,0.05)",
                     transition: "transform 0.2s ease",
                     cursor: "pointer",
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.15)"}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.15)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }
                 />
               ))}
             </div>
@@ -728,7 +782,13 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
           {/* CTA Buttons */}
           <div
             className="khs-cta-group khs-fadeup"
-            style={{ display: "flex", gap: 14, marginTop: 32, flexWrap: "wrap", animationDelay: ".3s" }}
+            style={{
+              display: "flex",
+              gap: 14,
+              marginTop: 32,
+              flexWrap: "wrap",
+              animationDelay: ".3s",
+            }}
           >
             <button
               onClick={handleShopClick} // 👈 إضافة onClick
@@ -791,13 +851,30 @@ function CHeadSection({ scrollToProductList }) { // 👈 إضافة prop
               { n: `حتى ${maxDiscount}%`, l: "خصم على القطعة", icon: "💰" },
               { n: "١.٥ – ١٤", l: "مقاسات بالسنين", icon: "📏" },
             ].map((s) => (
-              <div key={s.l} className="khs-stats-item" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span className="icon" style={{ fontSize: 22 }}>{s.icon}</span>
+              <div
+                key={s.l}
+                className="khs-stats-item"
+                style={{ display: "flex", alignItems: "center", gap: 10 }}
+              >
+                <span className="icon" style={{ fontSize: 22 }}>
+                  {s.icon}
+                </span>
                 <div>
-                  <div className="khs-display-font number" style={{ fontSize: 22, fontWeight: 800, color: "#3B1F38", lineHeight: 1.2 }}>
+                  <div
+                    className="khs-display-font number"
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 800,
+                      color: "#3B1F38",
+                      lineHeight: 1.2,
+                    }}
+                  >
                     {s.n}
                   </div>
-                  <div className="khs-eyebrow-font label" style={{ fontSize: 13, color: "#8A6E86", marginTop: 2 }}>
+                  <div
+                    className="khs-eyebrow-font label"
+                    style={{ fontSize: 13, color: "#8A6E86", marginTop: 2 }}
+                  >
                     {s.l}
                   </div>
                 </div>
