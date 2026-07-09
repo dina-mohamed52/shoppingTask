@@ -10,7 +10,7 @@ function CHeadSection({ scrollToProductList }) {
   }, []);
 
   const shirts = Clothes.filter((c) => c.category === "top");
-  // console.log("صصصصصصصصصصصصصصصصصصصصصصصصصصصص",shirts.length);
+
   const maxDiscount = Math.max(...Clothes.map((c) => c.discount));
   const hero = Clothes[0];
   const collage = [Clothes[1], Clothes[3], Clothes[6]];

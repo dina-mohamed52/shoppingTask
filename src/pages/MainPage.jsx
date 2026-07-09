@@ -62,6 +62,16 @@ const SEASONS = {
     tagline: "إطلالات منعشة بألوان البينك الناعمة",
     categories: [
       {
+        id: 4,
+        name: " ملابس صيفي",
+        nameEn: " توبات وليجن صيفي شيك",
+        path: "/clothes",
+        image:
+          "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263489/WhatsApp_Image_2026-07-03_at_4.49.06_AM_sibwqi.jpg",
+        items: "8+ منتج",
+        badge: "جديد",
+      },
+      {
         id: 1,
         name: "بندانات وتربونات",
         nameEn: "بندانات وتربونات واطقم صيفية",
