@@ -1,25 +1,63 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Clothes } from "../../data/Clothes";
 import { useTranslation } from "react-i18next";
 import { Sparkles, Heart, ShoppingBag, Star } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductCard from "../../features/products/ProductCard";
 
 function CProductList() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { category } = useParams();
+  
   const [mounted, setMounted] = useState(false);
+  const productsRef = useRef(null); // Reference to products section
+
+  // Get active tab from URL params - default to "all" if no category
+  const activeTab = category || "all";
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 100);
     return () => clearTimeout(t);
   }, []);
 
-  const products = Clothes;
-  const shirts = Clothes.filter((c) => c.category === "top");
+  // Get unique categories from products
+  const categories = [
+    { id: "top", label: "التوبات", icon: "👕", path: "/clothes/top" },
+    { id: "legging", label: "الليجنز", icon: "👖", path: "/clothes/legging" },
+    { id: "short", label: "الشورت", icon: "🩳", path: "/clothes/short" },
+  ];
+
+  // Filter products based on active tab
+  const filteredProducts = activeTab === "all"
+    ? Clothes
+    : Clothes.filter((p) => p.category === activeTab);
+
+  const titleMap = {
+    top: "التوبات",
+    legging: "الليجنز",
+    short: "الشورت",
+  };
+
+  const currentTitle = titleMap[activeTab];
 
   const handleProductClick = (product) => {
     navigate(`/product/${product.id}`);
+  };
+
+  // Handle tab change with navigation
+  const handleTabChange = (tabId, path) => {
+    navigate(path);
+  };
+
+  // Handle scroll to products section
+  const scrollToProducts = () => {
+    if (productsRef.current) {
+      productsRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
   };
 
   return (
@@ -45,14 +83,55 @@ function CProductList() {
             </h1>
 
             <p className="text-[#5B4458] text-base sm:text-lg max-w-2xl mx-auto">
-              {shirts.length}+ تصاميم توب بقطن ريب مضلع ناعم ومرن، بفيونكات بأشكال مختلفة وألوان زاهية
+              {filteredProducts.length}+ تصاميم توب بقطن ريب مضلع ناعم ومرن، بفيونكات بأشكال مختلفة وألوان زاهية
             </p>
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto">
-          {products.map((product, index) => (
+        {/* Tabs Section */}
+        <div className="max-w-7xl mx-auto mb-8">
+          <div className="flex flex-col items-center gap-4">
+            {/* Tabs */}
+            <div className="flex flex-wrap justify-center gap-2 bg-white/60 backdrop-blur-sm rounded-2xl p-2 shadow-sm border border-white/50">
+              {categories.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => handleTabChange(tab.id, tab.path)}
+                    className={`
+                      flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300
+                      ${isActive
+                        ? "bg-gradient-to-r from-[#F6A6C1] to-[#B65C7C] text-white shadow-lg shadow-pink-200/50 scale-105"
+                        : "text-[#5B4458] hover:bg-pink-50 hover:text-[#3B1F38]"
+                      }
+                    `}
+                  >
+                    <span className="text-lg">{tab.icon}</span>
+                    <span>{tab.label}</span>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Tab Results Counter */}
+            <div className="text-center">
+              <span className="text-sm text-[#8A6E86] bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full border border-white/50">
+                {filteredProducts.length} منتج في "{currentTitle}"
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Products Grid - Added ref here */}
+        <div 
+          ref={productsRef}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto scroll-mt-20"
+        >
+          {filteredProducts.map((product, index) => (
             <div
               key={product.id}
               className="transform transition-all duration-700"
@@ -64,12 +143,27 @@ function CProductList() {
             >
               <ProductCard
                 product={product}
-                onPreview={handleProductClick}  // للمعاينة السريعة
-                onClick={handleProductClick}    // ✅ للنقر على الكارد كامل
+                onPreview={handleProductClick}
+                onClick={handleProductClick}
               />
             </div>
           ))}
         </div>
+
+        {/* Empty State */}
+        {filteredProducts.length === 0 && (
+          <div className="text-center py-16">
+            <div className="text-6xl mb-4">🛍️</div>
+            <h3 className="text-xl font-bold text-[#3B1F38] mb-2">لا توجد منتجات</h3>
+            <p className="text-[#8A6E86]">لم نجد أي منتجات في هذه الفئة</p>
+            <button
+              onClick={() => navigate('/clothes')}
+              className="mt-4 inline-flex items-center gap-2 bg-gradient-to-r from-[#F6A6C1] to-[#B65C7C] text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
+            >
+              عرض جميع المنتجات
+            </button>
+          </div>
+        )}
 
         {/* Features Section */}
         <div className="mt-16 max-w-6xl mx-auto">
@@ -134,7 +228,7 @@ function CProductList() {
               
               <button 
                 className="inline-flex items-center gap-2 bg-[#FBCB5C] hover:bg-[#F5A623] text-[#3B1F38] font-bold py-3 px-8 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg shadow-yellow-500/25"
-                onClick={() => navigate('/products')}
+                onClick={scrollToProducts}
               >
                 <ShoppingBag className="w-5 h-5" />
                 <span>تسوقي الكوليكشن</span>

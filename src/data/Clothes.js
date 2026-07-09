@@ -253,7 +253,7 @@ export const Clothes = [
     originalPrice: 195,
     discount: 28,
     rating: 5,
-    category: "colon",
+    category: "short",
 
     productColors: [
       {

@@ -35,7 +35,7 @@ function App() {
             <Route path="/SummerHalfColon" element={<SummerHalfColon />} />
             <Route path="/SummerColon" element={<SummerColon />} />
             <Route path="/Checkout" element={<CheckoutPage />} />
-            <Route path="/Clothes" element={<Clothes />} />
+           <Route path="/clothes/:category?" element={<Clothes />} />
 
 
             {/* <Route path="/orderCollection" element={<OrderCollection/>}/> */}
