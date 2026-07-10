@@ -264,7 +264,7 @@ function ProductDetails() {
   const getProductTypeForOffers = () => {
     if (product.category === "top") return "top";
     if (product.category === "legging") return "legging";
-    if (product.category === "colon") return "short";
+    if (product.category === "short") return "short";
     return null;
   };
 
