@@ -241,7 +241,7 @@ const getFilteredProducts = () => {
   }
 
   if (activeTab === "short") {
-    return Clothes.filter((p) => p.category === "colon");
+    return Clothes.filter((p) => p.category === "short");
   }
 
   if (activeTab === "top") {
