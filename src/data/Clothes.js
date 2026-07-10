@@ -271,7 +271,7 @@ export const Clothes = [
     ],
     avalibeColors: ["أبيض", "أسود","بينك", "سكري"],
     image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263336/WhatsApp_Image_2026-07-05_at_5.26.23_AM_ttvxzy.jpg",
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783615454/WhatsApp_Image_2026-07-09_at_9.08.15_AM_ty3syu.jpg",
 
     sizes: [
       { size: "4-2", age: "من سنة ونص ل 3 سنين" },
@@ -316,7 +316,7 @@ export const Clothes = [
     ],
     avalibeColors: ["أبيض","بيج","رصاصي", "أسود","بينك", "سكري"],
     image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783530159/WhatsApp_Image_2026-07-05_at_10.24.30_AM_oitav8.jpg",
+      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783615536/WhatsApp_Image_2026-07-09_at_9.07.02_AM_1_yr3it2.jpg",
 
     sizes: [
       { size: "4-2", age: "من سنة ونص ل 3 سنين" },

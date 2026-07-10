@@ -47,7 +47,7 @@ function Clothes() {
   return (
     <div> 
       {/* 👈 تمرير دالة التمرير إلى CHeadSection */}
-      <CHeadSection scrollToProductList={scrollToProductList} />
+      <CHeadSection scrollToProductList={scrollToProductList} category={category} />
       
       <ClothesCountdownTimer />
       

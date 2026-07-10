@@ -13,7 +13,7 @@ function CProductList() {
   const [mounted, setMounted] = useState(false);
   const productsRef = useRef(null);
 
-  const activeTab = category || "all";
+  const activeTab = category || "top";
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 100);
