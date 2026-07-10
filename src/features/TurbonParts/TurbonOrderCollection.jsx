@@ -311,7 +311,7 @@ function TurbonOrderCollection({
 
   const isOneSizeProduct = (productId) => {
     const product = getProductById(productId);
-    return product?.tabType === "turbon" || product?.type === "set-turbon";
+     return product?.tabType === "turbon" && product?.type !== "set-turbon";
   };
 
   const handleGoToOffers = () => {

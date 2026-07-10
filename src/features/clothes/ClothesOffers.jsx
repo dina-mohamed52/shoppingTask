@@ -9,14 +9,14 @@ function ClothesOffers({
   filterByProductType = null,
   hideTabs = false
 }) {
-  const [activeTab, setActiveTab] = useState(filterByTabType || "all");
+  const [activeTab, setActiveTab] = useState(filterByTabType || "top");
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const filteredOffers = ClothesOffersData.filter(offer => {
     if (filterByProductType) {
       return offer.type === filterByProductType;
     }
-    if (activeTab === "all") return true;
+    // if (activeTab === "all") return true;
     if (activeTab === "legging") return offer.tabType === "legging";
     if (activeTab === "short") return offer.tabType === "short";
     if (activeTab === "top") return offer.tabType === "top";
@@ -24,12 +24,12 @@ function ClothesOffers({
     return true;
   });
 
-  const tabs = [
-    { id: "all", label: "الكل", icon: <ShoppingBag className="w-4 h-4" /> },
-    { id: "legging", label: "ليجن ريب", icon: <Package className="w-4 h-4" /> },
-    { id: "short", label: "شورت", icon: <Shirt className="w-4 h-4" /> },
-    { id: "top", label: "توب", icon: <Sparkles className="w-4 h-4" /> },
-  ];
+  // const tabs = [
+  //   { id: "all", label: "الكل", icon: <ShoppingBag className="w-4 h-4" /> },
+  //   { id: "legging", label: "ليجن ريب", icon: <Package className="w-4 h-4" /> },
+  //   { id: "short", label: "شورت", icon: <Shirt className="w-4 h-4" /> },
+  //   { id: "top", label: "توب", icon: <Sparkles className="w-4 h-4" /> },
+  // ];
 
   const getOfferIcon = (type) => {
     switch(type) {
@@ -286,9 +286,9 @@ function ClothesOffers({
         </div>
 
         {/* Tabs - Clean & Modern - Hide if needed */}
-        {!hideTabs && (
-          <div className="flex justify-center gap-1 bg-white/60 backdrop-blur-sm p-1.5 rounded-full max-w-2xl mx-auto mb-12 offers-tabs-wrapper border border-white/50 shadow-sm">
-            {tabs.map((tab) => (
+        {/* {!hideTabs && ( */}
+          {/* // <div className="flex justify-center gap-1 bg-white/60 backdrop-blur-sm p-1.5 rounded-full max-w-2xl mx-auto mb-12 offers-tabs-wrapper border border-white/50 shadow-sm"> */}
+            {/* {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -311,7 +311,7 @@ function ClothesOffers({
               </button>
             ))}
           </div>
-        )}
+        )} */}
 
         {/* Offers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 offers-grid">
