@@ -87,7 +87,7 @@ export const Clothes = [
         "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263424/WhatsApp_Image_2026-07-03_at_4.58.10_AM_2_wbc5v9.jpg"
       },
       {
-        "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783265691/WhatsApp_Image_2026-07-05_at_8.08.13_AM_1_czgkjh.jpg"
+        "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263419/WhatsApp_Image_2026-07-03_at_4.58.09_AM_1_emnfzq.jpg"
       },
       {
         "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263449/WhatsApp_Image_2026-07-03_at_4.58.09_AM_pqukmk.jpg"
@@ -99,7 +99,7 @@ export const Clothes = [
         "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263422/WhatsApp_Image_2026-07-03_at_4.58.10_AM_3_u6dyvq.jpg"
       }
     ],
-    "avalibeColors": ["أبيض", "أسود", "احمر", "لبني", "اصفر", "بينك"],
+    "avalibeColors": ["أبيض", "أسود", "نبيتي", "لبني", "اصفر", "بينك"],
     "image": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263394/WhatsApp_Image_2026-07-03_at_4.58.09_AM_2_kmtyl1.jpg",
     "sizes": [
       { "size": "2", "age": "من سنه ونص لسنتين" },
@@ -127,7 +127,7 @@ export const Clothes = [
         "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263376/WhatsApp_Image_2026-07-03_at_5.01.08_AM_1_mqqhqa.jpg"
       },
       {
-        "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263419/WhatsApp_Image_2026-07-03_at_4.58.09_AM_1_emnfzq.jpg"
+        "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783265691/WhatsApp_Image_2026-07-05_at_8.08.13_AM_1_czgkjh.jpg"
       },
       {
         "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263359/WhatsApp_Image_2026-07-03_at_5.01.08_AM_2_zmn2u2.jpg"
@@ -139,7 +139,7 @@ export const Clothes = [
         "img": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263379/WhatsApp_Image_2026-07-03_at_5.01.08_AM_mpqjiq.jpg"
       }
     ],
-    "avalibeColors": ["أبيض", "أسود", "اصفر", "بينك", "اورنج"],
+    "avalibeColors": ["أبيض", "أسود","احمر", "اصفر", "بينك", "اورنج"],
     "image": "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783263379/WhatsApp_Image_2026-07-03_at_5.01.08_AM_mpqjiq.jpg",
     "sizes": [
       { "size": "2", "age": "من سنه ونص لسنتين" },
@@ -183,7 +183,7 @@ export const Clothes = [
   },
   {
     "id": 27,
-    "name": "توب كتف واحد",
+    "name": "توب كتف حمالة",
     "description": "تيشيرت بناتي قطن ريب مضلع بتصميم كتف واحد عصري، خامة ناعمة ومريحة بمرونة عالية، مثالي للإطلالات الصيفية والخروجات اليومية.",
     "price": 280,
     "originalPrice": 350,
@@ -249,7 +249,7 @@ export const Clothes = [
       { size: "S", age: "2-4" },
       { size: "M", age: "4-6" },
       { size: "L", age: "6-8" },
-      { size: "XL", age: "9-12" },
+      { size: "XL", age: "8-10" },
     ],
   },
   {
@@ -292,7 +292,7 @@ export const Clothes = [
       { size: "S", age: "2-4" },
       { size: "M", age: "4-6" },
       { size: "L", age: "6-8" },
-      { size: "XL", age: "9-12" },
+     { size: "XL", age: "8-10" },
     ],
   },
 ];

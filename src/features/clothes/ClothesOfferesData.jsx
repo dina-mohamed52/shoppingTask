@@ -121,6 +121,32 @@ export const ClothesOffersData = [
     popular: true,
     tabType: "short",
   },
+  {
+    name: "6 شورت",
+    quantity: 6,
+    price: 450,
+    badge: "أفضل قيمة",
+    badgeColor: "from-[#ff8c93] to-[#e13485]",
+    icon: <Shirt className="w-4 h-4" />,
+    savings: 120,
+    originalPrice: 570,
+    unit: "شورت",
+    popular: true,
+    tabType: "short",
+  },
+  {
+    name: "8 شورت",
+    quantity: 8,
+    price: 580,
+    badge: "أفضل قيمة",
+    badgeColor: "from-[#ff8c93] to-[#e13485]",
+    icon: <Shirt className="w-4 h-4" />,
+    savings: 140,
+    originalPrice: 720,
+    unit: "شورت",
+    popular: true,
+    tabType: "short",
+  },
 
   // ========== التوبات ==========
   {
