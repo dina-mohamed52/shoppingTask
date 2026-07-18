@@ -169,12 +169,16 @@ function CheckoutPage() {
         address: `${formData.city} - ${formData.address}`,
         order: orderDetails,
         total: total,
+        notes: formData.notes || "-",
       }),
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || "فشل في إرسال الطلب");
     return data;
   };
+
+
+  // console.log("frrrrrrrrrrrrrrrrr", formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

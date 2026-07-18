@@ -24,10 +24,10 @@ import {
 } from "lucide-react";
 import HalfOffers from "../features/SummerHalf/HalfOffers";
 import TurbonOffers from "../features/TurbonParts/TurbonOffers";
-import ClothesOffers from "../features/clothes/ClothesOffers"; // 👈 إضافة استيراد ClothesOffers
+import ClothesOffers from "../features/clothes/ClothesOffers"; 
 import HalfOrderCollection from "../features/SummerHalf/HalfOrderCollection";
 import TurbonOrderCollection from "../features/TurbonParts/TurbonOrderCollection";
-import ClothesOrderCollection from "../features/clothes/ClothesOrderCollection"; // 👈 إضافة استيراد ClothesOrderCollection
+import ClothesOrderCollection from "../features/clothes/ClothesOrderCollection"; 
 import { useCart } from "../features/cart/CartContext";
 
 // ========== مكونات مساعدة صغيرة ==========
@@ -262,6 +262,16 @@ function ProductDetails() {
 
   // 👈 تحديد نوع المنتج لعرض العروض المناسبة
   const getProductTypeForOffers = () => {
+
+  // لو المنتج ليجن ريب
+  if (product.category === "legging" && product.name?.includes("ريب")) {
+    return "legging-rib";
+  }
+  // لو المنتج ليجن اوباك
+  if (product.category === "legging" && product.name?.includes(" أوباك" ||"اوباك")) {
+    return "legging-opak";
+  }
+
     if (product.category === "top") return "top";
     if (product.category === "legging") return "legging";
     if (product.category === "short") return "short";
@@ -584,7 +594,7 @@ function ProductDetails() {
           // 👈 عرض عروض الملابس (توب، ليجن، شورت)
           <ClothesOffers
             filterByTabType={productTypeForOffers}
-            filterByProductType={product.type || null}
+             filterByProductType={productTypeForOffers}
             setSelectedOffer={handleOfferSelect}
             hideTabs={true}
             scrollToOrderCollection={() =>
