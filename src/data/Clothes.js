@@ -245,12 +245,12 @@ export const Clothes = [
     image:
       "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783615454/WhatsApp_Image_2026-07-09_at_9.08.15_AM_ty3syu.jpg",
 
-    sizes: [
-      { size: "S", age: "2-4" },
-      { size: "M", age: "4-6" },
-      { size: "L", age: "6-8" },
-      { size: "XL", age: "8-10" },
-    ],
+   sizes: [
+  { size: "S", age: "من 2 إلى 4 سنوات" },
+  { size: "M", age: "من 4 إلى 6 سنوات" },
+  { size: "L", age: "من 6 إلى 8 سنوات" },
+  { size: "XL", age: "من 8 إلى 10 سنوات" },
+],
   },
   {
     id: 29,
@@ -289,10 +289,10 @@ export const Clothes = [
       "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783615536/WhatsApp_Image_2026-07-09_at_9.07.02_AM_1_yr3it2.jpg",
 
     sizes: [
-      { size: "S", age: "2-4" },
-      { size: "M", age: "4-6" },
-      { size: "L", age: "6-8" },
-     { size: "XL", age: "8-10" },
-    ],
+  { size: "S", age: "من 2 إلى 4 سنوات" },
+  { size: "M", age: "من 4 إلى 6 سنوات" },
+  { size: "L", age: "من 6 إلى 8 سنوات" },
+  { size: "XL", age: "من 8 إلى 10 سنوات" },
+],
   },
 ];
