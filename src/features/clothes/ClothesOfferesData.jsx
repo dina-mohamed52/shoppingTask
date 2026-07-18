@@ -14,6 +14,7 @@ export const ClothesOffersData = [
     unit: "ليجن ريب",
     popular: false,
     tabType: "legging",
+    type: "legging-rib",
   },
   {
     name: "4 ليجن ريب",
@@ -27,6 +28,7 @@ export const ClothesOffersData = [
     unit: "ليجن ريب",
     popular: false,
     tabType: "legging",
+    type: "legging-rib",
   },
   {
     name: "5 ليجن ريب",
@@ -40,6 +42,7 @@ export const ClothesOffersData = [
     unit: "ليجن ريب",
     popular: true,
     tabType: "legging",
+    type: "legging-rib",
   },
   {
     name: "6 ليجن ريب",
@@ -53,6 +56,7 @@ export const ClothesOffersData = [
     unit: "ليجن ريب",
     popular: false,
     tabType: "legging",
+    type: "legging-rib",
   },
   {
     name: "8 ليجن ريب",
@@ -66,6 +70,7 @@ export const ClothesOffersData = [
     unit: "ليجن ريب",
     popular: true,
     tabType: "legging",
+    type: "legging-rib",
   },
   {
     name: "12 ليجن ريب",
@@ -79,6 +84,65 @@ export const ClothesOffersData = [
     unit: "ليجن ريب",
     popular: true,
     tabType: "legging",
+    type: "legging-rib",
+  },
+
+  // ========== ليجن اوباك ==========
+  {
+    name: "3 ليجن اوباك",
+    quantity: 3,
+    price: 315,
+    badge: "عرض خاص",
+    badgeColor: "from-[#e13485] to-[#c01e6f]",
+    icon: <Package className="w-4 h-4" />,
+    savings: 0,
+    originalPrice: 315,
+    unit: "ليجن اوباك",
+    popular: false,
+     tabType: "legging",
+  type: "legging-opak",
+  },
+  {
+    name: "4 ليجن اوباك",
+    quantity: 4,
+    price: 400,
+    badge: "عرض خاص",
+    badgeColor: "from-[#e13485] to-[#c01e6f]",
+    icon: <Package className="w-4 h-4" />,
+    savings: 0,
+    originalPrice: 400,
+    unit: "ليجن اوباك",
+    popular: false,
+     tabType: "legging",
+  type: "legging-opak",
+  },
+  {
+    name: "6 ليجن اوباك",
+    quantity: 6,
+    price: 570,
+    badge: "الأكثر طلباً",
+    badgeColor: "from-[#e13485] to-[#c01e6f]",
+    icon: <Package className="w-4 h-4" />,
+    savings: 30,
+    originalPrice: 600,
+    unit: "ليجن اوباك",
+    popular: true,
+     tabType: "legging",
+  type: "legging-opak",
+  },
+  {
+    name: "8 ليجن اوباك",
+    quantity: 8,
+    price: 720,
+    badge: "أفضل قيمة",
+    badgeColor: "from-[#e13485] to-[#c01e6f]",
+    icon: <Package className="w-4 h-4" />,
+    savings: 80,
+    originalPrice: 800,
+    unit: "ليجن اوباك",
+    popular: true,
+     tabType: "legging",
+  type: "legging-opak",
   },
 
   // ========== الشورت ==========
@@ -94,6 +158,7 @@ export const ClothesOffersData = [
     unit: "شورت",
     popular: false,
     tabType: "short",
+      type: "short",
   },
   {
     name: "3 شورت",
@@ -107,6 +172,7 @@ export const ClothesOffersData = [
     unit: "شورت",
     popular: true,
     tabType: "short",
+      type: "short",
   },
   {
     name: "4 شورت",
@@ -120,6 +186,7 @@ export const ClothesOffersData = [
     unit: "شورت",
     popular: true,
     tabType: "short",
+      type: "short",
   },
   {
     name: "6 شورت",
@@ -133,6 +200,7 @@ export const ClothesOffersData = [
     unit: "شورت",
     popular: true,
     tabType: "short",
+      type: "short",
   },
   {
     name: "8 شورت",
@@ -146,6 +214,7 @@ export const ClothesOffersData = [
     unit: "شورت",
     popular: true,
     tabType: "short",
+      type: "short",
   },
 
   // ========== التوبات ==========

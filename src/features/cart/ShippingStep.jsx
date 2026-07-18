@@ -190,6 +190,7 @@ function ShippingStep({ onSuccess, onBack, cartItems }) {
         address: `${formData.city} - ${formData.address}`,
         order: orderDetails,
         total: total,
+        notes: formData.notes || "-",
       }),
     });
 
