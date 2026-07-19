@@ -246,10 +246,10 @@ export const Clothes = [
       "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783615454/WhatsApp_Image_2026-07-09_at_9.08.15_AM_ty3syu.jpg",
 
    sizes: [
-  { size: "S", age: "من 2 إلى 4 سنوات" },
-  { size: "M", age: "من 4 إلى 6 سنوات" },
-  { size: "L", age: "من 6 إلى 8 سنوات" },
-  { size: "XL", age: "من 8 إلى 10 سنوات" },
+  { size: "S", age: "من 2 إلى 3 سنوات" },
+  { size: "M", age: "من 3 إلى 4 سنوات" },
+  { size: "L", age: "من 4 إلى 6 سنوات" },
+  { size: "XL", age: "من 7 إلى 10 سنوات" },
 ],
   },
   {
