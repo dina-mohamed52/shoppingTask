@@ -270,73 +270,73 @@ export const SummerColonData = [
       { size: "14-12", age: "من 12 ل 14 سنة" },
     ],
   },
-  {
-    id: 8,
-    name: "كولون كريستال ساده",
-    description:
-      "كولون صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
+  // {
+  //   id: 8,
+  //   name: "كولون كريستال ساده",
+  //   description:
+  //     "كولون صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
 
-    price: 140,
-    originalPrice: 195,
-    discount: 28,
-    rating: 5,
-    category: "colon",
+  //   price: 140,
+  //   originalPrice: 195,
+  //   discount: 28,
+  //   rating: 5,
+  //   category: "colon",
 
-    productColors: [
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558519/WhatsApp_Image_2026-04-29_at_11.13.25_AM_1_bap542.jpg",
-      },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558646/WhatsApp_Image_2026-04-29_at_11.13.24_AM_ssisgc.jpg",
-      },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558520/WhatsApp_Image_2026-04-29_at_11.13.25_AM_jowvae.jpg",
-      },
-    ],
-    avalibeColors: ["أبيض", "أسود", "بيج"],
-    image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558519/WhatsApp_Image_2026-04-29_at_11.13.25_AM_1_bap542.jpg",
+  //   productColors: [
+  //     {
+  //       img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558519/WhatsApp_Image_2026-04-29_at_11.13.25_AM_1_bap542.jpg",
+  //     },
+  //     {
+  //       img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558646/WhatsApp_Image_2026-04-29_at_11.13.24_AM_ssisgc.jpg",
+  //     },
+  //     {
+  //       img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558520/WhatsApp_Image_2026-04-29_at_11.13.25_AM_jowvae.jpg",
+  //     },
+  //   ],
+  //   avalibeColors: ["أبيض", "أسود", "بيج"],
+  //   image:
+  //     "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558519/WhatsApp_Image_2026-04-29_at_11.13.25_AM_1_bap542.jpg",
 
-    sizes: [
-      { size: "4-2", age: "من سنة ونص ل 3 سنين" },
-      { size: "6-4", age: "من 3 ل 5 سنين" },
-      { size: "8-6", age: "من 5 ل 7 سنين" },
-      { size: "10-8", age: "من 7 ل 9 سنين" },
-      { size: "12-10", age: "من 9 ل 11 سنة" },
-      { size: "14-12", age: "من 12 ل 14 سنة" },
-    ],
-  },
-  {
-    id: 9,
-    name: "كولون  شبك",
-    description:
-      "كولون شبك صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
+  //   sizes: [
+  //     { size: "4-2", age: "من سنة ونص ل 3 سنين" },
+  //     { size: "6-4", age: "من 3 ل 5 سنين" },
+  //     { size: "8-6", age: "من 5 ل 7 سنين" },
+  //     { size: "10-8", age: "من 7 ل 9 سنين" },
+  //     { size: "12-10", age: "من 9 ل 11 سنة" },
+  //     { size: "14-12", age: "من 12 ل 14 سنة" },
+  //   ],
+  // },
+  // {
+  //   id: 9,
+  //   name: "كولون  شبك",
+  //   description:
+  //     "كولون شبك صيفي  قطن بجودة عالية  مميزة، يحتوي على 10% ليكرا لمرونة ممتازة وراحة مثالية تناسب الاستخدام اليومي.",
 
-    price: 140,
-    originalPrice: 195,
-    discount: 28,
-    rating: 5,
-    category: "colon",
+  //   price: 140,
+  //   originalPrice: 195,
+  //   discount: 28,
+  //   rating: 5,
+  //   category: "colon",
 
-    productColors: [
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558766/WhatsApp_Image_2026-04-29_at_11.17.03_AM_1_itcmlv.jpg",
-      },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558797/WhatsApp_Image_2026-04-29_at_11.17.03_AM_wefjw9.jpg",
-      },
-    ],
-    avalibeColors: ["أبيض", "أسود"],
-    image:
-      "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558797/WhatsApp_Image_2026-04-29_at_11.17.03_AM_wefjw9.jpg",
+  //   productColors: [
+  //     {
+  //       img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558766/WhatsApp_Image_2026-04-29_at_11.17.03_AM_1_itcmlv.jpg",
+  //     },
+  //     {
+  //       img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558797/WhatsApp_Image_2026-04-29_at_11.17.03_AM_wefjw9.jpg",
+  //     },
+  //   ],
+  //   avalibeColors: ["أبيض", "أسود"],
+  //   image:
+  //     "https://res.cloudinary.com/dxenvgjv5/image/upload/v1777558797/WhatsApp_Image_2026-04-29_at_11.17.03_AM_wefjw9.jpg",
 
-    sizes: [
-      { size: "4-2", age: "من سنة ونص ل 3 سنين" },
-      { size: "6-4", age: "من 3 ل 5 سنين" },
-      { size: "8-6", age: "من 5 ل 7 سنين" },
-      { size: "10-8", age: "من 7 ل 9 سنين" },
-      { size: "12-10", age: "من 9 ل 11 سنة" },
-      { size: "14-12", age: "من 12 ل 14 سنة" },
-    ],
-  },
+  //   sizes: [
+  //     { size: "4-2", age: "من سنة ونص ل 3 سنين" },
+  //     { size: "6-4", age: "من 3 ل 5 سنين" },
+  //     { size: "8-6", age: "من 5 ل 7 سنين" },
+  //     { size: "10-8", age: "من 7 ل 9 سنين" },
+  //     { size: "12-10", age: "من 9 ل 11 سنة" },
+  //     { size: "14-12", age: "من 12 ل 14 سنة" },
+  //   ],
+  // },
 ];
