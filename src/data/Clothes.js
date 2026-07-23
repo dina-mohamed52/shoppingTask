@@ -277,14 +277,14 @@ export const Clothes = [
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783530159/WhatsApp_Image_2026-07-05_at_10.24.31_AM_3_hu08sz.jpg",
       },
-      {
-        img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783530160/WhatsApp_Image_2026-07-05_at_10.24.31_AM_1_cerr5j.jpg",
-      },
+      // { بينك
+      //   img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783530160/WhatsApp_Image_2026-07-05_at_10.24.31_AM_1_cerr5j.jpg",
+      // },
       {
         img: "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783530159/WhatsApp_Image_2026-07-05_at_10.24.31_AM_o4aiaj.jpg",
       },
     ],
-    avalibeColors: ["أبيض","بيج","رصاصي", "أسود","بينك", "سكري"],
+    avalibeColors: ["أبيض","بيج","رصاصي", "أسود", "سكري"],
     image:
       "https://res.cloudinary.com/dxenvgjv5/image/upload/v1783615536/WhatsApp_Image_2026-07-09_at_9.07.02_AM_1_yr3it2.jpg",
 
